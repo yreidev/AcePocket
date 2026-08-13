@@ -184,8 +184,7 @@ class AlertRecordTile extends StatelessWidget {
                 const SizedBox(width: 8),
                 StatusChip(
                   label: record.notified ? '已通知' : '未通知',
-                  tone:
-                      record.notified ? ChipTone.success : ChipTone.neutral,
+                  tone: record.notified ? ChipTone.success : ChipTone.neutral,
                 ),
               ],
             ),

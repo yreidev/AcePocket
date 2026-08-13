@@ -60,8 +60,7 @@ final List<RouteBase> notifyAlertRoutes = <RouteBase>[
   ),
   GoRoute(
     path: '/webhooks',
-    builder: (BuildContext context, GoRouterState state) =>
-        const WebhookPage(),
+    builder: (BuildContext context, GoRouterState state) => const WebhookPage(),
     routes: <RouteBase>[
       GoRoute(
         path: 'new',
@@ -70,8 +69,7 @@ final List<RouteBase> notifyAlertRoutes = <RouteBase>[
       ),
       GoRoute(
         path: ':id/edit',
-        builder: (BuildContext context, GoRouterState state) =>
-            WebhookFormPage(
+        builder: (BuildContext context, GoRouterState state) => WebhookFormPage(
           webhookId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
         ),
       ),

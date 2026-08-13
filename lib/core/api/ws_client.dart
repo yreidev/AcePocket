@@ -268,8 +268,7 @@ class WsSessionManager {
     String? captchaCode,
   ) async {
     if (!server.hasCredentials) {
-      throw const WsAuthException(
-          '未配置面板用户名/密码，无法使用终端等实时功能。请在服务器设置中补充面板账号');
+      throw const WsAuthException('未配置面板用户名/密码，无法使用终端等实时功能。请在服务器设置中补充面板账号');
     }
 
     final client = createPanelHttpClient(server);
@@ -382,8 +381,7 @@ class WsSessionManager {
       //（toString() 即可读文案，页面通用错误展示可直接使用）。
       final certError = takeCertificateRejection(server, e);
       if (certError != null) throw certError;
-      throw const WsAuthException(
-          '服务器证书校验失败，可在服务器配置中开启「允许自签名证书」');
+      throw const WsAuthException('服务器证书校验失败，可在服务器配置中开启「允许自签名证书」');
     } on SocketException {
       throw const WsAuthException('无法连接服务器，请检查网络与服务器地址');
     } on FormatException {

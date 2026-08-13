@@ -40,8 +40,8 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data = await _api
-        .get('/firewall/rule', query: {'page': page, 'limit': limit});
+    final data =
+        await _api.get('/firewall/rule', query: {'page': page, 'limit': limit});
     return Paged.fromJson(data, FirewallRule.fromJson);
   }
 
@@ -171,8 +171,7 @@ class SecurityRepository {
   /// 获取扫描感知设置（GET /firewall/scan/setting）。
   Future<ScanSetting> scanSetting() async {
     final data = await _api.get('/firewall/scan/setting');
-    return ScanSetting.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return ScanSetting.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// 更新扫描感知设置。

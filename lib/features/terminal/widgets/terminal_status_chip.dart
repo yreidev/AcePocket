@@ -16,9 +16,8 @@ class TerminalStatusChip extends StatelessWidget {
     final (Color color, String label) = switch (state.status) {
       TerminalStatus.idle => (scheme.outline, '待连接'),
       TerminalStatus.connecting => (scheme.tertiary, '连接中…'),
-      TerminalStatus.connected => state.unstable
-          ? (scheme.tertiary, '连接可能已中断')
-          : (scheme.primary, '已连接'),
+      TerminalStatus.connected =>
+        state.unstable ? (scheme.tertiary, '连接可能已中断') : (scheme.primary, '已连接'),
       TerminalStatus.disconnected => (scheme.outline, '已断开'),
       TerminalStatus.failed => (scheme.error, '连接失败'),
     };

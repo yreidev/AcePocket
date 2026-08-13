@@ -225,14 +225,13 @@ class _ContainerListPageState extends ConsumerState<ContainerListPage> {
     return PagedListView<ContainerItem>(
       state: state,
       loadingMessage: '正在加载容器列表…',
-      emptyMessage: ref.watch(containerKeywordProvider).isEmpty
-          ? '还没有任何容器'
-          : '没有匹配的容器',
+      emptyMessage:
+          ref.watch(containerKeywordProvider).isEmpty ? '还没有任何容器' : '没有匹配的容器',
       emptyIcon: Icons.inbox_outlined,
       onRefresh: () => ref.read(containersProvider.notifier).refresh(),
       onLoadMore: () => ref.read(containersProvider.notifier).loadMore(),
       onRetry: () => ref.invalidate(containersProvider),
-      itemBuilder: (context, item) => ContainerTile(
+      itemBuilder: (context, item, _) => ContainerTile(
         item: item,
         onTap: () => context.push('/containers/${item.id}'),
         onShowLogs: () => context.push('/containers/${item.id}/logs'),

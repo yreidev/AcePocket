@@ -24,7 +24,7 @@ class BackupStorageRepo {
       'page': page,
       'limit': limit,
     });
-    return PageResult.fromJson(data, BackupStorage.fromJson);
+    return Paged.fromJson(data, BackupStorage.fromJson);
   }
 
   Future<BackupStorage> get(int id) async {

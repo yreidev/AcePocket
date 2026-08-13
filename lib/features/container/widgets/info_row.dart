@@ -1,79 +1,8 @@
+library;
+
+export '../../../core/widgets/info_row.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import '../../../core/widgets/app_snack.dart';
-
-/// 详情页的「标签 - 值」行。
-class InfoRow extends StatelessWidget {
-  const InfoRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.mono = false,
-    this.copyable = false,
-    this.valueWidget,
-  });
-
-  final String label;
-  final String value;
-
-  /// 等宽字体展示（ID、路径、命令等）。
-  final bool mono;
-
-  /// 长按复制。
-  final bool copyable;
-
-  /// 自定义值组件（提供时忽略 [value] 的文本渲染）。
-  final Widget? valueWidget;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final content = valueWidget ??
-        Text(
-          value.isEmpty ? '-' : value,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontFamily: mono ? 'monospace' : null,
-            fontFamilyFallback: mono ? const ['Courier'] : null,
-          ),
-        );
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 92,
-            child: Text(
-              label,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: copyable && valueWidget == null
-                ? Semantics(
-                    // GestureDetector 会把长按暴露给读屏，这里补一句说明做什么。
-                    onLongPressHint: '复制$label',
-                    child: GestureDetector(
-                      onLongPress: () async {
-                        await Clipboard.setData(ClipboardData(text: value));
-                        if (!context.mounted) return;
-                        showSuccessSnack(context, '已复制$label');
-                      },
-                      child: content,
-                    ),
-                  )
-                : content,
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 /// 一组标签样式的小块（端口、子网、镜像 tag 等）。
 class TagWrap extends StatelessWidget {

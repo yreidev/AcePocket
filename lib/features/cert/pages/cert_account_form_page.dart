@@ -39,7 +39,10 @@ class CertAccountFormPage extends ConsumerWidget {
                   for (final entry in CertAccount.caLabels.entries)
                     (entry.key, entry.value)
                 ]
-              : [for (final item in options.caProviders) (item.value, item.label)];
+              : [
+                  for (final item in options.caProviders)
+                    (item.value, item.label)
+                ];
           final algorithms = options.algorithms.isEmpty
               ? const [
                   ('P256', 'EC256'),
@@ -48,7 +51,8 @@ class CertAccountFormPage extends ConsumerWidget {
                   ('4096', 'RSA4096'),
                 ]
               : [
-                  for (final item in options.algorithms) (item.value, item.label)
+                  for (final item in options.algorithms)
+                    (item.value, item.label)
                 ];
 
           if (accountId == null) {

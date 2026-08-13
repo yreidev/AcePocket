@@ -98,8 +98,7 @@ class LogScanState {
 
   bool get busy => scanning || cleaning;
 
-  int get totalBytes =>
-      items.fold<int>(0, (sum, item) => sum + item.sizeBytes);
+  int get totalBytes => items.fold<int>(0, (sum, item) => sum + item.sizeBytes);
 
   LogScanState copyWith({
     bool? scanning,
@@ -122,9 +121,9 @@ class LogScanState {
 ///
 /// 无法识别时返回 0（例如「3 个镜像」这类计数文案）。
 int parseFormattedBytes(String text) {
-  final match =
-      RegExp(r'^\s*([0-9]+(?:\.[0-9]+)?)\s*([KMGTPEZY]?B)\s*$', caseSensitive: false)
-          .firstMatch(text);
+  final match = RegExp(r'^\s*([0-9]+(?:\.[0-9]+)?)\s*([KMGTPEZY]?B)\s*$',
+          caseSensitive: false)
+      .firstMatch(text);
   if (match == null) return 0;
   final value = double.tryParse(match.group(1)!) ?? 0;
   final unit = match.group(2)!.toUpperCase();

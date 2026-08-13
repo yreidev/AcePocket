@@ -315,7 +315,8 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
                 context,
                 title: '入口错误页',
                 options: PanelSetting.entranceErrorModes,
-                value: draft.entranceError.isEmpty ? '418' : draft.entranceError,
+                value:
+                    draft.entranceError.isEmpty ? '418' : draft.entranceError,
                 labelBuilder: PanelSetting.entranceErrorLabel,
               );
               if (value == null) return;

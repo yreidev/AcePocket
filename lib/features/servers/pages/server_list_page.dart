@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/models/server.dart';
 import '../../../core/storage/server_store.dart';
+import '../../../core/widgets/a11y.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/empty_view.dart';
 import '../../../core/widgets/error_view.dart';
@@ -70,7 +71,7 @@ class ServerListPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('服务器管理'),
         actions: [
-          IconButton(
+          A11yIconButton(
             icon: const Icon(Icons.add),
             tooltip: '添加服务器',
             onPressed: () => context.push('/servers/edit'),

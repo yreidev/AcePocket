@@ -247,7 +247,7 @@ class _ChannelsTabState extends ConsumerState<_ChannelsTab> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(notifyChannelsProvider);
-    return NotifyPagedListView<NotifyChannel>(
+    return PagedListView<NotifyChannel>(
       state: state,
       header: const InfoBanner(
         text: '通知渠道用于发送告警与系统事件通知。渠道配置（含密码）由面板加密存储，'

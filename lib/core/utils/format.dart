@@ -88,3 +88,25 @@ String formatDuration(Duration d) {
   if (seconds > 0) return '$sign$seconds 秒';
   return '$sign${abs.inMilliseconds} 毫秒';
 }
+
+/// 本地时间 `yyyy-MM-dd HH:mm:ss`；null 展示 `-`。
+String formatDateTime(DateTime? value) {
+  if (value == null) return '-';
+  final local = value.toLocal();
+  String two(int v) => v.toString().padLeft(2, '0');
+  return '${local.year}-${two(local.month)}-${two(local.day)} '
+      '${two(local.hour)}:${two(local.minute)}:${two(local.second)}';
+}
+
+/// 相对时间，如「3 天前」；未来时间回退到 [formatDateTime]。
+String formatRelative(DateTime? value) {
+  if (value == null) return '-';
+  final diff = DateTime.now().difference(value);
+  if (diff.isNegative) return formatDateTime(value);
+  if (diff.inMinutes < 1) return '刚刚';
+  if (diff.inHours < 1) return '${diff.inMinutes} 分钟前';
+  if (diff.inDays < 1) return '${diff.inHours} 小时前';
+  if (diff.inDays < 30) return '${diff.inDays} 天前';
+  if (diff.inDays < 365) return '${(diff.inDays / 30).floor()} 个月前';
+  return '${(diff.inDays / 365).floor()} 年前';
+}

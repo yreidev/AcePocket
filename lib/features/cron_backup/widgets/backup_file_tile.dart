@@ -108,8 +108,8 @@ class BackupFileTile extends StatelessWidget {
                   if (onDelete != null)
                     A11yIconButton(
                       tooltip: '删除此备份',
-                      icon: Icon(Icons.delete_outline,
-                          color: colorScheme.error),
+                      icon:
+                          Icon(Icons.delete_outline, color: colorScheme.error),
                       onPressed: onDelete,
                     ),
                 ],

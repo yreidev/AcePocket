@@ -30,8 +30,8 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
     if (_refreshing) return;
     setState(() => _refreshing = true);
     // 重新推导服务列表，并让每个服务重新查询状态。
-    for (final service in ref.read(serviceListProvider).valueOrNull ??
-        const <ServiceRef>[]) {
+    for (final service
+        in ref.read(serviceListProvider).valueOrNull ?? const <ServiceRef>[]) {
       ref.invalidate(serviceStateProvider(service.name));
     }
     ref.invalidate(serviceListProvider);
@@ -47,10 +47,10 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
   }
 
   Future<void> _addService() async {
-    final existing = (ref.read(serviceListProvider).valueOrNull ??
-            const <ServiceRef>[])
-        .map((s) => s.name)
-        .toList();
+    final existing =
+        (ref.read(serviceListProvider).valueOrNull ?? const <ServiceRef>[])
+            .map((s) => s.name)
+            .toList();
     final name = await showAddServiceDialog(context, existing: existing);
     if (name == null || name.isEmpty) return;
     try {
@@ -127,12 +127,10 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
             );
           }
 
-          final appServices = services
-              .where((s) => s.source == ServiceSource.app)
-              .toList();
-          final customServices = services
-              .where((s) => s.source == ServiceSource.custom)
-              .toList();
+          final appServices =
+              services.where((s) => s.source == ServiceSource.app).toList();
+          final customServices =
+              services.where((s) => s.source == ServiceSource.custom).toList();
 
           return RefreshIndicator(
             onRefresh: _refresh,

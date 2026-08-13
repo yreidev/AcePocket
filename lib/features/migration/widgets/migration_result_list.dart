@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/format.dart';
 import '../../../core/widgets/section_card.dart';
-import '../models/json_utils.dart';
 import '../models/migration_status.dart';
 
 /// 迁移结果列表（进度页与结果页共用）。

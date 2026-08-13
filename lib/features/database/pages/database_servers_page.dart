@@ -65,7 +65,8 @@ class _DatabaseServersPageState extends ConsumerState<DatabaseServersPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).updateServerRemark(server.id, remark),
+      () =>
+          ref.read(databaseRepoProvider).updateServerRemark(server.id, remark),
       success: '备注已更新',
     );
     if (ok) await _refresh();

@@ -202,7 +202,8 @@ class RaidPage extends ConsumerWidget {
                               if (device.slot.isNotEmpty) '槽位 ${device.slot}',
                               if (device.size.isNotEmpty) device.size,
                               if (device.model.isNotEmpty) device.model,
-                              if (device.serial.isNotEmpty) 'SN ${device.serial}',
+                              if (device.serial.isNotEmpty)
+                                'SN ${device.serial}',
                             ].join(' · '),
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,

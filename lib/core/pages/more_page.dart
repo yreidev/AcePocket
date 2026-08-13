@@ -432,7 +432,7 @@ class _MorePageState extends ConsumerState<MorePage> {
       appBar: AppBar(
         title: const Text('更多'),
         actions: [
-          IconButton(
+          A11yIconButton(
             tooltip: '服务器管理',
             icon: const Icon(Icons.dns_outlined),
             onPressed: () => context.push('/servers'),
@@ -467,8 +467,7 @@ class _MorePageState extends ConsumerState<MorePage> {
           prefixIcon: const Icon(Icons.search_rounded),
           suffixIcon: _query.isEmpty
               ? null
-              : IconButton(
-                  // 读屏只念动词「清空」分不清清空什么，写明动作对象。
+              : A11yIconButton(
                   tooltip: '清空搜索词',
                   icon: const Icon(Icons.clear_rounded),
                   onPressed: () {
@@ -726,8 +725,8 @@ class _ActiveServerCard extends StatelessWidget {
             const SizedBox(height: 12),
             InkWell(
               borderRadius: BorderRadius.circular(8),
-              onTap: () => context
-                  .push('/servers/edit?id=${server!.id}&advanced=1'),
+              onTap: () =>
+                  context.push('/servers/edit?id=${server!.id}&advanced=1'),
               // 原行高约 24dp，不足 48dp 触摸目标下限；只扩命中区域不改视觉。
               child: minTouchTarget(
                 child: Padding(
@@ -832,8 +831,7 @@ class _EntryGrid extends StatelessWidget {
             if (!supported) ...[
               const SizedBox(height: 2),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                 decoration: BoxDecoration(
                   color: unreleased
                       ? theme.colorScheme.tertiaryContainer

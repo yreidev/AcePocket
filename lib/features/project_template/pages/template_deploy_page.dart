@@ -169,8 +169,7 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
         (_nameController.text != _initialName ||
             _composeController.text != widget.template.compose ||
             _extraEnvs.isNotEmpty ||
-            _envValues.entries
-                .any((e) => _initialEnvValues[e.key] != e.value));
+            _envValues.entries.any((e) => _initialEnvValues[e.key] != e.value));
     if (dirty != _dirty && mounted) setState(() => _dirty = dirty);
   }
 
@@ -379,7 +378,8 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
       child: Scaffold(
         appBar: AppBar(
           // 模板名可能很长，单行省略而不是把标题挤没。
-          title: Text('部署 · $title', maxLines: 1, overflow: TextOverflow.ellipsis),
+          title:
+              Text('部署 · $title', maxLines: 1, overflow: TextOverflow.ellipsis),
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(

@@ -21,7 +21,8 @@ class WebsiteStatRepo {
       };
 
   /// 统计概览（汇总 + 时间序列 + 环比 + 站点列表）。
-  Future<StatOverview> overview(StatDateRange range, {String sites = ''}) async {
+  Future<StatOverview> overview(StatDateRange range,
+      {String sites = ''}) async {
     final data =
         await _api.get('/website/stat/overview', query: _range(range, sites));
     return StatOverview.fromJson(jMap(data));

@@ -176,10 +176,10 @@ class _NetworkCreateSheetState extends ConsumerState<_NetworkCreateSheet> {
                           labelText: '子网',
                           hintText: '如 172.20.0.0/16',
                         ),
-                        validator: (value) => _ipv4Enabled &&
-                                (value ?? '').trim().isEmpty
-                            ? '请输入 IPv4 子网'
-                            : null,
+                        validator: (value) =>
+                            _ipv4Enabled && (value ?? '').trim().isEmpty
+                                ? '请输入 IPv4 子网'
+                                : null,
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
@@ -212,10 +212,10 @@ class _NetworkCreateSheetState extends ConsumerState<_NetworkCreateSheet> {
                           labelText: '子网',
                           hintText: '如 fd00::/64',
                         ),
-                        validator: (value) => _ipv6Enabled &&
-                                (value ?? '').trim().isEmpty
-                            ? '请输入 IPv6 子网'
-                            : null,
+                        validator: (value) =>
+                            _ipv6Enabled && (value ?? '').trim().isEmpty
+                                ? '请输入 IPv6 子网'
+                                : null,
                       ),
                       const SizedBox(height: 12),
                       TextFormField(

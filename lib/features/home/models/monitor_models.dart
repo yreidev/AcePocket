@@ -223,9 +223,8 @@ class MonitorDetail {
 
   factory MonitorDetail.fromJson(Map<String, dynamic> json) {
     return MonitorDetail(
-      times:
-          (json['times'] as List?)?.map((e) => e.toString()).toList() ??
-              const [],
+      times: (json['times'] as List?)?.map((e) => e.toString()).toList() ??
+          const [],
       load: json['load'] is Map<String, dynamic>
           ? LoadSeries.fromJson(json['load'] as Map<String, dynamic>)
           : const LoadSeries(load1: [], load5: [], load15: []),

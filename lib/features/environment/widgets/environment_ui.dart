@@ -68,14 +68,15 @@ String phpVersionText(int version) {
 /// 面板把 php-fpm status 的原始值原样 `cast.ToString`，
 /// 启动时间是 Unix 秒时间戳，直接展示为数字对用户无意义。
 String formatLoadValue(String name, String value) {
-  final isTimeField = name.contains('时间') || name.toLowerCase().contains('time');
+  final isTimeField =
+      name.contains('时间') || name.toLowerCase().contains('time');
   if (!isTimeField) return value;
   final seconds = int.tryParse(value.trim());
   if (seconds == null || seconds < 1000000000 || seconds > 99999999999) {
     return value;
   }
-  final time =
-      DateTime.fromMillisecondsSinceEpoch(seconds * 1000, isUtc: true).toLocal();
+  final time = DateTime.fromMillisecondsSinceEpoch(seconds * 1000, isUtc: true)
+      .toLocal();
   return DateFormat('yyyy-MM-dd HH:mm:ss').format(time);
 }
 

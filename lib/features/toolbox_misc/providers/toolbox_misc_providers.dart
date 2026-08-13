@@ -266,8 +266,7 @@ class BenchmarkNotifier extends Notifier<BenchmarkState> {
       try {
         switch (key) {
           case 'memory':
-            final memory =
-                await repo.benchmarkMemory(cancelToken: cancelToken);
+            final memory = await repo.benchmarkMemory(cancelToken: cancelToken);
             _set(state.copyWith(memory: memory));
           case 'disk':
             final disk = await repo.benchmarkDisk(cancelToken: cancelToken);

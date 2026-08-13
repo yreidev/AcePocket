@@ -215,7 +215,7 @@ class _AlertRulesTabState extends ConsumerState<_AlertRulesTab> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(alertRulesProvider);
-    return NotifyPagedListView<AlertRule>(
+    return PagedListView<AlertRule>(
       state: state,
       header: const InfoBanner(
         text: '面板每分钟检查一次指标，条件连续满足设定次数后触发告警，'
@@ -245,7 +245,7 @@ class _AlertRecordsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(alertRecordsProvider);
-    return NotifyPagedListView<AlertRecord>(
+    return PagedListView<AlertRecord>(
       state: state,
       header: const InfoBanner(
         text: '告警记录只保存触发历史，不代表当前状态；清空记录不影响告警规则。',

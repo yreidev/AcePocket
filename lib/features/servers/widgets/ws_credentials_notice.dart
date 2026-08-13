@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -84,9 +86,9 @@ Future<bool> showWsAuthDialog(
 
   if (go == true && context.mounted) {
     if (server != null) {
-      context.push('/servers/edit?id=${server.id}&advanced=1');
+      unawaited(context.push('/servers/edit?id=${server.id}&advanced=1'));
     } else {
-      context.push('/servers');
+      unawaited(context.push('/servers'));
     }
     return true;
   }

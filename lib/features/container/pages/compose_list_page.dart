@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/utils/format.dart';
 import '../../../core/widgets/a11y.dart';
 import '../models/container_compose.dart';
 import '../models/json_utils.dart';
@@ -20,7 +23,7 @@ class ComposeListPage extends ConsumerWidget {
     if (name == null) return;
     await ref.read(containerComposesProvider.notifier).reload();
     if (context.mounted) {
-      context.push('/containers/compose/$name');
+      unawaited(context.push('/containers/compose/$name'));
     }
   }
 
@@ -83,7 +86,7 @@ class ComposeListPage extends ConsumerWidget {
         onLoadMore: () =>
             ref.read(containerComposesProvider.notifier).loadMore(),
         onRetry: () => ref.invalidate(containerComposesProvider),
-        itemBuilder: (context, compose) => _ComposeTile(
+        itemBuilder: (context, compose, _) => _ComposeTile(
           compose: compose,
           onTap: () => context.push('/containers/compose/${compose.name}'),
           onAction: (action) => _handle(context, ref, compose, action),
@@ -219,7 +222,8 @@ class _ComposeTile extends StatelessWidget {
               const SizedBox(height: 6),
               Row(
                 children: [
-                  Icon(Icons.schedule, size: 13, color: theme.colorScheme.outline),
+                  Icon(Icons.schedule,
+                      size: 13, color: theme.colorScheme.outline),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(

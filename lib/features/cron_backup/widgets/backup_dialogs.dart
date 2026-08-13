@@ -293,9 +293,8 @@ class _StorageField extends ConsumerWidget {
       ),
       data: (list) {
         final ids = list.map((e) => e.id).toList();
-        final current = ids.contains(value)
-            ? value
-            : (ids.isEmpty ? null : ids.first);
+        final current =
+            ids.contains(value) ? value : (ids.isEmpty ? null : ids.first);
         // 选中的存储已被删除时下拉框会回退到第一项，这里把外部状态一并纠正，
         // 否则提交出去的仍是那个已失效的存储 ID。
         if (current != null && current != value) {

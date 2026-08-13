@@ -66,9 +66,10 @@ class _LvmTabState extends ConsumerState<LvmTab> {
 
   Future<void> _createPv(DiskListData? disks, LvmInfo lvm) async {
     final existing = lvm.pvs.map((pv) => pv.name).toSet();
-    final candidates = (disks?.pvCandidates ?? const <({String device, int size})>[])
-        .where((item) => !existing.contains('/dev/${item.device}'))
-        .toList();
+    final candidates =
+        (disks?.pvCandidates ?? const <({String device, int size})>[])
+            .where((item) => !existing.contains('/dev/${item.device}'))
+            .toList();
     final device = await showDeviceSelectDialog(
       context,
       title: '创建物理卷',
@@ -269,8 +270,9 @@ class _LvmTabState extends ConsumerState<LvmTab> {
       trailing: _isBusy('pv:create')
           ? const BusyIndicator()
           : TextButton.icon(
-              onPressed:
-                  _locked ? null : () => _startFlow(() => _createPv(disks, lvm)),
+              onPressed: _locked
+                  ? null
+                  : () => _startFlow(() => _createPv(disks, lvm)),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('创建'),
             ),
@@ -311,7 +313,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
       trailing: _isBusy('vg:create')
           ? const BusyIndicator()
           : TextButton.icon(
-              onPressed: _locked ? null : () => _startFlow(() => _createVg(lvm)),
+              onPressed:
+                  _locked ? null : () => _startFlow(() => _createVg(lvm)),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('创建'),
             ),
@@ -351,7 +354,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
       trailing: _isBusy('lv:create')
           ? const BusyIndicator()
           : TextButton.icon(
-              onPressed: _locked ? null : () => _startFlow(() => _createLv(lvm)),
+              onPressed:
+                  _locked ? null : () => _startFlow(() => _createLv(lvm)),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('创建'),
             ),

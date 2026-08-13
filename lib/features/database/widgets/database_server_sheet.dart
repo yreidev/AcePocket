@@ -239,8 +239,7 @@ class _DatabaseServerSheetState extends ConsumerState<DatabaseServerSheet> {
             autocorrect: false,
             decoration: const InputDecoration(labelText: '用户名'),
           ),
-        if (dbTypeNeedsPassword(_type))
-          PasswordField(controller: _password),
+        if (dbTypeNeedsPassword(_type)) PasswordField(controller: _password),
         TextField(
           controller: _remark,
           maxLines: 2,

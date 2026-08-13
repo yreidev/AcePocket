@@ -110,8 +110,10 @@ String _describeTime(String minute, String hour) {
   if (minute.startsWith('*/')) {
     return '$hour 点每 ${minute.substring(2)} 分钟';
   }
-  if (hour.contains(',') || minute.contains(',') ||
-      hour.contains('-') || minute.contains('-')) {
+  if (hour.contains(',') ||
+      minute.contains(',') ||
+      hour.contains('-') ||
+      minute.contains('-')) {
     return '$hour 时 $minute 分';
   }
   return '${_pad(hour)}:${_pad(minute)}';

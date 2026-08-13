@@ -320,8 +320,8 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
                 if (state != null && state.running)
                   TextButton(
                     onPressed: _busy ? null : _stop,
-                    style:
-                        TextButton.styleFrom(foregroundColor: colorScheme.error),
+                    style: TextButton.styleFrom(
+                        foregroundColor: colorScheme.error),
                     child: const Text('停止'),
                   )
                 else

@@ -172,8 +172,7 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
   }
 
   Future<void> _copyTemplate() async {
-    await Clipboard.setData(
-        ClipboardData(text: FirewallRuleTable.csvTemplate));
+    await Clipboard.setData(ClipboardData(text: FirewallRuleTable.csvTemplate));
     if (!mounted) return;
     showSuccessSnack(context, '模板已复制到剪贴板');
   }
@@ -233,8 +232,7 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
         if (failures.isNotEmpty) '失败 ${failures.length} 条：',
         ...failures.take(10),
         if (failures.length > 10) '… 其余 ${failures.length - 10} 条失败原因相同或类似',
-        if (parsed.errors.isNotEmpty)
-          '另有 ${parsed.errors.length} 行因格式问题未提交',
+        if (parsed.errors.isNotEmpty) '另有 ${parsed.errors.length} 行因格式问题未提交',
       ],
       error: succeeded == 0,
     );

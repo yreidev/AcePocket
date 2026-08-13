@@ -63,14 +63,13 @@ class _BackupListPageState extends ConsumerState<BackupListPage> {
           ),
         ],
       ),
-      floatingActionButton:
-          server == null || !BackupTypes.canCreate(_type)
-              ? null
-              : FloatingActionButton.extended(
-                  onPressed: _submitting ? null : _create,
-                  icon: const Icon(Icons.add),
-                  label: const Text('创建备份'),
-                ),
+      floatingActionButton: server == null || !BackupTypes.canCreate(_type)
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: _submitting ? null : _create,
+              icon: const Icon(Icons.add),
+              label: const Text('创建备份'),
+            ),
       body: server == null
           ? const NoServerView()
           : tabs.when(
@@ -80,8 +79,7 @@ class _BackupListPageState extends ConsumerState<BackupListPage> {
                 onRetry: () => ref.invalidate(backupTypeTabsProvider),
               ),
               data: (types) {
-                final available =
-                    types.isEmpty ? BackupTypes.listable : types;
+                final available = types.isEmpty ? BackupTypes.listable : types;
                 final current =
                     available.contains(_type) ? _type : available.first;
                 if (current != _type) {
@@ -116,8 +114,7 @@ class _BackupListPageState extends ConsumerState<BackupListPage> {
       ),
       data: (data) => PagedList<BackupFile>(
         state: data,
-        onRefresh: () =>
-            ref.read(backupListProvider(type).notifier).refresh(),
+        onRefresh: () => ref.read(backupListProvider(type).notifier).refresh(),
         onLoadMore: () => _loadMore(type),
         header: _Notice(type: type),
         emptyView: EmptyView(
@@ -135,12 +132,10 @@ class _BackupListPageState extends ConsumerState<BackupListPage> {
           file: file,
           onInfo: () => _showInfo(file, type),
           onDownload: () => _download(file, type),
-          onRestore: BackupTypes.canRestore(type)
-              ? () => _restore(file, type)
-              : null,
-          onDelete: BackupTypes.canManage(type)
-              ? () => _delete(file, type)
-              : null,
+          onRestore:
+              BackupTypes.canRestore(type) ? () => _restore(file, type) : null,
+          onDelete:
+              BackupTypes.canManage(type) ? () => _delete(file, type) : null,
         ),
       ),
     );

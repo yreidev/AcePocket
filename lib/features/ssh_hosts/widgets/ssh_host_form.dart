@@ -181,8 +181,7 @@ class _SshHostFormState extends State<SshHostForm> {
                     // 常见误填：把「地址:端口」整串填进地址框。
                     // IPv6 字面量含多个冒号，只拦截「一个冒号 + 纯数字」的情况。
                     final parts = text.split(':');
-                    if (parts.length == 2 &&
-                        int.tryParse(parts.last) != null) {
+                    if (parts.length == 2 && int.tryParse(parts.last) != null) {
                       return '端口请填到右侧输入框';
                     }
                     // 其余情况交给通用校验：裸主机名或 IP（IPv4 / IPv6 均可），
@@ -274,8 +273,7 @@ class _SshHostFormState extends State<SshHostForm> {
                       setState(() => _obscurePassword = !_obscurePassword),
                 ),
               ),
-              validator: (value) =>
-                  (value ?? '').isEmpty ? '密码认证必须填写密码' : null,
+              validator: (value) => (value ?? '').isEmpty ? '密码认证必须填写密码' : null,
             )
           else ...[
             TextFormField(

@@ -23,7 +23,8 @@ enum ContainerAction {
   final IconData icon;
 
   /// 是否为危险操作（菜单项用错误色渲染）。
-  bool get danger => this == ContainerAction.remove || this == ContainerAction.kill;
+  bool get danger =>
+      this == ContainerAction.remove || this == ContainerAction.kill;
 }
 
 /// 根据容器状态给出可用的操作列表。

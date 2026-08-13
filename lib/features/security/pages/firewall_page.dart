@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -152,15 +154,15 @@ class _FirewallPageState extends ConsumerState<FirewallPage>
             onSelected: (value) async {
               switch (value) {
                 case 'scan':
-                  context.push('/firewall/scan');
+                  unawaited(context.push('/firewall/scan'));
                 case 'export':
-                  context.push('/firewall/export');
+                  unawaited(context.push('/firewall/export'));
                 case 'import':
                   await context.push('/firewall/import');
                   // 导入可能新增了规则，返回后刷新端口规则列表。
                   ref.invalidate(firewallRulesProvider);
                 case 'security':
-                  context.push('/security');
+                  unawaited(context.push('/security'));
               }
             },
             itemBuilder: (context) => const [
@@ -349,8 +351,9 @@ class _PortRuleTabState extends ConsumerState<_PortRuleTab> {
               const SizedBox(width: 8),
               TagChip(
                 label: FirewallLabels.strategy(rule.strategy),
-                color:
-                    accept ? theme.colorScheme.primary : theme.colorScheme.error,
+                color: accept
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.error,
               ),
               if (rule.inUse) ...[
                 const SizedBox(width: 6),

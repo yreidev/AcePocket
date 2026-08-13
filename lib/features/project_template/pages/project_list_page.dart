@@ -54,8 +54,7 @@ class _ProjectListPageState extends ConsumerState<ProjectListPage> {
   }
 
   /// 加载下一页；失败会记录到 `state.loadMoreError`，由列表底部展示并可重试。
-  Future<void> _loadMore() =>
-      ref.read(projectListProvider.notifier).loadMore();
+  Future<void> _loadMore() => ref.read(projectListProvider.notifier).loadMore();
 
   Future<void> _refresh() => ref.read(projectListProvider.notifier).refresh();
 

@@ -52,9 +52,8 @@ class ContainerPort {
     if (hostStart == 0 && hostEnd == 0) {
       return '$_containerRange/$proto';
     }
-    final addr = (host.isEmpty || host == '0.0.0.0' || host == '::')
-        ? ''
-        : '$host:';
+    final addr =
+        (host.isEmpty || host == '0.0.0.0' || host == '::') ? '' : '$host:';
     return '$addr$_hostRange->$_containerRange/$proto';
   }
 }

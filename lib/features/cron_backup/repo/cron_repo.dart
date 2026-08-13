@@ -18,7 +18,7 @@ class CronRepo {
   /// 计划任务列表（分页）。
   Future<PageResult<Cron>> list({required int page, required int limit}) async {
     final data = await _api.get('/cron', query: {'page': page, 'limit': limit});
-    return PageResult.fromJson(data, Cron.fromJson);
+    return Paged.fromJson(data, Cron.fromJson);
   }
 
   /// 获取单个计划任务详情（含 shell / log 路径与 config）。

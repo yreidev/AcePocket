@@ -201,8 +201,9 @@ class _PasswordDialogState extends State<_PasswordDialog> {
     // 错误要落在出问题的那个输入框上：旧实现把「密码至少 8 位」显示在
     // 「确认密码」下方，用户会以为是确认框填错了。
     final passwordError = validatePassword(password);
-    final confirmError =
-        passwordError == null && password != _confirm.text ? '两次输入的密码不一致' : null;
+    final confirmError = passwordError == null && password != _confirm.text
+        ? '两次输入的密码不一致'
+        : null;
     if (passwordError != null || confirmError != null) {
       setState(() {
         _passwordError = passwordError;

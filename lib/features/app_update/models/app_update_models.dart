@@ -92,8 +92,7 @@ class SemVer implements Comparable<SemVer> {
   }
 
   @override
-  bool operator ==(Object other) =>
-      other is SemVer && compareTo(other) == 0;
+  bool operator ==(Object other) => other is SemVer && compareTo(other) == 0;
 
   @override
   int get hashCode => Object.hash(major, minor, patch, preRelease.join('.'));

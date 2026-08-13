@@ -33,10 +33,7 @@ enum MonitorRange {
       case MonitorRange.yesterday:
         return (start: todayStart - dayMs, end: todayStart);
       case MonitorRange.last7d:
-        return (
-          start: todayStart - 7 * dayMs,
-          end: now.millisecondsSinceEpoch
-        );
+        return (start: todayStart - 7 * dayMs, end: now.millisecondsSinceEpoch);
       case MonitorRange.last30d:
         return (
           start: todayStart - 30 * dayMs,
@@ -55,8 +52,7 @@ final monitorRangeProvider =
     StateProvider.autoDispose<MonitorRange>((ref) => MonitorRange.today);
 
 /// 历史监控数据（随时间范围变化自动重新加载）。
-final monitorDetailProvider =
-    FutureProvider.autoDispose<MonitorDetail>((ref) {
+final monitorDetailProvider = FutureProvider.autoDispose<MonitorDetail>((ref) {
   final range = ref.watch(monitorRangeProvider).resolve();
   return ref
       .watch(monitorRepoProvider)

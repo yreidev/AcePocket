@@ -1,28 +1,7 @@
-/// 面板统一分页响应。
-///
-/// 对应源码 `internal/service/helper.go` 的 `Paginate()`：
-/// `{"total": <总数>, "items": [...]}`，请求参数为 `page` / `limit`。
-class Paged<T> {
-  const Paged({required this.items, required this.total});
+library;
 
-  final List<T> items;
-  final int total;
+export '../../../core/models/paged.dart';
 
-  factory Paged.parse(
-    dynamic data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) {
-    if (data is! Map) return Paged<T>(items: <T>[], total: 0);
-    final raw = data['items'];
-    final items = raw is List
-        ? raw.whereType<Map<String, dynamic>>().map(fromJson).toList()
-        : <T>[];
-    final total = (data['total'] as num?)?.toInt() ?? items.length;
-    return Paged<T>(items: items, total: total);
-  }
-}
-
-/// 分页列表页面状态（首屏加载 / 加载更多 / 错误 / 是否还有下一页）。
 class PagedListState<T> {
   PagedListState({
     List<T>? items,

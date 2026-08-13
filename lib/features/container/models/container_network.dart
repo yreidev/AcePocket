@@ -62,8 +62,7 @@ class ContainerNetwork {
       .toList();
 
   /// 是否为 Docker 预置网络（不可删除）。
-  bool get isPredefined =>
-      name == 'bridge' || name == 'host' || name == 'none';
+  bool get isPredefined => name == 'bridge' || name == 'host' || name == 'none';
 }
 
 /// 网络 IP 分配管理（`ContainerNetworkIPAM`）。

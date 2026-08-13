@@ -100,8 +100,7 @@ class NotifyAlertRepository {
 
   /// 更新通知渠道（PUT /notify/channel/{id}）。
   Future<void> updateNotifyChannel(NotifyChannel channel) =>
-      _api.put('/notify/channel/${channel.id}',
-          body: channel.toRequestJson());
+      _api.put('/notify/channel/${channel.id}', body: channel.toRequestJson());
 
   /// 删除通知渠道（DELETE /notify/channel/{id}）。
   Future<void> deleteNotifyChannel(int id) =>

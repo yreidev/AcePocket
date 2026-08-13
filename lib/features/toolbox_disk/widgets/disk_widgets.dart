@@ -7,7 +7,9 @@ library;
 
 import 'package:flutter/material.dart';
 
-/// 只读信息行：左标题右取值。
+import '../../../core/widgets/info_row.dart' as core;
+
+/// 磁盘工具箱信息行：值可选择复制（设备路径、序列号等）。
 class InfoRow extends StatelessWidget {
   const InfoRow({
     super.key,
@@ -26,32 +28,14 @@ class InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: labelWidth,
-            child: Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          Expanded(
-            child: SelectableText(
-              value.isEmpty ? '-' : value,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: valueColor,
-                fontFamily: monospace ? 'monospace' : null,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return core.InfoRow(
+      label: label,
+      value: value,
+      monospace: monospace,
+      valueColor: valueColor,
+      labelWidth: labelWidth,
+      selectable: true,
+      emptyPlaceholder: '-',
     );
   }
 }
@@ -125,7 +109,8 @@ class UsageBar extends StatelessWidget {
     );
     return Row(
       children: [
-        Expanded(child: width == null ? bar : SizedBox(width: width, child: bar)),
+        Expanded(
+            child: width == null ? bar : SizedBox(width: width, child: bar)),
         const SizedBox(width: 8),
         Text(
           '$clamped%',
@@ -152,8 +137,9 @@ class NoticeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final fg =
-        danger ? theme.colorScheme.onErrorContainer : theme.colorScheme.onSurfaceVariant;
+    final fg = danger
+        ? theme.colorScheme.onErrorContainer
+        : theme.colorScheme.onSurfaceVariant;
     final bg = danger
         ? theme.colorScheme.errorContainer
         : theme.colorScheme.surfaceContainerHighest;

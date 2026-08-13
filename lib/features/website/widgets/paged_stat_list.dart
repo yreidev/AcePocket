@@ -142,9 +142,7 @@ class _PagedStatListState<T> extends State<PagedStatList<T>> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Center(
                     child: Text(
-                      state.hasMore
-                          ? '上拉加载更多'
-                          : '共 ${state.total} 条',
+                      state.hasMore ? '上拉加载更多' : '共 ${state.total} 条',
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),

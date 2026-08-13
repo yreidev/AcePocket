@@ -156,9 +156,8 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
 
   Widget _buildEdit(BuildContext context) {
     final user = widget.user!;
-    final title = user.host.isEmpty
-        ? user.username
-        : '${user.username}@${user.host}';
+    final title =
+        user.host.isEmpty ? user.username : '${user.username}@${user.host}';
     return DbSheet(
       title: '编辑数据库用户',
       subtitle: title,
@@ -218,7 +217,8 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
           children: [
             if (available.isEmpty)
               const SheetHint(
-                text: '没有支持用户管理的数据库服务器，请先添加 MySQL / PostgreSQL / ClickHouse 服务器。',
+                text:
+                    '没有支持用户管理的数据库服务器，请先添加 MySQL / PostgreSQL / ClickHouse 服务器。',
                 icon: Icons.warning_amber_outlined,
               )
             else

@@ -30,7 +30,7 @@ class TemplateRepo {
       if (category.isNotEmpty) 'category': category,
       if (query.isNotEmpty) 'query': query,
     });
-    return PageResult.parse(data, AppTemplate.fromJson);
+    return Paged.parse(data, AppTemplate.fromJson);
   }
 
   /// 模板详情：GET /api/template/{slug}。

@@ -25,8 +25,8 @@ class MonitorRepository {
   ///
   /// [start] / [end] 为毫秒级时间戳（服务端 `time.UnixMilli` 解析）。
   Future<MonitorDetail> list({required int start, required int end}) async {
-    final data = await _client
-        .get('/monitor/list', query: {'start': start, 'end': end});
+    final data =
+        await _client.get('/monitor/list', query: {'start': start, 'end': end});
     return MonitorDetail.fromJson(
         data is Map<String, dynamic> ? data : const {});
   }

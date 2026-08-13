@@ -41,8 +41,8 @@ class MigrationRepository {
   /// 服务端会在成功后保存连接信息并把步骤置为 `precheck`；
   /// 若本机正在迁移中则返回 409。
   Future<InstalledEnvironment> precheck(MigrationConnection connection) async {
-    final data =
-        await _api.post('/toolbox_migration/precheck', body: connection.toJson());
+    final data = await _api.post('/toolbox_migration/precheck',
+        body: connection.toJson());
     final map = jsonMap(data);
     final remote = jsonMap(map?['remote']);
     if (remote == null) {

@@ -305,7 +305,8 @@ class _TuneFormState extends ConsumerState<_TuneForm> {
           host: _redisHost.text.trim().isEmpty
               ? '127.0.0.1'
               : _redisHost.text.trim(),
-          port: _redisPort.text.trim().isEmpty ? '6379' : _redisPort.text.trim(),
+          port:
+              _redisPort.text.trim().isEmpty ? '6379' : _redisPort.text.trim(),
           password: _redisPassword.text,
         ).compose();
       case 'memcached':
@@ -445,8 +446,7 @@ class _TuneFormState extends ConsumerState<_TuneForm> {
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.tertiary,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                 ),
                           ),
                         ),
@@ -587,12 +587,14 @@ class _TuneFormState extends ConsumerState<_TuneForm> {
             FormFieldRow(
               label: '脚本最大执行时间 max_execution_time',
               helper: '单位秒，-1 表示不限制',
-              child: _numberField(_maxExecutionTime, hint: '30', allowNegative: true),
+              child: _numberField(_maxExecutionTime,
+                  hint: '30', allowNegative: true),
             ),
             FormFieldRow(
               label: '输入解析最大时间 max_input_time',
               helper: '单位秒，-1 表示不限制',
-              child: _numberField(_maxInputTime, hint: '60', allowNegative: true),
+              child:
+                  _numberField(_maxInputTime, hint: '60', allowNegative: true),
             ),
             FormFieldRow(
               label: '最大输入变量数 max_input_vars',

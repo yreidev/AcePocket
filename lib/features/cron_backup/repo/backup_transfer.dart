@@ -97,8 +97,7 @@ class BackupUploader {
       throw const ApiException('本机文件不存在或已被移动');
     }
     if (!isUploadable(fileName)) {
-      throw ApiException(
-          '面板只接受 ${kUploadAllowedExtensions.join('、')} 格式的备份文件');
+      throw ApiException('面板只接受 ${kUploadAllowedExtensions.join('、')} 格式的备份文件');
     }
     final fileLength = await source.length();
     if (fileLength <= 0) {

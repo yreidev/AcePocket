@@ -344,9 +344,8 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DropdownButtonFormField<String>(
-                      initialValue: env.db.any((e) => e.value == _dbType)
-                          ? _dbType
-                          : '0',
+                      initialValue:
+                          env.db.any((e) => e.value == _dbType) ? _dbType : '0',
                       isExpanded: true,
                       decoration: const InputDecoration(labelText: '创建数据库'),
                       items: [

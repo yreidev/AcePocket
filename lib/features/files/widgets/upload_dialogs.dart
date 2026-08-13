@@ -103,8 +103,7 @@ class _TextUploadDialogState extends State<_TextUploadDialog> {
       setState(() => _error = error);
       return;
     }
-    Navigator.of(context)
-        .pop((name: name, content: _contentController.text));
+    Navigator.of(context).pop((name: name, content: _contentController.text));
   }
 
   @override

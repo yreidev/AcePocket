@@ -67,7 +67,8 @@ class BackupListNotifier
 /// 备份页可展示的类型标签（按面板已安装的环境过滤）。
 ///
 /// 检测失败时退回展示全部类型，保证功能可用。
-final backupTypeTabsProvider = FutureProvider.autoDispose<List<String>>((ref) async {
+final backupTypeTabsProvider =
+    FutureProvider.autoDispose<List<String>>((ref) async {
   const fallback = BackupTypes.listable;
   try {
     final dbTypes = await ref.watch(installedDatabaseTypesProvider.future);

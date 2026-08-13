@@ -76,7 +76,8 @@ class CertTile extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final status = certStatusOf(cert);
 
-    final (Color statusColor, Color statusBg, String statusText) = switch (status) {
+    final (Color statusColor, Color statusBg, String statusText) =
+        switch (status) {
       CertStatus.pending => (
           colorScheme.onSurfaceVariant,
           colorScheme.surfaceContainerHighest,
@@ -192,7 +193,8 @@ class CertTile extends StatelessWidget {
                   // 读屏只念「开关」无法分辨是哪张证书，补上控制对象；
                   // 开 / 关状态由 Switch 自身播报，label 里不写状态词。
                   a11ySwitch(
-                    label: '证书 ${cert.domains.isEmpty ? '（无域名）' : cert.domains.first} 的自动续签',
+                    label:
+                        '证书 ${cert.domains.isEmpty ? '（无域名）' : cert.domains.first} 的自动续签',
                     child: Switch(
                       value: cert.autoRenewal,
                       onChanged: busy ? null : (_) => onToggleAutoRenewal(),
@@ -274,10 +276,8 @@ class _Chip extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: foreground),
+        style:
+            Theme.of(context).textTheme.labelSmall?.copyWith(color: foreground),
       ),
     );
   }

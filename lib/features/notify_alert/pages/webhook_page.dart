@@ -113,7 +113,7 @@ class _WebhookPageState extends ConsumerState<WebhookPage> {
         children: [
           const FeatureUnsupportedBanner(feature: PanelFeature.webhook),
           Expanded(
-            child: NotifyPagedListView<WebHook>(
+            child: PagedListView<WebHook>(
               state: state,
               header: const InfoBanner(
                 text: '每个 WebHook 对应一个回调地址，GET / POST 请求该地址即以指定系统用户'

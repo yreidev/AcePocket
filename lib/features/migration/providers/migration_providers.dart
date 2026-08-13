@@ -20,8 +20,7 @@ final migrationRepoProvider = Provider<MigrationRepository>(
 );
 
 /// 迁移结果（结果查看页使用，含全量日志）。
-final migrationResultsProvider =
-    FutureProvider.autoDispose<MigrationSnapshot>(
+final migrationResultsProvider = FutureProvider.autoDispose<MigrationSnapshot>(
   (ref) => ref.watch(migrationRepoProvider).results(),
 );
 
@@ -419,10 +418,8 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
         items: items,
         stage: MigrationStage.select,
         serverStep: MigrationStep.select,
-        selectedWebsites:
-            state.selectedWebsites.intersection(websiteIds),
-        selectedDatabases:
-            state.selectedDatabases.intersection(databaseKeys),
+        selectedWebsites: state.selectedWebsites.intersection(websiteIds),
+        selectedDatabases: state.selectedDatabases.intersection(databaseKeys),
         selectedDatabaseUsers:
             state.selectedDatabaseUsers.intersection(userIds),
         selectedProjects: state.selectedProjects.intersection(projectIds),

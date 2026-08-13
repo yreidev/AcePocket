@@ -92,9 +92,8 @@ class PanelSystemInfo {
       kernelArch: _str(json['kernel_arch']),
       kernelVersion: _str(json['kernel_version']),
       osName: _str(json['os_name']),
-      osSupported: json['os_supported'] is bool
-          ? json['os_supported'] as bool
-          : true,
+      osSupported:
+          json['os_supported'] is bool ? json['os_supported'] as bool : true,
       osEol: json['os_eol'] is bool ? json['os_eol'] as bool : false,
       uptime: _int(json['uptime']),
       bootTime: _int(json['boot_time']),

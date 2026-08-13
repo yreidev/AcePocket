@@ -21,7 +21,7 @@ class BackupRepo {
       'page': page,
       'limit': limit,
     });
-    return PageResult.fromJson(data, BackupFile.fromJson);
+    return Paged.fromJson(data, BackupFile.fromJson);
   }
 
   /// 创建备份。服务端提交到后台任务队列异步执行。

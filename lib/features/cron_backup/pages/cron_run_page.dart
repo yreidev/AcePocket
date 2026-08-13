@@ -180,8 +180,8 @@ class _CronRunPageState extends ConsumerState<CronRunPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final server = ref.watch(activeServerProvider);
-    final running = _status == _RunStatus.connecting ||
-        _status == _RunStatus.running;
+    final running =
+        _status == _RunStatus.connecting || _status == _RunStatus.running;
 
     return Scaffold(
       appBar: AppBar(

@@ -52,7 +52,7 @@ class CertRepo {
       'page': page,
       'limit': limit,
     });
-    return PageResult.parse(data, CertListItem.fromJson);
+    return Paged.parse(data, CertListItem.fromJson);
   }
 
   /// 证书详情：GET /api/cert/cert/{id}。
@@ -176,7 +176,7 @@ class CertRepo {
       'page': page,
       'limit': limit,
     });
-    return PageResult.parse(data, CertDns.fromJson);
+    return Paged.parse(data, CertDns.fromJson);
   }
 
   /// DNS 账号详情：GET /api/cert/dns/{id}。
@@ -230,7 +230,7 @@ class CertRepo {
       'page': page,
       'limit': limit,
     });
-    return PageResult.parse(data, CertAccount.fromJson);
+    return Paged.parse(data, CertAccount.fromJson);
   }
 
   /// CA 账户详情：GET /api/cert/account/{id}。
@@ -294,6 +294,6 @@ class CertRepo {
       'page': 1,
       'limit': limit,
     });
-    return PageResult.parse(data, WebsiteOption.fromJson).items;
+    return Paged.parse(data, WebsiteOption.fromJson).items;
   }
 }

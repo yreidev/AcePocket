@@ -242,7 +242,8 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
           children: [
             const FeatureUnsupportedBanner(feature: PanelFeature.elasticsearch),
             Expanded(
-              child: _buildBody(context, serversAsync, servers, serverId, query),
+              child:
+                  _buildBody(context, serversAsync, servers, serverId, query),
             ),
           ],
         ),

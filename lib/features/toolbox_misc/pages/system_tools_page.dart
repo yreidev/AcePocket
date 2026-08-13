@@ -518,8 +518,8 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
           if (v.isEmpty) return '请输入主机名';
           if (v.length > 63) return '主机名过长（最多 63 个字符）';
           // 允许单字符主机名：首尾字母数字，中间可含短横线。
-          final ok = RegExp(r'^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$')
-              .hasMatch(v);
+          final ok =
+              RegExp(r'^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$').hasMatch(v);
           return ok ? null : '主机名只能包含字母、数字与短横线，且不能以短横线开头或结尾';
         },
       );
@@ -567,7 +567,8 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
     return SectionCard(
       title: 'hosts 文件',
       trailing: TextButton(
-        onPressed: _anyBusy ? null : () => context.push('/toolbox/system/hosts'),
+        onPressed:
+            _anyBusy ? null : () => context.push('/toolbox/system/hosts'),
         child: const Text('编辑'),
       ),
       child: Column(

@@ -71,8 +71,8 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
 
   @override
   void dispose() {
-    _subscription?.cancel();
-    _channel?.sink.close();
+    unawaited(_subscription?.cancel());
+    unawaited(_channel?.sink.close());
     _scrollController.dispose();
     super.dispose();
   }
@@ -133,9 +133,9 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
     }
 
     // 重试时先关掉上一次可能残留的连接与订阅，避免旧 channel 泄漏。
-    _subscription?.cancel();
+    unawaited(_subscription?.cancel());
     _subscription = null;
-    _channel?.sink.close();
+    unawaited(_channel?.sink.close());
     _channel = null;
 
     final path = widget.renew ? '/ws/cert/renew' : '/ws/cert/obtain';
@@ -147,12 +147,12 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
       // dispose 关不到这条连接）。必须在发送签发指令之前检查并关闭，
       // 否则会在用户以为已取消的情况下触发面板侧的签发 / 续签任务。
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       await channel.ready;
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       _channel = channel;
@@ -325,8 +325,7 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
                   selected: {_selfSigned},
                   onSelectionChanged: _running || _finished
                       ? null
-                      : (values) =>
-                          setState(() => _selfSigned = values.first),
+                      : (values) => setState(() => _selfSigned = values.first),
                 ),
               ),
             if (_authHint != null)
@@ -500,7 +499,8 @@ class _LogRow extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     // 级别只靠图标与颜色区分，读屏与色觉障碍用户会漏掉，补一个语义标签。
-    final (IconData icon, Color color, String levelLabel) = switch (entry.level) {
+    final (IconData icon, Color color, String levelLabel) =
+        switch (entry.level) {
       _LogLevel.info => (
           Icons.info_outline,
           colorScheme.onSurfaceVariant,

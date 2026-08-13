@@ -106,7 +106,8 @@ class ApiClient {
   /// `internal/request/user_passkey.go`）；query 会参与 HMAC 签名的规范化，
   /// 因此**必须**通过本参数传入，不能自行拼接到 [path] 上。
   Future<dynamic> delete(String path,
-          {Object? body, Map<String, dynamic>? query,
+          {Object? body,
+          Map<String, dynamic>? query,
           CancelToken? cancelToken}) =>
       _request('DELETE', path,
           body: body, query: query, cancelToken: cancelToken);
@@ -254,7 +255,8 @@ class ApiClient {
         return '域名解析失败，请检查面板地址中的主机名是否拼写正确，'
             '以及设备网络是否正常';
       }
-      if (detail.contains('Connection refused') || error.osError?.errorCode == 111) {
+      if (detail.contains('Connection refused') ||
+          error.osError?.errorCode == 111) {
         return '连接被服务器拒绝：目标端口没有服务在监听。'
             '请确认面板地址的端口是否正确、面板是否正在运行';
       }

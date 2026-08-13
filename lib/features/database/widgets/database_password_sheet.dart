@@ -128,9 +128,10 @@ class _DatabasePasswordSheetState extends ConsumerState<DatabasePasswordSheet> {
     required List<DatabaseUser> users,
     required bool showPicker,
   }) {
-    final selected = _selected != null && users.any((u) => u.id == _selected!.id)
-        ? _selected
-        : null;
+    final selected =
+        _selected != null && users.any((u) => u.id == _selected!.id)
+            ? _selected
+            : null;
 
     return DbSheet(
       title: '修改数据库密码',

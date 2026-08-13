@@ -27,7 +27,8 @@ Future<String?> showEnableTwoFaDialog(
   return showDialog<String>(
     context: context,
     barrierDismissible: false,
-    builder: (context) => _EnableTwoFaDialog(userId: userId, username: username),
+    builder: (context) =>
+        _EnableTwoFaDialog(userId: userId, username: username),
   );
 }
 

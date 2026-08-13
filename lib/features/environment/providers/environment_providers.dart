@@ -155,7 +155,8 @@ final goProxyProvider = FutureProvider.autoDispose.family<String, String>(
 );
 
 /// npm 镜像源。
-final nodejsRegistryProvider = FutureProvider.autoDispose.family<String, String>(
+final nodejsRegistryProvider =
+    FutureProvider.autoDispose.family<String, String>(
   (ref, slug) => ref.watch(environmentRepoProvider).nodejsRegistry(slug),
 );
 

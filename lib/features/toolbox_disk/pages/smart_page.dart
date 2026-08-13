@@ -183,7 +183,8 @@ class _SmartDetail extends ConsumerWidget {
                 Flexible(
                   child: TagChip(
                     label: passed ? '健康状态 正常' : '健康状态 异常',
-                    icon: passed ? Icons.verified_outlined : Icons.error_outline,
+                    icon:
+                        passed ? Icons.verified_outlined : Icons.error_outline,
                     color: passed
                         ? theme.colorScheme.primary
                         : theme.colorScheme.error,

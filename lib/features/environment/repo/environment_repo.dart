@@ -216,8 +216,8 @@ class EnvironmentRepository {
   }
 
   /// 安装 PHP 扩展（面板侧推入后台任务）。
-  Future<void> installPhpModule(int version, String moduleSlug) =>
-      _api.post('/environment/php/$version/modules', body: {'slug': moduleSlug});
+  Future<void> installPhpModule(int version, String moduleSlug) => _api
+      .post('/environment/php/$version/modules', body: {'slug': moduleSlug});
 
   /// 卸载 PHP 扩展（面板侧推入后台任务）。
   Future<void> uninstallPhpModule(int version, String moduleSlug) => _api

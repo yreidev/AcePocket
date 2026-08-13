@@ -25,7 +25,7 @@ class TaskRepository {
     required int limit,
   }) async {
     final data = await _api.get('/task', query: {'page': page, 'limit': limit});
-    return PageResult.fromJson(data, TaskItem.fromJson);
+    return Paged.fromJson(data, TaskItem.fromJson);
   }
 
   /// 任务详情（`GET /api/task/{id}`）。

@@ -31,8 +31,9 @@ class TaskListNotifier extends PagedNotifier<TaskItem> {
       ref.read(taskRepoProvider).list(page: page, limit: limit);
 }
 
-final taskListProvider = AsyncNotifierProvider.autoDispose<TaskListNotifier,
-    PagedState<TaskItem>>(TaskListNotifier.new);
+final taskListProvider =
+    AsyncNotifierProvider.autoDispose<TaskListNotifier, PagedState<TaskItem>>(
+        TaskListNotifier.new);
 
 /// 单个任务详情。
 final taskDetailProvider =

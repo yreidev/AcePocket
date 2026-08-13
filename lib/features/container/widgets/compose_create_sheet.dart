@@ -160,7 +160,8 @@ class _ComposeCreateSheetState extends ConsumerState<_ComposeCreateSheet> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      Text('docker-compose.yml', style: theme.textTheme.titleSmall),
+                      Text('docker-compose.yml',
+                          style: theme.textTheme.titleSmall),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _composeController,

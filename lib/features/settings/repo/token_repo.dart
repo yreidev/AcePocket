@@ -26,7 +26,7 @@ class TokenRepository {
       'page': page,
       'limit': limit,
     });
-    return PageResult.fromJson(data, UserToken.fromJson);
+    return Paged.fromJson(data, UserToken.fromJson);
   }
 
   /// 创建令牌（`POST /api/user_tokens`）。返回的对象含**仅此一次**的令牌明文。

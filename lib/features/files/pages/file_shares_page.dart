@@ -135,9 +135,7 @@ class _FileSharesPageState extends ConsumerState<FileSharesPage> {
                 const SizedBox(width: 8),
                 Chip(
                   label: Text(
-                    share.expired
-                        ? '已过期'
-                        : (share.exhausted ? '次数已用尽' : '有效'),
+                    share.expired ? '已过期' : (share.exhausted ? '次数已用尽' : '有效'),
                     style: theme.textTheme.labelSmall,
                   ),
                   visualDensity: VisualDensity.compact,

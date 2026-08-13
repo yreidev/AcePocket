@@ -100,8 +100,7 @@ class _MissingParamPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.link_off,
-                  size: 48, color: theme.colorScheme.outline),
+              Icon(Icons.link_off, size: 48, color: theme.colorScheme.outline),
               const SizedBox(height: 16),
               Text(
                 message,

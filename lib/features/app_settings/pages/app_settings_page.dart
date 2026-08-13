@@ -170,7 +170,8 @@ class _DataRefreshSection extends ConsumerWidget {
                   .toList(),
             ),
           ),
-          const _SectionNote('首页实时数据（CPU / 内存 / 网络等）的轮询间隔。间隔越短数据越实时，但更耗电、更费流量。'),
+          const _SectionNote(
+              '首页实时数据（CPU / 内存 / 网络等）的轮询间隔。间隔越短数据越实时，但更耗电、更费流量。'),
         ],
       ),
     );
@@ -223,9 +224,9 @@ class _TerminalSection extends ConsumerWidget {
                   value: settings.fontSize,
                   min: TerminalSettings.minFontSize,
                   max: TerminalSettings.maxFontSize,
-                  divisions:
-                      (TerminalSettings.maxFontSize - TerminalSettings.minFontSize)
-                          .round(),
+                  divisions: (TerminalSettings.maxFontSize -
+                          TerminalSettings.minFontSize)
+                      .round(),
                   label: settings.fontSize.toStringAsFixed(0),
                   onChanged: notifier.setFontSize,
                 ),

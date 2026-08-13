@@ -187,8 +187,7 @@ class _RedirectCardState extends State<_RedirectCard> {
                               ? r.statusCode
                               : 308,
                           isExpanded: true,
-                          decoration:
-                              const InputDecoration(labelText: '状态码'),
+                          decoration: const InputDecoration(labelText: '状态码'),
                           items: [
                             for (final code in _statusCodes)
                               DropdownMenuItem(

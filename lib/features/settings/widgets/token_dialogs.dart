@@ -80,8 +80,7 @@ class _TokenEditorDialogState extends State<_TokenEditorDialog> {
     setState(() {
       _presetDays = 0;
       // 统一取当天 23:59:59，避免选当天时刚好早于当前时间被服务端拒绝。
-      _expiredAt =
-          DateTime(picked.year, picked.month, picked.day, 23, 59, 59);
+      _expiredAt = DateTime(picked.year, picked.month, picked.day, 23, 59, 59);
     });
   }
 

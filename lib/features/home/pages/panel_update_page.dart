@@ -58,8 +58,8 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
 
   @override
   void dispose() {
-    _subscription?.cancel();
-    _channel?.sink.close();
+    unawaited(_subscription?.cancel());
+    unawaited(_channel?.sink.close());
     super.dispose();
   }
 
@@ -127,9 +127,9 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
     }
 
     // 重试时先关掉上一次可能残留的连接与订阅，避免旧 channel 泄漏。
-    _subscription?.cancel();
+    unawaited(_subscription?.cancel());
     _subscription = null;
-    _channel?.sink.close();
+    unawaited(_channel?.sink.close());
     _channel = null;
 
     _append(UpgradeLogLevel.info, '正在连接面板实时通道…');
@@ -139,12 +139,12 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
       // （此时 _channel 仍为 null，dispose 关不到这条连接），必须在此立即
       // 关闭，避免泄漏的连接在后台持续接收升级日志。
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       await channel.ready;
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       _channel = channel;

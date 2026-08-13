@@ -99,8 +99,10 @@ class _ProcessDetailSheet extends ConsumerWidget {
                     ('状态', process.statusLabel),
                     ('后台进程', process.background ? '是' : '否'),
                     ('线程数', '${process.numThreads}'),
-                    ('启动时间',
-                        process.startTime.isEmpty ? '-' : process.startTime),
+                    (
+                      '启动时间',
+                      process.startTime.isEmpty ? '-' : process.startTime
+                    ),
                   ]),
                 ),
                 SectionCard(

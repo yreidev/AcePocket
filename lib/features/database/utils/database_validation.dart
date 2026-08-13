@@ -22,9 +22,7 @@ String? validateDbUserHost(String input) {
   // IP/掩码 形式的网段。
   if (v.contains('/')) {
     final parts = v.split('/');
-    if (parts.length != 2 ||
-        !_isIpv4(parts[0]) ||
-        !_isIpv4(parts[1])) {
+    if (parts.length != 2 || !_isIpv4(parts[0]) || !_isIpv4(parts[1])) {
       return '网段请写成 IP/子网掩码 的形式，如 192.0.2.0/255.255.255.0';
     }
     return null;

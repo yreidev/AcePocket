@@ -116,7 +116,8 @@ class _CertCreatePageState extends ConsumerState<CertCreatePage> {
                   ('4096', 'RSA4096'),
                 ]
               : [
-                  for (final item in options.algorithms) (item.value, item.label)
+                  for (final item in options.algorithms)
+                    (item.value, item.label)
                 ];
           // 面板返回的算法列表若不含当前选中项，回退到第一项，保证提交值合法。
           if (!algorithms.any((e) => e.$1 == _type)) {

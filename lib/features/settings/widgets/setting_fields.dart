@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../../../core/widgets/app_snack.dart';
 
+export '../../../core/widgets/info_row.dart';
+
 /// 表单文本输入项（带标题与可选说明）。
 class SettingTextField extends StatelessWidget {
   const SettingTextField({
@@ -141,6 +143,7 @@ class SettingSwitchTile extends StatelessWidget {
 /// 字符串列表编辑器（绑定域名 / IP 白名单 / 公网 IP 等）。
 ///
 /// 以 Chip 展示已有条目，输入框回车或点击「添加」新增，Chip 上的叉号删除。
+/// 与 core 行式列表（`lib/core/widgets/string_list_field.dart`）不同，短条目更适合 Chip。
 class StringListField extends StatefulWidget {
   const StringListField({
     super.key,
@@ -254,70 +257,6 @@ class _StringListFieldState extends State<StringListField> {
           ],
         ],
       ),
-    );
-  }
-}
-
-/// 键值信息行（关于页 / 详情页展示只读信息，可长按复制）。
-class InfoRow extends StatelessWidget {
-  const InfoRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.copyable = false,
-    this.valueColor,
-  });
-
-  final String label;
-  final String value;
-  final bool copyable;
-  final Color? valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final text = value.isEmpty ? '-' : value;
-    final content = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 96,
-            child: Text(
-              label,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              text,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium?.copyWith(color: valueColor),
-            ),
-          ),
-          if (copyable && value.isNotEmpty)
-            Icon(
-              Icons.copy_outlined,
-              size: 16,
-              color: theme.colorScheme.outline,
-            ),
-        ],
-      ),
-    );
-
-    if (!copyable || value.isEmpty) return content;
-    return InkWell(
-      onTap: () async {
-        await Clipboard.setData(ClipboardData(text: value));
-        if (!context.mounted) return;
-        showSuccessSnack(context, '已复制$label');
-      },
-      child: content,
     );
   }
 }

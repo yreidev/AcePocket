@@ -66,8 +66,7 @@ Future<bool> composeUpAction(
     context,
     pending: '正在启动「$name」…',
     success: '「$name」已启动',
-    action: () =>
-        ref.read(containerRepoProvider).composeUp(name, force: force),
+    action: () => ref.read(containerRepoProvider).composeUp(name, force: force),
   );
 }
 

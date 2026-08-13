@@ -20,8 +20,7 @@ final backupStorageListProvider = AsyncNotifierProvider.autoDispose<
     BackupStorageListNotifier,
     PagedState<BackupStorage>>(BackupStorageListNotifier.new);
 
-class BackupStorageListNotifier
-    extends CronBackupPagedNotifier<BackupStorage> {
+class BackupStorageListNotifier extends CronBackupPagedNotifier<BackupStorage> {
   @override
   int get pageSize => kStoragePageSize;
 
@@ -54,9 +53,8 @@ final storageOptionsProvider =
     FutureProvider.autoDispose<List<StorageOption>>((ref) async {
   final result =
       await ref.watch(backupStorageRepoProvider).list(page: 1, limit: 1000);
-  final options = result.items
-      .map((e) => StorageOption(id: e.id, name: e.name))
-      .toList();
+  final options =
+      result.items.map((e) => StorageOption(id: e.id, name: e.name)).toList();
   if (!options.any((e) => e.id == 0)) {
     options.insert(0, const StorageOption(id: 0, name: '本地存储'));
   }

@@ -23,8 +23,7 @@ import 'transfer_client.dart';
 /// 上传（multipart）与下载（原始字节流）无法复用 [ApiClient] 的 JSON 通道，
 /// 交由 [PanelTransferClient]（同一签名算法，作用于任意字节 body）处理。
 class FileRepo {
-  FileRepo(this._api, this._server)
-      : transfer = PanelTransferClient(_server);
+  FileRepo(this._api, this._server) : transfer = PanelTransferClient(_server);
 
   final ApiClient _api;
   final ServerConfig _server;
@@ -81,8 +80,8 @@ class FileRepo {
     final b64 = data['content'] as String? ?? '';
     String text;
     try {
-      text = const Utf8Decoder(allowMalformed: true)
-          .convert(base64.decode(b64));
+      text =
+          const Utf8Decoder(allowMalformed: true).convert(base64.decode(b64));
     } catch (_) {
       text = '';
     }
@@ -230,7 +229,8 @@ class FileRepo {
     TransferProgress? onProgress,
     TransferCancelToken? cancelToken,
   }) async {
-    final name = (fileName == null || fileName.isEmpty) ? source.name : fileName;
+    final name =
+        (fileName == null || fileName.isEmpty) ? source.name : fileName;
     final total = source.size;
 
     // 小文件直传：一次 multipart 请求即可。
@@ -429,8 +429,8 @@ class FileRepo {
         size > sample * 2 ? await source.read(size - sample, size) : head;
     final modified = await source.lastModified();
     final builder = BytesBuilder(copy: false)
-      ..add(utf8.encode(
-          '${source.name}|$size|${modified.millisecondsSinceEpoch}'))
+      ..add(utf8
+          .encode('${source.name}|$size|${modified.millisecondsSinceEpoch}'))
       ..add(head)
       ..add(tail);
     return sha256.convert(builder.toBytes()).toString();

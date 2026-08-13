@@ -85,7 +85,8 @@ class _CertDnsListPageState extends ConsumerState<CertDnsListPage> {
   }
 
   Future<void> _openForm({int? id}) async {
-    await context.push(id == null ? '/certs/dns/create' : '/certs/dns/$id/edit');
+    await context
+        .push(id == null ? '/certs/dns/create' : '/certs/dns/$id/edit');
     await _reloadQuietly();
   }
 
@@ -151,8 +152,8 @@ class _CertDnsListPageState extends ConsumerState<CertDnsListPage> {
                   );
                 }
                 final dns = state.items[index];
-                final provider = options?.dnsProviderLabel(dns.type) ??
-                    dns.typeLabel;
+                final provider =
+                    options?.dnsProviderLabel(dns.type) ?? dns.typeLabel;
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundColor:

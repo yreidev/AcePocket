@@ -106,9 +106,8 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
                 minLines: 1,
                 decoration: InputDecoration(
                   labelText: '文件路径',
-                  helperText: widget.pathEditable
-                      ? '仅支持分享文件，不能分享目录'
-                      : '路径来自所选文件，不可修改',
+                  helperText:
+                      widget.pathEditable ? '仅支持分享文件，不能分享目录' : '路径来自所选文件，不可修改',
                   helperMaxLines: 2,
                 ),
                 onChanged: (_) {

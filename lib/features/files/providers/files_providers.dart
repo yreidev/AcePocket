@@ -51,7 +51,8 @@ final fileListProvider = AsyncNotifierProvider.autoDispose
 /// 并发控制（请求代次 / 在途标志 / loadMoreError）由
 /// [PagedFamilyAsyncNotifier] 统一提供；加载更多失败不打断已展示的列表，
 /// 错误记录到 `loadMoreError`，由列表底部展示并可重试。
-class FileListNotifier extends PagedFamilyAsyncNotifier<FileItem, FileListQuery> {
+class FileListNotifier
+    extends PagedFamilyAsyncNotifier<FileItem, FileListQuery> {
   @override
   int get pageSize => 100;
 
@@ -89,9 +90,8 @@ class FileSortNotifier extends Notifier<String> {
 }
 
 /// 是否显示隐藏文件（以 `.` 开头）。
-final showHiddenFilesProvider =
-    NotifierProvider<ShowHiddenFilesNotifier, bool>(
-        ShowHiddenFilesNotifier.new);
+final showHiddenFilesProvider = NotifierProvider<ShowHiddenFilesNotifier, bool>(
+    ShowHiddenFilesNotifier.new);
 
 class ShowHiddenFilesNotifier extends Notifier<bool> {
   @override

@@ -124,10 +124,9 @@ class _PhpInfoPageState extends ConsumerState<PhpInfoPage> {
     final visible = lowered.isEmpty
         ? blocks
         : blocks
-            .where((b) =>
-                b.isHeading
-                    ? b.title.toLowerCase().contains(lowered)
-                    : b.cells.any((c) => c.toLowerCase().contains(lowered)))
+            .where((b) => b.isHeading
+                ? b.title.toLowerCase().contains(lowered)
+                : b.cells.any((c) => c.toLowerCase().contains(lowered)))
             .toList();
 
     return Column(

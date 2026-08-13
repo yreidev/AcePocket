@@ -209,8 +209,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           if (task.isActive)
                             Expanded(
                               child: FilledButton.tonalIcon(
-                                onPressed:
-                                    _busy ? null : () => _cancel(task),
+                                onPressed: _busy ? null : () => _cancel(task),
                                 icon: const Icon(Icons.stop_circle_outlined),
                                 label: const Text('取消任务'),
                               ),
@@ -218,8 +217,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           else
                             Expanded(
                               child: OutlinedButton.icon(
-                                onPressed:
-                                    _busy ? null : () => _delete(task),
+                                onPressed: _busy ? null : () => _delete(task),
                                 icon: const Icon(Icons.delete_outline),
                                 label: const Text('删除任务记录'),
                                 style: OutlinedButton.styleFrom(

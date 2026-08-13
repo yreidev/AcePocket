@@ -125,8 +125,7 @@ class MigrationDatabaseUser {
 
   final String remark;
 
-  bool get supported =>
-      MigrationDatabase.supportedTypes.contains(serverType);
+  bool get supported => MigrationDatabase.supportedTypes.contains(serverType);
 
   factory MigrationDatabaseUser.fromJson(Map<String, dynamic> json) {
     final server = jsonMap(json['server']);

@@ -238,8 +238,7 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
     final env = detail.valueOrNull;
     // 列表接口的 installed 与 is_installed 探测任一为真即视为已安装，
     // 避免探测失败时误禁用全部操作。
-    final isInstalled =
-        env?.installed == true || installed.valueOrNull == true;
+    final isInstalled = env?.installed == true || installed.valueOrNull == true;
 
     return RefreshIndicator(
       onRefresh: () async {

@@ -111,7 +111,7 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
     try {
       final channel = await wsConnect(server, '/ws/container/image/pull');
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       _channel = channel;
@@ -334,10 +334,10 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
                               enabled: !_pulling,
                               decoration:
                                   const InputDecoration(labelText: '仓库用户名'),
-                              validator: (value) => _useAuth &&
-                                      (value ?? '').trim().isEmpty
-                                  ? '请输入仓库用户名'
-                                  : null,
+                              validator: (value) =>
+                                  _useAuth && (value ?? '').trim().isEmpty
+                                      ? '请输入仓库用户名'
+                                      : null,
                             ),
                             const SizedBox(height: 12),
                             TextFormField(

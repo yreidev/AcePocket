@@ -60,8 +60,7 @@ String? validatePemPrivateKey(String input) {
   if (end == null) {
     return '私钥缺少 -----END … PRIVATE KEY----- 结尾，可能没有粘贴完整';
   }
-  final body =
-      v.substring(begin.end, end.start).replaceAll(RegExp(r'\s'), '');
+  final body = v.substring(begin.end, end.start).replaceAll(RegExp(r'\s'), '');
   if (body.isEmpty || !_base64BodyPattern.hasMatch(body)) {
     return '私钥正文不是有效的 Base64 内容，请重新完整复制私钥文件';
   }

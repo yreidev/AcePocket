@@ -29,8 +29,7 @@ final List<RouteBase> sshHostsRoutes = <RouteBase>[
       ),
       GoRoute(
         path: ':id/edit',
-        builder: (BuildContext context, GoRouterState state) =>
-            SshHostFormPage(
+        builder: (BuildContext context, GoRouterState state) => SshHostFormPage(
           hostId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
         ),
       ),

@@ -43,8 +43,8 @@ class HomePollIntervalNotifier extends Notifier<int> {
 }
 
 /// 启动时自动检查应用更新。
-final autoCheckUpdateProvider =
-    NotifierProvider<AutoCheckUpdateNotifier, bool>(AutoCheckUpdateNotifier.new);
+final autoCheckUpdateProvider = NotifierProvider<AutoCheckUpdateNotifier, bool>(
+    AutoCheckUpdateNotifier.new);
 
 class AutoCheckUpdateNotifier extends Notifier<bool> {
   @override

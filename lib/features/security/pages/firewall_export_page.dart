@@ -199,8 +199,7 @@ class _FirewallExportPageState extends ConsumerState<FirewallExportPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       FilledButton.icon(
-                        onPressed:
-                            rules.isEmpty ? null : () => _copyCsv(csv),
+                        onPressed: rules.isEmpty ? null : () => _copyCsv(csv),
                         icon: const Icon(Icons.copy_all_outlined),
                         label: const Text('复制 CSV 文本'),
                       ),

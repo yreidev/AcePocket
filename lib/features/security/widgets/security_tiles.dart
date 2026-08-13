@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/widgets/a11y.dart';
 
+export '../../../core/widgets/info_row.dart';
+
 /// 「未保存」角标：草稿式设置页里标记改过但尚未提交到面板的项。
 ///
 /// 仅改动本地草稿的行必须带上它——否则用户看到行上已是新值，
@@ -193,53 +195,6 @@ class SettingValueTile extends StatelessWidget {
               : Icon(Icons.chevron_right,
                   color: theme.colorScheme.onSurfaceVariant)),
       onTap: busy ? null : onTap,
-    );
-  }
-}
-
-/// 只读信息行：左标题右取值。
-class InfoRow extends StatelessWidget {
-  const InfoRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.valueColor,
-    this.monospace = false,
-  });
-
-  final String label;
-  final String value;
-  final Color? valueColor;
-  final bool monospace;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 104,
-            child: Text(
-              label,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: valueColor,
-                fontFamily: monospace ? 'monospace' : null,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -31,8 +31,7 @@ Future<SavedExportFile> saveExportFile(
     final dot = safeName.lastIndexOf('.');
     final base = dot > 0 ? safeName.substring(0, dot) : safeName;
     final ext = dot > 0 ? safeName.substring(dot) : '';
-    target =
-        File('${directory.path}${Platform.pathSeparator}$base-$stamp$ext');
+    target = File('${directory.path}${Platform.pathSeparator}$base-$stamp$ext');
   }
   await target.writeAsBytes(bytes, flush: true);
   return SavedExportFile(path: target.path, bytes: bytes.length);

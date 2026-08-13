@@ -20,9 +20,8 @@ final certRepoProvider = Provider<CertRepo>((ref) {
 // ---------------------------------------------------------------------------
 
 /// 证书列表（分页）。
-final certListProvider =
-    AsyncNotifierProvider.autoDispose<CertListNotifier, PagedState<CertListItem>>(
-        CertListNotifier.new);
+final certListProvider = AsyncNotifierProvider.autoDispose<CertListNotifier,
+    PagedState<CertListItem>>(CertListNotifier.new);
 
 class CertListNotifier extends PagedListNotifier<CertListItem> {
   @override
@@ -57,7 +56,8 @@ class CertDnsListNotifier extends PagedListNotifier<CertDns> {
 
 /// CA 账户列表（分页）。
 final certAccountListProvider = AsyncNotifierProvider.autoDispose<
-    CertAccountListNotifier, PagedState<CertAccount>>(CertAccountListNotifier.new);
+    CertAccountListNotifier,
+    PagedState<CertAccount>>(CertAccountListNotifier.new);
 
 class CertAccountListNotifier extends PagedListNotifier<CertAccount> {
   @override
@@ -165,7 +165,8 @@ class CertOptions {
 /// 证书表单选项（算法 / CA / DNS 提供商 / 网站 / DNS 账号 / CA 账户）。
 ///
 /// 新建或删除 DNS、账户后，用 `ref.invalidate(certOptionsProvider)` 刷新。
-final certOptionsProvider = FutureProvider.autoDispose<CertOptions>((ref) async {
+final certOptionsProvider =
+    FutureProvider.autoDispose<CertOptions>((ref) async {
   final repo = ref.watch(certRepoProvider);
 
   final results = await Future.wait<Object>([

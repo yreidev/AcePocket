@@ -120,7 +120,8 @@ class _TwoFactorPromptDialogState extends State<TwoFactorPromptDialog> {
     final theme = Theme.of(context);
     final captchaBytes = widget.captcha?.imageBytes;
 
-    final account = widget.username.isEmpty ? '面板账号' : '面板账号 ${widget.username}';
+    final account =
+        widget.username.isEmpty ? '面板账号' : '面板账号 ${widget.username}';
     final String description;
     if (widget.requirePassCode && _needCaptcha) {
       description = '$account已开启两步验证，且面板要求图形验证码，'
@@ -201,7 +202,8 @@ class _TwoFactorPromptDialogState extends State<TwoFactorPromptDialog> {
                       height: 50,
                       fit: BoxFit.contain,
                       // 失败占位不设固定高度：大字号下 50dp 装不下提示语会溢出。
-                      errorBuilder: (context, error, stackTrace) => const Padding(
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
                         child: Text(
                           '验证码图片加载失败',

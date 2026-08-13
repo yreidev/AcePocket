@@ -161,8 +161,9 @@ class WebhooksNotifier extends PagedAsyncNotifier<WebHook>
       ref.read(notifyAlertRepoProvider).webhooks(page: page, limit: limit);
 }
 
-final webhooksProvider = AsyncNotifierProvider.autoDispose<WebhooksNotifier,
-    PagedState<WebHook>>(WebhooksNotifier.new);
+final webhooksProvider =
+    AsyncNotifierProvider.autoDispose<WebhooksNotifier, PagedState<WebHook>>(
+        WebhooksNotifier.new);
 
 /// 单个 WebHook（编辑页使用）。
 final webhookProvider =

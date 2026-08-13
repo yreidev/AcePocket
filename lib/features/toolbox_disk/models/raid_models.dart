@@ -44,8 +44,9 @@ class RaidInfo {
       available: jsonBool(root['available']),
       message: jsonString(root['message']),
       type: jsonString(root['type']),
-      controllers:
-          jsonMapList(root['controllers']).map(RaidController.fromJson).toList(),
+      controllers: jsonMapList(root['controllers'])
+          .map(RaidController.fromJson)
+          .toList(),
       arrays: jsonMapList(root['arrays']).map(RaidArray.fromJson).toList(),
     );
   }

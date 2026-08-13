@@ -116,7 +116,8 @@ class ContainerRepository {
 
   /// 镜像是否已存在于本机。
   Future<bool> imageExists(String name) async {
-    final data = await _api.get('/container/image/exist', query: {'name': name});
+    final data =
+        await _api.get('/container/image/exist', query: {'name': name});
     return data == true;
   }
 

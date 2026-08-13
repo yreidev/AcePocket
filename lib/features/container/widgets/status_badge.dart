@@ -79,7 +79,8 @@ enum BadgeTone { success, warning, danger, info, neutral }
 
 /// 容器状态徽标。
 class ContainerStateBadge extends StatelessWidget {
-  const ContainerStateBadge({super.key, required this.state, this.dense = false});
+  const ContainerStateBadge(
+      {super.key, required this.state, this.dense = false});
 
   final String state;
   final bool dense;

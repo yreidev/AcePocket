@@ -1,56 +1,10 @@
+library;
+
+export '../../../core/widgets/info_row.dart';
+
 import 'package:flutter/material.dart';
 
 import 'formatters.dart';
-
-/// 「标签 — 值」信息行，用于系统信息等纵向罗列的键值对。
-class InfoRow extends StatelessWidget {
-  const InfoRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.valueColor,
-    this.monospace = false,
-  });
-
-  final String label;
-  final String value;
-  final Color? valueColor;
-
-  /// 值是否使用等宽字体（版本号、哈希等）。
-  final bool monospace;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 92,
-            child: Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value.isEmpty ? '—' : value,
-              textAlign: TextAlign.right,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: valueColor ?? theme.colorScheme.onSurface,
-                fontFamily: monospace ? 'monospace' : null,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 /// 竖排的「值 + 标签」小指标块，用于一行并排展示多个数值。
 class MetricTile extends StatelessWidget {

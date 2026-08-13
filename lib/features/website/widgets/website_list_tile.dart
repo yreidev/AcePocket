@@ -125,10 +125,10 @@ class WebsiteListTile extends StatelessWidget {
                         value: 'delete',
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading: Icon(Icons.delete_outline,
-                              color: scheme.error),
-                          title: Text('删除',
-                              style: TextStyle(color: scheme.error)),
+                          leading:
+                              Icon(Icons.delete_outline, color: scheme.error),
+                          title:
+                              Text('删除', style: TextStyle(color: scheme.error)),
                         ),
                       ),
                     ],
@@ -237,10 +237,8 @@ class _Chip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: foreground),
+        style:
+            Theme.of(context).textTheme.labelSmall?.copyWith(color: foreground),
       ),
     );
   }

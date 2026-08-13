@@ -31,8 +31,7 @@ class TerminalRepo {
     String? passCode,
   }) async {
     if (!server.hasCredentials) {
-      throw const WsAuthException(
-          '未配置面板用户名/密码，无法使用终端。请在服务器配置中补充面板账号');
+      throw const WsAuthException('未配置面板用户名/密码，无法使用终端。请在服务器配置中补充面板账号');
     }
 
     if (passCode != null && passCode.trim().isNotEmpty) {

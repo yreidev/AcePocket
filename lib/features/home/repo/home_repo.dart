@@ -13,8 +13,7 @@ class HomeRepository {
   /// GET /home/panel — 面板基础信息。
   Future<PanelInfo> panel() async {
     final data = await _client.get('/home/panel');
-    return PanelInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return PanelInfo.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// GET /home/apps — 首页展示应用。
@@ -38,22 +37,19 @@ class HomeRepository {
       '/home/current',
       body: {'nets': nets, 'disks': disks},
     );
-    return CurrentInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return CurrentInfo.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// GET /home/system_info — 系统信息。
   Future<SystemInfo> systemInfo() async {
     final data = await _client.get('/home/system_info');
-    return SystemInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return SystemInfo.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// GET /home/count_info — 网站 / 数据库 / 项目 / 计划任务 / 容器统计。
   Future<CountInfo> countInfo() async {
     final data = await _client.get('/home/count_info');
-    return CountInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return CountInfo.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// GET /home/check_update — 检查面板更新，返回是否有新版本。
@@ -84,8 +80,7 @@ class HomeRepository {
   /// GET /home/runtime_info — Go 运行时与内存统计。
   Future<RuntimeInfo> runtimeInfo() async {
     final data = await _client.get('/home/runtime_info');
-    return RuntimeInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+    return RuntimeInfo.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
   /// GET /home/goroutines — 全部协程堆栈。

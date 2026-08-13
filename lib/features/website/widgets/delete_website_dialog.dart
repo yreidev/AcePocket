@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 /// 删除网站的选项。
 class DeleteWebsiteOptions {
-  const DeleteWebsiteOptions({required this.deletePath, required this.deleteDb});
+  const DeleteWebsiteOptions(
+      {required this.deletePath, required this.deleteDb});
 
   /// 同时删除网站目录。
   final bool deletePath;

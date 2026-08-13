@@ -69,7 +69,8 @@ class _DatabaseUsersPageState extends ConsumerState<DatabaseUsersPage> {
   }
 
   Future<void> _delete(DatabaseUser user) async {
-    final name = user.host.isEmpty ? user.username : '${user.username}@${user.host}';
+    final name =
+        user.host.isEmpty ? user.username : '${user.username}@${user.host}';
     final ok = await showConfirmDialog(
       context,
       title: '删除数据库用户',

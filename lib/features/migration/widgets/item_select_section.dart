@@ -176,9 +176,8 @@ class _ItemTile<T> extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: enabled
-                    ? colorScheme.onSurfaceVariant
-                    : colorScheme.error,
+                color:
+                    enabled ? colorScheme.onSurfaceVariant : colorScheme.error,
               ),
             ),
     );

@@ -98,7 +98,7 @@ class _ContainerLogsPageState extends ConsumerState<ContainerLogsPage> {
         query: {'container': widget.id},
       );
       if (!mounted) {
-        channel.sink.close();
+        unawaited(channel.sink.close());
         return;
       }
       _channel = channel;
@@ -415,7 +415,8 @@ class _StatusBar extends StatelessWidget {
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
-          Text(label, style: theme.textTheme.labelMedium?.copyWith(color: color)),
+          Text(label,
+              style: theme.textTheme.labelMedium?.copyWith(color: color)),
           const SizedBox(width: 16),
           Text(
             '$lineCount 行',

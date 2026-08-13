@@ -39,14 +39,19 @@ class ProjectTile extends StatelessWidget {
     final status = projectStatusOf(project.status);
 
     final (Color statusColor, Color statusBg) = switch (status) {
-      ProjectStatus.active => (colorScheme.primary, colorScheme.primaryContainer),
-      ProjectStatus.activating ||
-      ProjectStatus.deactivating =>
-        (colorScheme.tertiary, colorScheme.tertiaryContainer),
+      ProjectStatus.active => (
+          colorScheme.primary,
+          colorScheme.primaryContainer
+        ),
+      ProjectStatus.activating || ProjectStatus.deactivating => (
+          colorScheme.tertiary,
+          colorScheme.tertiaryContainer
+        ),
       ProjectStatus.failed => (colorScheme.error, colorScheme.errorContainer),
-      ProjectStatus.inactive ||
-      ProjectStatus.unknown =>
-        (colorScheme.onSurfaceVariant, colorScheme.surfaceContainerHighest),
+      ProjectStatus.inactive || ProjectStatus.unknown => (
+          colorScheme.onSurfaceVariant,
+          colorScheme.surfaceContainerHighest
+        ),
     };
 
     final running = project.isRunning;

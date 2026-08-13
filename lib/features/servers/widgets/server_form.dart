@@ -286,7 +286,7 @@ class _ServerFormState extends ConsumerState<ServerForm> {
               helperText: '在面板「设置 - API 令牌」中创建，仅创建时可见',
               prefixIcon: const Icon(Icons.key_outlined),
               border: const OutlineInputBorder(),
-              suffixIcon: IconButton(
+              suffixIcon: A11yIconButton(
                 icon: Icon(_obscureToken
                     ? Icons.visibility_outlined
                     : Icons.visibility_off_outlined),
@@ -363,8 +363,9 @@ class _ServerFormState extends ConsumerState<ServerForm> {
           // ——— 高级选项 ———
           InkWell(
             borderRadius: BorderRadius.circular(8),
-            onTap:
-                _busy ? null : () => setState(() => _showAdvanced = !_showAdvanced),
+            onTap: _busy
+                ? null
+                : () => setState(() => _showAdvanced = !_showAdvanced),
             // 原行高约 36dp，不足 48dp 触摸目标下限；只扩命中区域不改视觉。
             child: minTouchTarget(
               child: Padding(
@@ -453,7 +454,7 @@ class _ServerFormState extends ConsumerState<ServerForm> {
                 labelText: '面板密码（可选）',
                 prefixIcon: const Icon(Icons.lock_outline),
                 border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
+                suffixIcon: A11yIconButton(
                   icon: Icon(_obscurePassword
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined),

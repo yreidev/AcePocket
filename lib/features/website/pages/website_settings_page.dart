@@ -444,9 +444,8 @@ class _DefaultSiteSection extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     FilledButton.tonalIcon(
-                      onPressed: saving
-                          ? null
-                          : () => onSave(selected, websites),
+                      onPressed:
+                          saving ? null : () => onSave(selected, websites),
                       icon: saving
                           ? const SizedBox(
                               width: 16,

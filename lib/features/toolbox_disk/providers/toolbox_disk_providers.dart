@@ -40,8 +40,7 @@ final selectedSmartDiskProvider = StateProvider.autoDispose<String?>(
 );
 
 /// 指定磁盘的 SMART 详情。
-final smartInfoProvider =
-    FutureProvider.autoDispose.family<SmartInfo, String>(
+final smartInfoProvider = FutureProvider.autoDispose.family<SmartInfo, String>(
   (ref, device) => ref.watch(toolboxDiskRepoProvider).smartInfo(device),
 );
 

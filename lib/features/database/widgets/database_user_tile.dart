@@ -26,9 +26,8 @@ class DatabaseUserTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final serverType = user.server?.type ?? '';
-    final title = user.host.isEmpty
-        ? user.username
-        : '${user.username}@${user.host}';
+    final title =
+        user.host.isEmpty ? user.username : '${user.username}@${user.host}';
     return SectionCard(
       padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
       onTap: onEdit,

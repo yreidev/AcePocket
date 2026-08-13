@@ -341,7 +341,8 @@ class _KeyChip extends StatelessWidget {
                   label ?? '',
                   maxLines: 1,
                   softWrap: false,
-                  style: theme.textTheme.labelLarge?.copyWith(color: foreground),
+                  style:
+                      theme.textTheme.labelLarge?.copyWith(color: foreground),
                 ),
               ),
       ),

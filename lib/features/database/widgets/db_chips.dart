@@ -70,9 +70,12 @@ class StatusChip extends StatelessWidget {
     return InfoChip(
       label: ok ? '正常' : '异常',
       icon: ok ? Icons.check_circle_outline : Icons.error_outline,
-      color: ok ? theme.colorScheme.onTertiaryContainer : theme.colorScheme.onErrorContainer,
-      background:
-          ok ? theme.colorScheme.tertiaryContainer : theme.colorScheme.errorContainer,
+      color: ok
+          ? theme.colorScheme.onTertiaryContainer
+          : theme.colorScheme.onErrorContainer,
+      background: ok
+          ? theme.colorScheme.tertiaryContainer
+          : theme.colorScheme.errorContainer,
     );
   }
 }

@@ -115,8 +115,8 @@ final terminalSessionProvider = NotifierProvider.autoDispose.family<
 ///
 /// 消息协议见 `models/terminal_messages.dart`（与 `pkg/shell/pty.go`、
 /// `pkg/ssh/turn.go`、`pkg/docker/turn.go` 逐字段对齐）。
-class TerminalSessionController
-    extends AutoDisposeFamilyNotifier<TerminalSessionState, TerminalSessionSpec> {
+class TerminalSessionController extends AutoDisposeFamilyNotifier<
+    TerminalSessionState, TerminalSessionSpec> {
   /// 心跳间隔。
   static const Duration _pingInterval = Duration(seconds: 5);
 

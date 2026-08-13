@@ -132,9 +132,8 @@ class _AppStorePageState extends ConsumerState<AppStorePage>
               controller: _searchController,
               textInputAction: TextInputAction.search,
               onChanged: _onSearchChanged,
-              onSubmitted: (value) => ref
-                  .read(appFilterProvider.notifier)
-                  .setKeyword(value.trim()),
+              onSubmitted: (value) =>
+                  ref.read(appFilterProvider.notifier).setKeyword(value.trim()),
               decoration: InputDecoration(
                 hintText: '搜索应用名称或描述',
                 prefixIcon: const Icon(Icons.search),
@@ -382,8 +381,8 @@ class _AppListViewState extends ConsumerState<_AppListView>
     final state = ref.watch(appListProvider(widget.installedOnly));
     final filter = ref.watch(appFilterProvider);
     final filtered = filter.keyword.isNotEmpty || filter.category.isNotEmpty;
-    final categories = ref.watch(appCategoriesProvider).valueOrNull ??
-        const <AppCategory>[];
+    final categories =
+        ref.watch(appCategoriesProvider).valueOrNull ?? const <AppCategory>[];
     final categoryLabels = {
       for (final c in categories) c.value: c.label,
     };

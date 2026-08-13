@@ -519,7 +519,8 @@ class _StringListEditorState extends State<_StringListEditor> {
                       for (final value in _values)
                         InputChip(
                           label: Text(value),
-                          onDeleted: () => setState(() => _values.remove(value)),
+                          onDeleted: () =>
+                              setState(() => _values.remove(value)),
                         ),
                     ],
                   ),

@@ -325,8 +325,7 @@ class _DiskTabState extends ConsumerState<DiskTab> {
                     color: theme.colorScheme.error,
                   ),
                 ),
-              _isBusy('${disk.name}:detail') ||
-                      _isBusy('${disk.name}:init')
+              _isBusy('${disk.name}:detail') || _isBusy('${disk.name}:init')
                   ? const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: BusyIndicator(),

@@ -53,7 +53,8 @@ class ComposeDetail {
     return ComposeDetail(
       compose: asString(map['compose']),
       // 服务端由 .env 逐行拆分生成，可能包含空行产生的空 KV，此处过滤。
-      envs: KV.listFromJson(map['envs'])
+      envs: KV
+          .listFromJson(map['envs'])
           .where((kv) => kv.key.trim().isNotEmpty)
           .toList(),
     );

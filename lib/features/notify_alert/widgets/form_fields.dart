@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/widgets/a11y.dart';
+export '../../../core/widgets/string_list_field.dart';
 
 /// 底部选择器的一个选项。
 class PickerOption<T> {
@@ -198,10 +198,8 @@ class StatusChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: foreground),
+        style:
+            Theme.of(context).textTheme.labelSmall?.copyWith(color: foreground),
       ),
     );
   }
@@ -209,141 +207,3 @@ class StatusChip extends StatelessWidget {
 
 /// [StatusChip] 的色调。
 enum ChipTone { neutral, success, warning, danger }
-
-/// 动态字符串列表输入（收件人等），至少保留一行。
-class StringListField extends StatefulWidget {
-  const StringListField({
-    super.key,
-    required this.initialValues,
-    required this.onChanged,
-    this.label = '列表',
-    this.hint = '',
-    this.keyboardType = TextInputType.text,
-    this.validator,
-  });
-
-  final List<String> initialValues;
-  final ValueChanged<List<String>> onChanged;
-  final String label;
-  final String hint;
-  final TextInputType keyboardType;
-
-  /// 单条内容的校验器（入参已 trim 且非空）；返回 null 表示通过。
-  /// 空条目在回传时会被过滤，因此这里不校验空值。
-  final String? Function(String value)? validator;
-
-  @override
-  State<StringListField> createState() => _StringListFieldState();
-}
-
-class _StringListFieldState extends State<StringListField> {
-  final List<TextEditingController> _controllers = [];
-
-  @override
-  void initState() {
-    super.initState();
-    final initial =
-        widget.initialValues.where((e) => e.trim().isNotEmpty).toList();
-    if (initial.isEmpty) {
-      _controllers.add(TextEditingController());
-    } else {
-      for (final value in initial) {
-        _controllers.add(TextEditingController(text: value));
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  void _emit() {
-    widget.onChanged(_controllers
-        .map((c) => c.text.trim())
-        .where((e) => e.isNotEmpty)
-        .toList());
-  }
-
-  void _add() {
-    setState(() => _controllers.add(TextEditingController()));
-    _emit();
-  }
-
-  void _removeAt(int index) {
-    setState(() {
-      final controller = _controllers.removeAt(index);
-      controller.dispose();
-      if (_controllers.isEmpty) {
-        _controllers.add(TextEditingController());
-      }
-    });
-    _emit();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                widget.label,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-            TextButton.icon(
-              onPressed: _add,
-              icon: const Icon(Icons.add, size: 18),
-              label: const Text('添加'),
-            ),
-          ],
-        ),
-        for (var i = 0; i < _controllers.length; i++)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _controllers[i],
-                    autocorrect: false,
-                    keyboardType: widget.keyboardType,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      hintText: widget.hint,
-                      border: const OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    validator: widget.validator == null
-                        ? null
-                        : (value) {
-                            final v = (value ?? '').trim();
-                            if (v.isEmpty) return null;
-                            return widget.validator!(v);
-                          },
-                    onChanged: (_) => _emit(),
-                  ),
-                ),
-                A11yIconButton(
-                  tooltip: '删除第 ${i + 1} 行',
-                  onPressed: () => _removeAt(i),
-                  icon: const Icon(Icons.remove_circle_outline),
-                  color: theme.colorScheme.error,
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}

@@ -44,7 +44,8 @@ class UpdateCheckResult {
 
 /// 更新检查器：读取当前版本并与最新 Release 比较。
 class AppUpdateChecker {
-  AppUpdateChecker(AppUpdateRepo repo, {Future<String> Function()? versionLoader})
+  AppUpdateChecker(AppUpdateRepo repo,
+      {Future<String> Function()? versionLoader})
       : _repo = repo,
         _versionLoader = versionLoader ?? _loadVersionFromPackageInfo;
 

@@ -74,8 +74,8 @@ class AppListTile extends StatelessWidget {
                           ),
                           if (app.statusLabel != null) ...[
                             const SizedBox(width: 8),
-                            _StatusChip(status: app.status,
-                                label: app.statusLabel!),
+                            _StatusChip(
+                                status: app.status, label: app.statusLabel!),
                           ],
                         ],
                       ),
@@ -123,8 +123,7 @@ class _AppAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final source = app.name.isNotEmpty ? app.name : app.slug;
-    final letter =
-        source.isEmpty ? '?' : source.substring(0, 1).toUpperCase();
+    final letter = source.isEmpty ? '?' : source.substring(0, 1).toUpperCase();
     return Container(
       width: 42,
       height: 42,
@@ -200,8 +199,10 @@ class _MetaWrap extends StatelessWidget {
     final chips = <Widget>[];
 
     if (app.installed) {
-      final version = app.installedVersion.isEmpty ? '未知版本' : app.installedVersion;
-      final channel = app.installedChannel.isEmpty ? '' : ' · ${app.installedChannel}';
+      final version =
+          app.installedVersion.isEmpty ? '未知版本' : app.installedVersion;
+      final channel =
+          app.installedChannel.isEmpty ? '' : ' · ${app.installedChannel}';
       chips.add(_MetaChip(
         icon: Icons.verified_outlined,
         label: '$version$channel',
@@ -210,9 +211,8 @@ class _MetaWrap extends StatelessWidget {
       if (app.updateExist) {
         chips.add(_MetaChip(
           icon: Icons.upgrade,
-          label: app.targetVersion.isEmpty
-              ? '有新版本'
-              : '可更新至 ${app.targetVersion}',
+          label:
+              app.targetVersion.isEmpty ? '有新版本' : '可更新至 ${app.targetVersion}',
           color: colorScheme.tertiary,
         ));
       }

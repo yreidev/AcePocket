@@ -23,7 +23,8 @@ class PanelUserRepository {
 
   /// 用户列表（`GET /api/users`，`request.Paginate`）。
   Future<Paged<PanelUser>> list({required int page, required int limit}) async {
-    final data = await _api.get('/users', query: {'page': page, 'limit': limit});
+    final data =
+        await _api.get('/users', query: {'page': page, 'limit': limit});
     return Paged.fromJson(data, PanelUser.fromJson);
   }
 

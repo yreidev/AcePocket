@@ -128,10 +128,10 @@ class _DomainListFieldState extends State<DomainListField> {
                 if (widget.enabled)
                   A11yIconButton(
                     tooltip: '删除第 ${i + 1} 个${widget.label}',
-                    onPressed: _controllers.length == 1 &&
-                            _controllers[i].text.isEmpty
-                        ? null
-                        : () => _removeAt(i),
+                    onPressed:
+                        _controllers.length == 1 && _controllers[i].text.isEmpty
+                            ? null
+                            : () => _removeAt(i),
                     icon: Icon(
                       Icons.remove_circle_outline,
                       color: theme.colorScheme.error,

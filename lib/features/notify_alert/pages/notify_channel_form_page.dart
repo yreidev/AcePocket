@@ -27,8 +27,7 @@ class NotifyChannelFormPage extends ConsumerStatefulWidget {
       _NotifyChannelFormPageState();
 }
 
-class _NotifyChannelFormPageState
-    extends ConsumerState<NotifyChannelFormPage> {
+class _NotifyChannelFormPageState extends ConsumerState<NotifyChannelFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _hostController = TextEditingController();
@@ -472,6 +471,7 @@ class _NotifyChannelFormPageState
             hint: 'ops@example.com',
             keyboardType: TextInputType.emailAddress,
             initialValues: _recipients,
+            minItems: 1,
             validator: validateEmail,
             onChanged: (values) {
               _recipients = values;

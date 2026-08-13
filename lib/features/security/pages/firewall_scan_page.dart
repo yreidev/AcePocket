@@ -319,7 +319,8 @@ class _TrendBars extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: item.totalCount / max,
                       minHeight: 10,
-                      backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                      backgroundColor:
+                          theme.colorScheme.surfaceContainerHighest,
                     ),
                   ),
                 ),
@@ -487,8 +488,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                         labelBuilder: (name) => options
                             .firstWhere(
                               (e) => e.name == name,
-                              orElse: () =>
-                                  NetInterface(name: name, ips: const [], status: ''),
+                              orElse: () => NetInterface(
+                                  name: name, ips: const [], status: ''),
                             )
                             .label,
                         emptyHint: '未获取到可用网卡，留空即为自动检测',
@@ -503,8 +504,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                     subtitle: '达到阈值后自动写入防火墙 IP 规则',
                     value: draft.autoBlock,
                     dirty: _autoBlockDirty,
-                    onChanged: (value) =>
-                        setState(() => _draft = draft.copyWith(autoBlock: value)),
+                    onChanged: (value) => setState(
+                        () => _draft = draft.copyWith(autoBlock: value)),
                   ),
                   if (draft.autoBlock) ...[
                     SettingValueTile(
@@ -561,8 +562,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                           helperText: '填 0 表示永久封锁',
                         );
                         if (value == null || !mounted) return;
-                        setState(
-                            () => _draft = draft.copyWith(blockDuration: value));
+                        setState(() =>
+                            _draft = draft.copyWith(blockDuration: value));
                       },
                     ),
                     SettingValueTile(

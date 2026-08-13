@@ -40,10 +40,9 @@ class PanelInfo {
     return PanelInfo(
       name: json['name'] as String? ?? 'AcePanel',
       locale: json['locale'] as String? ?? '',
-      hiddenMenu: (json['hidden_menu'] as List?)
-              ?.map((e) => e.toString())
-              .toList() ??
-          const [],
+      hiddenMenu:
+          (json['hidden_menu'] as List?)?.map((e) => e.toString()).toList() ??
+              const [],
       customLogo: json['custom_logo'] as String? ?? '',
     );
   }

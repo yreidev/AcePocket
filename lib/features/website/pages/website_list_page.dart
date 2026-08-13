@@ -203,9 +203,8 @@ class _WebsiteListPageState extends ConsumerState<WebsiteListPage> {
                         selected: type == filter.value,
                         onSelected: (_) {
                           if (type == filter.value) return;
-                          ref
-                              .read(websiteTypeFilterProvider.notifier)
-                              .state = filter.value;
+                          ref.read(websiteTypeFilterProvider.notifier).state =
+                              filter.value;
                         },
                       ),
                     ),
@@ -232,9 +231,7 @@ class _WebsiteListPageState extends ConsumerState<WebsiteListPage> {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                   EmptyView(
-                    message: type == 'all'
-                        ? '还没有创建任何网站'
-                        : '当前类型下没有网站',
+                    message: type == 'all' ? '还没有创建任何网站' : '当前类型下没有网站',
                     icon: Icons.language_outlined,
                     action: FilledButton.icon(
                       onPressed: _openCreate,

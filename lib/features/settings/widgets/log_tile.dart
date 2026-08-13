@@ -146,8 +146,7 @@ class LogEntryTile extends StatelessWidget {
               data: theme.copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-                childrenPadding:
-                    const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 title: content,
                 children: [
                   if (longMessage)
@@ -234,8 +233,8 @@ class SshLogTile extends StatelessWidget {
                   ),
                   child: Text(
                     success ? '成功' : '失败',
-                    style: theme.textTheme.labelSmall
-                        ?.copyWith(color: foreground),
+                    style:
+                        theme.textTheme.labelSmall?.copyWith(color: foreground),
                   ),
                 ),
                 const SizedBox(width: 8),

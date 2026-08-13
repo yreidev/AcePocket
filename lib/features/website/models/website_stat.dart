@@ -135,8 +135,7 @@ class StatOverview {
   factory StatOverview.fromJson(Map<String, dynamic> json) => StatOverview(
         current: StatTotals.fromJson(jMap(json['current'])),
         previous: StatTotals.fromJson(jMap(json['previous'])),
-        series:
-            jMapList(json['series']).map(StatSeriesPoint.fromJson).toList(),
+        series: jMapList(json['series']).map(StatSeriesPoint.fromJson).toList(),
         previousSeries: jMapList(json['previous_series'])
             .map(StatSeriesPoint.fromJson)
             .toList(),
@@ -497,8 +496,7 @@ class StatDateRange {
   /// 单日查询时后端返回 24 小时序列，否则返回按天序列。
   bool get isSingleDay => start == end;
 
-  static String _fmt(DateTime d) =>
-      '${d.year.toString().padLeft(4, '0')}-'
+  static String _fmt(DateTime d) => '${d.year.toString().padLeft(4, '0')}-'
       '${d.month.toString().padLeft(2, '0')}-'
       '${d.day.toString().padLeft(2, '0')}';
 

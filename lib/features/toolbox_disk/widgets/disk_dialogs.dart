@@ -426,8 +426,7 @@ Future<String?> showDeviceSelectDialog(
                               style: const TextStyle(fontFamily: 'monospace'),
                             ),
                             subtitle: Text(formatBytes(item.size)),
-                            onTap: () =>
-                                Navigator.of(context).pop(item.device),
+                            onTap: () => Navigator.of(context).pop(item.device),
                           );
                         },
                       ),

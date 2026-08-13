@@ -144,8 +144,7 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
     try {
       final repo = ref.read(cronRepoProvider);
       final cron = await repo.get(widget.id!);
-      final needScript =
-          cron.type == CronTypes.shell && cron.shell.isNotEmpty;
+      final needScript = cron.type == CronTypes.shell && cron.shell.isNotEmpty;
       String script = '';
       Object? scriptError;
       if (needScript) {
@@ -230,9 +229,7 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
     final blocked = _scriptReadFailed;
     return UnsavedChangesGuard(
       hasUnsavedChanges: _dirty && !_saving,
-      message: _isEdit
-          ? '任务的修改还没有保存，确定放弃吗？'
-          : '新建的任务还没有创建，确定放弃吗？',
+      message: _isEdit ? '任务的修改还没有保存，确定放弃吗？' : '新建的任务还没有创建，确定放弃吗？',
       child: Scaffold(
         appBar: AppBar(
           title: Text(_isEdit ? '编辑计划任务' : '新建计划任务'),
@@ -259,12 +256,10 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
                           '脚本内容未能读取，保存会覆盖服务器上的现有脚本，'
                           '请先在上方重试读取。',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.error,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
                         ),
                       ),
                     FilledButton(
@@ -534,6 +529,7 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
           KvEditor(
             label: '自定义请求头',
             entries: _headers,
+            keyHint: '名称',
             onChanged: (v) => _updateField(() => _headers = v),
           ),
           if (_method == 'POST' || _method == 'PUT' || _method == 'PATCH') ...[
@@ -618,8 +614,9 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
               });
               _autoName();
             },
-            validator: (v) =>
-                (v == null || v.isEmpty) ? '请选择${isBackup ? '备份' : '切割'}类型' : null,
+            validator: (v) => (v == null || v.isEmpty)
+                ? '请选择${isBackup ? '备份' : '切割'}类型'
+                : null,
           ),
           const SizedBox(height: 16),
           _buildTargetField(theme),
@@ -683,7 +680,8 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
       );
     }
 
-    if (isBackup && CronTypes.backupSubTypes.containsKey(_subType) &&
+    if (isBackup &&
+        CronTypes.backupSubTypes.containsKey(_subType) &&
         _subType != 'website') {
       // mysql / postgresql / clickhouse
       final provider = databaseOptionsProvider(_subType);
@@ -732,8 +730,9 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
       ),
       data: (list) {
         final ids = list.map((e) => e.id).toList();
-        final value =
-            ids.contains(_storage) ? _storage : (ids.isEmpty ? null : ids.first);
+        final value = ids.contains(_storage)
+            ? _storage
+            : (ids.isEmpty ? null : ids.first);
         // 原先选中的存储已被删除时，下拉框回退到第一项，但 _storage 仍是失效的
         // ID，提交出去会落到一个不存在的存储上——这里把状态一并纠正过来。
         if (value != null && value != _storage) {
@@ -810,8 +809,7 @@ class _CronEditPageState extends ConsumerState<CronEditPage> {
     final form = _formKey.currentState;
     if (form == null || !form.validate()) return;
 
-    final needTargets =
-        _type == CronTypes.backup || _type == CronTypes.cutoff;
+    final needTargets = _type == CronTypes.backup || _type == CronTypes.cutoff;
     final targets =
         _targets.map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
     if (needTargets && targets.isEmpty) {

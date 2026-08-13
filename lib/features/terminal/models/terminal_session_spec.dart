@@ -50,7 +50,8 @@ class TerminalSessionSpec {
     if (sshId.isNotEmpty && int.tryParse(sshId) != null) {
       return TerminalSessionSpec(
         kind: TerminalSessionKind.ssh,
-        title: title.isEmpty ? '${TerminalSessionKind.ssh.label} #$sshId' : title,
+        title:
+            title.isEmpty ? '${TerminalSessionKind.ssh.label} #$sshId' : title,
         targetId: sshId,
       );
     }
@@ -117,7 +118,10 @@ class TerminalSessionSpec {
   Map<String, String> toQuery() => switch (kind) {
         TerminalSessionKind.pty => {'command': command, 'title': title},
         TerminalSessionKind.ssh => {'ssh': targetId, 'title': title},
-        TerminalSessionKind.container => {'container': targetId, 'title': title},
+        TerminalSessionKind.container => {
+            'container': targetId,
+            'title': title
+          },
       };
 
   static String _shortId(String id) =>

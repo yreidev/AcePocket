@@ -260,7 +260,8 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
                     if (state.isConnecting && !state.hasOutput)
                       Positioned.fill(
                         child: ColoredBox(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.86),
+                          color:
+                              theme.colorScheme.surface.withValues(alpha: 0.86),
                           child: const LoadingView(message: '正在连接终端…'),
                         ),
                       ),
@@ -280,7 +281,8 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
                 TerminalKeyboardBar(
                   enabled: state.isConnected,
                   onKey: (key) => _keepKeyboard(() => controller.sendKey(key)),
-                  onText: (text) => _keepKeyboard(() => controller.sendText(text)),
+                  onText: (text) =>
+                      _keepKeyboard(() => controller.sendText(text)),
                   onCtrl: (letter) =>
                       _keepKeyboard(() => controller.sendCtrlChar(letter)),
                 )

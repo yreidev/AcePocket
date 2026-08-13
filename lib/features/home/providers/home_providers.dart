@@ -45,8 +45,8 @@ final healthProvider = FutureProvider.autoDispose<List<HealthIssue>>((ref) {
 });
 
 /// 占用最高进程（type: cpu / memory / disk_io）。
-final topProcessesProvider = FutureProvider.autoDispose
-    .family<List<ProcessStat>, String>((ref, type) {
+final topProcessesProvider =
+    FutureProvider.autoDispose.family<List<ProcessStat>, String>((ref, type) {
   return ref.watch(homeRepoProvider).topProcesses(type);
 });
 
@@ -69,7 +69,8 @@ final panelUpdateProvider = FutureProvider.autoDispose<bool>((ref) async {
 final panelUpdateInfoProvider =
     FutureProvider.autoDispose<List<PanelVersion>>((ref) async {
   final versions = await ref.watch(homeRepoProvider).updateInfo();
-  final sorted = [...versions]..sort((a, b) => _compareVersion(b.version, a.version));
+  final sorted = [...versions]
+    ..sort((a, b) => _compareVersion(b.version, a.version));
   return sorted;
 });
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/utils/format.dart';
 import '../../../core/widgets/a11y.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../models/container_volume.dart';
@@ -107,7 +108,7 @@ class VolumeListPage extends ConsumerWidget {
         onLoadMore: () =>
             ref.read(containerVolumesProvider.notifier).loadMore(),
         onRetry: () => ref.invalidate(containerVolumesProvider),
-        itemBuilder: (context, volume) => _VolumeTile(
+        itemBuilder: (context, volume, _) => _VolumeTile(
           volume: volume,
           onDelete: () => _remove(context, ref, volume),
         ),
@@ -157,9 +158,8 @@ class _VolumeTile extends StatelessWidget {
                         runSpacing: 4,
                         children: [
                           StatusBadge(
-                            label: volume.driver.isEmpty
-                                ? 'local'
-                                : volume.driver,
+                            label:
+                                volume.driver.isEmpty ? 'local' : volume.driver,
                             tone: BadgeTone.info,
                             dense: true,
                           ),
@@ -213,7 +213,8 @@ class _VolumeTile extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                Icon(Icons.schedule, size: 13, color: theme.colorScheme.outline),
+                Icon(Icons.schedule,
+                    size: 13, color: theme.colorScheme.outline),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(

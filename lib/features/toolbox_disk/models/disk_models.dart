@@ -58,7 +58,8 @@ class BlockDevice {
       uuid: jsonString(json['uuid']),
       label: jsonString(json['label']),
       model: jsonString(json['model']),
-      children: jsonMapList(json['children']).map(BlockDevice.fromJson).toList(),
+      children:
+          jsonMapList(json['children']).map(BlockDevice.fromJson).toList(),
     );
   }
 

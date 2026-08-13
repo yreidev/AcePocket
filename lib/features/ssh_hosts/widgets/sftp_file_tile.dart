@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/format.dart';
+import '../../../core/utils/format.dart' hide formatDateTime;
 import '../../../core/widgets/a11y.dart';
 import '../models/ssh_file_info.dart';
 import 'formatters.dart';

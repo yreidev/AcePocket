@@ -118,8 +118,7 @@ class _CreateDatabaseSheetState extends ConsumerState<CreateDatabaseSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final optionsAsync =
-        ref.watch(databaseServerOptionsProvider(widget.type));
+    final optionsAsync = ref.watch(databaseServerOptionsProvider(widget.type));
 
     return optionsAsync.when(
       loading: () => const SizedBox(
@@ -135,13 +134,12 @@ class _CreateDatabaseSheetState extends ConsumerState<CreateDatabaseSheet> {
         ),
       ),
       data: (servers) {
-        final available = servers
-            .where((s) => kDatabaseListTypes.contains(s.type))
-            .toList();
-        final server = _server != null &&
-                available.any((s) => s.id == _server!.id)
-            ? _server
-            : null;
+        final available =
+            servers.where((s) => kDatabaseListTypes.contains(s.type)).toList();
+        final server =
+            _server != null && available.any((s) => s.id == _server!.id)
+                ? _server
+                : null;
         final serverType = server?.type ?? '';
 
         return DbSheet(

@@ -323,7 +323,8 @@ class _PanelInfoSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               InfoRow(label: '面板名称', value: info.panel.name),
-              InfoRow(label: '面板版本', value: system.panelVersion, copyable: true),
+              InfoRow(
+                  label: '面板版本', value: system.panelVersion, copyable: true),
               InfoRow(label: '构建版本', value: system.commitHash, copyable: true),
               InfoRow(label: '构建时间', value: system.buildTime),
               InfoRow(label: 'Go 版本', value: system.goVersion),

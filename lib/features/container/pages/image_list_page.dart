@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/utils/format.dart';
 import '../../../core/widgets/a11y.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../models/container_image.dart';
@@ -107,7 +108,7 @@ class ImageListPage extends ConsumerWidget {
         onRefresh: () => ref.read(containerImagesProvider.notifier).refresh(),
         onLoadMore: () => ref.read(containerImagesProvider.notifier).loadMore(),
         onRetry: () => ref.invalidate(containerImagesProvider),
-        itemBuilder: (context, image) => _ImageTile(
+        itemBuilder: (context, image, _) => _ImageTile(
           image: image,
           onDelete: () => _remove(context, ref, image),
         ),
@@ -212,7 +213,8 @@ class _ImageTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Icon(Icons.schedule, size: 13, color: theme.colorScheme.outline),
+                Icon(Icons.schedule,
+                    size: 13, color: theme.colorScheme.outline),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(

@@ -84,8 +84,7 @@ class CertItem {
   /// 证书内容与私钥齐全才可用于部署。
   bool get usable => cert.isNotEmpty && key.isNotEmpty;
 
-  String get label =>
-      domains.isEmpty ? '#$id' : '${domains.join(', ')}（#$id）';
+  String get label => domains.isEmpty ? '#$id' : '${domains.join(', ')}（#$id）';
 
   factory CertItem.fromJson(Map<String, dynamic> json) => CertItem(
         id: jInt(json['id']),

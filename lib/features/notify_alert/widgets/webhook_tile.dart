@@ -61,8 +61,7 @@ class WebHookTile extends StatelessWidget {
                   const SizedBox(width: 8),
                   StatusChip(
                     label: webhook.status ? '已启用' : '已停用',
-                    tone:
-                        webhook.status ? ChipTone.success : ChipTone.neutral,
+                    tone: webhook.status ? ChipTone.success : ChipTone.neutral,
                   ),
                   if (busy)
                     const Padding(

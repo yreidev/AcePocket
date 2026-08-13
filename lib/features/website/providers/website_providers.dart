@@ -83,8 +83,7 @@ final installedEnvironmentProvider =
 );
 
 /// 伪静态规则模板。
-final websiteRewritesProvider =
-    FutureProvider.autoDispose<Map<String, String>>(
+final websiteRewritesProvider = FutureProvider.autoDispose<Map<String, String>>(
   (ref) => ref.watch(websiteRepoProvider).rewrites(),
 );
 

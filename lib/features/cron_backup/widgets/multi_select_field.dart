@@ -62,8 +62,7 @@ class MultiSelectField extends StatelessWidget {
                         ),
                       ),
                       visualDensity: VisualDensity.compact,
-                      materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       deleteButtonTooltipMessage: '移除 $value',
                       onDeleted: () => onChanged(
                         selected.where((e) => e != value).toList(),
@@ -155,8 +154,7 @@ class _MultiSelectSheetState extends State<_MultiSelectSheet> {
             const SizedBox(height: 8),
             Expanded(
               child: widget.options.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, _) => ErrorView(
                   error: error,
                   onRetry: widget.onReload,

@@ -106,8 +106,7 @@ class ServerListNotifier extends AsyncNotifier<List<ServerConfig>> {
 
   /// 按 id 更新服务器；若为当前选中的服务器则同步刷新 activeServerProvider。
   Future<void> updateServer(ServerConfig server) async {
-    final list =
-        _current.map((s) => s.id == server.id ? server : s).toList();
+    final list = _current.map((s) => s.id == server.id ? server : s).toList();
     await ServerStore.instance.saveServers(list);
     state = AsyncData(list);
     if (ref.read(activeServerProvider)?.id == server.id) {

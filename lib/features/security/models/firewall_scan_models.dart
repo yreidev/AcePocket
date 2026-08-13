@@ -131,8 +131,7 @@ class ScanSummary {
         uniquePorts: (json['unique_ports'] as num?)?.toInt() ?? 0,
       );
 
-  static const empty =
-      ScanSummary(totalCount: 0, uniqueIps: 0, uniquePorts: 0);
+  static const empty = ScanSummary(totalCount: 0, uniqueIps: 0, uniquePorts: 0);
 }
 
 /// 每日扫描趋势（GET /firewall/scan/trend）。

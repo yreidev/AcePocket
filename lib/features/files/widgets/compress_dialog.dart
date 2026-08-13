@@ -79,7 +79,9 @@ class _CompressDialogState extends State<_CompressDialog> {
         List.generate(6, (_) => chars[rnd.nextInt(chars.length)]).join();
     final base = widget.names.length == 1
         ? widget.names.first
-        : (posixBaseName(widget.dir) == '/' ? 'archive' : posixBaseName(widget.dir));
+        : (posixBaseName(widget.dir) == '/'
+            ? 'archive'
+            : posixBaseName(widget.dir));
     return '$base-$suffix$_format';
   }
 

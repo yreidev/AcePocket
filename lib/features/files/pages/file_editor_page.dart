@@ -86,9 +86,7 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
     if (_saving) return;
     setState(() => _saving = true);
     try {
-      await ref
-          .read(fileRepoProvider)
-          .save(widget.path, _controller.text);
+      await ref.read(fileRepoProvider).save(widget.path, _controller.text);
       if (!mounted) return;
       setState(() {
         _original = _controller.text;
@@ -112,7 +110,8 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
       expands: true,
       keyboardType: TextInputType.multiline,
       textAlignVertical: TextAlignVertical.top,
-      style: const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.4),
+      style:
+          const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.4),
       decoration: const InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.all(12),
@@ -170,8 +169,7 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
               child: Row(
                 children: [
                   Icon(Icons.warning_amber_outlined,
-                      size: 18,
-                      color: theme.colorScheme.onTertiaryContainer),
+                      size: 18, color: theme.colorScheme.onTertiaryContainer),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(

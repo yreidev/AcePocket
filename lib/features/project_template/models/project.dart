@@ -58,7 +58,14 @@ String projectRestartLabel(String restart) {
 }
 
 /// 项目运行状态（systemd ActiveState）。
-enum ProjectStatus { active, activating, deactivating, inactive, failed, unknown }
+enum ProjectStatus {
+  active,
+  activating,
+  deactivating,
+  inactive,
+  failed,
+  unknown
+}
 
 ProjectStatus projectStatusOf(String status) {
   switch (status) {

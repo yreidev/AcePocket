@@ -131,8 +131,8 @@ class FirewallIpRulesNotifier extends PagedNotifier<FirewallIpRule> {
 }
 
 final firewallIpRulesProvider = AsyncNotifierProvider.autoDispose<
-        FirewallIpRulesNotifier, PagedState<FirewallIpRule>>(
-    FirewallIpRulesNotifier.new);
+    FirewallIpRulesNotifier,
+    PagedState<FirewallIpRule>>(FirewallIpRulesNotifier.new);
 
 /// 防火墙端口转发列表。
 class FirewallForwardsNotifier extends PagedNotifier<FirewallForward> {
@@ -149,8 +149,8 @@ class FirewallForwardsNotifier extends PagedNotifier<FirewallForward> {
 }
 
 final firewallForwardsProvider = AsyncNotifierProvider.autoDispose<
-        FirewallForwardsNotifier, PagedState<FirewallForward>>(
-    FirewallForwardsNotifier.new);
+    FirewallForwardsNotifier,
+    PagedState<FirewallForward>>(FirewallForwardsNotifier.new);
 
 /// 防篡改保护规则列表。
 class TamperRulesNotifier extends PagedNotifier<TamperRule> {
@@ -236,8 +236,8 @@ class ScanEventFilter {
   int get hashCode => Object.hash(sourceIp, port, location);
 }
 
-final scanEventFilterProvider =
-    StateProvider.autoDispose<ScanEventFilter>((ref) => const ScanEventFilter());
+final scanEventFilterProvider = StateProvider.autoDispose<ScanEventFilter>(
+    (ref) => const ScanEventFilter());
 
 /// 把「最近 N 天」换算为面板要求的 `YYYY-MM-DD` 起止日期。
 ({String start, String end}) scanRangeOf(int days) {
@@ -247,8 +247,7 @@ final scanEventFilterProvider =
   return (start: _formatDate(start), end: _formatDate(end));
 }
 
-String _formatDate(DateTime date) =>
-    '${date.year.toString().padLeft(4, '0')}-'
+String _formatDate(DateTime date) => '${date.year.toString().padLeft(4, '0')}-'
     '${date.month.toString().padLeft(2, '0')}-'
     '${date.day.toString().padLeft(2, '0')}';
 

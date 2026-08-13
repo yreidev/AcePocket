@@ -57,8 +57,7 @@ class NotifyChannelTile extends StatelessWidget {
                   const SizedBox(width: 8),
                   StatusChip(
                     label: channel.enabled ? '已启用' : '已停用',
-                    tone:
-                        channel.enabled ? ChipTone.success : ChipTone.neutral,
+                    tone: channel.enabled ? ChipTone.success : ChipTone.neutral,
                   ),
                   if (busy)
                     const Padding(
@@ -71,7 +70,8 @@ class NotifyChannelTile extends StatelessWidget {
                     )
                   else
                     PopupMenuButton<String>(
-                      tooltip: '${channel.name.isEmpty ? '未命名渠道' : channel.name}'
+                      tooltip:
+                          '${channel.name.isEmpty ? '未命名渠道' : channel.name}'
                           ' 的更多操作',
                       onSelected: (value) {
                         switch (value) {
@@ -129,8 +129,7 @@ class NotifyChannelTile extends StatelessWidget {
                     if (smtp != null)
                       StatusChip(label: '${smtp.host}:${smtp.port}'),
                     if (smtp != null)
-                      StatusChip(
-                          label: smtpEncryptionLabel(smtp.encryption)),
+                      StatusChip(label: smtpEncryptionLabel(smtp.encryption)),
                   ],
                 ),
               ),

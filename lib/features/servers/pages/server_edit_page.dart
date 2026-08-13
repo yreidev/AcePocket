@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/models/server.dart';
 import '../../../core/storage/server_store.dart';
+import '../../../core/widgets/a11y.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/empty_view.dart';
 import '../../../core/widgets/error_view.dart';
@@ -89,7 +90,7 @@ class ServerEditPage extends ConsumerWidget {
         title: Text(_isEdit ? '编辑服务器' : '添加服务器'),
         actions: [
           if (initial != null)
-            IconButton(
+            A11yIconButton(
               icon: const Icon(Icons.delete_outline),
               tooltip: '删除服务器',
               onPressed: () => _delete(context, ref, initial),

@@ -112,7 +112,10 @@ class ToolboxDiskRepository {
   Future<List<FstabEntry>> fstab() async {
     final data = await _api.get('/toolbox_disk/fstab');
     if (data is! List) return const <FstabEntry>[];
-    return data.whereType<Map>().map((e) => FstabEntry.fromJson(jsonMap(e))).toList();
+    return data
+        .whereType<Map>()
+        .map((e) => FstabEntry.fromJson(jsonMap(e)))
+        .toList();
   }
 
   /// 删除 fstab 条目（面板随后会执行 `mount -a` 重新挂载）。
@@ -136,7 +139,8 @@ class ToolboxDiskRepository {
       _api.delete('/toolbox_disk/lvm/pv', body: {'device': device});
 
   /// 创建卷组。[devices] 为物理卷的完整路径列表。
-  Future<void> createVg({required String name, required List<String> devices}) =>
+  Future<void> createVg(
+          {required String name, required List<String> devices}) =>
       _api.post('/toolbox_disk/lvm/vg', body: {
         'name': name,
         'devices': devices,

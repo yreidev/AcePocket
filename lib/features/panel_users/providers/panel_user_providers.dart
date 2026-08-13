@@ -51,7 +51,8 @@ final wsAccountStatusProvider = FutureProvider.autoDispose<WsAccountStatus?>(
   (ref) async {
     final server = ref.watch(activeServerProvider);
     if (server == null || !server.hasCredentials) return null;
-    final twoFa = await ref.watch(panelUserRepoProvider).isTwoFa(server.username);
+    final twoFa =
+        await ref.watch(panelUserRepoProvider).isTwoFa(server.username);
     return WsAccountStatus(username: server.username, twoFaEnabled: twoFa);
   },
 );
@@ -107,7 +108,8 @@ final panelUsersProvider = AsyncNotifierProvider.autoDispose<PanelUsersNotifier,
 /// 供通行密钥页选择用户的用户列表（一次拉取，最多 200 条）。
 final panelUserOptionsProvider = FutureProvider.autoDispose<List<PanelUser>>(
   (ref) async {
-    final paged = await ref.watch(panelUserRepoProvider).list(page: 1, limit: 200);
+    final paged =
+        await ref.watch(panelUserRepoProvider).list(page: 1, limit: 200);
     return paged.items;
   },
 );

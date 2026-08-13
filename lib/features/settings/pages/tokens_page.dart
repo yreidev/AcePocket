@@ -276,8 +276,8 @@ class _TokensPageState extends ConsumerState<TokensPage> {
                         );
                       }
                       final token = state.items[index];
-                      final inUse = currentTokenId != null &&
-                          currentTokenId == token.id;
+                      final inUse =
+                          currentTokenId != null && currentTokenId == token.id;
                       return TokenTile(
                         token: token,
                         inUse: inUse,

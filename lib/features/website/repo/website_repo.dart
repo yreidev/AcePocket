@@ -85,8 +85,7 @@ class WebsiteRepo {
       for (final website in result.items) {
         if (website.id == id) return website;
       }
-      if (result.items.length < pageSize ||
-          page * pageSize >= result.total) {
+      if (result.items.length < pageSize || page * pageSize >= result.total) {
         return null;
       }
     }
@@ -132,7 +131,9 @@ class WebsiteRepo {
   /// 签发证书。泛域名必须传 [dnsId]（DNS 验证）。
   Future<void> obtainCert(int id, {int? dnsId}) => _api.post(
         '/website/$id/obtain_cert',
-        body: dnsId != null && dnsId > 0 ? {'dns_id': dnsId} : <String, dynamic>{},
+        body: dnsId != null && dnsId > 0
+            ? {'dns_id': dnsId}
+            : <String, dynamic>{},
       );
 
   /// 直接更新某个网站的证书文件（`POST /api/website/cert`）。

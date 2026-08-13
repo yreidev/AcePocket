@@ -39,7 +39,8 @@ class _ConnectionTestDialog extends ConsumerWidget {
     WidgetRef ref,
     CertificateTrustRequiredException error,
   ) async {
-    final trusted = await showCertificateTrustDialog(context, error.certificate);
+    final trusted =
+        await showCertificateTrustDialog(context, error.certificate);
     if (!trusted || !context.mounted) return;
     final server = ref.read(serverByIdProvider(serverId));
     if (server == null) return;

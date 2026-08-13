@@ -31,7 +31,8 @@ class CpuInfo {
 
 /// gopsutil `load.AvgStat`。
 class LoadAvg {
-  const LoadAvg({required this.load1, required this.load5, required this.load15});
+  const LoadAvg(
+      {required this.load1, required this.load5, required this.load15});
 
   final double load1;
   final double load5;
@@ -302,8 +303,7 @@ class CurrentInfo {
               .toList() ??
           const [],
       percent: _d(json['percent']),
-      percents:
-          (json['percents'] as List?)?.map(_d).toList() ?? const [],
+      percents: (json['percents'] as List?)?.map(_d).toList() ?? const [],
       load: json['load'] is Map<String, dynamic>
           ? LoadAvg.fromJson(json['load'] as Map<String, dynamic>)
           : const LoadAvg(load1: 0, load5: 0, load15: 0),

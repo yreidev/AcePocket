@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -60,8 +62,7 @@ class _CronListPageState extends ConsumerState<CronListPage> {
               ),
               data: (data) => PagedList<Cron>(
                 state: data,
-                onRefresh: () =>
-                    ref.read(cronListProvider.notifier).refresh(),
+                onRefresh: () => ref.read(cronListProvider.notifier).refresh(),
                 onLoadMore: _loadMore,
                 emptyView: EmptyView(
                   icon: Icons.timer_outlined,
@@ -132,12 +133,12 @@ class _CronListPageState extends ConsumerState<CronListPage> {
     );
     if (!ok || !mounted) return;
     if (!context.mounted) return;
-    context.push(
+    unawaited(context.push(
       Uri(
         path: '/crons/run',
         queryParameters: {'shell': cron.shell, 'name': cron.name},
       ).toString(),
-    );
+    ));
   }
 
   Future<void> _toggle(Cron cron, bool value) async {

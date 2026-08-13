@@ -63,10 +63,9 @@ class ContainerInspect {
         final map = asMap(binding);
         final hostIp = asString(map['HostIp']);
         final hostPort = asString(map['HostPort']);
-        final prefix =
-            (hostIp.isEmpty || hostIp == '0.0.0.0' || hostIp == '::')
-                ? ''
-                : '$hostIp:';
+        final prefix = (hostIp.isEmpty || hostIp == '0.0.0.0' || hostIp == '::')
+            ? ''
+            : '$hostIp:';
         ports.add('$prefix$hostPort->$containerPort');
       }
     });

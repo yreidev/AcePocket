@@ -104,9 +104,9 @@ class TerminalSettingsSheet extends ConsumerWidget {
                     value: settings.fontSize,
                     min: TerminalSettings.minFontSize,
                     max: TerminalSettings.maxFontSize,
-                    divisions:
-                        (TerminalSettings.maxFontSize - TerminalSettings.minFontSize)
-                            .round(),
+                    divisions: (TerminalSettings.maxFontSize -
+                            TerminalSettings.minFontSize)
+                        .round(),
                     label: settings.fontSize.toStringAsFixed(0),
                     semanticFormatterCallback: (value) =>
                         '终端字号 ${value.round()}',

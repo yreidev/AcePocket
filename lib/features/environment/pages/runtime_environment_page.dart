@@ -170,7 +170,8 @@ class _RuntimeEnvironmentPageState
     // 连点会给面板连发多条同类后台任务。
     if (_busy != null) return;
     final repo = ref.read(environmentRepoProvider);
-    final name = env?.name ?? '${environmentTypeLabel(widget.type)} ${widget.slug}';
+    final name =
+        env?.name ?? '${environmentTypeLabel(widget.type)} ${widget.slug}';
     switch (value) {
       case 'check':
         ref.invalidate(environmentInstalledProvider(_ref));
@@ -591,9 +592,8 @@ class _SourceEditorState extends State<_SourceEditor> {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 11),
                   ),
-                  onPressed: widget.saving
-                      ? null
-                      : () => _controller.text = preset,
+                  onPressed:
+                      widget.saving ? null : () => _controller.text = preset,
                 ),
             ],
           ),

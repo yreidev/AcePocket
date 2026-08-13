@@ -87,8 +87,8 @@ class _CertAccountListPageState extends ConsumerState<CertAccountListPage> {
   }
 
   Future<void> _openForm({int? id}) async {
-    await context
-        .push(id == null ? '/certs/accounts/create' : '/certs/accounts/$id/edit');
+    await context.push(
+        id == null ? '/certs/accounts/create' : '/certs/accounts/$id/edit');
     await _reloadQuietly();
   }
 
