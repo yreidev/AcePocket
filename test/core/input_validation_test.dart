@@ -69,8 +69,7 @@ void main() {
     test('超长域名与超长标签被拒绝', () {
       final longLabel = 'a' * 64;
       expect(validateDomain('$longLabel.example.com'), contains('63'));
-      final longDomain =
-          List.filled(60, 'abcd').join('.'); // 60*5-1=299 字符
+      final longDomain = List.filled(60, 'abcd').join('.'); // 60*5-1=299 字符
       expect(validateDomain(longDomain), contains('过长'));
     });
   });
@@ -165,10 +164,9 @@ void main() {
     });
 
     test('family 与地址类型不匹配时给出指导', () {
-      expect(validateIpAddress('2001:db8::1', family: 'ipv4'),
-          contains('IPv4'));
-      expect(validateIpAddress('192.0.2.1', family: 'ipv6'),
-          contains('IPv6'));
+      expect(
+          validateIpAddress('2001:db8::1', family: 'ipv4'), contains('IPv4'));
+      expect(validateIpAddress('192.0.2.1', family: 'ipv6'), contains('IPv6'));
       expect(validateIpAddress('192.0.2.1', family: 'ipv4'), isNull);
       expect(validateIpAddress('2001:db8::1', family: 'ipv6'), isNull);
     });
@@ -201,8 +199,8 @@ void main() {
       expect(validateIpOrCidr('192.0.2.0/24', family: 'ipv4'), isNull);
       expect(
           validateIpOrCidr('192.0.2.0/24', family: 'ipv6'), contains('IPv6'));
-      expect(validateIpOrCidr('2001:db8::/32', family: 'ipv4'),
-          contains('IPv4'));
+      expect(
+          validateIpOrCidr('2001:db8::/32', family: 'ipv4'), contains('IPv4'));
     });
 
     test('空输入被拒绝', () {

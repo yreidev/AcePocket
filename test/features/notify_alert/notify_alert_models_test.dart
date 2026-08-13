@@ -24,8 +24,8 @@ void main() {
         channels: <int>[1],
       );
       final draft = saved
-          .copyWith(events: <String>['backup', 'login'])
-          .copyWith(events: <String>['backup']);
+          .copyWith(events: <String>['backup', 'login']).copyWith(
+              events: <String>['backup']);
       expect(draft, equals(saved));
     });
 

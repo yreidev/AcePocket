@@ -44,8 +44,8 @@ void main() {
     /// 初始化：第一页 0..19，total 60，hasMore = true。
     Future<void> seed({int total = 60}) async {
       state = AsyncData(
-        await pager.buildFirstPage((page, limit) async =>
-            pageOf(1, limit: limit, total: total)),
+        await pager.buildFirstPage(
+            (page, limit) async => pageOf(1, limit: limit, total: total)),
       );
     }
 
@@ -90,7 +90,8 @@ void main() {
       final fetch = FakeFetch();
       final future =
           pager.loadMore(read: read, write: write, fetch: fetch.call);
-      fetch.complete(0, PagedResult(items: List.generate(5, (i) => 20 + i), total: 60));
+      fetch.complete(
+          0, PagedResult(items: List.generate(5, (i) => 20 + i), total: 60));
       await future;
 
       final value = state.requireValue;
@@ -156,8 +157,7 @@ void main() {
     test('loadMore 在途时重复触发不并发发起', () async {
       await seed();
       final fetch = FakeFetch();
-      final first =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final first = pager.loadMore(read: read, write: write, fetch: fetch.call);
       final second =
           pager.loadMore(read: read, write: write, fetch: fetch.call);
       await second;
@@ -211,8 +211,7 @@ void main() {
       expect(value.loadMoreError, isA<StateError>());
 
       // 重试：发起时清除错误，成功后正常追加。
-      final retry =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final retry = pager.loadMore(read: read, write: write, fetch: fetch.call);
       expect(state.requireValue.loadMoreError, isNull);
       fetch.complete(1, pageOf(2));
       await retry;
@@ -323,5 +322,6 @@ class TestPagedNotifier extends PagedAsyncNotifier<int> {
       fetch!.call(page, limit);
 }
 
-final testPagedProvider = AsyncNotifierProvider.autoDispose<TestPagedNotifier,
-    PagedState<int>>(TestPagedNotifier.new);
+final testPagedProvider =
+    AsyncNotifierProvider.autoDispose<TestPagedNotifier, PagedState<int>>(
+        TestPagedNotifier.new);

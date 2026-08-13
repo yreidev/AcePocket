@@ -8,7 +8,8 @@ void main() {
       expect(validatePanelBaseUrl('https://1.2.3.4:8888'), isNull);
       expect(validatePanelBaseUrl('https://panel.example.com:13140'), isNull);
       // 前后空白与尾部斜杠（由 normalizedBaseUrl 去除）不应报错。
-      expect(validatePanelBaseUrl('  https://panel.example.com:13140  '), isNull);
+      expect(
+          validatePanelBaseUrl('  https://panel.example.com:13140  '), isNull);
       expect(validatePanelBaseUrl('https://panel.example.com:13140/'), isNull);
     });
 

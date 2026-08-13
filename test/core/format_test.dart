@@ -120,4 +120,24 @@ void main() {
       );
     });
   });
+
+  group('formatDateTime / formatRelative', () {
+    test('null 展示占位', () {
+      expect(formatDateTime(null), '-');
+      expect(formatRelative(null), '-');
+    });
+
+    test('本地时间格式为 yyyy-MM-dd HH:mm:ss', () {
+      final time = DateTime(2026, 8, 13, 9, 8, 7);
+      expect(formatDateTime(time), '2026-08-13 09:08:07');
+    });
+
+    test('刚刚 / 分钟前', () {
+      expect(formatRelative(DateTime.now()), '刚刚');
+      expect(
+        formatRelative(DateTime.now().subtract(const Duration(minutes: 3))),
+        '3 分钟前',
+      );
+    });
+  });
 }

@@ -57,8 +57,7 @@ void main() {
         validatePemCertificate('-----BEGIN CERTIFICATE-----\nMIIBFAKE'),
         contains('END'),
       );
-      final truncatedChain =
-          '$_fakeCert-----BEGIN CERTIFICATE-----\nMIIBFAKE';
+      final truncatedChain = '$_fakeCert-----BEGIN CERTIFICATE-----\nMIIBFAKE';
       expect(validatePemCertificate(truncatedChain), contains('数量不一致'));
     });
 
