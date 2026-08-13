@@ -105,11 +105,15 @@ class _WebsiteListPageState extends ConsumerState<WebsiteListPage> {
   }
 
   Future<void> _delete(Website website) async {
-    final options =
-        await showDeleteWebsiteDialog(context, websiteName: website.name);
+    final options = await showDeleteWebsiteDialog(
+      context,
+      websiteName: website.name,
+    );
     if (options == null) return;
     await _runBusy(website.id, () async {
-      await ref.read(websiteRepoProvider).delete(
+      await ref
+          .read(websiteRepoProvider)
+          .delete(
             website.id,
             deletePath: options.deletePath,
             deleteDb: options.deleteDb,
@@ -308,8 +312,9 @@ class _ListFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
             const SizedBox(height: 8),
             TextButton.icon(
@@ -338,8 +343,9 @@ class _ListFooter extends StatelessWidget {
       child: Center(
         child: Text(
           hasMore ? '上拉加载更多' : '共 $count 个网站',
-          style: theme.textTheme.labelSmall
-              ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
       ),
     );

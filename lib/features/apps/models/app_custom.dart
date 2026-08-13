@@ -15,12 +15,9 @@ class AppCustom {
   final String args;
 
   factory AppCustom.fromJson(Map<String, dynamic> json) => AppCustom(
-        preScript: jsonString(json['pre_script']),
-        args: jsonString(json['args']),
-      );
+    preScript: jsonString(json['pre_script']),
+    args: jsonString(json['args']),
+  );
 
-  Map<String, dynamic> toJson() => {
-        'pre_script': preScript,
-        'args': args,
-      };
+  Map<String, dynamic> toJson() => {'pre_script': preScript, 'args': args};
 }

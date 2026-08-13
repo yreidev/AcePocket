@@ -134,10 +134,7 @@ class _RuntimeEnvironmentPageState
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (env == null)
-                  const HintBanner(
-                    '面板环境列表中未找到该版本，可能是环境源数据已更新。',
-                    warning: true,
-                  ),
+                  const HintBanner('面板环境列表中未找到该版本，可能是环境源数据已更新。', warning: true),
                 _infoCard(env),
                 _cliCard(env),
                 ..._extraCards(env),
@@ -248,7 +245,8 @@ class _RuntimeEnvironmentPageState
         children: [
           KeyValueRow(
             label: '名称',
-            value: env?.name ??
+            value:
+                env?.name ??
                 '${environmentTypeLabel(widget.type)} ${widget.slug}',
           ),
           KeyValueRow(label: '类型', value: environmentTypeLabel(widget.type)),
@@ -297,8 +295,8 @@ class _RuntimeEnvironmentPageState
           Text(
             _cliDescription,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 12),
           FilledButton.tonalIcon(
@@ -318,8 +316,8 @@ class _RuntimeEnvironmentPageState
               child: Text(
                 '该版本尚未安装，安装后才能设置命令行默认版本。',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
+                  color: Theme.of(context).colorScheme.error,
+                ),
               ),
             ),
         ],
@@ -445,9 +443,7 @@ class _RuntimeEnvironmentPageState
           ),
         ];
       default:
-        return const [
-          HintBanner('该环境类型除「设为命令行默认版本」外没有其他可配置项。'),
-        ];
+        return const [HintBanner('该环境类型除「设为命令行默认版本」外没有其他可配置项。')];
     }
   }
 
@@ -466,8 +462,8 @@ class _RuntimeEnvironmentPageState
         child: Text(
           '该版本尚未安装，安装后才能读取和修改。',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       );
     }
@@ -525,8 +521,9 @@ class _SourceEditor extends StatefulWidget {
 }
 
 class _SourceEditorState extends State<_SourceEditor> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
 
   /// 输入框内容是否偏离服务端当前值。
   bool _dirty = false;
@@ -592,8 +589,9 @@ class _SourceEditorState extends State<_SourceEditor> {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 11),
                   ),
-                  onPressed:
-                      widget.saving ? null : () => _controller.text = preset,
+                  onPressed: widget.saving
+                      ? null
+                      : () => _controller.text = preset,
                 ),
             ],
           ),
@@ -606,8 +604,9 @@ class _SourceEditorState extends State<_SourceEditor> {
                     '有未保存的修改',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.tertiary),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.tertiary,
+                    ),
                   ),
                 )
               else
@@ -625,10 +624,7 @@ class _SourceEditorState extends State<_SourceEditor> {
                     : () {
                         final value = _controller.text.trim();
                         if (value.isEmpty) {
-                          showErrorSnack(
-                            context,
-                            const ApiException('内容不能为空'),
-                          );
+                          showErrorSnack(context, const ApiException('内容不能为空'));
                           return;
                         }
                         widget.onSave(value);

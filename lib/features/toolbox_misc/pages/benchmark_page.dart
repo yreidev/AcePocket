@@ -39,7 +39,8 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '开始跑分测试？',
-      content: '测试会长时间占满 CPU、申请数百 MB 内存并进行磁盘直读直写，'
+      content:
+          '测试会长时间占满 CPU、申请数百 MB 内存并进行磁盘直读直写，'
           '可能影响服务器上正在运行的业务，建议在空闲时段执行。',
       confirmText: '开始',
       danger: true,
@@ -78,8 +79,9 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
           A11yIconButton(
             tooltip: '清空全部跑分成绩',
             icon: const Icon(Icons.restart_alt),
-            onPressed:
-                state.running || !state.hasAnyResult ? null : notifier.reset,
+            onPressed: state.running || !state.hasAnyResult
+                ? null
+                : notifier.reset,
           ),
         ],
       ),
@@ -104,7 +106,7 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
                     child: Text(
                       state.stopped
                           ? '最近一次跑分于 ${_formatTime(state.finishedAt!)} '
-                              '被手动停止，可单独重测未完成的项目'
+                                '被手动停止，可单独重测未完成的项目'
                           : '最近一次跑分完成于 ${_formatTime(state.finishedAt!)}',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
@@ -169,10 +171,7 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
               const BusyIndicator(size: 16),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
-                  '正在运行：$title',
-                  style: theme.textTheme.bodyMedium,
-                ),
+                child: Text('正在运行：$title', style: theme.textTheme.bodyMedium),
               ),
               Text(
                 '${state.completed}/${state.planned}',
@@ -204,8 +203,9 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
   }
 
   Widget _scoreCard(ThemeData theme, BenchmarkState state) {
-    final runningGroup =
-        state.currentKey == null ? null : _testOf(state.currentKey!).group;
+    final runningGroup = state.currentKey == null
+        ? null
+        : _testOf(state.currentKey!).group;
     return SectionCard(
       title: '综合成绩',
       child: Row(
@@ -240,8 +240,9 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
     ThemeData theme,
     BenchmarkState state,
   ) {
-    final tests =
-        kBenchmarkTests.where((t) => t.group == BenchmarkGroup.cpu).toList();
+    final tests = kBenchmarkTests
+        .where((t) => t.group == BenchmarkGroup.cpu)
+        .toList();
     return SectionCard(
       title: 'CPU 明细（总分 ${state.cpuTotal}）',
       child: Column(
@@ -395,8 +396,9 @@ class _BenchmarkPageState extends ConsumerState<BenchmarkPage> {
             tooltip: '单独测试「${test.title}」',
             visualDensity: VisualDensity.compact,
             icon: const Icon(Icons.play_circle_outline, size: 20),
-            onPressed:
-                state.running ? null : () => _runSingle(context, ref, test),
+            onPressed: state.running
+                ? null
+                : () => _runSingle(context, ref, test),
           ),
         ],
       ),

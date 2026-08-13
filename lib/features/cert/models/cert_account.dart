@@ -51,15 +51,15 @@ class CertAccount {
       ca == 'google' || ca == 'litessl' || ca == 'sslcom';
 
   factory CertAccount.fromJson(Map<String, dynamic> json) => CertAccount(
-        id: jsonInt(json['id']),
-        email: jsonString(json['email']),
-        ca: jsonString(json['ca']),
-        kid: jsonString(json['kid']),
-        hmacEncoded: jsonString(json['hmac_encoded']),
-        keyType: jsonString(json['key_type']).isEmpty
-            ? 'P256'
-            : jsonString(json['key_type']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    email: jsonString(json['email']),
+    ca: jsonString(json['ca']),
+    kid: jsonString(json['kid']),
+    hmacEncoded: jsonString(json['hmac_encoded']),
+    keyType: jsonString(json['key_type']).isEmpty
+        ? 'P256'
+        : jsonString(json['key_type']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 }

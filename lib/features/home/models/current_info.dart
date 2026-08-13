@@ -31,8 +31,11 @@ class CpuInfo {
 
 /// gopsutil `load.AvgStat`。
 class LoadAvg {
-  const LoadAvg(
-      {required this.load1, required this.load5, required this.load15});
+  const LoadAvg({
+    required this.load1,
+    required this.load5,
+    required this.load15,
+  });
 
   final double load1;
   final double load5;
@@ -297,7 +300,8 @@ class CurrentInfo {
 
   factory CurrentInfo.fromJson(Map<String, dynamic> json) {
     return CurrentInfo(
-      cpus: (json['cpus'] as List?)
+      cpus:
+          (json['cpus'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(CpuInfo.fromJson)
               .toList() ??
@@ -310,26 +314,35 @@ class CurrentInfo {
       mem: json['mem'] is Map<String, dynamic>
           ? MemStat.fromJson(json['mem'] as Map<String, dynamic>)
           : const MemStat(
-              total: 0, available: 0, used: 0, usedPercent: 0, free: 0),
+              total: 0,
+              available: 0,
+              used: 0,
+              usedPercent: 0,
+              free: 0,
+            ),
       swap: json['swap'] is Map<String, dynamic>
           ? SwapStat.fromJson(json['swap'] as Map<String, dynamic>)
           : const SwapStat(total: 0, used: 0, free: 0, usedPercent: 0),
-      net: (json['net'] as List?)
+      net:
+          (json['net'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(NetIoStat.fromJson)
               .toList() ??
           const [],
-      diskIo: (json['disk_io'] as List?)
+      diskIo:
+          (json['disk_io'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(DiskIoStat.fromJson)
               .toList() ??
           const [],
-      disk: (json['disk'] as List?)
+      disk:
+          (json['disk'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(DiskPartition.fromJson)
               .toList() ??
           const [],
-      diskUsage: (json['disk_usage'] as List?)
+      diskUsage:
+          (json['disk_usage'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(DiskUsage.fromJson)
               .toList() ??

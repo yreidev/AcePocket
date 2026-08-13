@@ -89,8 +89,8 @@ Future<void> showSftpFileInfoDialog(
           file.isDir
               ? '目录'
               : file.isLink
-                  ? '软链接'
-                  : '文件'
+              ? '软链接'
+              : '文件',
         ),
         if (!file.isDir) ('大小', '${formatBytes(file.size)}（${file.size} 字节）'),
         ('权限', file.mode.isEmpty ? '—' : file.mode),

@@ -61,18 +61,11 @@ class InfoRow extends StatelessWidget {
       fontFamily: _mono ? 'monospace' : null,
       fontFamilyFallback: _mono ? const ['Courier'] : null,
     );
-    final content = valueWidget ??
+    final content =
+        valueWidget ??
         (selectable
-            ? SelectableText(
-                _display,
-                textAlign: TextAlign.right,
-                style: style,
-              )
-            : Text(
-                _display,
-                textAlign: TextAlign.right,
-                style: style,
-              ));
+            ? SelectableText(_display, textAlign: TextAlign.right, style: style)
+            : Text(_display, textAlign: TextAlign.right, style: style));
 
     final row = Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),

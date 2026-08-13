@@ -140,8 +140,11 @@ class DbSheet extends StatelessWidget {
 
 /// 弹层里的提示条。
 class SheetHint extends StatelessWidget {
-  const SheetHint(
-      {super.key, required this.text, this.icon = Icons.info_outline});
+  const SheetHint({
+    super.key,
+    required this.text,
+    this.icon = Icons.info_outline,
+  });
 
   final String text;
   final IconData icon;

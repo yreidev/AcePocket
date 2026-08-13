@@ -11,8 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// 常驻 Provider（非 autoDispose）：在 `app.dart` 的根组件里读取一次即完成
 /// 注册，之后由 [AppLifecycleListener] 持续驱动（Flutter 3.13+ 官方 API，
 /// 内部即 WidgetsBindingObserver，无需手动 add/removeObserver）。
-final appForegroundProvider =
-    NotifierProvider<AppForegroundNotifier, bool>(AppForegroundNotifier.new);
+final appForegroundProvider = NotifierProvider<AppForegroundNotifier, bool>(
+  AppForegroundNotifier.new,
+);
 
 /// 监听应用生命周期，把「是否前台」暴露为布尔状态。
 class AppForegroundNotifier extends Notifier<bool> {

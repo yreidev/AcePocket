@@ -66,20 +66,20 @@ class _BackupStorageEditPageState extends ConsumerState<BackupStorageEditPage> {
 
   /// 全部输入控制器，便于统一挂 / 摘监听与释放。
   List<TextEditingController> get _controllers => [
-        _nameController,
-        _accessKeyController,
-        _secretKeyController,
-        _regionController,
-        _endpointController,
-        _bucketController,
-        _urlController,
-        _hostController,
-        _portController,
-        _usernameController,
-        _passwordController,
-        _privateKeyController,
-        _pathController,
-      ];
+    _nameController,
+    _accessKeyController,
+    _secretKeyController,
+    _regionController,
+    _endpointController,
+    _bucketController,
+    _urlController,
+    _hostController,
+    _portController,
+    _usernameController,
+    _passwordController,
+    _privateKeyController,
+    _pathController,
+  ];
 
   @override
   void initState() {
@@ -174,10 +174,10 @@ class _BackupStorageEditPageState extends ConsumerState<BackupStorageEditPage> {
         body: server == null
             ? const NoServerView()
             : _loading
-                ? const LoadingView(message: '正在加载存储配置…')
-                : _loadError != null
-                    ? ErrorView(error: _loadError!, onRetry: _load)
-                    : _buildForm(),
+            ? const LoadingView(message: '正在加载存储配置…')
+            : _loadError != null
+            ? ErrorView(error: _loadError!, onRetry: _load)
+            : _buildForm(),
         bottomNavigationBar: server == null || _loading || _loadError != null
             ? null
             : SafeArea(

@@ -23,9 +23,9 @@ enum SshAuthMethod {
 
   /// 解析接口返回值，未知取值回退为密码认证。
   static SshAuthMethod parse(String? raw) => switch (raw) {
-        'publickey' => SshAuthMethod.publicKey,
-        _ => SshAuthMethod.password,
-      };
+    'publickey' => SshAuthMethod.publicKey,
+    _ => SshAuthMethod.password,
+  };
 }
 
 /// 主机连接配置（`biz.SSH.config`）。
@@ -104,30 +104,30 @@ class SshHost {
       config.user.isEmpty ? endpoint : '${config.user}@$endpoint';
 
   factory SshHost.fromJson(Map<String, dynamic> json) => SshHost(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        name: json['name'] as String? ?? '',
-        host: json['host'] as String? ?? '',
-        port: (json['port'] as num?)?.toInt() ?? 0,
-        config: json['config'] is Map<String, dynamic>
-            ? SshClientConfig.fromJson(json['config'] as Map<String, dynamic>)
-            : SshClientConfig.empty,
-        remark: json['remark'] as String? ?? '',
-        createdAt: parsePanelTime(json['created_at']),
-        updatedAt: parsePanelTime(json['updated_at']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    name: json['name'] as String? ?? '',
+    host: json['host'] as String? ?? '',
+    port: (json['port'] as num?)?.toInt() ?? 0,
+    config: json['config'] is Map<String, dynamic>
+        ? SshClientConfig.fromJson(json['config'] as Map<String, dynamic>)
+        : SshClientConfig.empty,
+    remark: json['remark'] as String? ?? '',
+    createdAt: parsePanelTime(json['created_at']),
+    updatedAt: parsePanelTime(json['updated_at']),
+  );
 
   /// 由主机信息生成编辑表单初值。
   SshHostDraft toDraft() => SshHostDraft(
-        name: name,
-        host: host,
-        port: port,
-        authMethod: config.authMethod,
-        user: config.user,
-        password: config.password,
-        key: config.key,
-        passphrase: config.passphrase,
-        remark: remark,
-      );
+    name: name,
+    host: host,
+    port: port,
+    authMethod: config.authMethod,
+    user: config.user,
+    password: config.password,
+    key: config.key,
+    passphrase: config.passphrase,
+    remark: remark,
+  );
 
   /// 解析面板返回的 RFC3339 时间（带时区偏移）。
   ///
@@ -181,15 +181,15 @@ class SshHostDraft {
   ///
   /// 更新接口的 `id` 由 URL 路径提供，这里同时写入请求体以保证绑定成功。
   Map<String, dynamic> toJson({int? id}) => {
-        if (id != null) 'id': id,
-        'name': name,
-        'host': host,
-        'port': port,
-        'auth_method': authMethod.value,
-        'user': user,
-        'password': authMethod == SshAuthMethod.password ? password : '',
-        'key': authMethod == SshAuthMethod.publicKey ? key : '',
-        'passphrase': authMethod == SshAuthMethod.publicKey ? passphrase : '',
-        'remark': remark,
-      };
+    if (id != null) 'id': id,
+    'name': name,
+    'host': host,
+    'port': port,
+    'auth_method': authMethod.value,
+    'user': user,
+    'password': authMethod == SshAuthMethod.password ? password : '',
+    'key': authMethod == SshAuthMethod.publicKey ? key : '',
+    'passphrase': authMethod == SshAuthMethod.publicKey ? passphrase : '',
+    'remark': remark,
+  };
 }

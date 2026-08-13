@@ -99,7 +99,9 @@ class _CreateDatabaseSheetState extends ConsumerState<CreateDatabaseSheet> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).createDatabase(
+      () => ref
+          .read(databaseRepoProvider)
+          .createDatabase(
             serverId: server.id,
             name: name,
             createUser: _createUser,
@@ -134,12 +136,13 @@ class _CreateDatabaseSheetState extends ConsumerState<CreateDatabaseSheet> {
         ),
       ),
       data: (servers) {
-        final available =
-            servers.where((s) => kDatabaseListTypes.contains(s.type)).toList();
+        final available = servers
+            .where((s) => kDatabaseListTypes.contains(s.type))
+            .toList();
         final server =
             _server != null && available.any((s) => s.id == _server!.id)
-                ? _server
-                : null;
+            ? _server
+            : null;
         final serverType = server?.type ?? '';
 
         return DbSheet(

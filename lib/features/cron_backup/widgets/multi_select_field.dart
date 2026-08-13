@@ -64,9 +64,8 @@ class MultiSelectField extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       deleteButtonTooltipMessage: '移除 $value',
-                      onDeleted: () => onChanged(
-                        selected.where((e) => e != value).toList(),
-                      ),
+                      onDeleted: () =>
+                          onChanged(selected.where((e) => e != value).toList()),
                     ),
                 ],
               ),
@@ -155,18 +154,18 @@ class _MultiSelectSheetState extends State<_MultiSelectSheet> {
             Expanded(
               child: widget.options.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => ErrorView(
-                  error: error,
-                  onRetry: widget.onReload,
-                ),
+                error: (error, _) =>
+                    ErrorView(error: error, onRetry: widget.onReload),
                 data: (list) {
                   final filtered = _keyword.isEmpty
                       ? list
                       : list
-                          .where((e) =>
-                              e.label.contains(_keyword) ||
-                              e.value.contains(_keyword))
-                          .toList();
+                            .where(
+                              (e) =>
+                                  e.label.contains(_keyword) ||
+                                  e.value.contains(_keyword),
+                            )
+                            .toList();
                   if (filtered.isEmpty) {
                     return Center(
                       child: Text(
@@ -254,10 +253,12 @@ class AsyncDropdownField extends StatelessWidget {
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
             const SizedBox(width: 12),
-            Text('加载中…',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                )),
+            Text(
+              '加载中…',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
       ),

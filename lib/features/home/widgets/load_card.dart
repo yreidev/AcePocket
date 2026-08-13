@@ -75,7 +75,8 @@ class LoadCard extends StatelessWidget {
             // 负载，也没说 100% 代表什么。这里把算式完整写出来。
             UsageBar(
               title: '近 1 分钟负载压力',
-              subtitle: '${load.load1.toStringAsFixed(2)} ÷ '
+              subtitle:
+                  '${load.load1.toStringAsFixed(2)} ÷ '
                   '${capacity.toStringAsFixed(0)}（$cores 核 × 2 记为满负荷）'
                   '，超过 100% 表示已有进程在排队',
               // 不预先 clamp：进度条本身会截到 100%，但数字要如实显示 145.3%，
@@ -111,11 +112,7 @@ class LoadCard extends StatelessWidget {
 }
 
 class _Inline extends StatelessWidget {
-  const _Inline({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
+  const _Inline({required this.icon, required this.label, required this.value});
 
   final IconData icon;
   final String label;

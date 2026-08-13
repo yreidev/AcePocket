@@ -68,16 +68,16 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
 
   /// 当前表单值的快照，用于判断是否有未保存的修改。
   String _snapshot() => <String>[
-        _nameController.text.trim(),
-        _targetController.text.trim(),
-        _thresholdController.text.trim(),
-        _durationController.text.trim(),
-        _silenceController.text.trim(),
-        _type,
-        _op,
-        '$_enabled',
-        (List<int>.from(_channels)..sort()).join(','),
-      ].join('\u0000');
+    _nameController.text.trim(),
+    _targetController.text.trim(),
+    _thresholdController.text.trim(),
+    _durationController.text.trim(),
+    _silenceController.text.trim(),
+    _type,
+    _op,
+    '$_enabled',
+    (List<int>.from(_channels)..sort()).join(','),
+  ].join('\u0000');
 
   void _onFieldChanged() {
     if (_applying) return;
@@ -228,11 +228,7 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.only(bottom: 96),
-            children: [
-              _basicCard(),
-              _conditionCard(),
-              _notifyCard(),
-            ],
+            children: [_basicCard(), _conditionCard(), _notifyCard()],
           ),
         ),
         bottomNavigationBar: SafeArea(
@@ -275,11 +271,7 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
                 (value == null || value.trim().isEmpty) ? '请填写规则名称' : null,
           ),
           const SizedBox(height: 16),
-          SelectField(
-            label: '监控指标',
-            value: meta.label,
-            onTap: _pickMetric,
-          ),
+          SelectField(label: '监控指标', value: meta.label, onTap: _pickMetric),
           if (meta.targetMode != AlertTargetMode.none) ...[
             const SizedBox(height: 16),
             TextFormField(
@@ -330,8 +322,8 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
             Text(
               '运算符',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 6),
             SizedBox(
@@ -361,8 +353,8 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
             Text(
               '当前条件：${alertConditionText(_type, _op, double.tryParse(_thresholdController.text.trim()) ?? 0)}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -373,8 +365,9 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
@@ -442,8 +435,8 @@ class _AlertRuleFormPageState extends ConsumerState<AlertRuleFormPage> {
           Text(
             '不选择任何渠道时，触发后只写入告警记录，不发送通知。',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 4),
           ChannelSelector(

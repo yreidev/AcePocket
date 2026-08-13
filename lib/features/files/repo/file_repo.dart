@@ -59,14 +59,17 @@ class FileRepo {
     required int page,
     int limit = 100,
   }) async {
-    final data = await _api.get('/file/list', query: {
-      'path': path,
-      if (keyword.isNotEmpty) 'keyword': keyword,
-      'sub': sub,
-      if (sort.isNotEmpty) 'sort': sort,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/file/list',
+      query: {
+        'path': path,
+        if (keyword.isNotEmpty) 'keyword': keyword,
+        'sub': sub,
+        if (sort.isNotEmpty) 'sort': sort,
+        'page': page,
+        'limit': limit,
+      },
+    );
     if (data is Map<String, dynamic>) return FileListPage.fromJson(data);
     return const FileListPage(total: 0, items: []);
   }
@@ -80,8 +83,9 @@ class FileRepo {
     final b64 = data['content'] as String? ?? '';
     String text;
     try {
-      text =
-          const Utf8Decoder(allowMalformed: true).convert(base64.decode(b64));
+      text = const Utf8Decoder(
+        allowMalformed: true,
+      ).convert(base64.decode(b64));
     } catch (_) {
       text = '';
     }
@@ -159,13 +163,10 @@ class FileRepo {
     required String mode,
     required String owner,
     required String group,
-  }) =>
-      _api.post('/file/permission', body: {
-        'path': path,
-        'mode': mode,
-        'owner': owner,
-        'group': group,
-      });
+  }) => _api.post(
+    '/file/permission',
+    body: {'path': path, 'mode': mode, 'owner': owner, 'group': group},
+  );
 
   // -------------------------------------------------------------------------
   // 压缩 / 解压 / 远程下载（面板均以后台任务执行）
@@ -177,9 +178,10 @@ class FileRepo {
     required String dir,
     required List<String> paths,
     required String file,
-  }) =>
-      _api.post('/file/compress',
-          body: {'dir': dir, 'paths': paths, 'file': file});
+  }) => _api.post(
+    '/file/compress',
+    body: {'dir': dir, 'paths': paths, 'file': file},
+  );
 
   /// 解压（`POST /file/un_compress`）：把压缩包 [file] 解压到目录 [path]。
   Future<void> unCompress({required String file, required String path}) =>
@@ -229,8 +231,9 @@ class FileRepo {
     TransferProgress? onProgress,
     TransferCancelToken? cancelToken,
   }) async {
-    final name =
-        (fileName == null || fileName.isEmpty) ? source.name : fileName;
+    final name = (fileName == null || fileName.isEmpty)
+        ? source.name
+        : fileName;
     final total = source.size;
 
     // 小文件直传：一次 multipart 请求即可。
@@ -314,13 +317,16 @@ class FileRepo {
     TransferCancelToken? cancelToken,
   }) async {
     cancelToken?.throwIfCancelled();
-    final data = await _api.post('/file/chunk/start', body: {
-      'path': dir,
-      'file_name': fileName,
-      'file_hash': fileHash,
-      'chunk_count': chunkCount,
-      'force': force,
-    });
+    final data = await _api.post(
+      '/file/chunk/start',
+      body: {
+        'path': dir,
+        'file_name': fileName,
+        'file_hash': fileHash,
+        'chunk_count': chunkCount,
+        'force': force,
+      },
+    );
     if (data is Map<String, dynamic> && data['uploaded_chunks'] is List) {
       return (data['uploaded_chunks'] as List)
           .whereType<num>()
@@ -367,13 +373,16 @@ class FileRepo {
     TransferCancelToken? cancelToken,
   }) async {
     cancelToken?.throwIfCancelled();
-    await _api.post('/file/chunk/finish', body: {
-      'path': dir,
-      'file_name': fileName,
-      'file_hash': fileHash,
-      'chunk_count': chunkCount,
-      'force': force,
-    });
+    await _api.post(
+      '/file/chunk/finish',
+      body: {
+        'path': dir,
+        'file_name': fileName,
+        'file_hash': fileHash,
+        'chunk_count': chunkCount,
+        'force': force,
+      },
+    );
   }
 
   Future<void> _uploadChunkWithRetry({
@@ -410,8 +419,10 @@ class FileRepo {
       }
     }
     if (lastError is ApiException) {
-      throw ApiException('第 ${chunkIndex + 1} 个分片上传失败：${lastError.message}',
-          statusCode: lastError.statusCode);
+      throw ApiException(
+        '第 ${chunkIndex + 1} 个分片上传失败：${lastError.message}',
+        statusCode: lastError.statusCode,
+      );
     }
     throw ApiException('第 ${chunkIndex + 1} 个分片上传失败：$lastError');
   }
@@ -425,12 +436,14 @@ class FileRepo {
     const sample = 1024 * 1024;
     final size = source.size;
     final head = await source.read(0, min(sample, size));
-    final tail =
-        size > sample * 2 ? await source.read(size - sample, size) : head;
+    final tail = size > sample * 2
+        ? await source.read(size - sample, size)
+        : head;
     final modified = await source.lastModified();
     final builder = BytesBuilder(copy: false)
-      ..add(utf8
-          .encode('${source.name}|$size|${modified.millisecondsSinceEpoch}'))
+      ..add(
+        utf8.encode('${source.name}|$size|${modified.millisecondsSinceEpoch}'),
+      )
       ..add(head)
       ..add(tail);
     return sha256.convert(builder.toBytes()).toString();
@@ -496,11 +509,14 @@ class FileRepo {
     required int expireHours,
     int maxDownloads = 0,
   }) async {
-    final data = await _api.post('/file_share', body: {
-      'path': path,
-      'max_downloads': maxDownloads,
-      'expire_hours': expireHours,
-    });
+    final data = await _api.post(
+      '/file_share',
+      body: {
+        'path': path,
+        'max_downloads': maxDownloads,
+        'expire_hours': expireHours,
+      },
+    );
     if (data is! Map<String, dynamic>) {
       throw const ApiException('创建分享响应格式异常');
     }

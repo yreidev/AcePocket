@@ -80,8 +80,10 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
     const chars =
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final rnd = Random.secure();
-    return List.generate(length, (_) => chars[rnd.nextInt(chars.length)])
-        .join();
+    return List.generate(
+      length,
+      (_) => chars[rnd.nextInt(chars.length)],
+    ).join();
   }
 
   void _onDbTypeChanged(String value) {
@@ -101,10 +103,14 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
 
   Future<void> _submit() async {
     // 域名 / 监听由动态列表维护，需要单独校验。
-    final domains =
-        _domains.map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
-    final listens =
-        _listens.map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+    final domains = _domains
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+    final listens = _listens
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
 
     if (!(_formKey.currentState?.validate() ?? false)) return;
     if (domains.isEmpty) {
@@ -145,7 +151,9 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
 
     setState(() => _submitting = true);
     try {
-      await ref.read(websiteRepoProvider).create(
+      await ref
+          .read(websiteRepoProvider)
+          .create(
             type: _type,
             name: _nameController.text.trim(),
             listens: listens,
@@ -311,17 +319,19 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
                       Text(
                         envAsync.hasError
                             ? '获取已安装 PHP 版本失败：'
-                                '${describeError(envAsync.error!)}'
+                                  '${describeError(envAsync.error!)}'
                             : '面板尚未安装任何 PHP 版本，请先在应用商店安装',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: theme.colorScheme.error),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.error,
+                        ),
                       )
                     else
                       DropdownButtonFormField<int>(
                         initialValue: _php,
                         isExpanded: true,
-                        decoration:
-                            const InputDecoration(labelText: '选择 PHP 版本'),
+                        decoration: const InputDecoration(
+                          labelText: '选择 PHP 版本',
+                        ),
                         items: [
                           for (final option in env.php)
                             DropdownMenuItem(
@@ -344,8 +354,9 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DropdownButtonFormField<String>(
-                      initialValue:
-                          env.db.any((e) => e.value == _dbType) ? _dbType : '0',
+                      initialValue: env.db.any((e) => e.value == _dbType)
+                          ? _dbType
+                          : '0',
                       isExpanded: true,
                       decoration: const InputDecoration(labelText: '创建数据库'),
                       items: [
@@ -406,8 +417,10 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
                             tooltip: '随机生成数据库密码',
                             icon: const Icon(Icons.casino_outlined),
                             onPressed: () {
-                              setState(() => _dbPasswordController.text =
-                                  _randomPassword());
+                              setState(
+                                () => _dbPasswordController.text =
+                                    _randomPassword(),
+                              );
                               _markDirty();
                             },
                           ),

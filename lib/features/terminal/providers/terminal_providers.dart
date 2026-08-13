@@ -28,7 +28,8 @@ final terminalRepoProvider = Provider<TerminalRepo>((ref) {
 /// 终端偏好设置（字号 / 快捷键条 / 回滚行数 / 自动重连）。
 final terminalSettingsProvider =
     NotifierProvider<TerminalSettingsNotifier, TerminalSettings>(
-        TerminalSettingsNotifier.new);
+      TerminalSettingsNotifier.new,
+    );
 
 class TerminalSettingsNotifier extends Notifier<TerminalSettings> {
   static const String _prefsKey = 'acepanel_terminal_settings';
@@ -89,14 +90,13 @@ class TerminalSettingsNotifier extends Notifier<TerminalSettings> {
   void setShowKeyboardBar(bool value) =>
       _update(state.copyWith(showKeyboardBar: value));
 
-  void setScrollback(int value) => _update(state.copyWith(
-        scrollback: value
-            .clamp(
-              TerminalSettings.minScrollback,
-              TerminalSettings.maxScrollback,
-            )
-            .toInt(),
-      ));
+  void setScrollback(int value) => _update(
+    state.copyWith(
+      scrollback: value
+          .clamp(TerminalSettings.minScrollback, TerminalSettings.maxScrollback)
+          .toInt(),
+    ),
+  );
 
   void setAutoReconnect(bool value) =>
       _update(state.copyWith(autoReconnect: value));
@@ -106,17 +106,20 @@ class TerminalSettingsNotifier extends Notifier<TerminalSettings> {
 }
 
 /// 终端会话控制器（按 [TerminalSessionSpec] 维度隔离）。
-final terminalSessionProvider = NotifierProvider.autoDispose.family<
-    TerminalSessionController,
-    TerminalSessionState,
-    TerminalSessionSpec>(TerminalSessionController.new);
+final terminalSessionProvider = NotifierProvider.autoDispose
+    .family<
+      TerminalSessionController,
+      TerminalSessionState,
+      TerminalSessionSpec
+    >(TerminalSessionController.new);
 
 /// 终端会话控制器：持有 xterm [Terminal]，负责 WebSocket 收发、心跳与重连。
 ///
 /// 消息协议见 `models/terminal_messages.dart`（与 `pkg/shell/pty.go`、
 /// `pkg/ssh/turn.go`、`pkg/docker/turn.go` 逐字段对齐）。
-class TerminalSessionController extends AutoDisposeFamilyNotifier<
-    TerminalSessionState, TerminalSessionSpec> {
+class TerminalSessionController
+    extends
+        AutoDisposeFamilyNotifier<TerminalSessionState, TerminalSessionSpec> {
   /// 心跳间隔。
   static const Duration _pingInterval = Duration(seconds: 5);
 
@@ -199,29 +202,32 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     final server = ref.read(activeServerProvider);
     if (server == null) {
       _connecting = false;
-      _setState(state.copyWith(
-        status: TerminalStatus.failed,
-        message: '尚未选择服务器，请先在「服务器」中添加并选中一台面板',
-        clearLatency: true,
-      ));
+      _setState(
+        state.copyWith(
+          status: TerminalStatus.failed,
+          message: '尚未选择服务器，请先在「服务器」中添加并选中一台面板',
+          clearLatency: true,
+        ),
+      );
       return;
     }
 
     await _closeChannel();
-    _setState(state.copyWith(
-      status: TerminalStatus.connecting,
-      clearMessage: true,
-      clearLatency: true,
-      requiresCredentials: false,
-      requiresPassCode: false,
-      unstable: false,
-    ));
+    _setState(
+      state.copyWith(
+        status: TerminalStatus.connecting,
+        clearMessage: true,
+        clearLatency: true,
+        requiresCredentials: false,
+        requiresPassCode: false,
+        unstable: false,
+      ),
+    );
 
     try {
-      final channel = await ref.read(terminalRepoProvider).open(
-            arg,
-            passCode: passCode,
-          );
+      final channel = await ref
+          .read(terminalRepoProvider)
+          .open(arg, passCode: passCode);
       if (_disposed) {
         unawaited(channel.sink.close());
         return;
@@ -243,11 +249,13 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
       }
       _ready = true;
 
-      _setState(state.copyWith(
-        status: TerminalStatus.connected,
-        clearMessage: true,
-        unstable: false,
-      ));
+      _setState(
+        state.copyWith(
+          status: TerminalStatus.connected,
+          clearMessage: true,
+          unstable: false,
+        ),
+      );
 
       // 同步一次当前窗口大小（建连前 TerminalView 可能已完成布局）。
       _sendResize(_columns, _rows);
@@ -255,17 +263,21 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     } on WsAuthException catch (e) {
       _handleAuthFailure(e);
     } on ApiException catch (e) {
-      _setState(state.copyWith(
-        status: TerminalStatus.failed,
-        message: e.message,
-        clearLatency: true,
-      ));
+      _setState(
+        state.copyWith(
+          status: TerminalStatus.failed,
+          message: e.message,
+          clearLatency: true,
+        ),
+      );
     } catch (e) {
-      _setState(state.copyWith(
-        status: TerminalStatus.failed,
-        message: '终端连接失败：$e',
-        clearLatency: true,
-      ));
+      _setState(
+        state.copyWith(
+          status: TerminalStatus.failed,
+          message: '终端连接失败：$e',
+          clearLatency: true,
+        ),
+      );
     } finally {
       _connecting = false;
     }
@@ -287,12 +299,14 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     await _closeChannel();
     if (_disposed) return;
     _terminal?.write('\r\n\x1b[33m[已断开连接]\x1b[0m\r\n');
-    _setState(state.copyWith(
-      status: TerminalStatus.disconnected,
-      message: '已断开连接',
-      clearLatency: true,
-      unstable: false,
-    ));
+    _setState(
+      state.copyWith(
+        status: TerminalStatus.disconnected,
+        message: '已断开连接',
+        clearLatency: true,
+        unstable: false,
+      ),
+    );
   }
 
   Future<void> _closeChannel() async {
@@ -323,18 +337,20 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     final channel = _channel;
     _subscription = null;
     _channel = null;
-    unawaited(Future(() async {
-      try {
-        await sub?.cancel();
-      } catch (_) {
-        // 忽略。
-      }
-      try {
-        await channel?.sink.close();
-      } catch (_) {
-        // 忽略。
-      }
-    }));
+    unawaited(
+      Future(() async {
+        try {
+          await sub?.cancel();
+        } catch (_) {
+          // 忽略。
+        }
+        try {
+          await channel?.sink.close();
+        } catch (_) {
+          // 忽略。
+        }
+      }),
+    );
   }
 
   // ---------------------------------------------------------------------
@@ -367,12 +383,14 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     _stopPing();
     _ready = false;
     _terminal?.write('\r\n\x1b[31m[连接异常：$error]\x1b[0m\r\n');
-    _setState(state.copyWith(
-      status: TerminalStatus.failed,
-      message: '连接异常：$error',
-      clearLatency: true,
-      unstable: false,
-    ));
+    _setState(
+      state.copyWith(
+        status: TerminalStatus.failed,
+        message: '连接异常：$error',
+        clearLatency: true,
+        unstable: false,
+      ),
+    );
     _maybeAutoReconnect();
   }
 
@@ -381,12 +399,14 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
     _stopPing();
     _ready = false;
     _terminal?.write('\r\n\x1b[33m[连接已关闭]\x1b[0m\r\n');
-    _setState(state.copyWith(
-      status: TerminalStatus.disconnected,
-      message: '连接已关闭，可点击「重连」重新打开终端',
-      clearLatency: true,
-      unstable: false,
-    ));
+    _setState(
+      state.copyWith(
+        status: TerminalStatus.disconnected,
+        message: '连接已关闭，可点击「重连」重新打开终端',
+        clearLatency: true,
+        unstable: false,
+      ),
+    );
     _maybeAutoReconnect();
   }
 
@@ -407,20 +427,24 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
 
   void _handleAuthFailure(WsAuthException e) {
     final message = e.message;
-    final needsPassCode = message.contains('2FA') ||
+    final needsPassCode =
+        message.contains('2FA') ||
         message.contains('两步') ||
         (message.contains('验证码') && !message.contains('图形'));
-    final needsCredentials = !needsPassCode &&
+    final needsCredentials =
+        !needsPassCode &&
         (message.contains('未配置') ||
             message.contains('账号') ||
             message.contains('密码'));
-    _setState(state.copyWith(
-      status: TerminalStatus.failed,
-      message: message,
-      clearLatency: true,
-      requiresCredentials: needsCredentials,
-      requiresPassCode: needsPassCode,
-    ));
+    _setState(
+      state.copyWith(
+        status: TerminalStatus.failed,
+        message: message,
+        clearLatency: true,
+        requiresCredentials: needsCredentials,
+        requiresPassCode: needsPassCode,
+      ),
+    );
   }
 
   /// 终端 -> 服务端（xterm 的按键输出）。
@@ -437,8 +461,12 @@ class TerminalSessionController extends AutoDisposeFamilyNotifier<
   void sendText(String data) => _sendInput(data);
 
   /// 发送功能键（Esc / Tab / 方向键等），由 xterm 按当前终端模式生成序列。
-  void sendKey(TerminalKey key,
-      {bool ctrl = false, bool alt = false, bool shift = false}) {
+  void sendKey(
+    TerminalKey key, {
+    bool ctrl = false,
+    bool alt = false,
+    bool shift = false,
+  }) {
     _terminal?.keyInput(key, ctrl: ctrl, alt: alt, shift: shift);
   }
 

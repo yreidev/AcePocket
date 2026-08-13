@@ -310,13 +310,13 @@ class _KeyChip extends StatelessWidget {
     final background = !enabled
         ? scheme.surfaceContainerHighest
         : emphasized
-            ? scheme.errorContainer
-            : scheme.surfaceContainer;
+        ? scheme.errorContainer
+        : scheme.surfaceContainer;
     final foreground = !enabled
         ? scheme.onSurfaceVariant.withValues(alpha: 0.5)
         : emphasized
-            ? scheme.onErrorContainer
-            : scheme.onSurface;
+        ? scheme.onErrorContainer
+        : scheme.onSurface;
 
     final content = Container(
       constraints: const BoxConstraints(
@@ -341,8 +341,9 @@ class _KeyChip extends StatelessWidget {
                   label ?? '',
                   maxLines: 1,
                   softWrap: false,
-                  style:
-                      theme.textTheme.labelLarge?.copyWith(color: foreground),
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: foreground,
+                  ),
                 ),
               ),
       ),

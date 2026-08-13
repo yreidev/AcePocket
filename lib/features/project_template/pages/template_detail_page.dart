@@ -44,8 +44,9 @@ class TemplateDetailPage extends ConsumerWidget {
       floatingActionButton: detailAsync.valueOrNull == null
           ? null
           : FloatingActionButton.extended(
-              onPressed: () => context
-                  .push('/templates/${Uri.encodeComponent(slug)}/deploy'),
+              onPressed: () => context.push(
+                '/templates/${Uri.encodeComponent(slug)}/deploy',
+              ),
               icon: const Icon(Icons.rocket_launch_outlined),
               label: const Text('部署'),
             ),
@@ -82,9 +83,7 @@ class TemplateDetailPage extends ConsumerWidget {
                             template.name.isEmpty
                                 ? template.slug
                                 : template.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
+                            style: Theme.of(context).textTheme.titleLarge
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 4),
@@ -92,13 +91,11 @@ class TemplateDetailPage extends ConsumerWidget {
                             template.description.isEmpty
                                 ? '暂无描述'
                                 : template.description,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
                                 ),
                           ),
                         ],
@@ -109,40 +106,42 @@ class TemplateDetailPage extends ConsumerWidget {
               ),
               SectionCard(
                 title: '基本信息',
-                child: _InfoList(items: [
-                  ('标识 slug', template.slug),
-                  ('来源', template.local ? '本地模板' : '应用商店'),
-                  (
-                    '分类',
-                    template.categories.isEmpty
-                        ? '—'
-                        : template.categories.map(categoryLabel).join('、')
-                  ),
-                  (
-                    '支持架构',
-                    template.architectures.isEmpty
-                        ? '不限'
-                        : template.architectures.join('、')
-                  ),
-                  ('官网', template.website.isEmpty ? '—' : template.website),
-                  ('创建时间', _fmtTime(template.createdAt)),
-                  ('更新时间', _fmtTime(template.updatedAt)),
-                ]),
+                child: _InfoList(
+                  items: [
+                    ('标识 slug', template.slug),
+                    ('来源', template.local ? '本地模板' : '应用商店'),
+                    (
+                      '分类',
+                      template.categories.isEmpty
+                          ? '—'
+                          : template.categories.map(categoryLabel).join('、'),
+                    ),
+                    (
+                      '支持架构',
+                      template.architectures.isEmpty
+                          ? '不限'
+                          : template.architectures.join('、'),
+                    ),
+                    ('官网', template.website.isEmpty ? '—' : template.website),
+                    ('创建时间', _fmtTime(template.createdAt)),
+                    ('更新时间', _fmtTime(template.updatedAt)),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '环境变量',
                 trailing: Text(
                   '${template.environments.length} 项',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 child: template.environments.isEmpty
                     ? Text(
                         '该模板无需配置环境变量',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -202,15 +201,17 @@ class _EnvRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   env.label,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               if (env.required)
                 Text(
                   '必填',
-                  style: theme.textTheme.labelSmall
-                      ?.copyWith(color: theme.colorScheme.error),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                 ),
             ],
           ),

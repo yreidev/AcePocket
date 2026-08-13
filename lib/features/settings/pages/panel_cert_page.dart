@@ -65,10 +65,8 @@ class _PanelCertPageState extends ConsumerState<PanelCertPage> {
           Expanded(
             child: settingAsync.when(
               loading: () => const LoadingView(message: '正在读取面板证书…'),
-              error: (error, _) => ErrorView(
-                error: error,
-                onRetry: _reloadForm,
-              ),
+              error: (error, _) =>
+                  ErrorView(error: error, onRetry: _reloadForm),
               data: (setting) => _CertForm(
                 key: ValueKey(
                   '$_formEpoch#${setting.cert.hashCode}-${setting.key.hashCode}',
@@ -108,10 +106,12 @@ class _CertFormState extends ConsumerState<_CertForm> {
     'custom': '自定义证书',
   };
 
-  late final TextEditingController _cert =
-      TextEditingController(text: widget.setting.cert);
-  late final TextEditingController _key =
-      TextEditingController(text: widget.setting.key);
+  late final TextEditingController _cert = TextEditingController(
+    text: widget.setting.cert,
+  );
+  late final TextEditingController _key = TextEditingController(
+    text: widget.setting.key,
+  );
 
   bool _saving = false;
   bool _obtaining = false;
@@ -153,10 +153,11 @@ class _CertFormState extends ConsumerState<_CertForm> {
     final ok = await showConfirmDialog(
       context,
       title: '更新面板证书？',
-      content: '新的证书与私钥会立即写入面板并热加载。'
+      content:
+          '新的证书与私钥会立即写入面板并热加载。'
           '${widget.setting.tls == 'off' ? '\n\n当前面板 TLS 模式为「关闭」，证书保存后不会生效，'
-              '需要在面板设置中把 TLS 模式改为「自定义证书」。' : '\n\n若证书与当前访问的域名 / IP 不匹配，'
-              'App 与浏览器都可能提示证书错误。'}',
+                    '需要在面板设置中把 TLS 模式改为「自定义证书」。' : '\n\n若证书与当前访问的域名 / IP 不匹配，'
+                    'App 与浏览器都可能提示证书错误。'}',
       confirmText: '保存证书',
       danger: true,
     );
@@ -185,7 +186,7 @@ class _CertFormState extends ConsumerState<_CertForm> {
       title: isAcme ? '重新签发面板证书' : '重新生成自签证书',
       content: isAcme
           ? '将向 ACME 服务商申请新的面板证书，需要面板设置中的公网 IP 正确且可从公网访问，'
-              '过程可能耗时较久。'
+                '过程可能耗时较久。'
           : '将重新生成面板自签名证书，签发完成后面板会重启。',
       confirmText: '开始签发',
     );
@@ -207,7 +208,9 @@ class _CertFormState extends ConsumerState<_CertForm> {
   }
 
   Future<void> _pasteInto(
-      TextEditingController controller, String label) async {
+    TextEditingController controller,
+    String label,
+  ) async {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     final text = data?.text ?? '';
     if (!mounted) return;
@@ -258,10 +261,7 @@ class _CertFormState extends ConsumerState<_CertForm> {
                     label: 'TLS 模式',
                     value: _tlsModes[setting.tls] ?? setting.tls,
                   ),
-                  InfoRow(
-                    label: '面板端口',
-                    value: '${setting.port}',
-                  ),
+                  InfoRow(label: '面板端口', value: '${setting.port}'),
                   InfoRow(
                     label: '证书',
                     value: setting.cert.trim().isEmpty ? '未设置' : '已设置',
@@ -300,8 +300,9 @@ class _CertFormState extends ConsumerState<_CertForm> {
                 minLines: 5,
                 maxLines: 12,
                 keyboardType: TextInputType.multiline,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
                 decoration: const InputDecoration(
                   hintText: '-----BEGIN CERTIFICATE-----',
                   alignLabelWithHint: true,
@@ -322,8 +323,9 @@ class _CertFormState extends ConsumerState<_CertForm> {
                 minLines: 5,
                 maxLines: 12,
                 keyboardType: TextInputType.multiline,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
                 decoration: const InputDecoration(
                   hintText: '-----BEGIN PRIVATE KEY-----',
                   alignLabelWithHint: true,

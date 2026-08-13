@@ -104,7 +104,8 @@ class _ProcessesPageState extends ConsumerState<ProcessesPage> {
     final ok = await showConfirmDialog(
       context,
       title: '结束进程',
-      content: '将向 ${process.name}（PID ${process.pid}）发送 SIGKILL 强制结束该进程。\n'
+      content:
+          '将向 ${process.name}（PID ${process.pid}）发送 SIGKILL 强制结束该进程。\n'
           '若为系统关键进程，可能导致服务异常，确定继续吗？',
       confirmText: '结束进程',
       danger: true,
@@ -126,7 +127,8 @@ class _ProcessesPageState extends ConsumerState<ProcessesPage> {
     final ok = await showConfirmDialog(
       context,
       title: '发送 ${signal.name}',
-      content: '确定向 ${process.name}（PID ${process.pid}）发送 '
+      content:
+          '确定向 ${process.name}（PID ${process.pid}）发送 '
           '${signal.name}（${signal.description}）吗？',
       confirmText: '发送',
       danger: signal.value == 9 || signal.value == 15 || signal.value == 19,
@@ -168,9 +170,9 @@ class _ProcessesPageState extends ConsumerState<ProcessesPage> {
                 groupValue: query.sort,
                 onChanged: (value) {
                   if (value == null) return;
-                  Navigator.of(context).pop(
-                    ProcessSortField.all.firstWhere((f) => f.key == value),
-                  );
+                  Navigator.of(
+                    context,
+                  ).pop(ProcessSortField.all.firstWhere((f) => f.key == value));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -284,10 +286,7 @@ class _ProcessesPageState extends ConsumerState<ProcessesPage> {
       return const LoadingView(message: '加载进程列表…');
     }
     if (state.error != null && state.items.isEmpty) {
-      return ErrorView(
-        error: state.error!,
-        onRetry: () => _notifier.reload(),
-      );
+      return ErrorView(error: state.error!, onRetry: () => _notifier.reload());
     }
 
     return RefreshIndicator(

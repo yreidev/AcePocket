@@ -84,7 +84,9 @@ class _EsDocumentSheetState extends ConsumerState<EsDocumentSheet> {
       _loadError = null;
     });
     try {
-      final doc = await ref.read(databaseRepoProvider).esDocumentGet(
+      final doc = await ref
+          .read(databaseRepoProvider)
+          .esDocumentGet(
             serverId: widget.serverId,
             index: widget.index,
             id: widget.docId!,
@@ -120,7 +122,9 @@ class _EsDocumentSheetState extends ConsumerState<EsDocumentSheet> {
     setState(() => _submitting = true);
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).esDocumentSet(
+      () => ref
+          .read(databaseRepoProvider)
+          .esDocumentSet(
             serverId: widget.serverId,
             index: widget.index,
             id: _id.text.trim(),

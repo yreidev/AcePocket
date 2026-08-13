@@ -10,31 +10,36 @@ final optionsRepoProvider = Provider<OptionsRepo>((ref) {
 });
 
 /// 网站名称选项。
-final websiteOptionsProvider =
-    FutureProvider.autoDispose<List<OptionItem>>((ref) async {
+final websiteOptionsProvider = FutureProvider.autoDispose<List<OptionItem>>((
+  ref,
+) async {
   return ref.watch(optionsRepoProvider).websites();
 });
 
 /// 指定类型的数据库选项（mysql / postgresql / clickhouse）。
 final databaseOptionsProvider = FutureProvider.autoDispose
     .family<List<OptionItem>, String>((ref, type) async {
-  return ref.watch(optionsRepoProvider).databases(type);
-});
+      return ref.watch(optionsRepoProvider).databases(type);
+    });
 
 /// 容器名称选项。
-final containerOptionsProvider =
-    FutureProvider.autoDispose<List<OptionItem>>((ref) async {
+final containerOptionsProvider = FutureProvider.autoDispose<List<OptionItem>>((
+  ref,
+) async {
   return ref.watch(optionsRepoProvider).containers();
 });
 
 /// 指定应用（逗号分隔 slug）是否已安装。
-final appInstalledProvider =
-    FutureProvider.autoDispose.family<bool, String>((ref, slugs) async {
+final appInstalledProvider = FutureProvider.autoDispose.family<bool, String>((
+  ref,
+  slugs,
+) async {
   return ref.watch(optionsRepoProvider).isInstalled(slugs);
 });
 
 /// 已安装的数据库类型集合。
-final installedDatabaseTypesProvider =
-    FutureProvider.autoDispose<Set<String>>((ref) async {
+final installedDatabaseTypesProvider = FutureProvider.autoDispose<Set<String>>((
+  ref,
+) async {
   return ref.watch(optionsRepoProvider).installedDatabaseTypes();
 });

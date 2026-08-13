@@ -90,27 +90,27 @@ class CertListItem {
   }
 
   factory CertListItem.fromJson(Map<String, dynamic> json) => CertListItem(
-        id: jsonInt(json['id']),
-        accountId: jsonInt(json['account_id']),
-        websiteId: jsonInt(json['website_id']),
-        dnsId: jsonInt(json['dns_id']),
-        type: jsonString(json['type']),
-        domains: jsonStringList(json['domains']),
-        alias: jsonStringMap(json['alias']),
-        autoRenewal: jsonBool(json['auto_renewal']),
-        nextRenewal: jsonTime(json['next_renewal']),
-        cert: jsonString(json['cert']),
-        key: jsonString(json['key']),
-        certUrl: jsonString(json['cert_url']),
-        script: jsonString(json['script']),
-        notBefore: jsonTime(json['not_before']),
-        notAfter: jsonTime(json['not_after']),
-        issuer: jsonString(json['issuer']),
-        ocspServer: jsonStringList(json['ocsp_server']),
-        dnsNames: jsonStringList(json['dns_names']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    accountId: jsonInt(json['account_id']),
+    websiteId: jsonInt(json['website_id']),
+    dnsId: jsonInt(json['dns_id']),
+    type: jsonString(json['type']),
+    domains: jsonStringList(json['domains']),
+    alias: jsonStringMap(json['alias']),
+    autoRenewal: jsonBool(json['auto_renewal']),
+    nextRenewal: jsonTime(json['next_renewal']),
+    cert: jsonString(json['cert']),
+    key: jsonString(json['key']),
+    certUrl: jsonString(json['cert_url']),
+    script: jsonString(json['script']),
+    notBefore: jsonTime(json['not_before']),
+    notAfter: jsonTime(json['not_after']),
+    issuer: jsonString(json['issuer']),
+    ocspServer: jsonStringList(json['ocsp_server']),
+    dnsNames: jsonStringList(json['dns_names']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 }
 
 /// 证书完整实体（internal/biz.Cert，创建 / 上传 / 详情接口的响应）。
@@ -148,19 +148,19 @@ class Cert {
   final DateTime? updatedAt;
 
   factory Cert.fromJson(Map<String, dynamic> json) => Cert(
-        id: jsonInt(json['id']),
-        accountId: jsonInt(json['account_id']),
-        websiteId: jsonInt(json['website_id']),
-        dnsId: jsonInt(json['dns_id']),
-        type: jsonString(json['type']),
-        domains: jsonStringList(json['domains']),
-        alias: jsonStringMap(json['alias']),
-        autoRenewal: jsonBool(json['auto_renewal']),
-        certUrl: jsonString(json['cert_url']),
-        cert: jsonString(json['cert']),
-        key: jsonString(json['key']),
-        script: jsonString(json['script']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    accountId: jsonInt(json['account_id']),
+    websiteId: jsonInt(json['website_id']),
+    dnsId: jsonInt(json['dns_id']),
+    type: jsonString(json['type']),
+    domains: jsonStringList(json['domains']),
+    alias: jsonStringMap(json['alias']),
+    autoRenewal: jsonBool(json['auto_renewal']),
+    certUrl: jsonString(json['cert_url']),
+    cert: jsonString(json['cert']),
+    key: jsonString(json['key']),
+    script: jsonString(json['script']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 }

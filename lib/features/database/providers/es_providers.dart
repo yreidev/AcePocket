@@ -29,16 +29,17 @@ class EsDataQuery {
 }
 
 /// 指定 Elasticsearch 服务器的索引列表。
-final esIndicesProvider =
-    FutureProvider.autoDispose.family<List<EsIndex>, int>((ref, serverId) {
-  return ref.watch(databaseRepoProvider).esIndices(serverId);
-});
+final esIndicesProvider = FutureProvider.autoDispose.family<List<EsIndex>, int>(
+  (ref, serverId) {
+    return ref.watch(databaseRepoProvider).esIndices(serverId);
+  },
+);
 
 /// Elasticsearch 文档分页列表。
 final esDataProvider = AsyncNotifierProvider.autoDispose
     .family<EsDataNotifier, PagedState<EsDocument>, EsDataQuery>(
-  EsDataNotifier.new,
-);
+      EsDataNotifier.new,
+    );
 
 class EsDataNotifier extends DatabasePagedNotifier<EsDocument, EsDataQuery> {
   @override
@@ -50,7 +51,9 @@ class EsDataNotifier extends DatabasePagedNotifier<EsDocument, EsDataQuery> {
 
   @override
   PageFetcher<EsDocument> get fetcher =>
-      (page, limit) => ref.read(databaseRepoProvider).esData(
+      (page, limit) => ref
+          .read(databaseRepoProvider)
+          .esData(
             serverId: arg.serverId,
             index: arg.index,
             page: page,

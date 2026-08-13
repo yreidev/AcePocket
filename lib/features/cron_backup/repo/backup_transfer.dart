@@ -39,14 +39,16 @@ import '../../files/repo/transfer_client.dart';
 /// 下载走 [PanelTransferClient.downloadBackup]（本身即流式，无需另做实现）。
 class BackupUploader {
   BackupUploader(this.server) {
-    _dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      // 大文件上传耗时长，超时按「两次数据块之间的间隔」计；中断由取消令牌负责。
-      sendTimeout: const Duration(minutes: 30),
-      receiveTimeout: const Duration(minutes: 30),
-      responseType: ResponseType.plain,
-      validateStatus: (_) => true,
-    ));
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 15),
+        // 大文件上传耗时长，超时按「两次数据块之间的间隔」计；中断由取消令牌负责。
+        sendTimeout: const Duration(minutes: 30),
+        receiveTimeout: const Duration(minutes: 30),
+        responseType: ResponseType.plain,
+        validateStatus: (_) => true,
+      ),
+    );
     // 证书校验策略（含 TOFU 指纹固定）统一在 panel_http_client.dart 实现。
     _dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () => createPanelHttpClient(server),
@@ -112,9 +114,11 @@ class BackupUploader {
         .replaceAll('"', '%22')
         .replaceAll('\r', '')
         .replaceAll('\n', '');
-    final prefix = utf8.encode('--$boundary\r\n'
-        'Content-Disposition: form-data; name="file"; filename="$safeName"\r\n'
-        'Content-Type: application/octet-stream\r\n\r\n');
+    final prefix = utf8.encode(
+      '--$boundary\r\n'
+      'Content-Disposition: form-data; name="file"; filename="$safeName"\r\n'
+      'Content-Type: application/octet-stream\r\n\r\n',
+    );
     final suffix = utf8.encode('\r\n--$boundary--\r\n');
     final total = prefix.length + fileLength + suffix.length;
 
@@ -270,8 +274,10 @@ class BackupUploader {
   static String _randomBoundary() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     final rnd = Random.secure();
-    final suffix =
-        List.generate(24, (_) => chars[rnd.nextInt(chars.length)]).join();
+    final suffix = List.generate(
+      24,
+      (_) => chars[rnd.nextInt(chars.length)],
+    ).join();
     return '----AcePanelMobile$suffix';
   }
 }

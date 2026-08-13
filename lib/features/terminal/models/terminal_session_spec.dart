@@ -37,10 +37,8 @@ class TerminalSessionSpec {
   });
 
   /// 本机 bash 终端（默认会话）。
-  factory TerminalSessionSpec.local() => const TerminalSessionSpec(
-        kind: TerminalSessionKind.pty,
-        title: '本机终端',
-      );
+  factory TerminalSessionSpec.local() =>
+      const TerminalSessionSpec(kind: TerminalSessionKind.pty, title: '本机终端');
 
   /// 从路由查询参数构造，参数缺失或非法时回退为本机 bash 终端。
   factory TerminalSessionSpec.fromQuery(Map<String, String> query) {
@@ -50,8 +48,9 @@ class TerminalSessionSpec {
     if (sshId.isNotEmpty && int.tryParse(sshId) != null) {
       return TerminalSessionSpec(
         kind: TerminalSessionKind.ssh,
-        title:
-            title.isEmpty ? '${TerminalSessionKind.ssh.label} #$sshId' : title,
+        title: title.isEmpty
+            ? '${TerminalSessionKind.ssh.label} #$sshId'
+            : title,
         targetId: sshId,
       );
     }
@@ -88,10 +87,10 @@ class TerminalSessionSpec {
 
   /// WebSocket 路径（`/api` 之后的部分，交给 core 的 `wsConnect`）。
   String get wsPath => switch (kind) {
-        TerminalSessionKind.pty => '/ws/pty',
-        TerminalSessionKind.ssh => '/ws/ssh',
-        TerminalSessionKind.container => '/ws/container/$targetId',
-      };
+    TerminalSessionKind.pty => '/ws/pty',
+    TerminalSessionKind.ssh => '/ws/ssh',
+    TerminalSessionKind.container => '/ws/container/$targetId',
+  };
 
   /// WebSocket 查询参数。
   Map<String, String>? get wsQuery =>
@@ -109,20 +108,17 @@ class TerminalSessionSpec {
 
   /// 副标题：命令 / 目标 id，用于状态栏展示。
   String get subtitle => switch (kind) {
-        TerminalSessionKind.pty => command,
-        TerminalSessionKind.ssh => 'SSH #$targetId',
-        TerminalSessionKind.container => _shortId(targetId),
-      };
+    TerminalSessionKind.pty => command,
+    TerminalSessionKind.ssh => 'SSH #$targetId',
+    TerminalSessionKind.container => _shortId(targetId),
+  };
 
   /// 反向生成路由查询参数（供其他模块跳转时复用）。
   Map<String, String> toQuery() => switch (kind) {
-        TerminalSessionKind.pty => {'command': command, 'title': title},
-        TerminalSessionKind.ssh => {'ssh': targetId, 'title': title},
-        TerminalSessionKind.container => {
-            'container': targetId,
-            'title': title
-          },
-      };
+    TerminalSessionKind.pty => {'command': command, 'title': title},
+    TerminalSessionKind.ssh => {'ssh': targetId, 'title': title},
+    TerminalSessionKind.container => {'container': targetId, 'title': title},
+  };
 
   static String _shortId(String id) =>
       id.length > 12 ? id.substring(0, 12) : id;

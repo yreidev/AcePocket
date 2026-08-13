@@ -70,10 +70,12 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
   final Map<String, GlobalKey> _envFieldKeys = {};
 
   late final String _initialName = _sanitizeName(widget.template.slug);
-  late final TextEditingController _nameController =
-      TextEditingController(text: _initialName);
-  late final TextEditingController _composeController =
-      TextEditingController(text: widget.template.compose);
+  late final TextEditingController _nameController = TextEditingController(
+    text: _initialName,
+  );
+  late final TextEditingController _composeController = TextEditingController(
+    text: widget.template.compose,
+  );
 
   /// 模板定义的环境变量当前值（key 为变量名）。
   final Map<String, String> _envValues = {};
@@ -165,7 +167,8 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
 
   /// 表单内容变化：重算「是否有未提交的修改」，变化时才 setState。
   void _onFormChanged() {
-    final dirty = !_deployed &&
+    final dirty =
+        !_deployed &&
         (_nameController.text != _initialName ||
             _composeController.text != widget.template.compose ||
             _extraEnvs.isNotEmpty ||
@@ -232,10 +235,7 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
     final candidates = <(GlobalKey, String?)>[
       (_nameFieldKey, _validateName(_nameController.text)),
       for (final env in widget.template.environments)
-        (
-          _envFieldKeys[env.name]!,
-          _validateEnv(env, _envValues[env.name]),
-        ),
+        (_envFieldKeys[env.name]!, _validateEnv(env, _envValues[env.name])),
       (_composeFieldKey, _validateCompose(_composeController.text)),
     ];
     for (final (key, error) in candidates) {
@@ -270,7 +270,8 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
     final ok = await showConfirmDialog(
       context,
       title: '部署模板',
-      content: '将使用模板「${widget.template.name}」创建编排「$name」。'
+      content:
+          '将使用模板「${widget.template.name}」创建编排「$name」。'
           '${_autoFirewall ? '\n面板会自动放行编排中声明的端口。' : ''}'
           '${_autoStart ? '\n创建完成后立即启动编排（docker compose up -d）。' : ''}',
       confirmText: '开始部署',
@@ -361,8 +362,9 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
     );
     if (!mounted) return;
     if (action == 'compose') {
-      context
-          .pushReplacement('/containers/compose/${Uri.encodeComponent(name)}');
+      context.pushReplacement(
+        '/containers/compose/${Uri.encodeComponent(name)}',
+      );
     }
   }
 
@@ -378,8 +380,11 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
       child: Scaffold(
         appBar: AppBar(
           // 模板名可能很长，单行省略而不是把标题挤没。
-          title:
-              Text('部署 · $title', maxLines: 1, overflow: TextOverflow.ellipsis),
+          title: Text(
+            '部署 · $title',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(
@@ -502,8 +507,8 @@ class _DeployFormState extends ConsumerState<_DeployForm> {
                   onPressed: _submitting
                       ? null
                       : () => setState(
-                            () => _composeController.text = template.compose,
-                          ),
+                          () => _composeController.text = template.compose,
+                        ),
                   icon: const Icon(Icons.restore, size: 18),
                   label: const Text('恢复默认'),
                 ),

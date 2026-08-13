@@ -27,8 +27,10 @@ class DiskPage extends ConsumerStatefulWidget {
 
 class _DiskPageState extends ConsumerState<DiskPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 3,
+    vsync: this,
+  );
 
   @override
   void dispose() {
@@ -106,11 +108,7 @@ class _DiskPageState extends ConsumerState<DiskPage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                DiskTab(),
-                LvmTab(),
-                FstabTab(),
-              ],
+              children: const [DiskTab(), LvmTab(), FstabTab()],
             ),
           ),
         ],

@@ -66,8 +66,9 @@ class SftpPathBar extends StatelessWidget {
                           color: isLast
                               ? theme.colorScheme.primary
                               : theme.colorScheme.onSurfaceVariant,
-                          fontWeight:
-                              isLast ? FontWeight.w600 : FontWeight.w400,
+                          fontWeight: isLast
+                              ? FontWeight.w600
+                              : FontWeight.w400,
                         ),
                       ),
                     ),
@@ -76,11 +77,9 @@ class SftpPathBar extends StatelessWidget {
         ),
       );
       if (!isLast) {
-        children.add(Icon(
-          Icons.chevron_right,
-          size: 16,
-          color: theme.colorScheme.outline,
-        ));
+        children.add(
+          Icon(Icons.chevron_right, size: 16, color: theme.colorScheme.outline),
+        );
       }
     }
 

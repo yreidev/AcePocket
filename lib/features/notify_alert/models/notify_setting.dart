@@ -50,16 +50,8 @@ const List<NotifyEventMeta> kNotifyEvents = <NotifyEventMeta>[
     label: '防篡改拦截',
     description: '防篡改规则拦截到写入操作时通知',
   ),
-  NotifyEventMeta(
-    value: 'health',
-    label: '面板健康问题',
-    description: '面板自检发现异常时通知',
-  ),
-  NotifyEventMeta(
-    value: 'login',
-    label: '面板登录',
-    description: '有账号登录面板时通知',
-  ),
+  NotifyEventMeta(value: 'health', label: '面板健康问题', description: '面板自检发现异常时通知'),
+  NotifyEventMeta(value: 'login', label: '面板登录', description: '有账号登录面板时通知'),
   NotifyEventMeta(
     value: 'login_failed',
     label: '面板登录失败过多',
@@ -87,18 +79,20 @@ class NotifySetting {
   /// 接收事件通知的渠道 ID 列表。
   final List<int> channels;
 
-  static const NotifySetting empty =
-      NotifySetting(events: <String>[], channels: <int>[]);
+  static const NotifySetting empty = NotifySetting(
+    events: <String>[],
+    channels: <int>[],
+  );
 
   factory NotifySetting.fromJson(Map<String, dynamic> json) => NotifySetting(
-        events: jsonStringList(json['events']),
-        channels: jsonIntList(json['channels']),
-      );
+    events: jsonStringList(json['events']),
+    channels: jsonIntList(json['channels']),
+  );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'events': events,
-        'channels': channels,
-      };
+    'events': events,
+    'channels': channels,
+  };
 
   NotifySetting copyWith({List<String>? events, List<int>? channels}) =>
       NotifySetting(
@@ -119,9 +113,9 @@ class NotifySetting {
 
   @override
   int get hashCode => Object.hash(
-        Object.hashAllUnordered(events),
-        Object.hashAllUnordered(channels),
-      );
+    Object.hashAllUnordered(events),
+    Object.hashAllUnordered(channels),
+  );
 
   /// 忽略顺序比较：勾选顺序不同但内容相同的两份设置等价
   /// （面板侧 events / channels 都按集合语义处理）。

@@ -63,11 +63,9 @@ class PathBreadcrumb extends StatelessWidget {
         ),
       );
       if (!isLast) {
-        children.add(Icon(
-          Icons.chevron_right,
-          size: 16,
-          color: theme.colorScheme.outline,
-        ));
+        children.add(
+          Icon(Icons.chevron_right, size: 16, color: theme.colorScheme.outline),
+        );
       }
     }
 

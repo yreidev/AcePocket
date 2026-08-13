@@ -9,7 +9,9 @@ void main() {
       expect(validatePanelBaseUrl('https://panel.example.com:13140'), isNull);
       // 前后空白与尾部斜杠（由 normalizedBaseUrl 去除）不应报错。
       expect(
-          validatePanelBaseUrl('  https://panel.example.com:13140  '), isNull);
+        validatePanelBaseUrl('  https://panel.example.com:13140  '),
+        isNull,
+      );
       expect(validatePanelBaseUrl('https://panel.example.com:13140/'), isNull);
     });
 
@@ -88,14 +90,8 @@ void main() {
         validatePanelBaseUrl('panel.example.com:8888'),
         contains('https://'),
       );
-      expect(
-        validatePanelBaseUrl('1.2.3.4:8888'),
-        contains('https://'),
-      );
-      expect(
-        validatePanelBaseUrl('ftp://1.2.3.4:8888'),
-        contains('https://'),
-      );
+      expect(validatePanelBaseUrl('1.2.3.4:8888'), contains('https://'));
+      expect(validatePanelBaseUrl('ftp://1.2.3.4:8888'), contains('https://'));
     });
 
     test('端口越界被拒绝', () {
@@ -103,10 +99,7 @@ void main() {
         validatePanelBaseUrl('https://1.2.3.4:70000'),
         contains('1-65535'),
       );
-      expect(
-        validatePanelBaseUrl('https://1.2.3.4:0'),
-        contains('1-65535'),
-      );
+      expect(validatePanelBaseUrl('https://1.2.3.4:0'), contains('1-65535'));
       // 边界值合法。
       expect(validatePanelBaseUrl('https://1.2.3.4:1'), isNull);
       expect(validatePanelBaseUrl('https://1.2.3.4:65535'), isNull);
@@ -115,10 +108,7 @@ void main() {
     test('IPv6 地址通过校验', () {
       expect(validatePanelBaseUrl('https://[::1]:8888'), isNull);
       // IPv6 同样适用路径 / 端口校验。
-      expect(
-        validatePanelBaseUrl('https://[::1]/8888'),
-        contains(':8888'),
-      );
+      expect(validatePanelBaseUrl('https://[::1]/8888'), contains(':8888'));
     });
   });
 }

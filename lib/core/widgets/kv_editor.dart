@@ -13,8 +13,8 @@ class KvEntry {
 /// 一行键值对的输入控制器；实例本身即该行的稳定身份。
 class _KvRow {
   _KvRow(String key, String value)
-      : keyController = TextEditingController(text: key),
-        valueController = TextEditingController(text: value);
+    : keyController = TextEditingController(text: key),
+      valueController = TextEditingController(text: value);
 
   final TextEditingController keyController;
   final TextEditingController valueController;
@@ -140,7 +140,8 @@ class _KvEditorState extends State<KvEditor> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final emptyHint = widget.emptyHint ??
+    final emptyHint =
+        widget.emptyHint ??
         (widget.label == null
             ? '暂无内容'
             : '未设置${widget.label}，点击「${widget.addLabel}」新增一条');
@@ -204,8 +205,10 @@ class _KvEditorState extends State<KvEditor> {
                 ),
                 A11yIconButton(
                   tooltip: '移除第 ${i + 1} 项',
-                  icon: Icon(Icons.remove_circle_outline,
-                      color: theme.colorScheme.error),
+                  icon: Icon(
+                    Icons.remove_circle_outline,
+                    color: theme.colorScheme.error,
+                  ),
                   onPressed: () => _removeAt(i),
                 ),
               ],

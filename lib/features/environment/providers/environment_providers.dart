@@ -33,12 +33,11 @@ class EnvironmentFilter {
     String? type,
     bool? onlyInstalled,
     String? query,
-  }) =>
-      EnvironmentFilter(
-        type: type ?? this.type,
-        onlyInstalled: onlyInstalled ?? this.onlyInstalled,
-        query: query ?? this.query,
-      );
+  }) => EnvironmentFilter(
+    type: type ?? this.type,
+    onlyInstalled: onlyInstalled ?? this.onlyInstalled,
+    query: query ?? this.query,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -68,16 +67,16 @@ class EnvironmentFilterNotifier extends Notifier<EnvironmentFilter> {
 /// 列表页筛选条件（跨页面保留，从详情页返回时不丢失）。
 final environmentFilterProvider =
     NotifierProvider<EnvironmentFilterNotifier, EnvironmentFilter>(
-  EnvironmentFilterNotifier.new,
-);
+      EnvironmentFilterNotifier.new,
+    );
 
 // -------------------------------------------------------------------- 环境列表
 
 /// 运行环境类型（Go / Java / Node.js / PHP / Python / .NET）。
 final environmentTypesProvider =
     FutureProvider.autoDispose<List<EnvironmentType>>(
-  (ref) => ref.watch(environmentRepoProvider).types(),
-);
+      (ref) => ref.watch(environmentRepoProvider).types(),
+    );
 
 /// 运行环境列表。
 ///
@@ -85,30 +84,32 @@ final environmentTypesProvider =
 /// （接口一次性返回全部数据，无分页，见 [EnvironmentRepository.list]）。
 final environmentListProvider =
     FutureProvider.autoDispose<List<EnvironmentDetail>>((ref) {
-  final scope = ref.watch(
-    environmentFilterProvider.select((f) => (f.type, f.onlyInstalled)),
-  );
-  return ref.watch(environmentRepoProvider).list(
-        type: scope.$1,
-        onlyInstalled: scope.$2,
+      final scope = ref.watch(
+        environmentFilterProvider.select((f) => (f.type, f.onlyInstalled)),
       );
-});
+      return ref
+          .watch(environmentRepoProvider)
+          .list(type: scope.$1, onlyInstalled: scope.$2);
+    });
 
 /// 应用关键字过滤后的列表。
 final visibleEnvironmentsProvider =
     Provider.autoDispose<AsyncValue<List<EnvironmentDetail>>>((ref) {
-  final query =
-      ref.watch(environmentFilterProvider.select((f) => f.query)).trim();
-  final lowered = query.toLowerCase();
-  return ref.watch(environmentListProvider).whenData((items) {
-    if (lowered.isEmpty) return items;
-    return items
-        .where((e) =>
-            e.name.toLowerCase().contains(lowered) ||
-            e.description.toLowerCase().contains(lowered))
-        .toList(growable: false);
-  });
-});
+      final query = ref
+          .watch(environmentFilterProvider.select((f) => f.query))
+          .trim();
+      final lowered = query.toLowerCase();
+      return ref.watch(environmentListProvider).whenData((items) {
+        if (lowered.isEmpty) return items;
+        return items
+            .where(
+              (e) =>
+                  e.name.toLowerCase().contains(lowered) ||
+                  e.description.toLowerCase().contains(lowered),
+            )
+            .toList(growable: false);
+      });
+    });
 
 // -------------------------------------------------------------------- 环境详情
 
@@ -133,19 +134,21 @@ class EnvironmentRef {
 /// 单个环境的详情（从 `/environment/list?type=` 中按 slug 命中）。
 final environmentDetailProvider = FutureProvider.autoDispose
     .family<EnvironmentDetail?, EnvironmentRef>((ref, key) async {
-  final items = await ref.watch(environmentRepoProvider).list(type: key.type);
-  for (final item in items) {
-    if (item.slug == key.slug) return item;
-  }
-  return null;
-});
+      final items = await ref
+          .watch(environmentRepoProvider)
+          .list(type: key.type);
+      for (final item in items) {
+        if (item.slug == key.slug) return item;
+      }
+      return null;
+    });
 
 /// 环境是否已安装（`GET /environment/is_installed`）。
-final environmentInstalledProvider =
-    FutureProvider.autoDispose.family<bool, EnvironmentRef>(
-  (ref, key) =>
-      ref.watch(environmentRepoProvider).isInstalled(key.type, key.slug),
-);
+final environmentInstalledProvider = FutureProvider.autoDispose
+    .family<bool, EnvironmentRef>(
+      (ref, key) =>
+          ref.watch(environmentRepoProvider).isInstalled(key.type, key.slug),
+    );
 
 // ------------------------------------------------------------ Go / Node / Py
 
@@ -155,10 +158,10 @@ final goProxyProvider = FutureProvider.autoDispose.family<String, String>(
 );
 
 /// npm 镜像源。
-final nodejsRegistryProvider =
-    FutureProvider.autoDispose.family<String, String>(
-  (ref, slug) => ref.watch(environmentRepoProvider).nodejsRegistry(slug),
-);
+final nodejsRegistryProvider = FutureProvider.autoDispose
+    .family<String, String>(
+      (ref, slug) => ref.watch(environmentRepoProvider).nodejsRegistry(slug),
+    );
 
 /// pip 镜像源。
 final pythonMirrorProvider = FutureProvider.autoDispose.family<String, String>(
@@ -168,10 +171,10 @@ final pythonMirrorProvider = FutureProvider.autoDispose.family<String, String>(
 // -------------------------------------------------------------------- PHP
 
 /// PHP 扩展列表。
-final phpModulesProvider =
-    FutureProvider.autoDispose.family<List<PhpModule>, int>(
-  (ref, version) => ref.watch(environmentRepoProvider).phpModules(version),
-);
+final phpModulesProvider = FutureProvider.autoDispose
+    .family<List<PhpModule>, int>(
+      (ref, version) => ref.watch(environmentRepoProvider).phpModules(version),
+    );
 
 /// PHP-FPM 负载状态。
 final phpLoadProvider = FutureProvider.autoDispose.family<List<NameValue>, int>(
@@ -189,10 +192,11 @@ final phpSlowLogPathProvider = FutureProvider.autoDispose.family<String, int>(
 );
 
 /// PHP 配置调优参数。
-final phpConfigTuneProvider =
-    FutureProvider.autoDispose.family<PhpConfigTune, int>(
-  (ref, version) => ref.watch(environmentRepoProvider).phpConfigTune(version),
-);
+final phpConfigTuneProvider = FutureProvider.autoDispose
+    .family<PhpConfigTune, int>(
+      (ref, version) =>
+          ref.watch(environmentRepoProvider).phpConfigTune(version),
+    );
 
 /// `php.ini` 原文。
 final phpIniProvider = FutureProvider.autoDispose.family<String, int>(

@@ -62,11 +62,13 @@ void main() {
     });
 
     test('正文不是 Base64 时被拒绝', () {
-      const bad = '-----BEGIN CERTIFICATE-----\n'
+      const bad =
+          '-----BEGIN CERTIFICATE-----\n'
           '这不是 base64 内容！\n'
           '-----END CERTIFICATE-----';
       expect(validatePemCertificate(bad), contains('Base64'));
-      const empty = '-----BEGIN CERTIFICATE-----\n'
+      const empty =
+          '-----BEGIN CERTIFICATE-----\n'
           '-----END CERTIFICATE-----';
       expect(validatePemCertificate(empty), contains('Base64'));
     });
@@ -95,7 +97,8 @@ void main() {
     });
 
     test('正文不是 Base64 时被拒绝', () {
-      const bad = '-----BEGIN PRIVATE KEY-----\n'
+      const bad =
+          '-----BEGIN PRIVATE KEY-----\n'
           '不是 base64！\n'
           '-----END PRIVATE KEY-----';
       expect(validatePemPrivateKey(bad), contains('Base64'));

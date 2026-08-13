@@ -26,7 +26,8 @@ typedef WebsiteListState = PagedState<Website>;
 /// 网站列表（下拉刷新 + 上拉分页）。
 final websiteListProvider =
     AsyncNotifierProvider<WebsiteListNotifier, WebsiteListState>(
-        WebsiteListNotifier.new);
+      WebsiteListNotifier.new,
+    );
 
 /// 并发控制（请求代次 / 在途标志 / loadMoreError）由
 /// [KeepAlivePagedAsyncNotifier] 统一提供。
@@ -63,24 +64,26 @@ class WebsiteListNotifier extends KeepAlivePagedAsyncNotifier<Website> {
   void removeItem(int id) {
     final current = state.valueOrNull;
     if (current == null) return;
-    state = AsyncData(current.copyWith(
-      items: current.items.where((e) => e.id != id).toList(growable: false),
-      total: current.total > 0 ? current.total - 1 : 0,
-    ));
+    state = AsyncData(
+      current.copyWith(
+        items: current.items.where((e) => e.id != id).toList(growable: false),
+        total: current.total > 0 ? current.total - 1 : 0,
+      ),
+    );
   }
 }
 
 /// 单个网站的完整配置。
-final websiteSettingProvider =
-    FutureProvider.autoDispose.family<WebsiteSetting, int>(
-  (ref, id) => ref.watch(websiteRepoProvider).getSetting(id),
-);
+final websiteSettingProvider = FutureProvider.autoDispose
+    .family<WebsiteSetting, int>(
+      (ref, id) => ref.watch(websiteRepoProvider).getSetting(id),
+    );
 
 /// 已安装环境（PHP 版本 / 数据库类型 / Web 服务器类型）。
 final installedEnvironmentProvider =
     FutureProvider.autoDispose<InstalledEnvironment>(
-  (ref) => ref.watch(websiteRepoProvider).installedEnvironment(),
-);
+      (ref) => ref.watch(websiteRepoProvider).installedEnvironment(),
+    );
 
 /// 伪静态规则模板。
 final websiteRewritesProvider = FutureProvider.autoDispose<Map<String, String>>(
@@ -102,8 +105,8 @@ final websiteDnsListProvider = FutureProvider.autoDispose<List<DnsItem>>(
 /// 建站默认配置（默认首页 / 停止页 / 404 页 / 默认 TLS 版本）。
 final websiteDefaultConfigProvider =
     FutureProvider.autoDispose<WebsiteDefaultConfig>(
-  (ref) => ref.watch(websiteRepoProvider).defaultConfig(),
-);
+      (ref) => ref.watch(websiteRepoProvider).defaultConfig(),
+    );
 
 /// 当前默认站点 id（0 表示面板内置默认页）。
 final websiteDefaultSiteProvider = FutureProvider.autoDispose<int>(
@@ -111,10 +114,11 @@ final websiteDefaultSiteProvider = FutureProvider.autoDispose<int>(
 );
 
 /// 全部网站（供「默认站点」选择，一次取 1000 条足够覆盖常规场景）。
-final allWebsitesProvider = FutureProvider.autoDispose<List<Website>>(
-  (ref) async {
-    final result =
-        await ref.watch(websiteRepoProvider).list(page: 1, limit: 1000);
-    return result.items;
-  },
-);
+final allWebsitesProvider = FutureProvider.autoDispose<List<Website>>((
+  ref,
+) async {
+  final result = await ref
+      .watch(websiteRepoProvider)
+      .list(page: 1, limit: 1000);
+  return result.items;
+});

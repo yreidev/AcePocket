@@ -23,11 +23,14 @@ class DatabaseRepo {
     required int limit,
     String? type,
   }) async {
-    final data = await _api.get('/database', query: {
-      'page': page,
-      'limit': limit,
-      if (type != null && type.isNotEmpty) 'type': type,
-    });
+    final data = await _api.get(
+      '/database',
+      query: {
+        'page': page,
+        'limit': limit,
+        if (type != null && type.isNotEmpty) 'type': type,
+      },
+    );
     return PageData.parse(data, Database.fromJson);
   }
 
@@ -41,22 +44,21 @@ class DatabaseRepo {
     String password = '',
     String host = '',
     String comment = '',
-  }) =>
-      _api.post('/database', body: {
-        'server_id': serverId,
-        'name': name,
-        'create_user': createUser,
-        'username': username,
-        'password': password,
-        'host': host,
-        'comment': comment,
-      });
+  }) => _api.post(
+    '/database',
+    body: {
+      'server_id': serverId,
+      'name': name,
+      'create_user': createUser,
+      'username': username,
+      'password': password,
+      'host': host,
+      'comment': comment,
+    },
+  );
 
   /// 删除数据库。
-  Future<void> deleteDatabase({
-    required int serverId,
-    required String name,
-  }) =>
+  Future<void> deleteDatabase({required int serverId, required String name}) =>
       _api.delete('/database', body: {'server_id': serverId, 'name': name});
 
   /// 设置数据库注释（仅 postgresql 支持）。
@@ -64,12 +66,10 @@ class DatabaseRepo {
     required int serverId,
     required String name,
     required String comment,
-  }) =>
-      _api.post('/database/comment', body: {
-        'server_id': serverId,
-        'name': name,
-        'comment': comment,
-      });
+  }) => _api.post(
+    '/database/comment',
+    body: {'server_id': serverId, 'name': name, 'comment': comment},
+  );
 
   // ---------------- 数据库服务器 /api/database_server ----------------
 
@@ -79,11 +79,14 @@ class DatabaseRepo {
     required int limit,
     String? type,
   }) async {
-    final data = await _api.get('/database_server', query: {
-      'page': page,
-      'limit': limit,
-      if (type != null && type.isNotEmpty) 'type': type,
-    });
+    final data = await _api.get(
+      '/database_server',
+      query: {
+        'page': page,
+        'limit': limit,
+        if (type != null && type.isNotEmpty) 'type': type,
+      },
+    );
     return PageData.parse(data, DatabaseServer.fromJson);
   }
 
@@ -91,7 +94,8 @@ class DatabaseRepo {
   Future<DatabaseServer> getServer(int id) async {
     final data = await _api.get('/database_server/$id');
     return DatabaseServer.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 创建服务器（host 传 127.0.0.1 即为本机；sqlite 的 host 为数据库文件路径）。
@@ -103,16 +107,18 @@ class DatabaseRepo {
     String username = '',
     String password = '',
     String remark = '',
-  }) =>
-      _api.post('/database_server', body: {
-        'name': name,
-        'type': type,
-        'host': host,
-        'port': port,
-        'username': username,
-        'password': password,
-        'remark': remark,
-      });
+  }) => _api.post(
+    '/database_server',
+    body: {
+      'name': name,
+      'type': type,
+      'host': host,
+      'port': port,
+      'username': username,
+      'password': password,
+      'remark': remark,
+    },
+  );
 
   /// 更新服务器。
   Future<void> updateServer(
@@ -123,15 +129,17 @@ class DatabaseRepo {
     String username = '',
     String password = '',
     String remark = '',
-  }) =>
-      _api.put('/database_server/$id', body: {
-        'name': name,
-        'host': host,
-        'port': port,
-        'username': username,
-        'password': password,
-        'remark': remark,
-      });
+  }) => _api.put(
+    '/database_server/$id',
+    body: {
+      'name': name,
+      'host': host,
+      'port': port,
+      'username': username,
+      'password': password,
+      'remark': remark,
+    },
+  );
 
   /// 更新服务器备注。
   Future<void> updateServerRemark(int id, String remark) =>
@@ -151,11 +159,14 @@ class DatabaseRepo {
     required int limit,
     String? type,
   }) async {
-    final data = await _api.get('/database_user', query: {
-      'page': page,
-      'limit': limit,
-      if (type != null && type.isNotEmpty) 'type': type,
-    });
+    final data = await _api.get(
+      '/database_user',
+      query: {
+        'page': page,
+        'limit': limit,
+        if (type != null && type.isNotEmpty) 'type': type,
+      },
+    );
     return PageData.parse(data, DatabaseUser.fromJson);
   }
 
@@ -163,7 +174,8 @@ class DatabaseRepo {
   Future<DatabaseUser> getUser(int id) async {
     final data = await _api.get('/database_user/$id');
     return DatabaseUser.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 创建用户；[privileges] 为授权数据库名列表（不存在的库会自动创建）。
@@ -174,15 +186,17 @@ class DatabaseRepo {
     String host = '',
     List<String> privileges = const [],
     String remark = '',
-  }) =>
-      _api.post('/database_user', body: {
-        'server_id': serverId,
-        'username': username,
-        'password': password,
-        'host': host,
-        'privileges': privileges,
-        'remark': remark,
-      });
+  }) => _api.post(
+    '/database_user',
+    body: {
+      'server_id': serverId,
+      'username': username,
+      'password': password,
+      'host': host,
+      'privileges': privileges,
+      'remark': remark,
+    },
+  );
 
   /// 更新用户（改密 / 改权限 / 改备注）。
   Future<void> updateUser(
@@ -190,12 +204,10 @@ class DatabaseRepo {
     required String password,
     required List<String> privileges,
     required String remark,
-  }) =>
-      _api.put('/database_user/$id', body: {
-        'password': password,
-        'privileges': privileges,
-        'remark': remark,
-      });
+  }) => _api.put(
+    '/database_user/$id',
+    body: {'password': password, 'privileges': privileges, 'remark': remark},
+  );
 
   /// 更新用户备注。
   Future<void> updateUserRemark(int id, String remark) =>
@@ -208,8 +220,10 @@ class DatabaseRepo {
 
   /// 获取 Redis 数据库数量。
   Future<int> redisDatabases(int serverId) async {
-    final data = await _api
-        .get('/database_redis/databases', query: {'server_id': serverId});
+    final data = await _api.get(
+      '/database_redis/databases',
+      query: {'server_id': serverId},
+    );
     if (data is num) return data.toInt();
     if (data is String) return int.tryParse(data) ?? 0;
     return 0;
@@ -223,13 +237,16 @@ class DatabaseRepo {
     required int limit,
     String? search,
   }) async {
-    final data = await _api.get('/database_redis/data', query: {
-      'server_id': serverId,
-      'db': db,
-      'page': page,
-      'limit': limit,
-      if (search != null && search.isNotEmpty) 'search': search,
-    });
+    final data = await _api.get(
+      '/database_redis/data',
+      query: {
+        'server_id': serverId,
+        'db': db,
+        'page': page,
+        'limit': limit,
+        if (search != null && search.isNotEmpty) 'search': search,
+      },
+    );
     return PageData.parse(data, RedisKv.fromJson);
   }
 
@@ -239,11 +256,10 @@ class DatabaseRepo {
     required int db,
     required String key,
   }) async {
-    final data = await _api.get('/database_redis/key', query: {
-      'server_id': serverId,
-      'db': db,
-      'key': key,
-    });
+    final data = await _api.get(
+      '/database_redis/key',
+      query: {'server_id': serverId, 'db': db, 'key': key},
+    );
     return RedisKv.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
@@ -256,27 +272,27 @@ class DatabaseRepo {
     required String value,
     required String type,
     required int ttl,
-  }) =>
-      _api.post('/database_redis/key', body: {
-        'server_id': serverId,
-        'db': db,
-        'key': key,
-        'value': value,
-        'type': type,
-        'ttl': ttl > 0 ? ttl : 0,
-      });
+  }) => _api.post(
+    '/database_redis/key',
+    body: {
+      'server_id': serverId,
+      'db': db,
+      'key': key,
+      'value': value,
+      'type': type,
+      'ttl': ttl > 0 ? ttl : 0,
+    },
+  );
 
   /// 删除键值。
   Future<void> redisKeyDelete({
     required int serverId,
     required int db,
     required String key,
-  }) =>
-      _api.delete('/database_redis/key', body: {
-        'server_id': serverId,
-        'db': db,
-        'key': key,
-      });
+  }) => _api.delete(
+    '/database_redis/key',
+    body: {'server_id': serverId, 'db': db, 'key': key},
+  );
 
   /// 设置键值过期时间；[ttl] <= 0 表示移除过期时间。
   Future<void> redisKeyTtl({
@@ -284,13 +300,10 @@ class DatabaseRepo {
     required int db,
     required String key,
     required int ttl,
-  }) =>
-      _api.post('/database_redis/key/ttl', body: {
-        'server_id': serverId,
-        'db': db,
-        'key': key,
-        'ttl': ttl,
-      });
+  }) => _api.post(
+    '/database_redis/key/ttl',
+    body: {'server_id': serverId, 'db': db, 'key': key, 'ttl': ttl},
+  );
 
   /// 重命名键值。
   Future<void> redisKeyRename({
@@ -298,27 +311,28 @@ class DatabaseRepo {
     required int db,
     required String oldKey,
     required String newKey,
-  }) =>
-      _api.post('/database_redis/key/rename', body: {
-        'server_id': serverId,
-        'db': db,
-        'old_key': oldKey,
-        'new_key': newKey,
-      });
+  }) => _api.post(
+    '/database_redis/key/rename',
+    body: {
+      'server_id': serverId,
+      'db': db,
+      'old_key': oldKey,
+      'new_key': newKey,
+    },
+  );
 
   /// 清空指定数据库。
-  Future<void> redisClear({required int serverId, required int db}) =>
-      _api.post('/database_redis/clear', body: {
-        'server_id': serverId,
-        'db': db,
-      });
+  Future<void> redisClear({required int serverId, required int db}) => _api
+      .post('/database_redis/clear', body: {'server_id': serverId, 'db': db});
 
   // ---------------- Elasticsearch /api/database_elasticsearch ----------------
 
   /// 获取索引列表。
   Future<List<EsIndex>> esIndices(int serverId) async {
-    final data = await _api
-        .get('/database_elasticsearch/indices', query: {'server_id': serverId});
+    final data = await _api.get(
+      '/database_elasticsearch/indices',
+      query: {'server_id': serverId},
+    );
     if (data is! List) return const [];
     return data
         .whereType<Map<String, dynamic>>()
@@ -328,17 +342,17 @@ class DatabaseRepo {
 
   /// 创建索引。
   Future<void> esIndexCreate({required int serverId, required String name}) =>
-      _api.post('/database_elasticsearch/index', body: {
-        'server_id': serverId,
-        'name': name,
-      });
+      _api.post(
+        '/database_elasticsearch/index',
+        body: {'server_id': serverId, 'name': name},
+      );
 
   /// 删除索引。
   Future<void> esIndexDelete({required int serverId, required String name}) =>
-      _api.delete('/database_elasticsearch/index', body: {
-        'server_id': serverId,
-        'name': name,
-      });
+      _api.delete(
+        '/database_elasticsearch/index',
+        body: {'server_id': serverId, 'name': name},
+      );
 
   /// 获取文档列表。
   Future<PageData<EsDocument>> esData({
@@ -348,13 +362,16 @@ class DatabaseRepo {
     required int limit,
     String? search,
   }) async {
-    final data = await _api.get('/database_elasticsearch/data', query: {
-      'server_id': serverId,
-      'index': index,
-      'page': page,
-      'limit': limit,
-      if (search != null && search.isNotEmpty) 'search': search,
-    });
+    final data = await _api.get(
+      '/database_elasticsearch/data',
+      query: {
+        'server_id': serverId,
+        'index': index,
+        'page': page,
+        'limit': limit,
+        if (search != null && search.isNotEmpty) 'search': search,
+      },
+    );
     return PageData.parse(data, EsDocument.fromJson);
   }
 
@@ -364,11 +381,10 @@ class DatabaseRepo {
     required String index,
     required String id,
   }) async {
-    final data = await _api.get('/database_elasticsearch/document', query: {
-      'server_id': serverId,
-      'index': index,
-      'id': id,
-    });
+    final data = await _api.get(
+      '/database_elasticsearch/document',
+      query: {'server_id': serverId, 'index': index, 'id': id},
+    );
     return EsDocument.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
@@ -378,23 +394,18 @@ class DatabaseRepo {
     required String index,
     String id = '',
     required String body,
-  }) =>
-      _api.post('/database_elasticsearch/document', body: {
-        'server_id': serverId,
-        'index': index,
-        'id': id,
-        'body': body,
-      });
+  }) => _api.post(
+    '/database_elasticsearch/document',
+    body: {'server_id': serverId, 'index': index, 'id': id, 'body': body},
+  );
 
   /// 删除文档。
   Future<void> esDocumentDelete({
     required int serverId,
     required String index,
     required String id,
-  }) =>
-      _api.delete('/database_elasticsearch/document', body: {
-        'server_id': serverId,
-        'index': index,
-        'id': id,
-      });
+  }) => _api.delete(
+    '/database_elasticsearch/document',
+    body: {'server_id': serverId, 'index': index, 'id': id},
+  );
 }

@@ -58,8 +58,9 @@ class BlockDevice {
       uuid: jsonString(json['uuid']),
       label: jsonString(json['label']),
       model: jsonString(json['model']),
-      children:
-          jsonMapList(json['children']).map(BlockDevice.fromJson).toList(),
+      children: jsonMapList(
+        json['children'],
+      ).map(BlockDevice.fromJson).toList(),
     );
   }
 
@@ -87,11 +88,11 @@ class DfInfo {
   final int percent;
 
   factory DfInfo.fromJson(Map<String, dynamic> json) => DfInfo(
-        size: jsonInt(json['size']),
-        used: jsonInt(json['used']),
-        avail: jsonInt(json['avail']),
-        percent: jsonInt(json['percent']),
-      );
+    size: jsonInt(json['size']),
+    used: jsonInt(json['used']),
+    avail: jsonInt(json['avail']),
+    percent: jsonInt(json['percent']),
+  );
 }
 
 /// 展平后的分区 / 逻辑卷条目（磁盘卡片中的一行）。
@@ -185,10 +186,10 @@ class DiskListData {
 
   /// 全部未挂载、可作为挂载 / 格式化目标的分区（含 LVM 逻辑卷）。
   List<PartitionInfo> get unmountedPartitions => [
-        for (final disk in disks)
-          for (final part in disk.partitions)
-            if (!part.mounted) part,
-      ];
+    for (final disk in disks)
+      for (final part in disk.partitions)
+        if (!part.mounted) part,
+  ];
 
   /// 可用于创建物理卷的设备：非系统盘的整盘（无分区）或未挂载分区。
   List<({String device, int size})> get pvCandidates {
@@ -225,35 +226,39 @@ class DiskListData {
       void walk(List<BlockDevice> children, int depth) {
         for (final child in children) {
           final usage = df[child.mountpoint];
-          partitions.add(PartitionInfo(
-            name: child.name,
-            size: child.size,
-            type: child.type,
-            mountpoint: child.mountpoint,
-            fstype: child.fstype,
-            uuid: child.uuid,
-            label: child.label,
-            depth: depth,
-            used: usage?.used ?? 0,
-            avail: usage?.avail ?? 0,
-            percent: usage?.percent ?? 0,
-            onSystemDisk: isSystemDisk,
-          ));
+          partitions.add(
+            PartitionInfo(
+              name: child.name,
+              size: child.size,
+              type: child.type,
+              mountpoint: child.mountpoint,
+              fstype: child.fstype,
+              uuid: child.uuid,
+              label: child.label,
+              depth: depth,
+              used: usage?.used ?? 0,
+              avail: usage?.avail ?? 0,
+              percent: usage?.percent ?? 0,
+              onSystemDisk: isSystemDisk,
+            ),
+          );
           walk(child.children, depth + 1);
         }
       }
 
       walk(device.children, 0);
-      disks.add(DiskInfo(
-        name: device.name,
-        size: device.size,
-        type: device.type,
-        model: device.model,
-        mountpoint: device.mountpoint,
-        fstype: device.fstype,
-        isSystemDisk: isSystemDisk,
-        partitions: partitions,
-      ));
+      disks.add(
+        DiskInfo(
+          name: device.name,
+          size: device.size,
+          type: device.type,
+          model: device.model,
+          mountpoint: device.mountpoint,
+          fstype: device.fstype,
+          isSystemDisk: isSystemDisk,
+          partitions: partitions,
+        ),
+      );
     }
 
     return DiskListData(disks: disks, df: df);
@@ -283,13 +288,13 @@ class FstabEntry {
   bool get isRoot => mountPoint == '/';
 
   factory FstabEntry.fromJson(Map<String, dynamic> json) => FstabEntry(
-        device: jsonString(json['device']),
-        mountPoint: jsonString(json['mount_point']),
-        fsType: jsonString(json['fs_type']),
-        options: jsonString(json['options']),
-        dump: jsonString(json['dump']),
-        pass: jsonString(json['pass']),
-      );
+    device: jsonString(json['device']),
+    mountPoint: jsonString(json['mount_point']),
+    fsType: jsonString(json['fs_type']),
+    options: jsonString(json['options']),
+    dump: jsonString(json['dump']),
+    pass: jsonString(json['pass']),
+  );
 }
 
 /// 面板支持的文件系统类型（`request.ToolboxDiskFormat` 的 `in:ext4,ext3,xfs,btrfs`）。

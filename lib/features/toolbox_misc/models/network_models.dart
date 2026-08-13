@@ -105,15 +105,14 @@ class NetworkFilter {
     String? port,
     String? sort,
     String? order,
-  }) =>
-      NetworkFilter(
-        states: states ?? this.states,
-        pid: pid ?? this.pid,
-        process: process ?? this.process,
-        port: port ?? this.port,
-        sort: sort ?? this.sort,
-        order: order ?? this.order,
-      );
+  }) => NetworkFilter(
+    states: states ?? this.states,
+    pid: pid ?? this.pid,
+    process: process ?? this.process,
+    port: port ?? this.port,
+    sort: sort ?? this.sort,
+    order: order ?? this.order,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -129,11 +128,11 @@ class NetworkFilter {
 
   @override
   int get hashCode => Object.hash(
-        pid,
-        process,
-        port,
-        sort,
-        order,
-        Object.hashAllUnordered(states),
-      );
+    pid,
+    process,
+    port,
+    sort,
+    order,
+    Object.hashAllUnordered(states),
+  );
 }

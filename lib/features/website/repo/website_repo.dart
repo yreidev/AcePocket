@@ -25,11 +25,14 @@ class WebsiteRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/website', query: {
-      'type': type.isEmpty ? 'all' : type,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website',
+      query: {
+        'type': type.isEmpty ? 'all' : type,
+        'page': page,
+        'limit': limit,
+      },
+    );
     return WebsitePage.fromJson(jMap(data));
   }
 
@@ -56,22 +59,24 @@ class WebsiteRepo {
     String remark = '',
     int php = 0,
     String proxy = '',
-  }) =>
-      _api.post('/website', body: {
-        'type': type,
-        'name': name,
-        'listens': listens,
-        'domains': domains,
-        'path': path,
-        'db': db,
-        'db_type': dbType,
-        'db_name': dbName,
-        'db_user': dbUser,
-        'db_password': dbPassword,
-        'remark': remark,
-        'php': php,
-        'proxy': proxy,
-      });
+  }) => _api.post(
+    '/website',
+    body: {
+      'type': type,
+      'name': name,
+      'listens': listens,
+      'domains': domains,
+      'path': path,
+      'db': db,
+      'db_type': dbType,
+      'db_name': dbName,
+      'db_user': dbUser,
+      'db_password': dbPassword,
+      'remark': remark,
+      'php': php,
+      'proxy': proxy,
+    },
+  );
 
   /// 按 id 查找网站列表行。
   ///
@@ -107,11 +112,7 @@ class WebsiteRepo {
     int id, {
     bool deletePath = false,
     bool deleteDb = false,
-  }) =>
-      _api.delete('/website/$id', body: {
-        'path': deletePath,
-        'db': deleteDb,
-      });
+  }) => _api.delete('/website/$id', body: {'path': deletePath, 'db': deleteDb});
 
   /// 更新备注。
   Future<void> updateRemark(int id, String remark) =>
@@ -130,11 +131,9 @@ class WebsiteRepo {
 
   /// 签发证书。泛域名必须传 [dnsId]（DNS 验证）。
   Future<void> obtainCert(int id, {int? dnsId}) => _api.post(
-        '/website/$id/obtain_cert',
-        body: dnsId != null && dnsId > 0
-            ? {'dns_id': dnsId}
-            : <String, dynamic>{},
-      );
+    '/website/$id/obtain_cert',
+    body: dnsId != null && dnsId > 0 ? {'dns_id': dnsId} : <String, dynamic>{},
+  );
 
   /// 直接更新某个网站的证书文件（`POST /api/website/cert`）。
   ///
@@ -146,12 +145,10 @@ class WebsiteRepo {
     required String name,
     required String cert,
     required String key,
-  }) =>
-      _api.post('/website/cert', body: {
-        'name': name,
-        'cert': cert,
-        'key': key,
-      });
+  }) => _api.post(
+    '/website/cert',
+    body: {'name': name, 'cert': cert, 'key': key},
+  );
 
   /// 获取建站默认配置（`GET /api/website/default_config`）。
   Future<WebsiteDefaultConfig> defaultConfig() async {
@@ -191,19 +188,19 @@ class WebsiteRepo {
 
   /// 证书列表（用于「使用已有证书」）。
   Future<List<CertItem>> certs({int page = 1, int limit = 1000}) async {
-    final data = await _api.get('/cert/cert', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/cert/cert',
+      query: {'page': page, 'limit': limit},
+    );
     return jMapList(jMap(data)['items']).map(CertItem.fromJson).toList();
   }
 
   /// DNS 账号列表（泛域名签发证书时使用）。
   Future<List<DnsItem>> dnsAccounts({int page = 1, int limit = 1000}) async {
-    final data = await _api.get('/cert/dns', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/cert/dns',
+      query: {'page': page, 'limit': limit},
+    );
     return jMapList(jMap(data)['items']).map(DnsItem.fromJson).toList();
   }
 }

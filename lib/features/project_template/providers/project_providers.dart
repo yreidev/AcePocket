@@ -13,8 +13,9 @@ final projectRepoProvider = Provider<ProjectRepo>((ref) {
 });
 
 /// 项目列表的类型筛选（`all` 表示全部）。
-final projectTypeFilterProvider =
-    NotifierProvider<ProjectTypeFilter, String>(ProjectTypeFilter.new);
+final projectTypeFilterProvider = NotifierProvider<ProjectTypeFilter, String>(
+  ProjectTypeFilter.new,
+);
 
 class ProjectTypeFilter extends Notifier<String> {
   @override
@@ -27,8 +28,11 @@ class ProjectTypeFilter extends Notifier<String> {
 }
 
 /// 项目列表（分页，随类型筛选自动重载）。
-final projectListProvider = AsyncNotifierProvider.autoDispose<
-    ProjectListNotifier, PagedState<ProjectDetail>>(ProjectListNotifier.new);
+final projectListProvider =
+    AsyncNotifierProvider.autoDispose<
+      ProjectListNotifier,
+      PagedState<ProjectDetail>
+    >(ProjectListNotifier.new);
 
 class ProjectListNotifier extends PagedListNotifier<ProjectDetail> {
   @override
@@ -42,7 +46,9 @@ class ProjectListNotifier extends PagedListNotifier<ProjectDetail> {
 
   @override
   Future<PageResult<ProjectDetail>> fetch(int page, int limit) {
-    return ref.read(projectRepoProvider).list(
+    return ref
+        .read(projectRepoProvider)
+        .list(
           page: page,
           limit: limit,
           type: ref.read(projectTypeFilterProvider),
@@ -51,7 +57,7 @@ class ProjectListNotifier extends PagedListNotifier<ProjectDetail> {
 }
 
 /// 单个项目详情（详情页 / 编辑页使用）。
-final projectDetailProvider =
-    FutureProvider.autoDispose.family<ProjectDetail, int>((ref, id) async {
-  return ref.watch(projectRepoProvider).get(id);
-});
+final projectDetailProvider = FutureProvider.autoDispose
+    .family<ProjectDetail, int>((ref, id) async {
+      return ref.watch(projectRepoProvider).get(id);
+    });

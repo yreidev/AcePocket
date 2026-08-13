@@ -58,9 +58,11 @@ class _PermissionDialogState extends State<_PermissionDialog> {
     _bits = mode.split('').map((e) => int.tryParse(e) ?? 0).toList();
     _modeController = TextEditingController(text: mode);
     _ownerController = TextEditingController(
-        text: widget.initialOwner.isEmpty ? 'www' : widget.initialOwner);
+      text: widget.initialOwner.isEmpty ? 'www' : widget.initialOwner,
+    );
     _groupController = TextEditingController(
-        text: widget.initialGroup.isEmpty ? 'www' : widget.initialGroup);
+      text: widget.initialGroup.isEmpty ? 'www' : widget.initialGroup,
+    );
   }
 
   @override
@@ -209,8 +211,9 @@ class _PermissionDialogState extends State<_PermissionDialog> {
               const SizedBox(height: 12),
               Text(
                 _error!,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.error,
+                ),
               ),
             ],
           ],

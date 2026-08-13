@@ -58,8 +58,9 @@ class ChannelSelector extends ConsumerWidget {
               '渠道列表加载失败：${describeError(error)}',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
           ),
           TextButton(
@@ -72,8 +73,9 @@ class ChannelSelector extends ConsumerWidget {
         if (list.isEmpty) {
           return Text(
             emptyHint,
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           );
         }
         return Column(

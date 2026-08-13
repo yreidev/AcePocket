@@ -50,20 +50,19 @@ const _server = ServerConfig(
 Map<String, dynamic> _websiteJson({
   required int id,
   String name = 'example.com',
-}) =>
-    {
-      'id': '$id',
-      'name': name,
-      'type': 'proxy',
-      'status': 1,
-      'path': '/www/wwwroot/$name',
-      'ssl': false,
-      'remark': '',
-      'expire_at': '',
-      'cert_expire': '12.00',
-      'php': '0',
-      'domains': [name],
-    };
+}) => {
+  'id': '$id',
+  'name': name,
+  'type': 'proxy',
+  'status': 1,
+  'path': '/www/wwwroot/$name',
+  'ssl': false,
+  'remark': '',
+  'expire_at': '',
+  'cert_expire': '12.00',
+  'php': '0',
+  'domains': [name],
+};
 
 void main() {
   test('Website.fromJson 容忍数字字符串与状态 1', () {
@@ -112,9 +111,7 @@ void main() {
       jsonEncode({
         'data': {
           'total': 150,
-          'items': [
-            _websiteJson(id: 1, name: 'a.example.com'),
-          ],
+          'items': [_websiteJson(id: 1, name: 'a.example.com')],
         },
       }),
     ]);

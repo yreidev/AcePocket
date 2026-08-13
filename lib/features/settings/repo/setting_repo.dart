@@ -18,7 +18,8 @@ class SettingRepository {
   Future<PanelSetting> getSetting() async {
     final data = await _api.get('/setting');
     return PanelSetting.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 更新面板设置（`POST /api/setting`）。
@@ -73,22 +74,21 @@ class SettingRepository {
   Future<PanelBasicInfo> panelInfo() async {
     final data = await _api.get('/home/panel');
     return PanelBasicInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 面板 / 系统版本信息（`GET /api/home/system_info`）。
   Future<PanelSystemInfo> systemInfo() async {
     final data = await _api.get('/home/system_info');
     return PanelSystemInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 「关于」页聚合数据。用户信息获取失败不影响整体展示。
   Future<AboutInfo> aboutInfo() async {
-    final results = await Future.wait([
-      panelInfo(),
-      systemInfo(),
-    ]);
+    final results = await Future.wait([panelInfo(), systemInfo()]);
     PanelUser? user;
     try {
       user = await currentUser();

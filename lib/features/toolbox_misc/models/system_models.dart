@@ -8,9 +8,7 @@ library;
 /// 系统工具箱一次要读取 6 类互不相干的信息（DNS / SWAP / 时区 / NTP / 主机名 /
 /// hosts），任意一项失败不应让整页不可用，因此按分区分别记录成败。
 class SectionResult<T> {
-  const SectionResult.data(T value)
-      : _value = value,
-        error = null;
+  const SectionResult.data(T value) : _value = value, error = null;
 
   const SectionResult.failure(Object this.error) : _value = null;
 
@@ -60,11 +58,11 @@ class DnsInfo {
 
   /// 管理方式的中文说明。
   String get managerLabel => switch (manager) {
-        'NetworkManager' => 'NetworkManager（网络管理器）',
-        'netplan' => 'netplan（Ubuntu 网络配置）',
-        'resolv.conf' => 'resolv.conf（直接写配置文件）',
-        _ => '未识别',
-      };
+    'NetworkManager' => 'NetworkManager（网络管理器）',
+    'netplan' => 'netplan（Ubuntu 网络配置）',
+    'resolv.conf' => 'resolv.conf（直接写配置文件）',
+    _ => '未识别',
+  };
 
   /// resolv.conf 方式下的修改会在重启后被系统覆盖。
   bool get isResolvConf => manager == 'resolv.conf' || manager == 'unknown';
@@ -90,11 +88,11 @@ class SwapInfo {
   final int size;
 
   factory SwapInfo.fromJson(Map<String, dynamic> json) => SwapInfo(
-        total: json['total'] as String? ?? '0.00 B',
-        used: json['used'] as String? ?? '0.00 B',
-        free: json['free'] as String? ?? '0.00 B',
-        size: (json['size'] as num?)?.toInt() ?? 0,
-      );
+    total: json['total'] as String? ?? '0.00 B',
+    used: json['used'] as String? ?? '0.00 B',
+    free: json['free'] as String? ?? '0.00 B',
+    size: (json['size'] as num?)?.toInt() ?? 0,
+  );
 
   bool get enabled => size > 0;
 }
@@ -151,10 +149,10 @@ class NtpConfig {
   final List<String> builtins;
 
   factory NtpConfig.fromJson(Map<String, dynamic> json) => NtpConfig(
-        serviceType: json['service_type'] as String? ?? 'unknown',
-        servers: _stringList(json['servers']),
-        builtins: _stringList(json['builtins']),
-      );
+    serviceType: json['service_type'] as String? ?? 'unknown',
+    servers: _stringList(json['servers']),
+    builtins: _stringList(json['builtins']),
+  );
 
   static List<String> _stringList(dynamic raw) {
     if (raw is! List) return const [];
@@ -162,10 +160,10 @@ class NtpConfig {
   }
 
   String get serviceTypeLabel => switch (serviceType) {
-        'timesyncd' => 'systemd-timesyncd',
-        'chrony' => 'chrony',
-        _ => '未检测到 NTP 服务',
-      };
+    'timesyncd' => 'systemd-timesyncd',
+    'chrony' => 'chrony',
+    _ => '未检测到 NTP 服务',
+  };
 
   /// 系统未安装 timesyncd / chrony 时无法写入 NTP 配置。
   bool get supported => serviceType == 'timesyncd' || serviceType == 'chrony';

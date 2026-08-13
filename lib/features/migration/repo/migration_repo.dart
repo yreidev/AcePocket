@@ -41,8 +41,10 @@ class MigrationRepository {
   /// 服务端会在成功后保存连接信息并把步骤置为 `precheck`；
   /// 若本机正在迁移中则返回 409。
   Future<InstalledEnvironment> precheck(MigrationConnection connection) async {
-    final data = await _api.post('/toolbox_migration/precheck',
-        body: connection.toJson());
+    final data = await _api.post(
+      '/toolbox_migration/precheck',
+      body: connection.toJson(),
+    );
     final map = jsonMap(data);
     final remote = jsonMap(map?['remote']);
     if (remote == null) {
@@ -75,14 +77,16 @@ class MigrationRepository {
     required List<MigrationDatabaseUser> databaseUsers,
     required List<MigrationProject> projects,
     required bool stopOnMig,
-  }) =>
-      _api.post('/toolbox_migration/start', body: {
-        'websites': websites.map((e) => e.toStartJson()).toList(),
-        'databases': databases.map((e) => e.toStartJson()).toList(),
-        'database_users': databaseUsers.map((e) => e.toStartJson()).toList(),
-        'projects': projects.map((e) => e.toStartJson()).toList(),
-        'stop_on_mig': stopOnMig,
-      });
+  }) => _api.post(
+    '/toolbox_migration/start',
+    body: {
+      'websites': websites.map((e) => e.toStartJson()).toList(),
+      'databases': databases.map((e) => e.toStartJson()).toList(),
+      'database_users': databaseUsers.map((e) => e.toStartJson()).toList(),
+      'projects': projects.map((e) => e.toStartJson()).toList(),
+      'stop_on_mig': stopOnMig,
+    },
+  );
 
   /// 重置迁移状态（迁移进行中时服务端返回 409）。
   Future<void> reset() => _api.post('/toolbox_migration/reset');

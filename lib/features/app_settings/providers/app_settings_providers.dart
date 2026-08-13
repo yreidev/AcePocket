@@ -5,8 +5,9 @@ import '../repo/app_settings_store.dart';
 
 /// 启动时默认打开的 tab（下次启动生效，路由 initialLocation 读取
 /// [AppSettingsStore]）。
-final startupTabProvider =
-    NotifierProvider<StartupTabNotifier, StartupTab>(StartupTabNotifier.new);
+final startupTabProvider = NotifierProvider<StartupTabNotifier, StartupTab>(
+  StartupTabNotifier.new,
+);
 
 class StartupTabNotifier extends Notifier<StartupTab> {
   @override
@@ -25,7 +26,8 @@ class StartupTabNotifier extends Notifier<StartupTab> {
 /// 首页实时数据轮询间隔（秒，0 = 关闭）。
 final homePollIntervalProvider =
     NotifierProvider<HomePollIntervalNotifier, int>(
-        HomePollIntervalNotifier.new);
+      HomePollIntervalNotifier.new,
+    );
 
 class HomePollIntervalNotifier extends Notifier<int> {
   @override
@@ -44,7 +46,8 @@ class HomePollIntervalNotifier extends Notifier<int> {
 
 /// 启动时自动检查应用更新。
 final autoCheckUpdateProvider = NotifierProvider<AutoCheckUpdateNotifier, bool>(
-    AutoCheckUpdateNotifier.new);
+  AutoCheckUpdateNotifier.new,
+);
 
 class AutoCheckUpdateNotifier extends Notifier<bool> {
   @override

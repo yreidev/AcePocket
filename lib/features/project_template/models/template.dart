@@ -95,17 +95,17 @@ class AppTemplate {
   final DateTime? updatedAt;
 
   factory AppTemplate.fromJson(Map<String, dynamic> json) => AppTemplate(
-        slug: jsonString(json['slug']),
-        name: jsonString(json['name']),
-        icon: jsonString(json['icon']),
-        description: jsonString(json['description']),
-        website: jsonString(json['website']),
-        categories: jsonStringList(json['categories']),
-        architectures: jsonStringList(json['architectures']),
-        compose: jsonString(json['compose']),
-        environments: TemplateEnvironment.listFrom(json['environments']),
-        local: jsonBool(json['local']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    slug: jsonString(json['slug']),
+    name: jsonString(json['name']),
+    icon: jsonString(json['icon']),
+    description: jsonString(json['description']),
+    website: jsonString(json['website']),
+    categories: jsonStringList(json['categories']),
+    architectures: jsonStringList(json['architectures']),
+    compose: jsonString(json['compose']),
+    environments: TemplateEnvironment.listFrom(json['environments']),
+    local: jsonBool(json['local']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 }

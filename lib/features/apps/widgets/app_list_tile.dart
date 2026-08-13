@@ -75,7 +75,9 @@ class AppListTile extends StatelessWidget {
                           if (app.statusLabel != null) ...[
                             const SizedBox(width: 8),
                             _StatusChip(
-                                status: app.status, label: app.statusLabel!),
+                              status: app.status,
+                              label: app.statusLabel!,
+                            ),
                           ],
                         ],
                       ),
@@ -137,11 +139,11 @@ class _AppAvatar extends StatelessWidget {
       child: Text(
         letter,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: app.installed
-                  ? colorScheme.onPrimaryContainer
-                  : colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
-            ),
+          color: app.installed
+              ? colorScheme.onPrimaryContainer
+              : colorScheme.onSurfaceVariant,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
@@ -199,37 +201,48 @@ class _MetaWrap extends StatelessWidget {
     final chips = <Widget>[];
 
     if (app.installed) {
-      final version =
-          app.installedVersion.isEmpty ? '未知版本' : app.installedVersion;
-      final channel =
-          app.installedChannel.isEmpty ? '' : ' · ${app.installedChannel}';
-      chips.add(_MetaChip(
-        icon: Icons.verified_outlined,
-        label: '$version$channel',
-        color: colorScheme.primary,
-      ));
+      final version = app.installedVersion.isEmpty
+          ? '未知版本'
+          : app.installedVersion;
+      final channel = app.installedChannel.isEmpty
+          ? ''
+          : ' · ${app.installedChannel}';
+      chips.add(
+        _MetaChip(
+          icon: Icons.verified_outlined,
+          label: '$version$channel',
+          color: colorScheme.primary,
+        ),
+      );
       if (app.updateExist) {
-        chips.add(_MetaChip(
-          icon: Icons.upgrade,
-          label:
-              app.targetVersion.isEmpty ? '有新版本' : '可更新至 ${app.targetVersion}',
-          color: colorScheme.tertiary,
-        ));
+        chips.add(
+          _MetaChip(
+            icon: Icons.upgrade,
+            label: app.targetVersion.isEmpty
+                ? '有新版本'
+                : '可更新至 ${app.targetVersion}',
+            color: colorScheme.tertiary,
+          ),
+        );
       }
     } else if (app.channels.isNotEmpty) {
-      chips.add(_MetaChip(
-        icon: Icons.inventory_2_outlined,
-        label: '${app.channels.length} 个版本可选',
-        color: colorScheme.onSurfaceVariant,
-      ));
+      chips.add(
+        _MetaChip(
+          icon: Icons.inventory_2_outlined,
+          label: '${app.channels.length} 个版本可选',
+          color: colorScheme.onSurfaceVariant,
+        ),
+      );
     }
 
     for (final category in app.categories) {
-      chips.add(_MetaChip(
-        icon: Icons.label_outline,
-        label: categoryLabels[category] ?? category,
-        color: colorScheme.onSurfaceVariant,
-      ));
+      chips.add(
+        _MetaChip(
+          icon: Icons.label_outline,
+          label: categoryLabels[category] ?? category,
+          color: colorScheme.onSurfaceVariant,
+        ),
+      );
     }
 
     if (chips.isEmpty) return const SizedBox.shrink();

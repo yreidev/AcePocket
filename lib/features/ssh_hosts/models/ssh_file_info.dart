@@ -52,8 +52,10 @@ class SshFileInfo {
 String normalizePath(String raw) {
   final trimmed = raw.trim();
   if (trimmed.isEmpty) return '/';
-  final segments =
-      trimmed.split('/').where((segment) => segment.isNotEmpty).toList();
+  final segments = trimmed
+      .split('/')
+      .where((segment) => segment.isNotEmpty)
+      .toList();
   if (segments.isEmpty) return '/';
   return '/${segments.join('/')}';
 }

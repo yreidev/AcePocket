@@ -82,8 +82,10 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
   }
 
   Future<void> _addServer() async {
-    final saved =
-        await DatabaseServerSheet.show(context, initialType: 'elasticsearch');
+    final saved = await DatabaseServerSheet.show(
+      context,
+      initialType: 'elasticsearch',
+    );
     if (saved == true) ref.invalidate(databaseServerOptionsProvider);
   }
 
@@ -170,7 +172,9 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).esDocumentDelete(
+      () => ref
+          .read(databaseRepoProvider)
+          .esDocumentDelete(
             serverId: query.serverId,
             index: query.index,
             id: document.id,
@@ -193,8 +197,9 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
       );
     }
 
-    final serversAsync =
-        ref.watch(databaseServerOptionsProvider('elasticsearch'));
+    final serversAsync = ref.watch(
+      databaseServerOptionsProvider('elasticsearch'),
+    );
     final servers = serversAsync.valueOrNull ?? const <DatabaseServer>[];
     final serverId = servers.any((s) => s.id == _serverId)
         ? _serverId
@@ -228,22 +233,27 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
         floatingActionButton: serverId == null
             ? null
             : (query == null
-                ? FloatingActionButton.extended(
-                    onPressed: () => _createIndex(serverId),
-                    icon: const Icon(Icons.add),
-                    label: const Text('创建索引'),
-                  )
-                : FloatingActionButton.extended(
-                    onPressed: () => _createDocument(query),
-                    icon: const Icon(Icons.note_add_outlined),
-                    label: const Text('新建文档'),
-                  )),
+                  ? FloatingActionButton.extended(
+                      onPressed: () => _createIndex(serverId),
+                      icon: const Icon(Icons.add),
+                      label: const Text('创建索引'),
+                    )
+                  : FloatingActionButton.extended(
+                      onPressed: () => _createDocument(query),
+                      icon: const Icon(Icons.note_add_outlined),
+                      label: const Text('新建文档'),
+                    )),
         body: Column(
           children: [
             const FeatureUnsupportedBanner(feature: PanelFeature.elasticsearch),
             Expanded(
-              child:
-                  _buildBody(context, serversAsync, servers, serverId, query),
+              child: _buildBody(
+                context,
+                serversAsync,
+                servers,
+                serverId,
+                query,
+              ),
             ),
           ],
         ),
@@ -357,8 +367,9 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
                 builder: (context, constraints) => SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
                     child: EmptyView(
                       message: '该服务器上还没有索引',
                       icon: Icons.folder_outlined,

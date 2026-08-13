@@ -75,8 +75,10 @@ class StorageTile extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: colorScheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(6),
@@ -124,8 +126,10 @@ class StorageTile extends StatelessWidget {
                     ),
                     A11yIconButton(
                       tooltip: '删除此备份存储',
-                      icon:
-                          Icon(Icons.delete_outline, color: colorScheme.error),
+                      icon: Icon(
+                        Icons.delete_outline,
+                        color: colorScheme.error,
+                      ),
                       onPressed: onDelete,
                     ),
                   ],

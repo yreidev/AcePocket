@@ -102,9 +102,7 @@ void _show(
                 message,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: foreground,
-                ),
+                style: theme.textTheme.bodyMedium?.copyWith(color: foreground),
               ),
             ),
           ],

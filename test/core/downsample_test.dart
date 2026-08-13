@@ -24,8 +24,10 @@ void main() {
 
     test('下标严格升序（无重复、无乱序）', () {
       final random = math.Random(42);
-      final values =
-          List<double>.generate(5000, (_) => random.nextDouble() * 1000);
+      final values = List<double>.generate(
+        5000,
+        (_) => random.nextDouble() * 1000,
+      );
       final indexes = lttbIndexes(values, 250);
       expect(indexes.length, 250);
       for (var i = 1; i < indexes.length; i++) {

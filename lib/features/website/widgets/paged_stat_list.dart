@@ -68,10 +68,7 @@ class _PagedStatListState<T> extends State<PagedStatList<T>> {
     final theme = Theme.of(context);
     return widget.state.when(
       loading: () => const LoadingView(message: '正在加载统计数据…'),
-      error: (error, _) => ErrorView(
-        error: error,
-        onRetry: widget.onRefresh,
-      ),
+      error: (error, _) => ErrorView(error: error, onRetry: widget.onRefresh),
       data: (state) {
         if (state.items.isEmpty) {
           return RefreshIndicator(
@@ -113,8 +110,9 @@ class _PagedStatListState<T> extends State<PagedStatList<T>> {
                           textAlign: TextAlign.center,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(color: theme.colorScheme.error),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.error,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         TextButton.icon(

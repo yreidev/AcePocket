@@ -22,14 +22,16 @@ class AppUpdateRepo {
   final Dio _dio;
 
   static Dio _buildDio() {
-    return Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 15),
-      sendTimeout: const Duration(seconds: 10),
-      headers: {'Accept': 'application/vnd.github+json'},
-      // 非 200 也不抛异常，统一在下方按失败处理。
-      validateStatus: (_) => true,
-    ));
+    return Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(seconds: 10),
+        headers: {'Accept': 'application/vnd.github+json'},
+        // 非 200 也不抛异常，统一在下方按失败处理。
+        validateStatus: (_) => true,
+      ),
+    );
   }
 
   /// 拉取最新 Release。

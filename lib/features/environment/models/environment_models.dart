@@ -91,9 +91,9 @@ class NameValue {
   const NameValue({required this.name, required this.value});
 
   factory NameValue.fromJson(Map<String, dynamic> json) => NameValue(
-        name: (json['name'] ?? '').toString(),
-        value: (json['value'] ?? '').toString(),
-      );
+    name: (json['name'] ?? '').toString(),
+    value: (json['value'] ?? '').toString(),
+  );
 
   final String name;
   final String value;

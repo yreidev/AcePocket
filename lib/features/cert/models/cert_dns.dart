@@ -24,20 +24,20 @@ class DnsParam {
   final bool skipVerify;
 
   factory DnsParam.fromJson(Map<String, dynamic> json) => DnsParam(
-        ak: jsonString(json['ak']),
-        sk: jsonString(json['sk']),
-        dnsServer: jsonString(json['dns_server']).isEmpty
-            ? '8.8.8.8'
-            : jsonString(json['dns_server']),
-        skipVerify: jsonBool(json['skip_verify']),
-      );
+    ak: jsonString(json['ak']),
+    sk: jsonString(json['sk']),
+    dnsServer: jsonString(json['dns_server']).isEmpty
+        ? '8.8.8.8'
+        : jsonString(json['dns_server']),
+    skipVerify: jsonBool(json['skip_verify']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'ak': ak,
-        'sk': sk,
-        'dns_server': dnsServer,
-        'skip_verify': skipVerify,
-      };
+    'ak': ak,
+    'sk': sk,
+    'dns_server': dnsServer,
+    'skip_verify': skipVerify,
+  };
 }
 
 /// DNS 账号（internal/biz.CertDNS）。

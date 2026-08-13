@@ -88,7 +88,9 @@ class NotifyChannelTile extends StatelessWidget {
                       itemBuilder: (context) => [
                         const PopupMenuItem(value: 'edit', child: Text('编辑')),
                         const PopupMenuItem(
-                            value: 'test', child: Text('发送测试通知')),
+                          value: 'test',
+                          child: Text('发送测试通知'),
+                        ),
                         PopupMenuItem(
                           value: 'toggle',
                           child: Text(channel.enabled ? '停用' : '启用'),

@@ -96,9 +96,9 @@ class _CreateBackupDialogState extends ConsumerState<_CreateBackupDialog> {
               showErrorSnack(context, '请选择备份目标');
               return;
             }
-            Navigator.of(context).pop(
-              CreateBackupResult(target: target, storage: _storage),
-            );
+            Navigator.of(
+              context,
+            ).pop(CreateBackupResult(target: target, storage: _storage));
           },
           child: const Text('开始备份'),
         ),
@@ -154,10 +154,7 @@ class _RestoreDialogState extends ConsumerState<_RestoreDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                widget.file.name,
-                style: theme.textTheme.bodyMedium,
-              ),
+              Text(widget.file.name, style: theme.textTheme.bodyMedium),
               const SizedBox(height: 12),
               if (_fixedTarget)
                 Text(
@@ -293,8 +290,9 @@ class _StorageField extends ConsumerWidget {
       ),
       data: (list) {
         final ids = list.map((e) => e.id).toList();
-        final current =
-            ids.contains(value) ? value : (ids.isEmpty ? null : ids.first);
+        final current = ids.contains(value)
+            ? value
+            : (ids.isEmpty ? null : ids.first);
         // 选中的存储已被删除时下拉框会回退到第一项，这里把外部状态一并纠正，
         // 否则提交出去的仍是那个已失效的存储 ID。
         if (current != null && current != value) {
@@ -416,10 +414,7 @@ class _InfoRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: SelectableText(
-                  value,
-                  style: theme.textTheme.bodyMedium,
-                ),
+                child: SelectableText(value, style: theme.textTheme.bodyMedium),
               ),
               if (copyable)
                 A11yIconButton(

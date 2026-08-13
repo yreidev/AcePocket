@@ -40,12 +40,17 @@ class AlertRulesNotifier extends PagedAsyncNotifier<AlertRule>
       ref.read(notifyAlertRepoProvider).alertRules(page: page, limit: limit);
 }
 
-final alertRulesProvider = AsyncNotifierProvider.autoDispose<AlertRulesNotifier,
-    PagedState<AlertRule>>(AlertRulesNotifier.new);
+final alertRulesProvider =
+    AsyncNotifierProvider.autoDispose<
+      AlertRulesNotifier,
+      PagedState<AlertRule>
+    >(AlertRulesNotifier.new);
 
 /// 单条告警规则（编辑页使用）。
-final alertRuleProvider =
-    FutureProvider.autoDispose.family<AlertRule, int>((ref, id) {
+final alertRuleProvider = FutureProvider.autoDispose.family<AlertRule, int>((
+  ref,
+  id,
+) {
   return ref.watch(notifyAlertRepoProvider).alertRule(id);
 });
 
@@ -66,8 +71,11 @@ class AlertRecordsNotifier extends PagedAsyncNotifier<AlertRecord>
       ref.read(notifyAlertRepoProvider).alertRecords(page: page, limit: limit);
 }
 
-final alertRecordsProvider = AsyncNotifierProvider.autoDispose<
-    AlertRecordsNotifier, PagedState<AlertRecord>>(AlertRecordsNotifier.new);
+final alertRecordsProvider =
+    AsyncNotifierProvider.autoDispose<
+      AlertRecordsNotifier,
+      PagedState<AlertRecord>
+    >(AlertRecordsNotifier.new);
 
 // ------------------------------------------------------------------ 通知渠道
 
@@ -87,21 +95,23 @@ class NotifyChannelsNotifier extends PagedAsyncNotifier<NotifyChannel>
       .notifyChannels(page: page, limit: limit);
 }
 
-final notifyChannelsProvider = AsyncNotifierProvider.autoDispose<
-    NotifyChannelsNotifier,
-    PagedState<NotifyChannel>>(NotifyChannelsNotifier.new);
+final notifyChannelsProvider =
+    AsyncNotifierProvider.autoDispose<
+      NotifyChannelsNotifier,
+      PagedState<NotifyChannel>
+    >(NotifyChannelsNotifier.new);
 
 /// 全部通知渠道（规则表单 / 事件设置的多选数据源）。
 final allNotifyChannelsProvider =
     FutureProvider.autoDispose<List<NotifyChannel>>((ref) {
-  return ref.watch(notifyAlertRepoProvider).allNotifyChannels();
-});
+      return ref.watch(notifyAlertRepoProvider).allNotifyChannels();
+    });
 
 /// 单个通知渠道（编辑页使用）。
-final notifyChannelProvider =
-    FutureProvider.autoDispose.family<NotifyChannel, int>((ref, id) {
-  return ref.watch(notifyAlertRepoProvider).notifyChannel(id);
-});
+final notifyChannelProvider = FutureProvider.autoDispose
+    .family<NotifyChannel, int>((ref, id) {
+      return ref.watch(notifyAlertRepoProvider).notifyChannel(id);
+    });
 
 /// 事件通知设置。
 final notifySettingProvider = FutureProvider.autoDispose<NotifySetting>((ref) {
@@ -130,8 +140,8 @@ class NotifyEventDraftNotifier extends Notifier<NotifySetting?> {
 
 final notifyEventDraftProvider =
     NotifierProvider<NotifyEventDraftNotifier, NotifySetting?>(
-  NotifyEventDraftNotifier.new,
-);
+      NotifyEventDraftNotifier.new,
+    );
 
 /// 事件通知设置是否有未保存的修改。
 ///
@@ -163,11 +173,14 @@ class WebhooksNotifier extends PagedAsyncNotifier<WebHook>
 
 final webhooksProvider =
     AsyncNotifierProvider.autoDispose<WebhooksNotifier, PagedState<WebHook>>(
-        WebhooksNotifier.new);
+      WebhooksNotifier.new,
+    );
 
 /// 单个 WebHook（编辑页使用）。
-final webhookProvider =
-    FutureProvider.autoDispose.family<WebHook, int>((ref, id) {
+final webhookProvider = FutureProvider.autoDispose.family<WebHook, int>((
+  ref,
+  id,
+) {
   return ref.watch(notifyAlertRepoProvider).webhook(id);
 });
 

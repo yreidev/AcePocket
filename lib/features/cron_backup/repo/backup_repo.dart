@@ -17,10 +17,10 @@ class BackupRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/backup/$type', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/backup/$type',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, BackupFile.fromJson);
   }
 
@@ -33,10 +33,7 @@ class BackupRepo {
     required String target,
     required int storage,
   }) =>
-      _api.post('/backup/$type', body: {
-        'target': target,
-        'storage': storage,
-      });
+      _api.post('/backup/$type', body: {'target': target, 'storage': storage});
 
   /// 删除备份文件（[file] 传文件名，与面板前端一致）。
   Future<void> delete({required String type, required String file}) =>
@@ -47,11 +44,10 @@ class BackupRepo {
     required String type,
     required String file,
     required String target,
-  }) =>
-      _api.post('/backup/$type/restore', body: {
-        'file': file,
-        'target': target,
-      });
+  }) => _api.post(
+    '/backup/$type/restore',
+    body: {'file': file, 'target': target},
+  );
 
   /// 备份文件的下载接口路径（需 HMAC 签名，仅用于展示 / 复制）。
   static String downloadPath({required String type, required String file}) =>

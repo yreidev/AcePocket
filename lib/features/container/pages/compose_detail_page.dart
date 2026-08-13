@@ -104,7 +104,9 @@ class _ComposeDetailPageState extends ConsumerState<ComposeDetailPage> {
       context,
       pending: '正在保存编排…',
       success: '已保存',
-      action: () => ref.read(containerRepoProvider).updateCompose(
+      action: () => ref
+          .read(containerRepoProvider)
+          .updateCompose(
             name: widget.name,
             compose: _composeController.text,
             envs: _envs,
@@ -122,7 +124,8 @@ class _ComposeDetailPageState extends ConsumerState<ComposeDetailPage> {
       final go = await showConfirmDialog(
         context,
         title: '有未保存的修改',
-        content: '当前编辑的内容尚未保存，启动将使用服务器上已保存的编排内容。'
+        content:
+            '当前编辑的内容尚未保存，启动将使用服务器上已保存的编排内容。'
             '建议先保存再启动。',
         confirmText: '仍然启动',
         cancelText: '返回保存',

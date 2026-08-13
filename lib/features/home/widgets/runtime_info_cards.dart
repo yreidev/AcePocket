@@ -47,11 +47,7 @@ class RuntimeInfoCards extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              InfoRow(
-                label: 'Go 版本',
-                value: info.goVersion,
-                monospace: true,
-              ),
+              InfoRow(label: 'Go 版本', value: info.goVersion, monospace: true),
               InfoRow(
                 label: '面板运行时长',
                 value: formatUptime(info.uptime.round()),

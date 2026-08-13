@@ -247,10 +247,7 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshAll(ref),
-        child: body,
-      ),
+      body: RefreshIndicator(onRefresh: () => _refreshAll(ref), child: body),
     );
   }
 
@@ -287,8 +284,11 @@ class _StaleHint extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.cloud_off_rounded,
-              size: 16, color: theme.colorScheme.onErrorContainer),
+          Icon(
+            Icons.cloud_off_rounded,
+            size: 16,
+            color: theme.colorScheme.onErrorContainer,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

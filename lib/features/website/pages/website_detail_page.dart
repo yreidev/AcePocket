@@ -153,17 +153,20 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
       if (!setting.listens.any((l) => l.https)) {
         final args = <String>['ssl', if (isNginx) 'quic'];
         if (setting.listens.any((l) => l.address.startsWith('[::]'))) {
-          setting.listens
-              .add(ListenConfig(address: '[::]:443', args: [...args]));
+          setting.listens.add(
+            ListenConfig(address: '[::]:443', args: [...args]),
+          );
         }
         setting.listens.add(ListenConfig(address: '443', args: [...args]));
       }
     } else {
-      setting.listens.removeWhere((l) =>
-          l.address == '443' ||
-          l.address.endsWith(':443') ||
-          l.https ||
-          l.quic);
+      setting.listens.removeWhere(
+        (l) =>
+            l.address == '443' ||
+            l.address.endsWith(':443') ||
+            l.https ||
+            l.quic,
+      );
     }
   }
 
@@ -364,7 +367,8 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
     final ok = await showConfirmDialog(
       context,
       title: '仅更新证书文件？',
-      content: '将把当前填写的证书与私钥直接写入网站「${setting.name}」的证书文件。'
+      content:
+          '将把当前填写的证书与私钥直接写入网站「${setting.name}」的证书文件。'
           '${setting.ssl ? '该网站已启用 HTTPS，面板会立即重载 Web 服务器。' : '该网站尚未启用 HTTPS，证书写入后不会立即生效。'}\n\n'
           '本操作不会提交本页的其他修改。',
       confirmText: '更新证书',
@@ -373,11 +377,9 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
 
     setState(() => _certBusy = true);
     try {
-      await ref.read(websiteRepoProvider).updateCert(
-            name: setting.name,
-            cert: cert,
-            key: key,
-          );
+      await ref
+          .read(websiteRepoProvider)
+          .updateCert(name: setting.name, cert: cert, key: key);
       if (!mounted) return;
       showSuccessSnack(context, '证书已更新');
       ref.invalidate(websiteCertListProvider);
@@ -404,10 +406,7 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
       }
       if (!mounted) return;
       if (dnsList.isEmpty) {
-        showErrorSnack(
-          context,
-          '网站包含泛域名，需要 DNS 验证，请先在证书管理中添加 DNS 账号',
-        );
+        showErrorSnack(context, '网站包含泛域名，需要 DNS 验证，请先在证书管理中添加 DNS 账号');
         return;
       }
       dnsId = await showDialog<int>(
@@ -456,7 +455,9 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
     if (options == null) return;
     setState(() => _deleteBusy = true);
     try {
-      await ref.read(websiteRepoProvider).delete(
+      await ref
+          .read(websiteRepoProvider)
+          .delete(
             widget.websiteId,
             deletePath: options.deletePath,
             deleteDb: options.deleteDb,
@@ -545,10 +546,10 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: _dirty
-                            ? Theme.of(context).colorScheme.error
-                            : Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: _dirty
+                        ? Theme.of(context).colorScheme.error
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -594,12 +595,15 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
                     value: 'delete',
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.delete_outline,
-                          color: Theme.of(context).colorScheme.error),
+                      leading: Icon(
+                        Icons.delete_outline,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
                       title: Text(
                         '删除网站',
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.error),
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                   ),

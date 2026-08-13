@@ -26,13 +26,16 @@ class ProcessRepo {
     String order = 'desc',
     String keyword = '',
   }) async {
-    final data = await _api.get('/process', query: {
-      'page': page,
-      'limit': limit,
-      'sort': sort,
-      'order': order,
-      if (keyword.isNotEmpty) 'keyword': keyword,
-    });
+    final data = await _api.get(
+      '/process',
+      query: {
+        'page': page,
+        'limit': limit,
+        'sort': sort,
+        'order': order,
+        if (keyword.isNotEmpty) 'keyword': keyword,
+      },
+    );
     return Paged.parse(data, ProcessInfo.fromJson);
   }
 

@@ -37,11 +37,7 @@ class DatabasePasswordSheet extends ConsumerStatefulWidget {
   }) {
     return showDbSheet<bool>(
       context,
-      DatabasePasswordSheet(
-        user: user,
-        serverId: serverId,
-        subtitle: subtitle,
-      ),
+      DatabasePasswordSheet(user: user, serverId: serverId, subtitle: subtitle),
     );
   }
 
@@ -84,7 +80,9 @@ class _DatabasePasswordSheetState extends ConsumerState<DatabasePasswordSheet> {
     setState(() => _submitting = true);
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).updateUser(
+      () => ref
+          .read(databaseRepoProvider)
+          .updateUser(
             user.id,
             password: _password.text,
             // 保持原有授权与备注不变（接口会按传入列表回收多余权限）。
@@ -107,10 +105,8 @@ class _DatabasePasswordSheetState extends ConsumerState<DatabasePasswordSheet> {
 
     final usersAsync = ref.watch(serverDatabaseUsersProvider(widget.serverId!));
     return usersAsync.when(
-      loading: () => const SizedBox(
-        height: 240,
-        child: LoadingView(message: '正在加载数据库用户'),
-      ),
+      loading: () =>
+          const SizedBox(height: 240, child: LoadingView(message: '正在加载数据库用户')),
       error: (error, _) => SizedBox(
         height: 300,
         child: ErrorView(
@@ -130,12 +126,13 @@ class _DatabasePasswordSheetState extends ConsumerState<DatabasePasswordSheet> {
   }) {
     final selected =
         _selected != null && users.any((u) => u.id == _selected!.id)
-            ? _selected
-            : null;
+        ? _selected
+        : null;
 
     return DbSheet(
       title: '修改数据库密码',
-      subtitle: widget.subtitle ??
+      subtitle:
+          widget.subtitle ??
           (showPicker ? '为该服务器上的数据库用户设置新密码' : _userLabel(users.first)),
       submitting: _submitting,
       onSubmit: users.isEmpty ? null : _submit,
@@ -175,9 +172,7 @@ class _DatabasePasswordSheetState extends ConsumerState<DatabasePasswordSheet> {
             onGenerate: generatePassword,
           ),
         if (users.isNotEmpty)
-          const SheetHint(
-            text: '修改后请同步更新使用该账号的应用配置，否则应用将无法连接数据库。',
-          ),
+          const SheetHint(text: '修改后请同步更新使用该账号的应用配置，否则应用将无法连接数据库。'),
       ],
     );
   }

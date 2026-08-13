@@ -21,11 +21,11 @@ class BackupFile {
   final DateTime? time;
 
   factory BackupFile.fromJson(Map<String, dynamic> json) => BackupFile(
-        name: jsonString(json['name']),
-        path: jsonString(json['path']),
-        size: jsonString(json['size']),
-        time: jsonTime(json['time']),
-      );
+    name: jsonString(json['name']),
+    path: jsonString(json['path']),
+    size: jsonString(json['size']),
+    time: jsonTime(json['time']),
+  );
 }
 
 /// 备份类型常量与展示文案（与 `request.BackupList` 的校验规则一致）。

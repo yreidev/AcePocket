@@ -45,7 +45,8 @@ class MigrationResultsPage extends ConsumerWidget {
             ref.invalidate(migrationResultsProvider);
             await ref.read(migrationResultsProvider.future);
           },
-          child: snapshot.results.isEmpty &&
+          child:
+              snapshot.results.isEmpty &&
                   (snapshot.logs == null || snapshot.logs!.isEmpty)
               ? ListView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -101,8 +102,10 @@ class MigrationResultsPage extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('当前状态：${snapshot.step.label}',
-              style: theme.textTheme.bodyMedium),
+          Text(
+            '当前状态：${snapshot.step.label}',
+            style: theme.textTheme.bodyMedium,
+          ),
           const SizedBox(height: 6),
           Text(
             '成功 $success · 失败 $failed · 跳过 $skipped',

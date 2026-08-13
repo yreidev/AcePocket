@@ -13,9 +13,7 @@ import 'api_exception.dart';
 void ensureSecurePanelTransport(ServerConfig server) {
   final uri = Uri.tryParse(server.normalizedBaseUrl);
   if (uri == null || uri.scheme.toLowerCase() != 'https') {
-    throw const ApiException(
-      '出于安全原因，面板地址必须使用 HTTPS。请先为面板配置 HTTPS，再更新服务器地址',
-    );
+    throw const ApiException('出于安全原因，面板地址必须使用 HTTPS。请先为面板配置 HTTPS，再更新服务器地址');
   }
 }
 
@@ -65,8 +63,10 @@ HttpClient createPanelHttpClient(ServerConfig server) {
           _lastRejected.remove(server.id);
           return true;
         case CertificateDecision.needsTrust:
-          _lastRejected[server.id] =
-              _RejectedCertificate(info, mismatch: false);
+          _lastRejected[server.id] = _RejectedCertificate(
+            info,
+            mismatch: false,
+          );
           return false;
         case CertificateDecision.mismatch:
           _lastRejected[server.id] = _RejectedCertificate(info, mismatch: true);
@@ -194,7 +194,8 @@ class CertificateTrustRequiredException implements Exception {
   /// 本次握手遇到的证书信息。
   final PanelCertificateInfo certificate;
 
-  String get message => '首次连接该服务器需要确认其身份：'
+  String get message =>
+      '首次连接该服务器需要确认其身份：'
       '请在服务器设置中执行连接测试，核对证书 SHA-256 指纹后选择信任。'
       '确认后指纹会被记住，日后证书变化时连接将被拒绝。';
 
@@ -219,7 +220,8 @@ class CertificateMismatchException implements Exception {
   /// 之前信任的指纹（规范化后的小写十六进制）。
   final String pinnedSha256;
 
-  String get message => '服务器证书与之前信任的指纹不一致，连接已被拒绝。'
+  String get message =>
+      '服务器证书与之前信任的指纹不一致，连接已被拒绝。'
       '这可能意味着连接正在被中间人攻击，也可能是服务器更换了证书。'
       '若确认服务器确实更换了证书，请在服务器编辑页清除已记住的证书指纹，'
       '然后重新执行连接测试确认新证书。';

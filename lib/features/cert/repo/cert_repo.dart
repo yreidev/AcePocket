@@ -48,10 +48,10 @@ class CertRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/cert/cert', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/cert/cert',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.parse(data, CertListItem.fromJson);
   }
 
@@ -76,15 +76,18 @@ class CertRepo {
     int dnsId = 0,
     int websiteId = 0,
   }) async {
-    final data = await _api.post('/cert/cert', body: {
-      'type': type,
-      'domains': domains,
-      'alias': alias,
-      'auto_renewal': autoRenewal,
-      'account_id': accountId,
-      'dns_id': dnsId,
-      'website_id': websiteId,
-    });
+    final data = await _api.post(
+      '/cert/cert',
+      body: {
+        'type': type,
+        'domains': domains,
+        'alias': alias,
+        'auto_renewal': autoRenewal,
+        'account_id': accountId,
+        'dns_id': dnsId,
+        'website_id': websiteId,
+      },
+    );
     if (data is! Map) {
       throw StateError('创建证书响应格式异常');
     }
@@ -92,14 +95,11 @@ class CertRepo {
   }
 
   /// 上传自有证书：POST /api/cert/cert/upload（request.CertUpload）。
-  Future<Cert> uploadCert({
-    required String cert,
-    required String key,
-  }) async {
-    final data = await _api.post('/cert/cert/upload', body: {
-      'cert': cert,
-      'key': key,
-    });
+  Future<Cert> uploadCert({required String cert, required String key}) async {
+    final data = await _api.post(
+      '/cert/cert/upload',
+      body: {'cert': cert, 'key': key},
+    );
     if (data is! Map) {
       throw StateError('上传证书响应格式异常');
     }
@@ -119,20 +119,22 @@ class CertRepo {
     int accountId = 0,
     int dnsId = 0,
     int websiteId = 0,
-  }) =>
-      _api.put('/cert/cert/$id', body: {
-        'id': id,
-        'type': type,
-        'domains': domains,
-        'alias': alias,
-        'cert': cert,
-        'key': key,
-        'script': script,
-        'auto_renewal': autoRenewal,
-        'account_id': accountId,
-        'dns_id': dnsId,
-        'website_id': websiteId,
-      });
+  }) => _api.put(
+    '/cert/cert/$id',
+    body: {
+      'id': id,
+      'type': type,
+      'domains': domains,
+      'alias': alias,
+      'cert': cert,
+      'key': key,
+      'script': script,
+      'auto_renewal': autoRenewal,
+      'account_id': accountId,
+      'dns_id': dnsId,
+      'website_id': websiteId,
+    },
+  );
 
   /// 删除证书：DELETE /api/cert/cert/{id}。
   Future<void> deleteCert(int id) => _api.delete('/cert/cert/$id');
@@ -156,12 +158,10 @@ class CertRepo {
     required int id,
     required int websiteId,
     bool enableHttps = true,
-  }) =>
-      _api.post('/cert/cert/$id/deploy', body: {
-        'id': id,
-        'website_id': websiteId,
-        'enable_https': enableHttps,
-      });
+  }) => _api.post(
+    '/cert/cert/$id/deploy',
+    body: {'id': id, 'website_id': websiteId, 'enable_https': enableHttps},
+  );
 
   // ------------------------------------------------------------------
   // DNS 账号 /api/cert/dns
@@ -172,10 +172,10 @@ class CertRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/cert/dns', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/cert/dns',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.parse(data, CertDns.fromJson);
   }
 
@@ -193,12 +193,10 @@ class CertRepo {
     required String name,
     required String type,
     required DnsParam data,
-  }) =>
-      _api.post('/cert/dns', body: {
-        'name': name,
-        'type': type,
-        'data': data.toJson(),
-      });
+  }) => _api.post(
+    '/cert/dns',
+    body: {'name': name, 'type': type, 'data': data.toJson()},
+  );
 
   /// 更新 DNS 账号：PUT /api/cert/dns/{id}（request.CertDNSUpdate）。
   Future<void> updateDns({
@@ -206,13 +204,10 @@ class CertRepo {
     required String name,
     required String type,
     required DnsParam data,
-  }) =>
-      _api.put('/cert/dns/$id', body: {
-        'id': id,
-        'name': name,
-        'type': type,
-        'data': data.toJson(),
-      });
+  }) => _api.put(
+    '/cert/dns/$id',
+    body: {'id': id, 'name': name, 'type': type, 'data': data.toJson()},
+  );
 
   /// 删除 DNS 账号：DELETE /api/cert/dns/{id}。
   Future<void> deleteDns(int id) => _api.delete('/cert/dns/$id');
@@ -226,10 +221,10 @@ class CertRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/cert/account', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/cert/account',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.parse(data, CertAccount.fromJson);
   }
 
@@ -251,14 +246,16 @@ class CertRepo {
     required String keyType,
     String kid = '',
     String hmacEncoded = '',
-  }) =>
-      _api.post('/cert/account', body: {
-        'ca': ca,
-        'email': email,
-        'key_type': keyType,
-        'kid': kid,
-        'hmac_encoded': hmacEncoded,
-      });
+  }) => _api.post(
+    '/cert/account',
+    body: {
+      'ca': ca,
+      'email': email,
+      'key_type': keyType,
+      'kid': kid,
+      'hmac_encoded': hmacEncoded,
+    },
+  );
 
   /// 更新 CA 账户：PUT /api/cert/account/{id}（request.CertAccountUpdate）。
   Future<void> updateAccount({
@@ -268,15 +265,17 @@ class CertRepo {
     required String keyType,
     String kid = '',
     String hmacEncoded = '',
-  }) =>
-      _api.put('/cert/account/$id', body: {
-        'id': id,
-        'ca': ca,
-        'email': email,
-        'key_type': keyType,
-        'kid': kid,
-        'hmac_encoded': hmacEncoded,
-      });
+  }) => _api.put(
+    '/cert/account/$id',
+    body: {
+      'id': id,
+      'ca': ca,
+      'email': email,
+      'key_type': keyType,
+      'kid': kid,
+      'hmac_encoded': hmacEncoded,
+    },
+  );
 
   /// 删除 CA 账户：DELETE /api/cert/account/{id}。
   Future<void> deleteAccount(int id) => _api.delete('/cert/account/$id');
@@ -289,11 +288,10 @@ class CertRepo {
   ///
   /// 面板未安装 Web 服务器时该接口可能报错，调用方需自行容错。
   Future<List<WebsiteOption>> listWebsites({int limit = 10000}) async {
-    final data = await _api.get('/website', query: {
-      'type': 'all',
-      'page': 1,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website',
+      query: {'type': 'all', 'page': 1, 'limit': limit},
+    );
     return Paged.parse(data, WebsiteOption.fromJson).items;
   }
 }

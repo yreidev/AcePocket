@@ -188,34 +188,32 @@ class MigrationFlowState {
     bool? polling,
     String? authHint,
     bool clearAuthHint = false,
-  }) =>
-      MigrationFlowState(
-        initializing: initializing ?? this.initializing,
-        initError: clearInitError ? null : (initError ?? this.initError),
-        stage: stage ?? this.stage,
-        serverStep: serverStep ?? this.serverStep,
-        connection: connection ?? this.connection,
-        localEnv: localEnv ?? this.localEnv,
-        remoteEnv: remoteEnv ?? this.remoteEnv,
-        comparison: comparison ?? this.comparison,
-        ignoreEnvCheck: ignoreEnvCheck ?? this.ignoreEnvCheck,
-        items: items ?? this.items,
-        selectedWebsites: selectedWebsites ?? this.selectedWebsites,
-        selectedDatabases: selectedDatabases ?? this.selectedDatabases,
-        selectedDatabaseUsers:
-            selectedDatabaseUsers ?? this.selectedDatabaseUsers,
-        selectedProjects: selectedProjects ?? this.selectedProjects,
-        stopOnMig: stopOnMig ?? this.stopOnMig,
-        results: results ?? this.results,
-        logs: logs ?? this.logs,
-        startedAt: clearTimes ? null : (startedAt ?? this.startedAt),
-        endedAt: clearTimes ? null : (endedAt ?? this.endedAt),
-        busy: busy ?? this.busy,
-        busyLabel: busy == false ? null : (busyLabel ?? this.busyLabel),
-        live: live ?? this.live,
-        polling: polling ?? this.polling,
-        authHint: clearAuthHint ? null : (authHint ?? this.authHint),
-      );
+  }) => MigrationFlowState(
+    initializing: initializing ?? this.initializing,
+    initError: clearInitError ? null : (initError ?? this.initError),
+    stage: stage ?? this.stage,
+    serverStep: serverStep ?? this.serverStep,
+    connection: connection ?? this.connection,
+    localEnv: localEnv ?? this.localEnv,
+    remoteEnv: remoteEnv ?? this.remoteEnv,
+    comparison: comparison ?? this.comparison,
+    ignoreEnvCheck: ignoreEnvCheck ?? this.ignoreEnvCheck,
+    items: items ?? this.items,
+    selectedWebsites: selectedWebsites ?? this.selectedWebsites,
+    selectedDatabases: selectedDatabases ?? this.selectedDatabases,
+    selectedDatabaseUsers: selectedDatabaseUsers ?? this.selectedDatabaseUsers,
+    selectedProjects: selectedProjects ?? this.selectedProjects,
+    stopOnMig: stopOnMig ?? this.stopOnMig,
+    results: results ?? this.results,
+    logs: logs ?? this.logs,
+    startedAt: clearTimes ? null : (startedAt ?? this.startedAt),
+    endedAt: clearTimes ? null : (endedAt ?? this.endedAt),
+    busy: busy ?? this.busy,
+    busyLabel: busy == false ? null : (busyLabel ?? this.busyLabel),
+    live: live ?? this.live,
+    polling: polling ?? this.polling,
+    authHint: clearAuthHint ? null : (authHint ?? this.authHint),
+  );
 }
 
 /// 迁移向导控制器。
@@ -340,7 +338,8 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
         default:
           // 面板处于 idle/connect/precheck/select：向导阶段由本地维护，
           // 只有当本地停留在「迁移中 / 完成」而面板已被重置时才退回第一步。
-          final reverted = state.stage == MigrationStage.running ||
+          final reverted =
+              state.stage == MigrationStage.running ||
               state.stage == MigrationStage.done;
           if (reverted) {
             _closeChannel();
@@ -420,8 +419,9 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
         serverStep: MigrationStep.select,
         selectedWebsites: state.selectedWebsites.intersection(websiteIds),
         selectedDatabases: state.selectedDatabases.intersection(databaseKeys),
-        selectedDatabaseUsers:
-            state.selectedDatabaseUsers.intersection(userIds),
+        selectedDatabaseUsers: state.selectedDatabaseUsers.intersection(
+          userIds,
+        ),
         selectedProjects: state.selectedProjects.intersection(projectIds),
       );
       return null;
@@ -476,8 +476,9 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
   /// 全选 / 全不选某一类（仅对可迁移的项生效）。
   void selectAllWebsites(bool selected) {
     state = state.copyWith(
-      selectedWebsites:
-          selected ? state.items.websites.map((e) => e.id).toSet() : <int>{},
+      selectedWebsites: selected
+          ? state.items.websites.map((e) => e.id).toSet()
+          : <int>{},
     );
   }
 
@@ -485,9 +486,9 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
     state = state.copyWith(
       selectedDatabases: selected
           ? state.items.databases
-              .where((e) => e.supported)
-              .map((e) => e.key)
-              .toSet()
+                .where((e) => e.supported)
+                .map((e) => e.key)
+                .toSet()
           : <String>{},
     );
   }
@@ -496,17 +497,18 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
     state = state.copyWith(
       selectedDatabaseUsers: selected
           ? state.items.databaseUsers
-              .where((e) => e.supported)
-              .map((e) => e.id)
-              .toSet()
+                .where((e) => e.supported)
+                .map((e) => e.id)
+                .toSet()
           : <int>{},
     );
   }
 
   void selectAllProjects(bool selected) {
     state = state.copyWith(
-      selectedProjects:
-          selected ? state.items.projects.map((e) => e.id).toSet() : <int>{},
+      selectedProjects: selected
+          ? state.items.projects.map((e) => e.id).toSet()
+          : <int>{},
     );
   }
 
@@ -630,8 +632,8 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
     final text = raw is String
         ? raw
         : raw is List<int>
-            ? utf8.decode(raw, allowMalformed: true)
-            : '$raw';
+        ? utf8.decode(raw, allowMalformed: true)
+        : '$raw';
     dynamic decoded;
     try {
       decoded = jsonDecode(text);
@@ -641,8 +643,8 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
     final map = decoded is Map<String, dynamic>
         ? decoded
         : decoded is Map
-            ? decoded.map((key, value) => MapEntry('$key', value))
-            : null;
+        ? decoded.map((key, value) => MapEntry('$key', value))
+        : null;
     if (map == null) return;
 
     final snapshot = MigrationSnapshot.fromJson(map);
@@ -659,8 +661,8 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
       stage: snapshot.step == MigrationStep.done
           ? MigrationStage.done
           : snapshot.step == MigrationStep.running
-              ? MigrationStage.running
-              : state.stage,
+          ? MigrationStage.running
+          : state.stage,
     );
 
     if (snapshot.step == MigrationStep.done) {
@@ -765,5 +767,5 @@ class MigrationFlowNotifier extends Notifier<MigrationFlowState> {
 /// 迁移向导控制器 Provider。
 final migrationFlowProvider =
     NotifierProvider<MigrationFlowNotifier, MigrationFlowState>(
-  MigrationFlowNotifier.new,
-);
+      MigrationFlowNotifier.new,
+    );

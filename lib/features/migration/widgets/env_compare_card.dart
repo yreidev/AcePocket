@@ -5,11 +5,7 @@ import '../models/migration_environment.dart';
 
 /// 本地与远程环境对比卡片。
 class EnvCompareCard extends StatelessWidget {
-  const EnvCompareCard({
-    super.key,
-    required this.local,
-    required this.remote,
-  });
+  const EnvCompareCard({super.key, required this.local, required this.remote});
 
   final InstalledEnvironment local;
   final InstalledEnvironment remote;
@@ -29,27 +25,33 @@ class EnvCompareCard extends StatelessWidget {
     for (final entry in InstalledEnvironment.runtimeKeys.entries) {
       final localItems = local.runtime(entry.key);
       final remoteItems = remote.runtime(entry.key);
-      rows.add(_EnvCompareRow(
-        title: entry.value,
-        localText: _labels(localItems),
-        remoteText: _labels(remoteItems),
-        matched: _same(localItems, remoteItems),
-      ));
+      rows.add(
+        _EnvCompareRow(
+          title: entry.value,
+          localText: _labels(localItems),
+          remoteText: _labels(remoteItems),
+          matched: _same(localItems, remoteItems),
+        ),
+      );
     }
 
-    rows.add(_EnvCompareRow(
-      title: '数据库',
-      localText: _labels(local.databases),
-      remoteText: _labels(remote.databases),
-      matched: _same(local.databases, remote.databases),
-    ));
+    rows.add(
+      _EnvCompareRow(
+        title: '数据库',
+        localText: _labels(local.databases),
+        remoteText: _labels(remote.databases),
+        matched: _same(local.databases, remote.databases),
+      ),
+    );
 
-    rows.add(_EnvCompareRow(
-      title: 'rsync',
-      localText: local.rsync ? '已安装' : '未安装',
-      remoteText: remote.rsync ? '已安装' : '未安装',
-      matched: local.rsync == remote.rsync,
-    ));
+    rows.add(
+      _EnvCompareRow(
+        title: 'rsync',
+        localText: local.rsync ? '已安装' : '未安装',
+        remoteText: remote.rsync ? '已安装' : '未安装',
+        matched: local.rsync == remote.rsync,
+      ),
+    );
 
     return SectionCard(
       title: '环境对比（本机 → 远程）',
@@ -88,8 +90,8 @@ class _EnvCompareHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.labelSmall?.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        );
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
+    );
     return Row(
       children: [
         Expanded(flex: 3, child: Text('项目', style: style)),
@@ -126,8 +128,8 @@ class _EnvCompareRow extends StatelessWidget {
     final iconColor = matched
         ? colorScheme.primary
         : required
-            ? colorScheme.error
-            : colorScheme.tertiary;
+        ? colorScheme.error
+        : colorScheme.tertiary;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,16 +151,16 @@ class _EnvCompareRow extends StatelessWidget {
             matched
                 ? Icons.check_circle_outline
                 : required
-                    ? Icons.cancel_outlined
-                    : Icons.error_outline,
+                ? Icons.cancel_outlined
+                : Icons.error_outline,
             size: 18,
             color: iconColor,
             // 是否一致仅靠图标与颜色表达，读屏用户会漏掉，补语义标签。
             semanticLabel: matched
                 ? '一致'
                 : required
-                    ? '不一致，阻断迁移'
-                    : '存在差异',
+                ? '不一致，阻断迁移'
+                : '存在差异',
           ),
         ),
       ],

@@ -42,16 +42,7 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
   String _geoGroupBy = 'country';
   String _geoCountry = '';
 
-  static const _tabs = [
-    '概览',
-    'URI',
-    '慢请求',
-    'IP',
-    '地区',
-    '蜘蛛',
-    '客户端',
-    '错误',
-  ];
+  static const _tabs = ['概览', 'URI', '慢请求', 'IP', '地区', '蜘蛛', '客户端', '错误'];
 
   void _setRange(StatDateRange range) {
     if (_range == range) return;
@@ -65,24 +56,34 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
       firstDate: DateTime(now.year - 3),
       lastDate: DateTime(now.year, now.month, now.day),
       initialDateRange: DateTimeRange(
-        start: DateTime(now.year, now.month, now.day)
-            .subtract(const Duration(days: 6)),
+        start: DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).subtract(const Duration(days: 6)),
         end: DateTime(now.year, now.month, now.day),
       ),
     );
     if (picked == null || !mounted) return;
-    String fmt(DateTime d) => '${d.year.toString().padLeft(4, '0')}-'
+    String fmt(DateTime d) =>
+        '${d.year.toString().padLeft(4, '0')}-'
         '${d.month.toString().padLeft(2, '0')}-'
         '${d.day.toString().padLeft(2, '0')}';
-    _setRange(StatDateRange(
-      start: fmt(picked.start),
-      end: fmt(picked.end),
-      label: '自定义',
-    ));
+    _setRange(
+      StatDateRange(
+        start: fmt(picked.start),
+        end: fmt(picked.end),
+        label: '自定义',
+      ),
+    );
   }
 
   void _refreshAll(
-      StatQuery base, StatQuery slow, StatQuery errors, StatQuery geo) {
+    StatQuery base,
+    StatQuery slow,
+    StatQuery errors,
+    StatQuery geo,
+  ) {
     ref.invalidate(statOverviewProvider(base));
     ref.invalidate(statRealtimeProvider);
     ref.invalidate(statUrisProvider(base));
@@ -167,9 +168,9 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
     if (saved != true || !mounted) return;
 
     try {
-      await ref.read(websiteStatRepoProvider).saveSetting(
-            current.copyWith(days: days, bodyEnabled: bodyEnabled),
-          );
+      await ref
+          .read(websiteStatRepoProvider)
+          .saveSetting(current.copyWith(days: days, bodyEnabled: bodyEnabled));
       if (!mounted) return;
       ref.invalidate(statSettingProvider);
       showSuccessSnack(context, '统计设置已保存');
@@ -179,7 +180,11 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
   }
 
   Future<void> _clearStats(
-      StatQuery base, StatQuery slow, StatQuery errors, StatQuery geo) async {
+    StatQuery base,
+    StatQuery slow,
+    StatQuery errors,
+    StatQuery geo,
+  ) async {
     final ok = await showConfirmDialog(
       context,
       title: '清空统计数据',
@@ -238,11 +243,7 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                siteName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Text(siteName, maxLines: 1, overflow: TextOverflow.ellipsis),
               Text(
                 '${_range.label} · ${_range.start}'
                 '${_range.isSingleDay ? '' : ' ~ ${_range.end}'}',
@@ -308,8 +309,10 @@ class _WebsiteStatsPageState extends ConsumerState<WebsiteStatsPage> {
                   value: 'clear',
                   child: ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.delete_sweep_outlined,
-                        color: theme.colorScheme.error),
+                    leading: Icon(
+                      Icons.delete_sweep_outlined,
+                      color: theme.colorScheme.error,
+                    ),
                     title: Text(
                       '清空统计',
                       style: TextStyle(color: theme.colorScheme.error),

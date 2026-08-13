@@ -46,7 +46,8 @@ typedef FileListState = PagedState<FileItem>;
 /// 文件列表（按 路径 + 关键字 + 排序 维度缓存，支持分页追加）。
 final fileListProvider = AsyncNotifierProvider.autoDispose
     .family<FileListNotifier, FileListState, FileListQuery>(
-        FileListNotifier.new);
+      FileListNotifier.new,
+    );
 
 /// 并发控制（请求代次 / 在途标志 / loadMoreError）由
 /// [PagedFamilyAsyncNotifier] 统一提供；加载更多失败不打断已展示的列表，
@@ -65,7 +66,9 @@ class FileListNotifier
 
   @override
   Future<PagedResult<FileItem>> fetchPage(int page, int limit) async {
-    final result = await ref.read(fileRepoProvider).list(
+    final result = await ref
+        .read(fileRepoProvider)
+        .list(
           path: arg.path,
           keyword: arg.keyword,
           sub: arg.keyword.isNotEmpty,
@@ -79,8 +82,9 @@ class FileListNotifier
 
 /// 列表排序方式：`''`（目录优先按名称）、`name` / `size` / `modify`，
 /// 前缀 `-` 表示降序（面板 `internal/service/file.go` List 的约定）。
-final fileSortProvider =
-    NotifierProvider<FileSortNotifier, String>(FileSortNotifier.new);
+final fileSortProvider = NotifierProvider<FileSortNotifier, String>(
+  FileSortNotifier.new,
+);
 
 class FileSortNotifier extends Notifier<String> {
   @override
@@ -91,7 +95,8 @@ class FileSortNotifier extends Notifier<String> {
 
 /// 是否显示隐藏文件（以 `.` 开头）。
 final showHiddenFilesProvider = NotifierProvider<ShowHiddenFilesNotifier, bool>(
-    ShowHiddenFilesNotifier.new);
+  ShowHiddenFilesNotifier.new,
+);
 
 class ShowHiddenFilesNotifier extends Notifier<bool> {
   @override
@@ -123,7 +128,8 @@ class FileClipboard {
 
 final fileClipboardProvider =
     NotifierProvider<FileClipboardNotifier, FileClipboard?>(
-        FileClipboardNotifier.new);
+      FileClipboardNotifier.new,
+    );
 
 class FileClipboardNotifier extends Notifier<FileClipboard?> {
   @override
@@ -148,21 +154,24 @@ class FileClipboardNotifier extends Notifier<FileClipboard?> {
 }
 
 /// 单个文件 / 目录的详细信息（`GET /file/info`）。
-final fileInfoProvider =
-    FutureProvider.autoDispose.family<FileItem, String>((ref, path) {
+final fileInfoProvider = FutureProvider.autoDispose.family<FileItem, String>((
+  ref,
+  path,
+) {
   return ref.watch(fileRepoProvider).info(path);
 });
 
 /// 文件文本内容（`GET /file/content`），供编辑器页使用。
-final fileContentProvider =
-    FutureProvider.autoDispose.family<FileContent, String>((ref, path) {
-  return ref.watch(fileRepoProvider).content(path);
-});
+final fileContentProvider = FutureProvider.autoDispose
+    .family<FileContent, String>((ref, path) {
+      return ref.watch(fileRepoProvider).content(path);
+    });
 
 /// 文件分享列表。
 final fileSharesProvider =
     AsyncNotifierProvider.autoDispose<FileSharesNotifier, List<FileShare>>(
-        FileSharesNotifier.new);
+      FileSharesNotifier.new,
+    );
 
 class FileSharesNotifier extends AutoDisposeAsyncNotifier<List<FileShare>> {
   @override
@@ -174,7 +183,9 @@ class FileSharesNotifier extends AutoDisposeAsyncNotifier<List<FileShare>> {
     required int expireHours,
     int maxDownloads = 0,
   }) async {
-    final share = await ref.read(fileRepoProvider).shareCreate(
+    final share = await ref
+        .read(fileRepoProvider)
+        .shareCreate(
           path: path,
           expireHours: expireHours,
           maxDownloads: maxDownloads,

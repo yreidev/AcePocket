@@ -5,7 +5,7 @@ import 'json_utils.dart';
 /// HTTPS / QUIC 通过 args 中的 `ssl` / `quic` 参数表达。
 class ListenConfig {
   ListenConfig({required this.address, List<String>? args})
-      : args = args ?? <String>[];
+    : args = args ?? <String>[];
 
   String address;
   List<String> args;
@@ -25,9 +25,9 @@ class ListenConfig {
   }
 
   factory ListenConfig.fromJson(Map<String, dynamic> json) => ListenConfig(
-        address: jString(json['address']),
-        args: jStringList(json['args']),
-      );
+    address: jString(json['address']),
+    args: jStringList(json['args']),
+  );
 
   Map<String, dynamic> toJson() => {'address': address, 'args': args};
 }
@@ -42,8 +42,8 @@ class UpstreamConfig {
     this.algo = '',
     this.keepalive = 0,
     Map<String, dynamic>? extra,
-  })  : servers = servers ?? <String, String>{},
-        extra = extra ?? <String, dynamic>{};
+  }) : servers = servers ?? <String, String>{},
+       extra = extra ?? <String, dynamic>{};
 
   String name;
 
@@ -56,21 +56,22 @@ class UpstreamConfig {
   static const _ownKeys = {'name', 'servers', 'algo', 'keepalive'};
 
   factory UpstreamConfig.fromJson(Map<String, dynamic> json) => UpstreamConfig(
-        name: jString(json['name']),
-        servers: jStringMap(json['servers']),
-        algo: jString(json['algo']),
-        keepalive: jInt(json['keepalive']),
-        extra: Map.fromEntries(
-            json.entries.where((e) => !_ownKeys.contains(e.key))),
-      );
+    name: jString(json['name']),
+    servers: jStringMap(json['servers']),
+    algo: jString(json['algo']),
+    keepalive: jInt(json['keepalive']),
+    extra: Map.fromEntries(
+      json.entries.where((e) => !_ownKeys.contains(e.key)),
+    ),
+  );
 
   Map<String, dynamic> toJson() => {
-        ...extra,
-        'name': name,
-        'servers': servers,
-        'algo': algo,
-        'keepalive': keepalive,
-      };
+    ...extra,
+    'name': name,
+    'servers': servers,
+    'algo': algo,
+    'keepalive': keepalive,
+  };
 }
 
 /// 反向代理配置，对应 `pkg/webserver/types.Proxy`。
@@ -106,47 +107,48 @@ class ProxyConfig {
 
   /// 与 Web 前端一致的新代理默认值。
   factory ProxyConfig.newDefault() => ProxyConfig(
-        location: '/',
-        pass: 'http://127.0.0.1:8080',
-        host: r'$host',
-        sni: '',
-        buffering: true,
-        httpVersion: '1.1',
-        extra: {
-          'cache': null,
-          'resolver': <String>[],
-          'resolver_timeout': 5000000000, // 5 秒（纳秒）
-          'headers': <String, String>{},
-          'replaces': <String, String>{},
-          'timeout': null,
-          'retry': null,
-          'client_max_body_size': 0,
-          'ssl_backend': null,
-          'response_headers': null,
-          'access_control': null,
-        },
-      );
+    location: '/',
+    pass: 'http://127.0.0.1:8080',
+    host: r'$host',
+    sni: '',
+    buffering: true,
+    httpVersion: '1.1',
+    extra: {
+      'cache': null,
+      'resolver': <String>[],
+      'resolver_timeout': 5000000000, // 5 秒（纳秒）
+      'headers': <String, String>{},
+      'replaces': <String, String>{},
+      'timeout': null,
+      'retry': null,
+      'client_max_body_size': 0,
+      'ssl_backend': null,
+      'response_headers': null,
+      'access_control': null,
+    },
+  );
 
   factory ProxyConfig.fromJson(Map<String, dynamic> json) => ProxyConfig(
-        location: jString(json['location']),
-        pass: jString(json['pass']),
-        host: jString(json['host']),
-        sni: jString(json['sni']),
-        buffering: jBool(json['buffering']),
-        httpVersion: jString(json['http_version'], '1.1'),
-        extra: Map.fromEntries(
-            json.entries.where((e) => !_ownKeys.contains(e.key))),
-      );
+    location: jString(json['location']),
+    pass: jString(json['pass']),
+    host: jString(json['host']),
+    sni: jString(json['sni']),
+    buffering: jBool(json['buffering']),
+    httpVersion: jString(json['http_version'], '1.1'),
+    extra: Map.fromEntries(
+      json.entries.where((e) => !_ownKeys.contains(e.key)),
+    ),
+  );
 
   Map<String, dynamic> toJson() => {
-        ...extra,
-        'location': location,
-        'pass': pass,
-        'host': host,
-        'sni': sni,
-        'buffering': buffering,
-        'http_version': httpVersion,
-      };
+    ...extra,
+    'location': location,
+    'pass': pass,
+    'host': host,
+    'sni': sni,
+    'buffering': buffering,
+    'http_version': httpVersion,
+  };
 }
 
 /// 重定向配置，对应 `pkg/webserver/types.Redirect`。
@@ -167,20 +169,20 @@ class RedirectConfig {
   int statusCode;
 
   factory RedirectConfig.fromJson(Map<String, dynamic> json) => RedirectConfig(
-        type: jString(json['type'], 'url'),
-        from: jString(json['from']),
-        to: jString(json['to']),
-        keepUri: jBool(json['keep_uri']),
-        statusCode: jInt(json['status_code'], 308),
-      );
+    type: jString(json['type'], 'url'),
+    from: jString(json['from']),
+    to: jString(json['to']),
+    keepUri: jBool(json['keep_uri']),
+    statusCode: jInt(json['status_code'], 308),
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'from': from,
-        'to': to,
-        'keep_uri': keepUri,
-        'status_code': statusCode,
-      };
+    'type': type,
+    'from': from,
+    'to': to,
+    'keep_uri': keepUri,
+    'status_code': statusCode,
+  };
 }
 
 /// 限流限速配置，对应 `pkg/webserver/types.RateLimit`。
@@ -204,10 +206,10 @@ class RateLimitConfig {
       );
 
   Map<String, dynamic> toJson() => {
-        'per_server': perServer,
-        'per_ip': perIp,
-        'rate': rate,
-      };
+    'per_server': perServer,
+    'per_ip': perIp,
+    'rate': rate,
+  };
 }
 
 /// 真实 IP 配置，对应 `pkg/webserver/types.RealIP`。
@@ -223,16 +225,16 @@ class RealIpConfig {
   bool recursive;
 
   factory RealIpConfig.fromJson(Map<String, dynamic> json) => RealIpConfig(
-        from: jStringList(json['from']),
-        header: jString(json['header'], 'X-Forwarded-For'),
-        recursive: jBool(json['recursive']),
-      );
+    from: jStringList(json['from']),
+    header: jString(json['header'], 'X-Forwarded-For'),
+    recursive: jBool(json['recursive']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'from': from,
-        'header': header,
-        'recursive': recursive,
-      };
+    'from': from,
+    'header': header,
+    'recursive': recursive,
+  };
 }
 
 /// 网站自定义配置片段。
@@ -246,16 +248,16 @@ class CustomConfig {
   String content;
 
   factory CustomConfig.fromJson(Map<String, dynamic> json) => CustomConfig(
-        name: jString(json['name']),
-        scope: jString(json['scope'], 'site'),
-        content: jString(json['content']),
-      );
+    name: jString(json['name']),
+    scope: jString(json['scope'], 'site'),
+    content: jString(json['content']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'scope': scope,
-        'content': content,
-      };
+    'name': name,
+    'scope': scope,
+    'content': content,
+  };
 }
 
 /// 网站完整配置，对应 `pkg/types.WebsiteSetting`。
@@ -358,77 +360,79 @@ class WebsiteSetting {
   List<CustomConfig> customConfigs;
 
   factory WebsiteSetting.fromJson(Map<String, dynamic> json) => WebsiteSetting(
-        id: jInt(json['id']),
-        name: jString(json['name']),
-        type: jString(json['type'], 'static'),
-        listens: jMapList(json['listens']).map(ListenConfig.fromJson).toList(),
-        domains: jStringList(json['domains']),
-        path: jString(json['path']),
-        root: jString(json['root']),
-        index: jStringList(json['index']),
-        ssl: jBool(json['ssl']),
-        sslCert: jString(json['ssl_cert']),
-        sslKey: jString(json['ssl_key']),
-        hsts: jBool(json['hsts']),
-        ocsp: jBool(json['ocsp']),
-        httpRedirect: jBool(json['http_redirect']),
-        sslProtocols: jStringList(json['ssl_protocols']),
-        sslNotBefore: jString(json['ssl_not_before']),
-        sslNotAfter: jString(json['ssl_not_after']),
-        sslDnsNames: jStringList(json['ssl_dns_names']),
-        sslIssuer: jString(json['ssl_issuer']),
-        sslOcspServer: jStringList(json['ssl_ocsp_server']),
-        accessLog: jString(json['access_log']),
-        errorLog: jString(json['error_log']),
-        php: jInt(json['php']),
-        rewrite: jString(json['rewrite']),
-        openBasedir: jBool(json['open_basedir']),
-        upstreams:
-            jMapList(json['upstreams']).map(UpstreamConfig.fromJson).toList(),
-        proxies: jMapList(json['proxies']).map(ProxyConfig.fromJson).toList(),
-        redirects:
-            jMapList(json['redirects']).map(RedirectConfig.fromJson).toList(),
-        statEnabled: jBool(json['stat_enabled']),
-        rateLimit: json['rate_limit'] is Map
-            ? RateLimitConfig.fromJson(jMap(json['rate_limit']))
-            : null,
-        realIp: json['real_ip'] is Map
-            ? RealIpConfig.fromJson(jMap(json['real_ip']))
-            : null,
-        basicAuth: jStringMap(json['basic_auth']),
-        customConfigs: jMapList(json['custom_configs'])
-            .map(CustomConfig.fromJson)
-            .toList(),
-      );
+    id: jInt(json['id']),
+    name: jString(json['name']),
+    type: jString(json['type'], 'static'),
+    listens: jMapList(json['listens']).map(ListenConfig.fromJson).toList(),
+    domains: jStringList(json['domains']),
+    path: jString(json['path']),
+    root: jString(json['root']),
+    index: jStringList(json['index']),
+    ssl: jBool(json['ssl']),
+    sslCert: jString(json['ssl_cert']),
+    sslKey: jString(json['ssl_key']),
+    hsts: jBool(json['hsts']),
+    ocsp: jBool(json['ocsp']),
+    httpRedirect: jBool(json['http_redirect']),
+    sslProtocols: jStringList(json['ssl_protocols']),
+    sslNotBefore: jString(json['ssl_not_before']),
+    sslNotAfter: jString(json['ssl_not_after']),
+    sslDnsNames: jStringList(json['ssl_dns_names']),
+    sslIssuer: jString(json['ssl_issuer']),
+    sslOcspServer: jStringList(json['ssl_ocsp_server']),
+    accessLog: jString(json['access_log']),
+    errorLog: jString(json['error_log']),
+    php: jInt(json['php']),
+    rewrite: jString(json['rewrite']),
+    openBasedir: jBool(json['open_basedir']),
+    upstreams: jMapList(
+      json['upstreams'],
+    ).map(UpstreamConfig.fromJson).toList(),
+    proxies: jMapList(json['proxies']).map(ProxyConfig.fromJson).toList(),
+    redirects: jMapList(
+      json['redirects'],
+    ).map(RedirectConfig.fromJson).toList(),
+    statEnabled: jBool(json['stat_enabled']),
+    rateLimit: json['rate_limit'] is Map
+        ? RateLimitConfig.fromJson(jMap(json['rate_limit']))
+        : null,
+    realIp: json['real_ip'] is Map
+        ? RealIpConfig.fromJson(jMap(json['real_ip']))
+        : null,
+    basicAuth: jStringMap(json['basic_auth']),
+    customConfigs: jMapList(
+      json['custom_configs'],
+    ).map(CustomConfig.fromJson).toList(),
+  );
 
   /// 组装保存配置（PUT /website/{id}）的请求体，
   /// 字段与 `request.WebsiteUpdate` 一致。
   Map<String, dynamic> toUpdateJson() => {
-        'id': id,
-        'listens': listens.map((e) => e.toJson()).toList(),
-        'domains': domains,
-        'path': path,
-        'root': root,
-        'index': index,
-        'ssl': ssl,
-        'ssl_cert': sslCert,
-        'ssl_key': sslKey,
-        'hsts': hsts,
-        'ocsp': ocsp,
-        'http_redirect': httpRedirect,
-        'ssl_protocols': sslProtocols,
-        'php': php,
-        'rewrite': rewrite,
-        'open_basedir': openBasedir,
-        'upstreams': upstreams.map((e) => e.toJson()).toList(),
-        'proxies': proxies.map((e) => e.toJson()).toList(),
-        'redirects': redirects.map((e) => e.toJson()).toList(),
-        'stat_enabled': statEnabled,
-        'access_log': accessLog,
-        'error_log': errorLog,
-        'rate_limit': rateLimit?.toJson(),
-        'real_ip': realIp?.toJson(),
-        'basic_auth': basicAuth,
-        'custom_configs': customConfigs.map((e) => e.toJson()).toList(),
-      };
+    'id': id,
+    'listens': listens.map((e) => e.toJson()).toList(),
+    'domains': domains,
+    'path': path,
+    'root': root,
+    'index': index,
+    'ssl': ssl,
+    'ssl_cert': sslCert,
+    'ssl_key': sslKey,
+    'hsts': hsts,
+    'ocsp': ocsp,
+    'http_redirect': httpRedirect,
+    'ssl_protocols': sslProtocols,
+    'php': php,
+    'rewrite': rewrite,
+    'open_basedir': openBasedir,
+    'upstreams': upstreams.map((e) => e.toJson()).toList(),
+    'proxies': proxies.map((e) => e.toJson()).toList(),
+    'redirects': redirects.map((e) => e.toJson()).toList(),
+    'stat_enabled': statEnabled,
+    'access_log': accessLog,
+    'error_log': errorLog,
+    'rate_limit': rateLimit?.toJson(),
+    'real_ip': realIp?.toJson(),
+    'basic_auth': basicAuth,
+    'custom_configs': customConfigs.map((e) => e.toJson()).toList(),
+  };
 }

@@ -151,8 +151,8 @@ class _ComposeTile extends StatelessWidget {
                               tone: compose.isRunning
                                   ? BadgeTone.success
                                   : compose.isUnknown
-                                      ? BadgeTone.neutral
-                                      : BadgeTone.warning,
+                                  ? BadgeTone.neutral
+                                  : BadgeTone.warning,
                               dense: true,
                             ),
                           ],
@@ -222,8 +222,11 @@ class _ComposeTile extends StatelessWidget {
               const SizedBox(height: 6),
               Row(
                 children: [
-                  Icon(Icons.schedule,
-                      size: 13, color: theme.colorScheme.outline),
+                  Icon(
+                    Icons.schedule,
+                    size: 13,
+                    color: theme.colorScheme.outline,
+                  ),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(

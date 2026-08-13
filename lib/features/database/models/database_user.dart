@@ -39,40 +39,39 @@ class DatabaseUser {
   bool get isValid => status == 'valid';
 
   factory DatabaseUser.fromJson(Map<String, dynamic> json) => DatabaseUser(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        serverId: (json['server_id'] as num?)?.toInt() ?? 0,
-        username: json['username'] as String? ?? '',
-        password: json['password'] as String? ?? '',
-        host: json['host'] as String? ?? '',
-        status: json['status'] as String? ?? '',
-        privileges: (json['privileges'] as List?)
-                ?.whereType<String>()
-                .toList(growable: false) ??
-            const [],
-        remark: json['remark'] as String? ?? '',
-        server: json['server'] is Map<String, dynamic>
-            ? DatabaseServer.fromJson(json['server'] as Map<String, dynamic>)
-            : null,
-        createdAt: _parseTime(json['created_at']),
-        updatedAt: _parseTime(json['updated_at']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    serverId: (json['server_id'] as num?)?.toInt() ?? 0,
+    username: json['username'] as String? ?? '',
+    password: json['password'] as String? ?? '',
+    host: json['host'] as String? ?? '',
+    status: json['status'] as String? ?? '',
+    privileges:
+        (json['privileges'] as List?)?.whereType<String>().toList(
+          growable: false,
+        ) ??
+        const [],
+    remark: json['remark'] as String? ?? '',
+    server: json['server'] is Map<String, dynamic>
+        ? DatabaseServer.fromJson(json['server'] as Map<String, dynamic>)
+        : null,
+    createdAt: _parseTime(json['created_at']),
+    updatedAt: _parseTime(json['updated_at']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'server_id': serverId,
-        'username': username,
-        'password': password,
-        'host': host,
-        'status': status,
-        'privileges': privileges,
-        'remark': remark,
-        if (server != null) 'server': server!.toJson(),
-        // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
-        if (createdAt != null)
-          'created_at': createdAt!.toUtc().toIso8601String(),
-        if (updatedAt != null)
-          'updated_at': updatedAt!.toUtc().toIso8601String(),
-      };
+    'id': id,
+    'server_id': serverId,
+    'username': username,
+    'password': password,
+    'host': host,
+    'status': status,
+    'privileges': privileges,
+    'remark': remark,
+    if (server != null) 'server': server!.toJson(),
+    // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
+    if (createdAt != null) 'created_at': createdAt!.toUtc().toIso8601String(),
+    if (updatedAt != null) 'updated_at': updatedAt!.toUtc().toIso8601String(),
+  };
 
   /// 解析面板返回的 RFC3339 时间（带时区偏移）。
   ///

@@ -6,9 +6,9 @@ class KV {
   final String value;
 
   factory KV.fromJson(Map<String, dynamic> json) => KV(
-        key: json['key'] as String? ?? '',
-        value: json['value'] as String? ?? '',
-      );
+    key: json['key'] as String? ?? '',
+    value: json['value'] as String? ?? '',
+  );
 
   Map<String, dynamic> toJson() => {'key': key, 'value': value};
 

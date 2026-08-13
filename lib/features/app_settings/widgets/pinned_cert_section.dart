@@ -38,17 +38,13 @@ class PinnedCertSection extends ConsumerWidget {
         .read(serverListProvider.notifier)
         .updateServer(server.copyWith(pinnedCertSha256: ''));
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('已清除「$name」的证书指纹')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('已清除「$name」的证书指纹')));
   }
 
   /// 一台服务器的指纹条目：名称 + 地址 + 分组指纹 + 「清除」按钮。
-  Widget _buildItem(
-    BuildContext context,
-    WidgetRef ref,
-    ServerConfig server,
-  ) {
+  Widget _buildItem(BuildContext context, WidgetRef ref, ServerConfig server) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Container(
@@ -66,14 +62,16 @@ class PinnedCertSection extends ConsumerWidget {
               children: [
                 Text(
                   _displayName(server),
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w600),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   server.normalizedBaseUrl,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -102,8 +100,9 @@ class PinnedCertSection extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
     // 加载中 / 出错时降级为空列表（main 中已预加载，几乎总是有值）。
     final servers = ref.watch(serverListProvider).valueOrNull ?? const [];
-    final pinnedServers =
-        servers.where((s) => s.pinnedCertSha256.isNotEmpty).toList();
+    final pinnedServers = servers
+        .where((s) => s.pinnedCertSha256.isNotEmpty)
+        .toList();
 
     return SectionCard(
       title: '网络与安全',
@@ -114,22 +113,27 @@ class PinnedCertSection extends ConsumerWidget {
             '开启「允许自签名证书」的服务器首次连接时，需确认其证书 SHA-256 指纹'
             '（TOFU），确认后指纹会被记住并固定校验，证书变化时连接将被拒绝。'
             '服务器更换证书后可在此清除对应指纹，下次连接将重新要求确认。',
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: colorScheme.onSurfaceVariant),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 12),
           if (pinnedServers.isEmpty)
             Row(
               children: [
-                Icon(Icons.verified_user_outlined,
-                    size: 18, color: colorScheme.onSurfaceVariant),
+                Icon(
+                  Icons.verified_user_outlined,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     '暂无已记住的证书指纹。开启「允许自签名证书」的服务器'
                     '完成首次连接确认后会显示在这里。',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: colorScheme.onSurfaceVariant),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
               ],

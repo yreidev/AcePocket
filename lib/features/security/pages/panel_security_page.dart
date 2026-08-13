@@ -89,7 +89,8 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
     return showConfirmDialog(
       context,
       title: '放弃修改',
-      content: '有 ${_dirtyKeys.length} 项修改尚未保存，'
+      content:
+          '有 ${_dirtyKeys.length} 项修改尚未保存，'
           '这些改动还没有下发到面板，放弃后将丢失。',
       confirmText: '放弃修改',
       cancelText: '继续编辑',
@@ -109,14 +110,16 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
     final origin = _origin;
     if (draft == null || origin == null || _saving) return;
 
-    final riskyChanged = draft.entrance != origin.entrance ||
+    final riskyChanged =
+        draft.entrance != origin.entrance ||
         draft.port != origin.port ||
         draft.tls != origin.tls;
     if (riskyChanged) {
       final confirmed = await showConfirmDialog(
         context,
         title: '保存并重启面板？',
-        content: '修改安全入口 / 端口 / HTTPS 后面板会自动重启，'
+        content:
+            '修改安全入口 / 端口 / HTTPS 后面板会自动重启，'
             '之后需要在本 App 的服务器配置中同步更新地址与入口，否则将无法连接。',
         confirmText: '保存',
         danger: true,
@@ -126,8 +129,9 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
 
     setState(() => _saving = true);
     try {
-      final restart =
-          await ref.read(securityRepoProvider).updatePanelSetting(draft);
+      final restart = await ref
+          .read(securityRepoProvider)
+          .updatePanelSetting(draft);
       if (!mounted) return;
       _reset();
       ref.invalidate(panelSettingProvider);
@@ -170,7 +174,8 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
 
     return UnsavedChangesGuard(
       hasUnsavedChanges: _dirty && !_saving,
-      message: '有 ${_dirtyKeys.length} 项面板安全设置改了但没保存，'
+      message:
+          '有 ${_dirtyKeys.length} 项面板安全设置改了但没保存，'
           '这些改动还没有下发到面板，返回后将丢失。',
       onDiscard: _reset,
       child: Scaffold(
@@ -231,8 +236,11 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
           child: Row(
             children: [
-              Icon(Icons.edit_outlined,
-                  size: 18, color: theme.colorScheme.tertiary),
+              Icon(
+                Icons.edit_outlined,
+                size: 18,
+                color: theme.colorScheme.tertiary,
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -291,7 +299,8 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
                 initialValue: draft.entrance,
                 label: '入口路径',
                 hintText: '/acepanel',
-                helperText: '必须以 / 开头；填 / 表示不启用安全入口（不推荐）。'
+                helperText:
+                    '必须以 / 开头；填 / 表示不启用安全入口（不推荐）。'
                     '保存后面板才会重启并生效',
                 validator: (value) {
                   if (value.isEmpty) return '入口不能为空，不启用请填 /';
@@ -315,8 +324,9 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
                 context,
                 title: '入口错误页',
                 options: PanelSetting.entranceErrorModes,
-                value:
-                    draft.entranceError.isEmpty ? '418' : draft.entranceError,
+                value: draft.entranceError.isEmpty
+                    ? '418'
+                    : draft.entranceError,
                 labelBuilder: PanelSetting.entranceErrorLabel,
               );
               if (value == null) return;
@@ -460,8 +470,8 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
                 hintText: '172.16.0.1 或 172.16.0.0/16',
                 validator: (value) =>
                     RegExp(r'^[0-9a-fA-F:.]+(/\d{1,3})?$').hasMatch(value)
-                        ? null
-                        : '请输入合法的 IP 或 CIDR',
+                    ? null
+                    : '请输入合法的 IP 或 CIDR',
               );
               if (values == null) return;
               _update({'bind_ip': values});

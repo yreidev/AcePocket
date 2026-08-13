@@ -9,7 +9,7 @@ class LvOption {
   final String value;
 
   factory LvOption.fromJson(Map<String, dynamic> json) => LvOption(
-        label: jsonString(json['label']),
-        value: jsonString(json['value']),
-      );
+    label: jsonString(json['label']),
+    value: jsonString(json['value']),
+  );
 }

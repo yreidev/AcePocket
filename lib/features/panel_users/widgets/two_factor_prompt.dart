@@ -110,9 +110,9 @@ class _TwoFactorPromptDialogState extends State<TwoFactorPromptDialog> {
       setState(() => _error = '请输入图形验证码');
       return;
     }
-    Navigator.of(context).pop(
-      TwoFactorPromptResult(passCode: passCode, captchaCode: captchaCode),
-    );
+    Navigator.of(
+      context,
+    ).pop(TwoFactorPromptResult(passCode: passCode, captchaCode: captchaCode));
   }
 
   @override
@@ -120,11 +120,13 @@ class _TwoFactorPromptDialogState extends State<TwoFactorPromptDialog> {
     final theme = Theme.of(context);
     final captchaBytes = widget.captcha?.imageBytes;
 
-    final account =
-        widget.username.isEmpty ? '面板账号' : '面板账号 ${widget.username}';
+    final account = widget.username.isEmpty
+        ? '面板账号'
+        : '面板账号 ${widget.username}';
     final String description;
     if (widget.requirePassCode && _needCaptcha) {
-      description = '$account已开启两步验证，且面板要求图形验证码，'
+      description =
+          '$account已开启两步验证，且面板要求图形验证码，'
           '请输入验证器 App 中的 6 位动态验证码与下方图形验证码。';
     } else if (widget.requirePassCode) {
       description = '$account已开启两步验证，请输入验证器 App 中的 6 位动态验证码。';
@@ -204,13 +206,13 @@ class _TwoFactorPromptDialogState extends State<TwoFactorPromptDialog> {
                       // 失败占位不设固定高度：大字号下 50dp 装不下提示语会溢出。
                       errorBuilder: (context, error, stackTrace) =>
                           const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        child: Text(
-                          '验证码图片加载失败',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ),
+                            padding: EdgeInsets.symmetric(vertical: 14),
+                            child: Text(
+                              '验证码图片加载失败',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                          ),
                     ),
                   ),
                 const SizedBox(height: 8),
@@ -270,7 +272,8 @@ void installWsLoginChallengeHandler() {
 }
 
 Future<WsLoginCredentials?> _handleWsLoginChallenge(
-    WsLoginChallenge challenge) async {
+  WsLoginChallenge challenge,
+) async {
   final context = rootNavigatorKey.currentContext;
   // 没有可用的界面上下文时返回 null，core 会按「用户取消」处理并抛出
   // WsAuthException，由调用页面走既有的错误提示分支。

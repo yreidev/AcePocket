@@ -45,9 +45,9 @@ final List<RouteBase> environmentRoutes = <RouteBase>[
             path: 'config',
             builder: (BuildContext context, GoRouterState state) =>
                 PhpConfigEditorPage(
-              version: _phpVersion(state),
-              fpm: state.uri.queryParameters['target'] == 'fpm',
-            ),
+                  version: _phpVersion(state),
+                  fpm: state.uri.queryParameters['target'] == 'fpm',
+                ),
           ),
           GoRoute(
             path: 'phpinfo',
@@ -60,9 +60,9 @@ final List<RouteBase> environmentRoutes = <RouteBase>[
         path: 'runtime/:type/:slug',
         builder: (BuildContext context, GoRouterState state) =>
             RuntimeEnvironmentPage(
-          type: state.pathParameters['type'] ?? '',
-          slug: state.pathParameters['slug'] ?? '',
-        ),
+              type: state.pathParameters['type'] ?? '',
+              slug: state.pathParameters['slug'] ?? '',
+            ),
       ),
     ],
   ),

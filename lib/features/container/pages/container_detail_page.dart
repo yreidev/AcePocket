@@ -102,8 +102,9 @@ class ContainerDetailPage extends ConsumerWidget {
               itemBuilder: (context) {
                 final theme = Theme.of(context);
                 return [
-                  for (final action
-                      in availableContainerActions(async.value!.state.status))
+                  for (final action in availableContainerActions(
+                    async.value!.state.status,
+                  ))
                     PopupMenuItem<ContainerAction>(
                       value: action,
                       child: Row(
@@ -193,8 +194,9 @@ class _BasicCard extends StatelessWidget {
           if (info.state.error.isNotEmpty)
             InfoRow(label: '错误信息', value: info.state.error),
           InfoRow(
-              label: '进程 PID',
-              value: info.state.pid <= 0 ? '-' : '${info.state.pid}'),
+            label: '进程 PID',
+            value: info.state.pid <= 0 ? '-' : '${info.state.pid}',
+          ),
           InfoRow(label: '重启次数', value: '${info.restartCount}'),
           InfoRow(label: '重启策略', value: host.restartPolicy),
           InfoRow(label: '特权模式', value: host.privileged ? '是' : '否'),
@@ -403,10 +405,7 @@ class _RawCardState extends State<_RawCard> {
       child: AnimatedReveal(
         visible: _expanded,
         child: _expanded
-            ? MonoBlock(
-                text: _encoder.convert(widget.info.raw),
-                maxHeight: 360,
-              )
+            ? MonoBlock(text: _encoder.convert(widget.info.raw), maxHeight: 360)
             : const SizedBox.shrink(),
       ),
     );

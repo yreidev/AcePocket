@@ -58,9 +58,9 @@ class ServiceState {
   final bool enabled;
 
   ServiceState copyWith({bool? running, bool? enabled}) => ServiceState(
-        running: running ?? this.running,
-        enabled: enabled ?? this.enabled,
-      );
+    running: running ?? this.running,
+    enabled: enabled ?? this.enabled,
+  );
 }
 
 /// 应用 slug → systemd 服务名映射。

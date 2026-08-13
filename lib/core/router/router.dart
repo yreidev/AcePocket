@@ -205,14 +205,18 @@ final routerProvider = Provider<GoRouter>((ref) {
 /// 除 GoRouter 自身外，还供需要在「任意位置」弹出全局对话框的场景取用
 /// （如 WS 会话登录的两步验证弹窗，见
 /// `features/panel_users/widgets/two_factor_prompt.dart`）。
-final GlobalKey<NavigatorState> rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
-final GlobalKey<NavigatorState> _homeTabKey =
-    GlobalKey<NavigatorState>(debugLabel: 'tab-home');
-final GlobalKey<NavigatorState> _websiteTabKey =
-    GlobalKey<NavigatorState>(debugLabel: 'tab-website');
-final GlobalKey<NavigatorState> _moreTabKey =
-    GlobalKey<NavigatorState>(debugLabel: 'tab-more');
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: 'root',
+);
+final GlobalKey<NavigatorState> _homeTabKey = GlobalKey<NavigatorState>(
+  debugLabel: 'tab-home',
+);
+final GlobalKey<NavigatorState> _websiteTabKey = GlobalKey<NavigatorState>(
+  debugLabel: 'tab-website',
+);
+final GlobalKey<NavigatorState> _moreTabKey = GlobalKey<NavigatorState>(
+  debugLabel: 'tab-more',
+);
 
 /// 首页快捷入口：路径与本文件聚合的真实路由一一对应。
 ///
@@ -424,8 +428,10 @@ class _BranchFadeThroughState extends State<_BranchFadeThrough>
     curve: AppMotion.enter,
   );
 
-  late final Animation<double> _scale =
-      Tween<double>(begin: 0.97, end: 1).animate(_scaleCurve);
+  late final Animation<double> _scale = Tween<double>(
+    begin: 0.97,
+    end: 1,
+  ).animate(_scaleCurve);
 
   @override
   void didChangeDependencies() {

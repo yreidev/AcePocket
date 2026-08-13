@@ -69,8 +69,9 @@ class _EnableTwoFaDialogState extends ConsumerState<_EnableTwoFaDialog> {
       _loadError = null;
     });
     try {
-      final setup =
-          await ref.read(panelUserRepoProvider).generateTwoFa(widget.userId);
+      final setup = await ref
+          .read(panelUserRepoProvider)
+          .generateTwoFa(widget.userId);
       if (!mounted) return;
       setState(() {
         _setup = setup;
@@ -98,11 +99,9 @@ class _EnableTwoFaDialogState extends ConsumerState<_EnableTwoFaDialog> {
       _codeError = null;
     });
     try {
-      await ref.read(panelUserRepoProvider).updateTwoFa(
-            widget.userId,
-            secret: setup.secret,
-            code: code,
-          );
+      await ref
+          .read(panelUserRepoProvider)
+          .updateTwoFa(widget.userId, secret: setup.secret, code: code);
       if (!mounted) return;
       Navigator.of(context).pop(setup.secret);
     } catch (e) {
@@ -119,10 +118,7 @@ class _EnableTwoFaDialogState extends ConsumerState<_EnableTwoFaDialog> {
     final theme = Theme.of(context);
     return AlertDialog(
       title: Text('为 ${widget.username} 开启两步验证'),
-      content: SizedBox(
-        width: 360,
-        child: _buildContent(theme),
-      ),
+      content: SizedBox(width: 360, child: _buildContent(theme)),
       actions: [
         TextButton(
           onPressed: _submitting ? null : () => Navigator.of(context).pop(),
@@ -144,10 +140,7 @@ class _EnableTwoFaDialogState extends ConsumerState<_EnableTwoFaDialog> {
 
   Widget _buildContent(ThemeData theme) {
     if (_loading) {
-      return const SizedBox(
-        height: 180,
-        child: LoadingView(message: '生成密钥中…'),
-      );
+      return const SizedBox(height: 180, child: LoadingView(message: '生成密钥中…'));
     }
     final error = _loadError;
     if (error != null) {
@@ -276,10 +269,11 @@ class _SecretRow extends StatelessWidget {
                 SelectableText(
                   value,
                   maxLines: dense ? 2 : 1,
-                  style: (dense
-                          ? theme.textTheme.bodySmall
-                          : theme.textTheme.bodyMedium)
-                      ?.copyWith(fontFamily: 'monospace'),
+                  style:
+                      (dense
+                              ? theme.textTheme.bodySmall
+                              : theme.textTheme.bodyMedium)
+                          ?.copyWith(fontFamily: 'monospace'),
                 ),
               ],
             ),

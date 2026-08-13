@@ -57,17 +57,11 @@ void main() {
 
   group('normalizeFingerprint / fingerprintMatches', () {
     test('去掉冒号与空白并统一小写', () {
-      expect(
-        normalizeFingerprint('AA:BB:cc dd\tEE\nff'),
-        'aabbccddeeff',
-      );
+      expect(normalizeFingerprint('AA:BB:cc dd\tEE\nff'), 'aabbccddeeff');
     });
 
     test('大小写与分隔符不同的同一指纹视为匹配', () {
-      expect(
-        fingerprintMatches('AA:BB:CC:DD', 'aabbccdd'),
-        isTrue,
-      );
+      expect(fingerprintMatches('AA:BB:CC:DD', 'aabbccdd'), isTrue);
     });
 
     test('不同指纹不匹配', () {
@@ -96,8 +90,10 @@ void main() {
     });
 
     test('输入带大写与冒号时先规范化再分组', () {
-      expect(formatFingerprintGroups('AA:BB:CC:DD:EE:FF:00:11'),
-          'aabbccdd eeff0011');
+      expect(
+        formatFingerprintGroups('AA:BB:CC:DD:EE:FF:00:11'),
+        'aabbccdd eeff0011',
+      );
     });
   });
 

@@ -69,12 +69,14 @@ class _UpstreamListFieldState extends State<UpstreamListField> {
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
             onPressed: () {
-              widget.upstreams.add(UpstreamConfig(
-                name: 'backend',
-                servers: {'127.0.0.1:8080': ''},
-                algo: '',
-                keepalive: 0,
-              ));
+              widget.upstreams.add(
+                UpstreamConfig(
+                  name: 'backend',
+                  servers: {'127.0.0.1:8080': ''},
+                  algo: '',
+                  keepalive: 0,
+                ),
+              );
               setState(() {});
               widget.onChanged();
             },
@@ -104,10 +106,12 @@ class _UpstreamCard extends StatefulWidget {
 }
 
 class _UpstreamCardState extends State<_UpstreamCard> {
-  late final TextEditingController _name =
-      TextEditingController(text: widget.upstream.name);
-  late final TextEditingController _keepalive =
-      TextEditingController(text: '${widget.upstream.keepalive}');
+  late final TextEditingController _name = TextEditingController(
+    text: widget.upstream.name,
+  );
+  late final TextEditingController _keepalive = TextEditingController(
+    text: '${widget.upstream.keepalive}',
+  );
 
   static const _algos = ['', 'least_conn', 'ip_hash', 'random'];
 
@@ -180,16 +184,23 @@ class _UpstreamCardState extends State<_UpstreamCard> {
                         child: DropdownButtonFormField<String>(
                           initialValue: _algos.contains(u.algo) ? u.algo : '',
                           isExpanded: true,
-                          decoration:
-                              const InputDecoration(labelText: '负载均衡算法'),
+                          decoration: const InputDecoration(
+                            labelText: '负载均衡算法',
+                          ),
                           items: const [
                             DropdownMenuItem(value: '', child: Text('轮询（默认）')),
                             DropdownMenuItem(
-                                value: 'least_conn', child: Text('最少连接')),
+                              value: 'least_conn',
+                              child: Text('最少连接'),
+                            ),
                             DropdownMenuItem(
-                                value: 'ip_hash', child: Text('IP 哈希')),
+                              value: 'ip_hash',
+                              child: Text('IP 哈希'),
+                            ),
                             DropdownMenuItem(
-                                value: 'random', child: Text('随机')),
+                              value: 'random',
+                              child: Text('随机'),
+                            ),
                           ],
                           onChanged: (v) {
                             setState(() => u.algo = v ?? '');
@@ -311,16 +322,21 @@ class _ProxyCard extends StatefulWidget {
 }
 
 class _ProxyCardState extends State<_ProxyCard> {
-  late final TextEditingController _location =
-      TextEditingController(text: widget.proxy.location);
-  late final TextEditingController _pass =
-      TextEditingController(text: widget.proxy.pass);
-  late final TextEditingController _host =
-      TextEditingController(text: widget.proxy.host);
-  late final TextEditingController _sni =
-      TextEditingController(text: widget.proxy.sni);
+  late final TextEditingController _location = TextEditingController(
+    text: widget.proxy.location,
+  );
+  late final TextEditingController _pass = TextEditingController(
+    text: widget.proxy.pass,
+  );
+  late final TextEditingController _host = TextEditingController(
+    text: widget.proxy.host,
+  );
+  late final TextEditingController _sni = TextEditingController(
+    text: widget.proxy.sni,
+  );
   late final TextEditingController _bodySize = TextEditingController(
-      text: '${jInt(widget.proxy.extra['client_max_body_size'])}');
+    text: '${jInt(widget.proxy.extra['client_max_body_size'])}',
+  );
 
   bool _expanded = false;
 
@@ -364,8 +380,9 @@ class _ProxyCardState extends State<_ProxyCard> {
                   ),
                 ),
                 A11yIconButton(
-                  tooltip:
-                      p.location.isEmpty ? '删除这条代理规则' : '删除代理规则 ${p.location}',
+                  tooltip: p.location.isEmpty
+                      ? '删除这条代理规则'
+                      : '删除代理规则 ${p.location}',
                   color: theme.colorScheme.error,
                   onPressed: widget.onRemove,
                   icon: const Icon(Icons.remove_circle_outline),
@@ -421,11 +438,12 @@ class _ProxyCardState extends State<_ProxyCard> {
                         child: DropdownButtonFormField<String>(
                           initialValue:
                               const ['1.0', '1.1', '2'].contains(p.httpVersion)
-                                  ? p.httpVersion
-                                  : '1.1',
+                              ? p.httpVersion
+                              : '1.1',
                           isExpanded: true,
-                          decoration:
-                              const InputDecoration(labelText: 'HTTP 版本'),
+                          decoration: const InputDecoration(
+                            labelText: 'HTTP 版本',
+                          ),
                           items: const [
                             DropdownMenuItem(value: '1.0', child: Text('1.0')),
                             DropdownMenuItem(value: '1.1', child: Text('1.1')),

@@ -154,7 +154,8 @@ class RaidPage extends ConsumerWidget {
             InfoRow(
               label: '成员磁盘',
               value: '${array.activeDevices} / ${array.totalDevices}',
-              valueColor: array.totalDevices > 0 &&
+              valueColor:
+                  array.totalDevices > 0 &&
                       array.activeDevices < array.totalDevices
                   ? theme.colorScheme.error
                   : null,

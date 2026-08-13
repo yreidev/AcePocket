@@ -73,7 +73,9 @@ class CronTile extends StatelessWidget {
                             if (cron.config.subType.isNotEmpty)
                               _Tag(
                                 text: CronTypes.subTypeLabel(
-                                    cron.type, cron.config.subType),
+                                  cron.type,
+                                  cron.config.subType,
+                                ),
                                 color: colorScheme.secondaryContainer,
                                 textColor: colorScheme.onSecondaryContainer,
                               ),
@@ -101,8 +103,11 @@ class CronTile extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(Icons.schedule,
-                      size: 15, color: colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.schedule,
+                    size: 15,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
@@ -120,8 +125,11 @@ class CronTile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Icon(Icons.adjust,
-                        size: 15, color: colorScheme.onSurfaceVariant),
+                    Icon(
+                      Icons.adjust,
+                      size: 15,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
@@ -186,10 +194,14 @@ class CronTile extends StatelessWidget {
                         child: ListTile(
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          leading: Icon(Icons.delete_outline,
-                              color: colorScheme.error),
-                          title: Text('删除',
-                              style: TextStyle(color: colorScheme.error)),
+                          leading: Icon(
+                            Icons.delete_outline,
+                            color: colorScheme.error,
+                          ),
+                          title: Text(
+                            '删除',
+                            style: TextStyle(color: colorScheme.error),
+                          ),
                         ),
                       ),
                     ],

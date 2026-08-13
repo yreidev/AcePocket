@@ -29,8 +29,9 @@ class LocalFileUploadSource implements UploadSource {
   /// 打开本地文件并读取元信息。
   static Future<LocalFileUploadSource> open(File file, {String? name}) async {
     final stat = await file.stat();
-    final fallbackName =
-        file.uri.pathSegments.isEmpty ? 'file' : file.uri.pathSegments.last;
+    final fallbackName = file.uri.pathSegments.isEmpty
+        ? 'file'
+        : file.uri.pathSegments.last;
     return LocalFileUploadSource._(
       file,
       (name == null || name.isEmpty) ? fallbackName : name,
@@ -80,8 +81,8 @@ class BytesUploadSource implements UploadSource {
     required this.name,
     required List<int> bytes,
     DateTime? modified,
-  })  : _bytes = bytes is Uint8List ? bytes : Uint8List.fromList(bytes),
-        _modified = modified ?? DateTime.now();
+  }) : _bytes = bytes is Uint8List ? bytes : Uint8List.fromList(bytes),
+       _modified = modified ?? DateTime.now();
 
   final Uint8List _bytes;
   final DateTime _modified;

@@ -78,20 +78,20 @@ class PanelSetting {
   static const entranceErrorModes = ['418', 'nginx', 'close'];
 
   static String entranceErrorLabel(String value) => switch (value) {
-        '418' => '返回 418 状态码',
-        'nginx' => '伪装成 Nginx 默认页',
-        'close' => '直接断开连接',
-        _ => value.isEmpty ? '默认' : value,
-      };
+    '418' => '返回 418 状态码',
+    'nginx' => '伪装成 Nginx 默认页',
+    'close' => '直接断开连接',
+    _ => value.isEmpty ? '默认' : value,
+  };
 
   /// 面板 TLS 模式选项（与 `SettingPanel.TLS` 校验一致）。
   static const tlsModes = ['off', 'acme', 'self-signed', 'custom'];
 
   static String tlsLabel(String value) => switch (value) {
-        'off' => '关闭（HTTP）',
-        'acme' => 'ACME 自动签发',
-        'self-signed' => '自签名证书',
-        'custom' => '自定义证书',
-        _ => value,
-      };
+    'off' => '关闭（HTTP）',
+    'acme' => 'ACME 自动签发',
+    'self-signed' => '自签名证书',
+    'custom' => '自定义证书',
+    _ => value,
+  };
 }

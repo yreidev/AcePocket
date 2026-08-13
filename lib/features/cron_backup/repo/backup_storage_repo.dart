@@ -20,10 +20,10 @@ class BackupStorageRepo {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/backup_storage', query: {
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/backup_storage',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, BackupStorage.fromJson);
   }
 
@@ -37,25 +37,20 @@ class BackupStorageRepo {
     required String type,
     required String name,
     required BackupStorageInfo info,
-  }) =>
-      _api.post('/backup_storage', body: {
-        'type': type,
-        'name': name,
-        'info': info.toJson(),
-      });
+  }) => _api.post(
+    '/backup_storage',
+    body: {'type': type, 'name': name, 'info': info.toJson()},
+  );
 
   Future<void> update({
     required int id,
     required String type,
     required String name,
     required BackupStorageInfo info,
-  }) =>
-      _api.put('/backup_storage/$id', body: {
-        'id': id,
-        'type': type,
-        'name': name,
-        'info': info.toJson(),
-      });
+  }) => _api.put(
+    '/backup_storage/$id',
+    body: {'id': id, 'type': type, 'name': name, 'info': info.toJson()},
+  );
 
   Future<void> delete(int id) => _api.delete('/backup_storage/$id');
 }

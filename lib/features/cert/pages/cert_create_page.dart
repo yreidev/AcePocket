@@ -46,14 +46,19 @@ class _CertCreatePageState extends ConsumerState<CertCreatePage> {
     }
     final hasWildcard = _domains.any((d) => d.contains('*'));
     if (hasWildcard && _dnsId == 0) {
-      showSnack(context, '泛域名（*.example.com）只能通过 DNS 验证签发，请选择 DNS 账号',
-          error: true);
+      showSnack(
+        context,
+        '泛域名（*.example.com）只能通过 DNS 验证签发，请选择 DNS 账号',
+        error: true,
+      );
       return;
     }
 
     setState(() => _submitting = true);
     try {
-      final cert = await ref.read(certRepoProvider).createCert(
+      final cert = await ref
+          .read(certRepoProvider)
+          .createCert(
             type: _type,
             domains: _domains,
             alias: _alias,
@@ -117,7 +122,7 @@ class _CertCreatePageState extends ConsumerState<CertCreatePage> {
                 ]
               : [
                   for (final item in options.algorithms)
-                    (item.value, item.label)
+                    (item.value, item.label),
                 ];
           // 面板返回的算法列表若不含当前选中项，回退到第一项，保证提交值合法。
           if (!algorithms.any((e) => e.$1 == _type)) {
@@ -131,8 +136,11 @@ class _CertCreatePageState extends ConsumerState<CertCreatePage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.info_outline,
-                        size: 20, color: theme.colorScheme.primary),
+                    Icon(
+                      Icons.info_outline,
+                      size: 20,
+                      color: theme.colorScheme.primary,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -288,9 +296,7 @@ class _CertCreatePageState extends ConsumerState<CertCreatePage> {
               ),
               if (_dnsId != 0)
                 SectionCard(
-                  child: AliasListField(
-                    onChanged: (value) => _alias = value,
-                  ),
+                  child: AliasListField(onChanged: (value) => _alias = value),
                 ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),

@@ -105,8 +105,9 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
     );
     final listAsync = ref.watch(fileListProvider(query));
     final listState = listAsync.valueOrNull;
-    final visibleCount =
-        listState == null ? 0 : _visibleItems(listState.items).length;
+    final visibleCount = listState == null
+        ? 0
+        : _visibleItems(listState.items).length;
     // 首次加载 / 出错时不要显示「0 项」，那会被误读为「目录是空的」。
     final String countLabel;
     if (listState == null) {
@@ -118,7 +119,8 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
     }
 
     return PopScope(
-      canPop: _selected.isEmpty &&
+      canPop:
+          _selected.isEmpty &&
           !_searching &&
           _keyword.isEmpty &&
           _history.length <= 1,
@@ -319,9 +321,7 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'all',
-                child: Text(
-                  _selected.length >= visibleCount ? '取消全选' : '全选',
-                ),
+                child: Text(_selected.length >= visibleCount ? '取消全选' : '全选'),
               ),
               const PopupMenuItem(value: 'compress', child: Text('压缩')),
               const PopupMenuItem(value: 'permission', child: Text('权限设置')),
@@ -391,8 +391,8 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -533,7 +533,7 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
                 message: _keyword.isEmpty
                     ? '该目录为空\n可以点下方按钮新建文件、文件夹或上传文件'
                     : '在 $_path 及其子目录中没有找到匹配「$_keyword」的文件\n'
-                        '可换个关键字，或清除搜索回到目录浏览',
+                          '可换个关键字，或清除搜索回到目录浏览',
                 icon: Icons.folder_off_outlined,
                 action: _keyword.isEmpty
                     ? FilledButton.tonalIcon(
@@ -576,8 +576,10 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
               // 加载下一页失败：展示错误并允许点击重试（弱网下与「到底了」区分开）。
               final theme = Theme.of(context);
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 child: Column(
                   children: [
                     Text(
@@ -586,8 +588,9 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
                       textAlign: TextAlign.center,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: theme.colorScheme.error),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     TextButton.icon(
@@ -652,8 +655,10 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
   Widget _parentTile() {
     final theme = Theme.of(context);
     return ListTile(
-      leading: Icon(Icons.drive_folder_upload_outlined,
-          color: theme.colorScheme.onSurfaceVariant),
+      leading: Icon(
+        Icons.drive_folder_upload_outlined,
+        color: theme.colorScheme.onSurfaceVariant,
+      ),
       title: const Text('上一级目录'),
       subtitle: Text(
         posixParent(_path),

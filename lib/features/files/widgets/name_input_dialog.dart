@@ -111,10 +111,7 @@ class _NameInputDialogState extends State<_NameInputDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('取消'),
         ),
-        FilledButton(
-          onPressed: _submit,
-          child: Text(widget.confirmText),
-        ),
+        FilledButton(onPressed: _submit, child: Text(widget.confirmText)),
       ],
     );
   }

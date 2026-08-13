@@ -26,11 +26,12 @@ class DownloadOutcome {
 ///
 /// [savePath] 为本对话框算好的本地保存路径，[onProgress] 与 [cancelToken]
 /// 需要透传给底层传输客户端。
-typedef DownloadRunner = Future<File> Function({
-  required String savePath,
-  required TransferProgress onProgress,
-  required TransferCancelToken cancelToken,
-});
+typedef DownloadRunner =
+    Future<File> Function({
+      required String savePath,
+      required TransferProgress onProgress,
+      required TransferCancelToken cancelToken,
+    });
 
 /// 展示下载进度对话框并实际执行下载，结束后返回结果。
 ///

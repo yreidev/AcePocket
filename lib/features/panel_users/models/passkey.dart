@@ -47,14 +47,14 @@ class Passkey {
   }
 
   factory Passkey.fromJson(Map<String, dynamic> json) => Passkey(
-        id: jsonInt(json['id']),
-        userId: jsonInt(json['user_id']),
-        name: jsonString(json['name']),
-        transports: _parseTransports(json['transports']),
-        lastUsedAt: jsonTime(json['last_used_at']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    userId: jsonInt(json['user_id']),
+    name: jsonString(json['name']),
+    transports: _parseTransports(json['transports']),
+    lastUsedAt: jsonTime(json['last_used_at']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 
   /// `transports` 在数据库中以 JSON 字符串保存（如 `["internal","hybrid"]`），
   /// 这里同时兼容已解析为数组的情况。

@@ -170,8 +170,18 @@ class ServerConfig {
           other.pinnedCertSha256 == pinnedCertSha256;
 
   @override
-  int get hashCode => Object.hash(id, name, baseUrl, tokenId, token,
-      allowSelfSigned, username, password, entrance, pinnedCertSha256);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    baseUrl,
+    tokenId,
+    token,
+    allowSelfSigned,
+    username,
+    password,
+    entrance,
+    pinnedCertSha256,
+  );
 
   @override
   String toString() => 'ServerConfig($name, $baseUrl)';

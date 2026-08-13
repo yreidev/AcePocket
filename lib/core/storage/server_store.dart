@@ -83,7 +83,8 @@ class ServerStore {
 /// 增删改统一走本 Notifier（会同步持久化，并维护 [activeServerProvider]）。
 final serverListProvider =
     AsyncNotifierProvider<ServerListNotifier, List<ServerConfig>>(
-        ServerListNotifier.new);
+      ServerListNotifier.new,
+    );
 
 class ServerListNotifier extends AsyncNotifier<List<ServerConfig>> {
   @override
@@ -132,7 +133,8 @@ class ServerListNotifier extends AsyncNotifier<List<ServerConfig>> {
 /// 当前选中的服务器（未配置任何服务器时为 null）。
 final activeServerProvider =
     NotifierProvider<ActiveServerNotifier, ServerConfig?>(
-        ActiveServerNotifier.new);
+      ActiveServerNotifier.new,
+    );
 
 class ActiveServerNotifier extends Notifier<ServerConfig?> {
   @override
@@ -148,7 +150,8 @@ class ActiveServerNotifier extends Notifier<ServerConfig?> {
 
   /// 选中指定 id 的服务器并持久化；id 不存在时不做任何事。
   Future<void> select(String id) async {
-    final list = ref.read(serverListProvider).valueOrNull ??
+    final list =
+        ref.read(serverListProvider).valueOrNull ??
         ServerStore.instance.servers;
     for (final s in list) {
       if (s.id == id) {

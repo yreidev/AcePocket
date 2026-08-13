@@ -44,28 +44,28 @@ class FirewallRule {
   final bool inUse;
 
   factory FirewallRule.fromJson(Map<String, dynamic> json) => FirewallRule(
-        type: json['type'] as String? ?? '',
-        family: json['family'] as String? ?? 'ipv4',
-        portStart: (json['port_start'] as num?)?.toInt() ?? 0,
-        portEnd: (json['port_end'] as num?)?.toInt() ?? 0,
-        protocol: json['protocol'] as String? ?? 'tcp',
-        address: json['address'] as String? ?? '',
-        strategy: json['strategy'] as String? ?? 'accept',
-        direction: json['direction'] as String? ?? 'in',
-        inUse: json['in_use'] as bool? ?? false,
-      );
+    type: json['type'] as String? ?? '',
+    family: json['family'] as String? ?? 'ipv4',
+    portStart: (json['port_start'] as num?)?.toInt() ?? 0,
+    portEnd: (json['port_end'] as num?)?.toInt() ?? 0,
+    protocol: json['protocol'] as String? ?? 'tcp',
+    address: json['address'] as String? ?? '',
+    strategy: json['strategy'] as String? ?? 'accept',
+    direction: json['direction'] as String? ?? 'in',
+    inUse: json['in_use'] as bool? ?? false,
+  );
 
   /// 创建 / 删除规则的请求体（POST/DELETE /firewall/rule）。
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'family': family,
-        'port_start': portStart,
-        'port_end': portEnd,
-        'protocol': protocol,
-        'address': address,
-        'strategy': strategy,
-        'direction': direction,
-      };
+    'type': type,
+    'family': family,
+    'port_start': portStart,
+    'port_end': portEnd,
+    'protocol': protocol,
+    'address': address,
+    'strategy': strategy,
+    'direction': direction,
+  };
 
   /// 端口展示文本，如 `80` 或 `8000-9000`。
   String get portLabel =>
@@ -89,20 +89,20 @@ class FirewallIpRule {
   final String direction;
 
   factory FirewallIpRule.fromJson(Map<String, dynamic> json) => FirewallIpRule(
-        family: json['family'] as String? ?? 'ipv4',
-        protocol: json['protocol'] as String? ?? 'tcp',
-        address: json['address'] as String? ?? '',
-        strategy: json['strategy'] as String? ?? 'accept',
-        direction: json['direction'] as String? ?? 'in',
-      );
+    family: json['family'] as String? ?? 'ipv4',
+    protocol: json['protocol'] as String? ?? 'tcp',
+    address: json['address'] as String? ?? '',
+    strategy: json['strategy'] as String? ?? 'accept',
+    direction: json['direction'] as String? ?? 'in',
+  );
 
   Map<String, dynamic> toJson() => {
-        'family': family,
-        'protocol': protocol,
-        'address': address,
-        'strategy': strategy,
-        'direction': direction,
-      };
+    'family': family,
+    'protocol': protocol,
+    'address': address,
+    'strategy': strategy,
+    'direction': direction,
+  };
 }
 
 /// 防火墙端口转发（GET /firewall/forward 的 items 元素）。
@@ -128,11 +128,11 @@ class FirewallForward {
       );
 
   Map<String, dynamic> toJson() => {
-        'protocol': protocol,
-        'port': port,
-        'target_ip': targetIp,
-        'target_port': targetPort,
-      };
+    'protocol': protocol,
+    'port': port,
+    'target_ip': targetIp,
+    'target_port': targetPort,
+  };
 }
 
 /// 占用端口的进程（GET /firewall/rule/port_usage，
@@ -154,10 +154,10 @@ class PortProcess {
   final String command;
 
   factory PortProcess.fromJson(Map<String, dynamic> json) => PortProcess(
-        pid: json['pid']?.toString() ?? '',
-        name: json['name'] as String? ?? '',
-        command: json['command'] as String? ?? '',
-      );
+    pid: json['pid']?.toString() ?? '',
+    name: json['name'] as String? ?? '',
+    command: json['command'] as String? ?? '',
+  );
 }
 
 /// 枚举取值 → 中文展示的映射工具。
@@ -165,23 +165,23 @@ class FirewallLabels {
   const FirewallLabels._();
 
   static String strategy(String value) => switch (value) {
-        'accept' => '允许',
-        'drop' => '丢弃',
-        'reject' => '拒绝',
-        _ => value,
-      };
+    'accept' => '允许',
+    'drop' => '丢弃',
+    'reject' => '拒绝',
+    _ => value,
+  };
 
   static String direction(String value) => switch (value) {
-        'in' => '入站',
-        'out' => '出站',
-        _ => value,
-      };
+    'in' => '入站',
+    'out' => '出站',
+    _ => value,
+  };
 
   static String family(String value) => switch (value) {
-        'ipv4' => 'IPv4',
-        'ipv6' => 'IPv6',
-        _ => value,
-      };
+    'ipv4' => 'IPv4',
+    'ipv6' => 'IPv6',
+    _ => value,
+  };
 
   static String protocol(String value) => value.toUpperCase();
 }

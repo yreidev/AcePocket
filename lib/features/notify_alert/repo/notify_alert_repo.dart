@@ -23,8 +23,10 @@ class NotifyAlertRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/alert/rule', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/alert/rule',
+      query: {'page': page, 'limit': limit},
+    );
     return parsePagedResult(data, AlertRule.fromJson);
   }
 
@@ -55,8 +57,10 @@ class NotifyAlertRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/alert/record', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/alert/record',
+      query: {'page': page, 'limit': limit},
+    );
     return parsePagedResult(data, AlertRecord.fromJson);
   }
 
@@ -70,8 +74,10 @@ class NotifyAlertRepository {
     required int page,
     required int limit,
   }) async {
-    final data = await _api
-        .get('/notify/channel', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/notify/channel',
+      query: {'page': page, 'limit': limit},
+    );
     return parsePagedResult(data, NotifyChannel.fromJson);
   }
 
@@ -130,8 +136,10 @@ class NotifyAlertRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/webhook', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/webhook',
+      query: {'page': page, 'limit': limit},
+    );
     return parsePagedResult(data, WebHook.fromJson);
   }
 

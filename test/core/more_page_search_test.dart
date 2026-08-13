@@ -54,18 +54,11 @@ void main() {
     test('多分组命中时保持 kMoreGroups 原始顺序', () {
       // '面板' 命中多个分组的入口：面板日志（运维与监控）、面板迁移（工具箱）、
       // 面板安全（安全）、面板设置等（系统），应按原始遍历顺序排列。
-      final labels = filterMoreEntries(kMoreGroups, '面板')
-          .map((r) => r.entry.label)
-          .toList();
-      expect(labels, [
-        '面板日志',
-        '面板迁移',
-        '面板安全',
-        '面板设置',
-        '面板用户',
-        '面板证书',
-        '面板升级',
-      ]);
+      final labels = filterMoreEntries(
+        kMoreGroups,
+        '面板',
+      ).map((r) => r.entry.label).toList();
+      expect(labels, ['面板日志', '面板迁移', '面板安全', '面板设置', '面板用户', '面板证书', '面板升级']);
     });
 
     test('结果携带正确的分组标题', () {

@@ -7,8 +7,6 @@ class WebsiteOption {
   final int id;
   final String name;
 
-  factory WebsiteOption.fromJson(Map<String, dynamic> json) => WebsiteOption(
-        id: jsonInt(json['id']),
-        name: jsonString(json['name']),
-      );
+  factory WebsiteOption.fromJson(Map<String, dynamic> json) =>
+      WebsiteOption(id: jsonInt(json['id']), name: jsonString(json['name']));
 }

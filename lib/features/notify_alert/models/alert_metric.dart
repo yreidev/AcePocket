@@ -71,21 +71,9 @@ const List<AlertMetricMeta> kAlertMetrics = <AlertMetricMeta>[
   AlertMetricMeta(value: 'cpu', label: 'CPU 使用率', unit: '%'),
   AlertMetricMeta(value: 'memory', label: '内存使用率', unit: '%'),
   AlertMetricMeta(value: 'swap', label: 'Swap 使用率', unit: '%'),
-  AlertMetricMeta(
-    value: 'load1',
-    label: '1 分钟平均负载',
-    defaultThreshold: 10,
-  ),
-  AlertMetricMeta(
-    value: 'load5',
-    label: '5 分钟平均负载',
-    defaultThreshold: 10,
-  ),
-  AlertMetricMeta(
-    value: 'load15',
-    label: '15 分钟平均负载',
-    defaultThreshold: 10,
-  ),
+  AlertMetricMeta(value: 'load1', label: '1 分钟平均负载', defaultThreshold: 10),
+  AlertMetricMeta(value: 'load5', label: '5 分钟平均负载', defaultThreshold: 10),
+  AlertMetricMeta(value: 'load15', label: '15 分钟平均负载', defaultThreshold: 10),
   AlertMetricMeta(
     value: 'disk',
     label: '磁盘使用率',

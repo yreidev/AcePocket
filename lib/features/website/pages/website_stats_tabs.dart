@@ -55,8 +55,9 @@ class _OverviewTabState extends ConsumerState<_OverviewTab> {
                   loading: () => const LinearProgressIndicator(),
                   error: (e, _) => Text(
                     '实时数据获取失败：${describeError(e)}',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.error),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
                   ),
                   data: (realtime) => StatMetricGrid(
                     tiles: [
@@ -105,37 +106,49 @@ class _OverviewTabState extends ConsumerState<_OverviewTab> {
                       label: '请求数',
                       value: formatCount(current.requests),
                       delta: formatDelta(current.requests, previous.requests),
-                      deltaPositive:
-                          isDeltaPositive(current.requests, previous.requests),
+                      deltaPositive: isDeltaPositive(
+                        current.requests,
+                        previous.requests,
+                      ),
                     ),
                     StatMetricTile(
                       label: '出站流量',
                       value: formatBytes(current.bandwidth),
                       delta: formatDelta(current.bandwidth, previous.bandwidth),
                       deltaPositive: isDeltaPositive(
-                          current.bandwidth, previous.bandwidth),
+                        current.bandwidth,
+                        previous.bandwidth,
+                      ),
                     ),
                     StatMetricTile(
                       label: '入站流量',
                       value: formatBytes(current.bandwidthIn),
                       delta: formatDelta(
-                          current.bandwidthIn, previous.bandwidthIn),
+                        current.bandwidthIn,
+                        previous.bandwidthIn,
+                      ),
                       deltaPositive: isDeltaPositive(
-                          current.bandwidthIn, previous.bandwidthIn),
+                        current.bandwidthIn,
+                        previous.bandwidthIn,
+                      ),
                     ),
                     StatMetricTile(
                       label: '错误数',
                       value: formatCount(current.errors),
                       delta: formatDelta(current.errors, previous.errors),
-                      deltaPositive:
-                          !isDeltaPositive(current.errors, previous.errors),
+                      deltaPositive: !isDeltaPositive(
+                        current.errors,
+                        previous.errors,
+                      ),
                     ),
                     StatMetricTile(
                       label: '蜘蛛请求',
                       value: formatCount(current.spiders),
                       delta: formatDelta(current.spiders, previous.spiders),
-                      deltaPositive:
-                          isDeltaPositive(current.spiders, previous.spiders),
+                      deltaPositive: isDeltaPositive(
+                        current.spiders,
+                        previous.spiders,
+                      ),
                     ),
                     StatMetricTile(
                       label: '平均响应',
@@ -209,8 +222,11 @@ class _UriTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statUrisProvider(query));
-    final maxRequests = state.valueOrNull?.items
-            .fold<int>(0, (max, e) => e.requests > max ? e.requests : max) ??
+    final maxRequests =
+        state.valueOrNull?.items.fold<int>(
+          0,
+          (max, e) => e.requests > max ? e.requests : max,
+        ) ??
         0;
 
     return PagedStatList<UriRank>(
@@ -223,7 +239,8 @@ class _UriTab extends ConsumerWidget {
           label: item.uri,
           value: '${formatCount(item.requests)} 次',
           ratio: maxRequests == 0 ? 0 : item.requests / maxRequests,
-          subtitle: '流量 ${formatBytes(item.bandwidth)}'
+          subtitle:
+              '流量 ${formatBytes(item.bandwidth)}'
               ' · 平均 ${formatMilliseconds(item.avgRequestTimeMs)}',
           trailing: item.errors > 0 ? '错误 ${formatCount(item.errors)}' : null,
         ),
@@ -256,7 +273,8 @@ class _SlowUriTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statSlowUrisProvider(query));
-    final maxTime = state.valueOrNull?.items.fold<double>(
+    final maxTime =
+        state.valueOrNull?.items.fold<double>(
           0,
           (max, e) => e.avgRequestTimeMs > max ? e.avgRequestTimeMs : max,
         ) ??
@@ -284,7 +302,8 @@ class _SlowUriTab extends ConsumerWidget {
           label: item.uri,
           value: formatMilliseconds(item.avgRequestTimeMs),
           ratio: maxTime == 0 ? 0 : item.avgRequestTimeMs / maxTime,
-          subtitle: '请求 ${formatCount(item.requests)} 次'
+          subtitle:
+              '请求 ${formatCount(item.requests)} 次'
               ' · 流量 ${formatBytes(item.bandwidth)}',
           trailing: item.errors > 0 ? '错误 ${formatCount(item.errors)}' : null,
         ),
@@ -303,8 +322,11 @@ class _IpTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statIpsProvider(query));
-    final maxRequests = state.valueOrNull?.items
-            .fold<int>(0, (max, e) => e.requests > max ? e.requests : max) ??
+    final maxRequests =
+        state.valueOrNull?.items.fold<int>(
+          0,
+          (max, e) => e.requests > max ? e.requests : max,
+        ) ??
         0;
 
     return PagedStatList<IpRank>(
@@ -363,7 +385,9 @@ class _GeoTab extends ConsumerWidget {
         ),
         data: (items) {
           final maxRequests = items.fold<int>(
-              0, (max, e) => e.requests > max ? e.requests : max);
+            0,
+            (max, e) => e.requests > max ? e.requests : max,
+          );
           return ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.only(bottom: 32),
@@ -377,9 +401,7 @@ class _GeoTab extends ConsumerWidget {
                     onSelected: (_) => onDrillDown('country', ''),
                   ),
                   ChoiceChip(
-                    label: Text(
-                      country.isEmpty ? '省份' : '省份（$country）',
-                    ),
+                    label: Text(country.isEmpty ? '省份' : '省份（$country）'),
                     selected: groupBy == 'region',
                     onSelected: (_) => onDrillDown('region', country),
                   ),
@@ -465,8 +487,10 @@ class _SpiderTab extends ConsumerWidget {
               ],
             );
           }
-          final maxRequests = stats.items
-              .fold<int>(0, (max, e) => e.requests > max ? e.requests : max);
+          final maxRequests = stats.items.fold<int>(
+            0,
+            (max, e) => e.requests > max ? e.requests : max,
+          );
           return ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: 8, bottom: 32),
@@ -525,12 +549,18 @@ class _ClientTab extends ConsumerWidget {
           onRetry: () => ref.invalidate(statClientsProvider(query)),
         ),
         data: (stats) {
-          final maxBrowser = stats.browsers
-              .fold<int>(0, (max, e) => e.requests > max ? e.requests : max);
-          final maxOs = stats.os
-              .fold<int>(0, (max, e) => e.requests > max ? e.requests : max);
-          final maxItem = stats.items
-              .fold<int>(0, (max, e) => e.requests > max ? e.requests : max);
+          final maxBrowser = stats.browsers.fold<int>(
+            0,
+            (max, e) => e.requests > max ? e.requests : max,
+          );
+          final maxOs = stats.os.fold<int>(
+            0,
+            (max, e) => e.requests > max ? e.requests : max,
+          );
+          final maxItem = stats.items.fold<int>(
+            0,
+            (max, e) => e.requests > max ? e.requests : max,
+          );
 
           if (stats.items.isEmpty) {
             return ListView(
@@ -585,7 +615,8 @@ class _ClientTab extends ConsumerWidget {
                   children: [
                     for (final item in stats.items.take(50))
                       StatRankBar(
-                        label: '${item.browser.isEmpty ? '未知' : item.browser}'
+                        label:
+                            '${item.browser.isEmpty ? '未知' : item.browser}'
                             ' / ${item.os.isEmpty ? '未知' : item.os}',
                         value: '${formatCount(item.requests)} 次',
                         ratio: maxItem == 0 ? 0 : item.requests / maxItem,

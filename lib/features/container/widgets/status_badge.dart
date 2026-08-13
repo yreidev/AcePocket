@@ -22,25 +22,25 @@ class StatusBadge extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final (background, foreground) = switch (tone) {
       BadgeTone.success => (
-          colorScheme.primaryContainer,
-          colorScheme.onPrimaryContainer
-        ),
+        colorScheme.primaryContainer,
+        colorScheme.onPrimaryContainer,
+      ),
       BadgeTone.warning => (
-          colorScheme.tertiaryContainer,
-          colorScheme.onTertiaryContainer
-        ),
+        colorScheme.tertiaryContainer,
+        colorScheme.onTertiaryContainer,
+      ),
       BadgeTone.danger => (
-          colorScheme.errorContainer,
-          colorScheme.onErrorContainer
-        ),
+        colorScheme.errorContainer,
+        colorScheme.onErrorContainer,
+      ),
       BadgeTone.info => (
-          colorScheme.secondaryContainer,
-          colorScheme.onSecondaryContainer
-        ),
+        colorScheme.secondaryContainer,
+        colorScheme.onSecondaryContainer,
+      ),
       BadgeTone.neutral => (
-          colorScheme.surfaceContainerHighest,
-          colorScheme.onSurfaceVariant
-        ),
+        colorScheme.surfaceContainerHighest,
+        colorScheme.onSurfaceVariant,
+      ),
     };
 
     return Container(
@@ -79,8 +79,11 @@ enum BadgeTone { success, warning, danger, info, neutral }
 
 /// 容器状态徽标。
 class ContainerStateBadge extends StatelessWidget {
-  const ContainerStateBadge(
-      {super.key, required this.state, this.dense = false});
+  const ContainerStateBadge({
+    super.key,
+    required this.state,
+    this.dense = false,
+  });
 
   final String state;
   final bool dense;

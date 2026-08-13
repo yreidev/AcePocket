@@ -18,8 +18,9 @@ final appsRepoProvider = Provider<AppsRepo?>((ref) {
 });
 
 /// 应用分类列表。
-final appCategoriesProvider =
-    FutureProvider.autoDispose<List<AppCategory>>((ref) async {
+final appCategoriesProvider = FutureProvider.autoDispose<List<AppCategory>>((
+  ref,
+) async {
   final repo = ref.watch(appsRepoProvider);
   if (repo == null) return const <AppCategory>[];
   return repo.categories();
@@ -36,9 +37,9 @@ class AppFilter {
   final String keyword;
 
   AppFilter copyWith({String? category, String? keyword}) => AppFilter(
-        category: category ?? this.category,
-        keyword: keyword ?? this.keyword,
-      );
+    category: category ?? this.category,
+    keyword: keyword ?? this.keyword,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -51,8 +52,9 @@ class AppFilter {
   int get hashCode => Object.hash(category, keyword);
 }
 
-final appFilterProvider =
-    NotifierProvider<AppFilterNotifier, AppFilter>(AppFilterNotifier.new);
+final appFilterProvider = NotifierProvider<AppFilterNotifier, AppFilter>(
+  AppFilterNotifier.new,
+);
 
 class AppFilterNotifier extends Notifier<AppFilter> {
   @override
@@ -98,10 +100,7 @@ class AppListNotifier extends AutoDisposeFamilyNotifier<AppListState, bool> {
     _filter = ref.watch(appFilterProvider);
 
     if (_repo == null) {
-      return AppListState(
-        isLoading: false,
-        error: '尚未选择服务器，请先在服务器列表中选择一台面板',
-      );
+      return AppListState(isLoading: false, error: '尚未选择服务器，请先在服务器列表中选择一台面板');
     }
 
     final generation = ++_generation;
@@ -224,8 +223,10 @@ class AppListNotifier extends AutoDisposeFamilyNotifier<AppListState, bool> {
 }
 
 /// 应用自定义编译参数（仅 `custom_supported` 为 true 的应用可用）。
-final appCustomProvider =
-    FutureProvider.autoDispose.family<AppCustom, String>((ref, slug) async {
+final appCustomProvider = FutureProvider.autoDispose.family<AppCustom, String>((
+  ref,
+  slug,
+) async {
   final repo = ref.watch(appsRepoProvider);
   if (repo == null) return const AppCustom();
   return repo.getCustom(slug);

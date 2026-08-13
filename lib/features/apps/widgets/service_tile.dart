@@ -12,11 +12,7 @@ import '../repo/systemctl_repo.dart';
 /// 系统服务列表项：展示运行状态与自启状态，并提供启停 / 重启 / 重载 /
 /// 清空日志 / 移除自定义服务等操作。
 class ServiceTile extends ConsumerStatefulWidget {
-  const ServiceTile({
-    super.key,
-    required this.service,
-    this.onRemoved,
-  });
+  const ServiceTile({super.key, required this.service, this.onRemoved});
 
   final ServiceRef service;
 
@@ -55,10 +51,8 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
     }
   }
 
-  Future<void> _start() => _run(
-        (repo) => repo.start(_name),
-        successMessage: '$_name 已启动',
-      );
+  Future<void> _start() =>
+      _run((repo) => repo.start(_name), successMessage: '$_name 已启动');
 
   Future<void> _stop() async {
     final ok = await showConfirmDialog(
@@ -69,10 +63,7 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
       danger: true,
     );
     if (!ok || !mounted) return;
-    await _run(
-      (repo) => repo.stop(_name),
-      successMessage: '$_name 已停止',
-    );
+    await _run((repo) => repo.stop(_name), successMessage: '$_name 已停止');
   }
 
   Future<void> _restart() async {
@@ -84,21 +75,16 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
       danger: true,
     );
     if (!ok || !mounted) return;
-    await _run(
-      (repo) => repo.restart(_name),
-      successMessage: '$_name 已重启',
-    );
+    await _run((repo) => repo.restart(_name), successMessage: '$_name 已重启');
   }
 
-  Future<void> _reload() => _run(
-        (repo) => repo.reload(_name),
-        successMessage: '$_name 已重载配置',
-      );
+  Future<void> _reload() =>
+      _run((repo) => repo.reload(_name), successMessage: '$_name 已重载配置');
 
   Future<void> _setEnabled(bool enabled) => _run(
-        (repo) => enabled ? repo.enable(_name) : repo.disable(_name),
-        successMessage: enabled ? '已设置为开机自启' : '已取消开机自启',
-      );
+    (repo) => enabled ? repo.enable(_name) : repo.disable(_name),
+    successMessage: enabled ? '已设置为开机自启' : '已取消开机自启',
+  );
 
   Future<void> _clearLog() async {
     final ok = await showConfirmDialog(
@@ -109,10 +95,7 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
       danger: true,
     );
     if (!ok || !mounted) return;
-    await _run(
-      (repo) => repo.clearLog(_name),
-      successMessage: '日志已清空',
-    );
+    await _run((repo) => repo.clearLog(_name), successMessage: '日志已清空');
   }
 
   Future<void> _remove() async {
@@ -251,8 +234,10 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
                         value: 'remove',
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading: Icon(Icons.remove_circle_outline,
-                              color: colorScheme.error),
+                          leading: Icon(
+                            Icons.remove_circle_outline,
+                            color: colorScheme.error,
+                          ),
                           title: Text(
                             '移除服务',
                             style: TextStyle(color: colorScheme.error),
@@ -271,8 +256,9 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
                     Expanded(
                       child: Text(
                         '状态获取失败：${describeError(async.error!)}',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: colorScheme.error),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.error,
+                        ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -301,8 +287,9 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
                       ),
                       Switch(
                         value: state?.enabled ?? false,
-                        onChanged:
-                            (_busy || state == null) ? null : _setEnabled,
+                        onChanged: (_busy || state == null)
+                            ? null
+                            : _setEnabled,
                       ),
                     ],
                   ),
@@ -321,7 +308,8 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
                   TextButton(
                     onPressed: _busy ? null : _stop,
                     style: TextButton.styleFrom(
-                        foregroundColor: colorScheme.error),
+                      foregroundColor: colorScheme.error,
+                    ),
                     child: const Text('停止'),
                   )
                 else

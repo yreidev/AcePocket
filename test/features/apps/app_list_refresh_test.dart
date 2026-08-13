@@ -62,8 +62,9 @@ void main() {
     expect(sub.read().items, hasLength(1));
 
     repo.fail = true;
-    final error =
-        await container.read(appListProvider(true).notifier).refresh();
+    final error = await container
+        .read(appListProvider(true).notifier)
+        .refresh();
 
     expect(error, isA<ApiException>());
     final state = sub.read();

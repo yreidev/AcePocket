@@ -73,8 +73,9 @@ class _TextInputDialog extends StatefulWidget {
 }
 
 class _TextInputDialogState extends State<_TextInputDialog> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
   String? _error;
 
   @override
@@ -286,9 +287,7 @@ class _PasswordDialogState extends State<_PasswordDialog> {
               helperMaxLines: 3,
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
-                icon: Icon(
-                  _obscure ? Icons.visibility_off : Icons.visibility,
-                ),
+                icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
                 onPressed: () => setState(() => _obscure = !_obscure),
               ),
             ),
@@ -387,9 +386,7 @@ class _MultiSelectDialogState extends State<_MultiSelectDialog> {
                   for (final option in widget.options)
                     CheckboxListTile(
                       value: _selected.contains(option),
-                      title: Text(
-                        widget.labelBuilder?.call(option) ?? option,
-                      ),
+                      title: Text(widget.labelBuilder?.call(option) ?? option),
                       onChanged: (checked) => setState(() {
                         if (checked ?? false) {
                           _selected.add(option);

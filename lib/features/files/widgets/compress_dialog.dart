@@ -75,13 +75,15 @@ class _CompressDialogState extends State<_CompressDialog> {
   String _defaultName() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     final rnd = Random();
-    final suffix =
-        List.generate(6, (_) => chars[rnd.nextInt(chars.length)]).join();
+    final suffix = List.generate(
+      6,
+      (_) => chars[rnd.nextInt(chars.length)],
+    ).join();
     final base = widget.names.length == 1
         ? widget.names.first
         : (posixBaseName(widget.dir) == '/'
-            ? 'archive'
-            : posixBaseName(widget.dir));
+              ? 'archive'
+              : posixBaseName(widget.dir));
     return '$base-$suffix$_format';
   }
 
@@ -195,10 +197,8 @@ Future<String?> showUnCompressDialog(
 }) {
   return showDialog<String>(
     context: context,
-    builder: (context) => _UnCompressDialog(
-      archivePath: archivePath,
-      currentDir: currentDir,
-    ),
+    builder: (context) =>
+        _UnCompressDialog(archivePath: archivePath, currentDir: currentDir),
   );
 }
 
@@ -262,10 +262,7 @@ class _UnCompressDialogState extends State<_UnCompressDialog> {
           const SizedBox(height: 16),
           TextField(
             controller: _controller,
-            decoration: InputDecoration(
-              labelText: '解压到目录',
-              errorText: _error,
-            ),
+            decoration: InputDecoration(labelText: '解压到目录', errorText: _error),
             onChanged: (_) {
               if (_error != null) setState(() => _error = null);
             },

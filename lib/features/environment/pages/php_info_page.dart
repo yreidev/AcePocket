@@ -92,13 +92,14 @@ class _PhpInfoPageState extends ConsumerState<PhpInfoPage> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
               TextButton.icon(
-                onPressed:
-                    html.isEmpty ? null : () => copyToClipboard(context, html),
+                onPressed: html.isEmpty
+                    ? null
+                    : () => copyToClipboard(context, html),
                 icon: const Icon(Icons.copy_rounded, size: 16),
                 label: const Text('复制全文'),
               ),
@@ -124,10 +125,12 @@ class _PhpInfoPageState extends ConsumerState<PhpInfoPage> {
     final visible = lowered.isEmpty
         ? blocks
         : blocks
-            .where((b) => b.isHeading
-                ? b.title.toLowerCase().contains(lowered)
-                : b.cells.any((c) => c.toLowerCase().contains(lowered)))
-            .toList();
+              .where(
+                (b) => b.isHeading
+                    ? b.title.toLowerCase().contains(lowered)
+                    : b.cells.any((c) => c.toLowerCase().contains(lowered)),
+              )
+              .toList();
 
     return Column(
       children: [

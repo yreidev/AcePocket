@@ -5,7 +5,8 @@ import 'more_usage_store.dart';
 /// 「更多」页入口使用记录（path -> 记录），供「常用置顶」分组消费。
 final moreUsageProvider =
     NotifierProvider<MoreUsageNotifier, Map<String, MoreUsageRecord>>(
-        MoreUsageNotifier.new);
+      MoreUsageNotifier.new,
+    );
 
 class MoreUsageNotifier extends Notifier<Map<String, MoreUsageRecord>> {
   @override

@@ -10,12 +10,16 @@ void main() {
     if (Platform.isAndroid) return;
 
     late BuildContext context;
-    await tester.pumpWidget(MaterialApp(
-      home: Builder(builder: (builderContext) {
-        context = builderContext;
-        return const SizedBox();
-      }),
-    ));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (builderContext) {
+            context = builderContext;
+            return const SizedBox();
+          },
+        ),
+      ),
+    );
 
     await showAppUpdateDialog(
       context,

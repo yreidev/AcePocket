@@ -38,10 +38,7 @@ void main() {
     expect(find.textContaining('无法连接面板'), findsWidgets);
 
     // 「重试」按钮真实可见且可命中：hitTestable 会排除被裁掉 / 被遮挡的按钮。
-    expect(
-      find.widgetWithText(FilledButton, '重试').hitTestable(),
-      findsWidgets,
-    );
+    expect(find.widgetWithText(FilledButton, '重试').hitTestable(), findsWidgets);
 
     // 滚到底再检查一次，确保下方卡片的错误态同样没有溢出。
     await tester.drag(find.byType(ListView), const Offset(0, -400));

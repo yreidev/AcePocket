@@ -62,8 +62,8 @@ class SmartPage extends ConsumerWidget {
           final stored = ref.watch(selectedSmartDiskProvider);
           final selected =
               list.disks.any((disk) => disk.name == stored) && stored != null
-                  ? stored
-                  : list.disks.first.name;
+              ? stored
+              : list.disks.first.name;
 
           return RefreshIndicator(
             onRefresh: () async {
@@ -101,9 +101,9 @@ class SmartPage extends ConsumerWidget {
             ChoiceChip(
               label: Text(disk.label),
               selected: disk.name == selected,
-              onSelected: (_) => ref
-                  .read(selectedSmartDiskProvider.notifier)
-                  .state = disk.name,
+              onSelected: (_) =>
+                  ref.read(selectedSmartDiskProvider.notifier).state =
+                      disk.name,
             ),
         ],
       ),
@@ -167,10 +167,10 @@ class _SmartDetail extends ConsumerWidget {
     final tempColor = temperature == null
         ? theme.colorScheme.onSurfaceVariant
         : temperature <= 40
-            ? theme.colorScheme.primary
-            : temperature <= 50
-                ? theme.colorScheme.tertiary
-                : theme.colorScheme.error;
+        ? theme.colorScheme.primary
+        : temperature <= 50
+        ? theme.colorScheme.tertiary
+        : theme.colorScheme.error;
 
     return SectionCard(
       title: '基本信息',
@@ -183,8 +183,9 @@ class _SmartDetail extends ConsumerWidget {
                 Flexible(
                   child: TagChip(
                     label: passed ? '健康状态 正常' : '健康状态 异常',
-                    icon:
-                        passed ? Icons.verified_outlined : Icons.error_outline,
+                    icon: passed
+                        ? Icons.verified_outlined
+                        : Icons.error_outline,
                     color: passed
                         ? theme.colorScheme.primary
                         : theme.colorScheme.error,

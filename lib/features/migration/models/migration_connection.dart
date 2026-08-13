@@ -5,11 +5,7 @@ import '../../../core/utils/url_validation.dart';
 /// 迁移方向：**当前服务器 → 远程服务器**，即把本机面板的网站 / 数据库 /
 /// 项目推送到 [url] 指向的另一台 AcePanel。令牌为远程面板的 API 令牌。
 class MigrationConnection {
-  const MigrationConnection({
-    this.url = '',
-    this.tokenId = 1,
-    this.token = '',
-  });
+  const MigrationConnection({this.url = '', this.tokenId = 1, this.token = ''});
 
   /// 远程面板地址，如 `https://1.2.3.4:8888`。
   final String url;
@@ -25,11 +21,7 @@ class MigrationConnection {
   bool get isValid =>
       validatePanelBaseUrl(url) == null && tokenId > 0 && token.isNotEmpty;
 
-  MigrationConnection copyWith({
-    String? url,
-    int? tokenId,
-    String? token,
-  }) =>
+  MigrationConnection copyWith({String? url, int? tokenId, String? token}) =>
       MigrationConnection(
         url: url ?? this.url,
         tokenId: tokenId ?? this.tokenId,
@@ -37,8 +29,8 @@ class MigrationConnection {
       );
 
   Map<String, dynamic> toJson() => {
-        'url': url.trim(),
-        'token_id': tokenId,
-        'token': token,
-      };
+    'url': url.trim(),
+    'token_id': tokenId,
+    'token': token,
+  };
 }

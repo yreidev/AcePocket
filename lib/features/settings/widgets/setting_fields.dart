@@ -89,10 +89,12 @@ class SettingDropdown<T> extends StatelessWidget {
           helperMaxLines: 3,
         ),
         items: items.entries
-            .map((e) => DropdownMenuItem<T>(
-                  value: e.key,
-                  child: Text(e.value, overflow: TextOverflow.ellipsis),
-                ))
+            .map(
+              (e) => DropdownMenuItem<T>(
+                value: e.key,
+                child: Text(e.value, overflow: TextOverflow.ellipsis),
+              ),
+            )
             .toList(),
         onChanged: (v) {
           if (v != null) onChanged(v);

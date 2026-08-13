@@ -32,8 +32,9 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final states = ref.read(logCleanProvider);
-      final needScan =
-          states.values.every((s) => !s.scanned && !s.busy && s.error == null);
+      final needScan = states.values.every(
+        (s) => !s.scanned && !s.busy && s.error == null,
+      );
       if (needScan) ref.read(logCleanProvider.notifier).scanAll();
     });
   }
@@ -43,7 +44,8 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '清理${type.title}？',
-      content: '将删除 ${type.title}（${state?.items.length ?? 0} 项）'
+      content:
+          '将删除 ${type.title}（${state?.items.length ?? 0} 项）'
           '并释放对应磁盘空间，该操作不可恢复。',
       confirmText: '清理',
       danger: true,
@@ -63,7 +65,8 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '清理全部日志？',
-      content: '将依次清理 ${types.map((t) => t.title).join('、')}，'
+      content:
+          '将依次清理 ${types.map((t) => t.title).join('、')}，'
           '删除后不可恢复。',
       confirmText: '全部清理',
       danger: true,
@@ -71,8 +74,9 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
     if (!confirmed) return;
     for (final type in types) {
       try {
-        final cleaned =
-            await ref.read(logCleanProvider.notifier).clean(type.key);
+        final cleaned = await ref
+            .read(logCleanProvider.notifier)
+            .clean(type.key);
         if (!mounted) return;
         showSuccessSnack(context, '${type.title}已清理，释放 $cleaned');
       } catch (e) {
@@ -92,10 +96,14 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
     final cleanable = kLogTypes
         .where((t) => (states[t.key]?.items.isNotEmpty ?? false))
         .toList();
-    final totalItems =
-        states.values.fold<int>(0, (sum, s) => sum + s.items.length);
-    final totalBytes =
-        states.values.fold<int>(0, (sum, s) => sum + s.totalBytes);
+    final totalItems = states.values.fold<int>(
+      0,
+      (sum, s) => sum + s.items.length,
+    );
+    final totalBytes = states.values.fold<int>(
+      0,
+      (sum, s) => sum + s.totalBytes,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -166,7 +174,8 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
                                     ? null
                                     : () => _cleanAll(cleanable),
                                 icon: const Icon(
-                                    Icons.cleaning_services_outlined),
+                                  Icons.cleaning_services_outlined,
+                                ),
                                 label: const Text('全部清理'),
                               ),
                             ),
@@ -192,8 +201,9 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
       children: [
         Text(
           value,
-          style: theme.textTheme.headlineSmall
-              ?.copyWith(fontWeight: FontWeight.w600),
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 2),
         Text(

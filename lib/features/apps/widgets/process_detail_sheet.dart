@@ -92,33 +92,37 @@ class _ProcessDetailSheet extends ConsumerWidget {
               children: [
                 SectionCard(
                   title: '基本信息',
-                  child: _KeyValueList(entries: [
-                    ('PID', '${process.pid}'),
-                    ('父进程 PID', '${process.ppid}'),
-                    ('用户', process.username.isEmpty ? '-' : process.username),
-                    ('状态', process.statusLabel),
-                    ('后台进程', process.background ? '是' : '否'),
-                    ('线程数', '${process.numThreads}'),
-                    (
-                      '启动时间',
-                      process.startTime.isEmpty ? '-' : process.startTime
-                    ),
-                  ]),
+                  child: _KeyValueList(
+                    entries: [
+                      ('PID', '${process.pid}'),
+                      ('父进程 PID', '${process.ppid}'),
+                      ('用户', process.username.isEmpty ? '-' : process.username),
+                      ('状态', process.statusLabel),
+                      ('后台进程', process.background ? '是' : '否'),
+                      ('线程数', '${process.numThreads}'),
+                      (
+                        '启动时间',
+                        process.startTime.isEmpty ? '-' : process.startTime,
+                      ),
+                    ],
+                  ),
                 ),
                 SectionCard(
                   title: '资源占用',
-                  child: _KeyValueList(entries: [
-                    ('CPU', formatCpuPercent(process.cpu)),
-                    ('常驻内存 RSS', formatBytes(process.rss)),
-                    ('虚拟内存 VMS', formatBytes(process.vms)),
-                    ('内存峰值 HWM', formatBytes(process.hwm)),
-                    ('数据段', formatBytes(process.data)),
-                    ('栈', formatBytes(process.stack)),
-                    ('锁定内存', formatBytes(process.locked)),
-                    ('交换分区', formatBytes(process.swap)),
-                    ('磁盘读取', formatBytes(process.diskRead)),
-                    ('磁盘写入', formatBytes(process.diskWrite)),
-                  ]),
+                  child: _KeyValueList(
+                    entries: [
+                      ('CPU', formatCpuPercent(process.cpu)),
+                      ('常驻内存 RSS', formatBytes(process.rss)),
+                      ('虚拟内存 VMS', formatBytes(process.vms)),
+                      ('内存峰值 HWM', formatBytes(process.hwm)),
+                      ('数据段', formatBytes(process.data)),
+                      ('栈', formatBytes(process.stack)),
+                      ('锁定内存', formatBytes(process.locked)),
+                      ('交换分区', formatBytes(process.swap)),
+                      ('磁盘读取', formatBytes(process.diskRead)),
+                      ('磁盘写入', formatBytes(process.diskWrite)),
+                    ],
+                  ),
                 ),
                 SectionCard(
                   title: '路径与命令行',
@@ -269,8 +273,9 @@ class _ConnectionRow extends StatelessWidget {
           ),
           child: Text(
             connection.protocol,
-            style: theme.textTheme.labelSmall
-                ?.copyWith(color: colorScheme.onSecondaryContainer),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: colorScheme.onSecondaryContainer,
+            ),
           ),
         ),
         const SizedBox(width: 8),

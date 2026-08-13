@@ -92,9 +92,11 @@ List<MoreSearchResult> filterMoreEntries(List<MoreGroup> groups, String query) {
   final results = <MoreSearchResult>[];
   for (final group in groups) {
     for (final entry in group.entries) {
-      final matched = entry.label.toLowerCase().contains(q) ||
-          (kMoreEntryPinyin[entry.label]
-                  ?.any((candidate) => candidate.contains(q)) ??
+      final matched =
+          entry.label.toLowerCase().contains(q) ||
+          (kMoreEntryPinyin[entry.label]?.any(
+                (candidate) => candidate.contains(q),
+              ) ??
               false);
       if (matched) {
         results.add(MoreSearchResult(entry: entry, groupTitle: group.title));

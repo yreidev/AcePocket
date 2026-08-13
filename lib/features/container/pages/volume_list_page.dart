@@ -31,7 +31,8 @@ class VolumeListPage extends ConsumerWidget {
     final ok = await showConfirmDialog(
       context,
       title: '删除存储卷',
-      content: '确定要删除「${volume.name}」吗？\n卷内数据将被永久删除，此操作不可恢复。'
+      content:
+          '确定要删除「${volume.name}」吗？\n卷内数据将被永久删除，此操作不可恢复。'
           '${volume.inUse ? '\n该卷正被 ${volume.refCount} 个容器使用，删除可能失败。' : ''}',
       confirmText: '删除',
       danger: true,
@@ -158,8 +159,9 @@ class _VolumeTile extends StatelessWidget {
                         runSpacing: 4,
                         children: [
                           StatusBadge(
-                            label:
-                                volume.driver.isEmpty ? 'local' : volume.driver,
+                            label: volume.driver.isEmpty
+                                ? 'local'
+                                : volume.driver,
                             tone: BadgeTone.info,
                             dense: true,
                           ),
@@ -213,8 +215,11 @@ class _VolumeTile extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                Icon(Icons.schedule,
-                    size: 13, color: theme.colorScheme.outline),
+                Icon(
+                  Icons.schedule,
+                  size: 13,
+                  color: theme.colorScheme.outline,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(

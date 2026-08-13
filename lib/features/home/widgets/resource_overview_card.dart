@@ -193,8 +193,9 @@ class _SwapBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // NaN 通不过 clamp（两次比较都为 false，原样返回），会打挂进度条的断言。
-    final percent =
-        swap.usedPercent.isFinite ? swap.usedPercent.clamp(0.0, 100.0) : 0.0;
+    final percent = swap.usedPercent.isFinite
+        ? swap.usedPercent.clamp(0.0, 100.0)
+        : 0.0;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -206,8 +207,11 @@ class _SwapBar extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.swap_horiz,
-                  size: 18, color: theme.colorScheme.onSurfaceVariant),
+              Icon(
+                Icons.swap_horiz,
+                size: 18,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
               const SizedBox(width: 6),
               Text(
                 'SWAP 交换分区',
@@ -220,8 +224,9 @@ class _SwapBar extends StatelessWidget {
                 child: Text(
                   '${formatBytes(swap.used)} / ${formatBytes(swap.total)}',
                   maxLines: 1,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(fontFeatures: kTabularFigures),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontFeatures: kTabularFigures,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

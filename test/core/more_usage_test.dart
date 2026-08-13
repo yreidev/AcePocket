@@ -44,10 +44,12 @@ void main() {
         '/websites': _rec('/websites', 2, 100),
         '/databases': _rec('/databases', 2, 100),
       };
-      expect(
-        topUsagePaths(records),
-        <String>['/apps', '/databases', '/firewall', '/websites'],
-      );
+      expect(topUsagePaths(records), <String>[
+        '/apps',
+        '/databases',
+        '/firewall',
+        '/websites',
+      ]);
     });
 
     test('count == 0 的记录不参与统计', () {
@@ -84,10 +86,16 @@ void main() {
       final records = <String, MoreUsageRecord>{
         for (var i = 1; i <= 10; i++) '/p$i': _rec('/p$i', i, 100),
       };
-      expect(
-        topUsagePaths(records),
-        <String>['/p10', '/p9', '/p8', '/p7', '/p6', '/p5', '/p4', '/p3'],
-      );
+      expect(topUsagePaths(records), <String>[
+        '/p10',
+        '/p9',
+        '/p8',
+        '/p7',
+        '/p6',
+        '/p5',
+        '/p4',
+        '/p3',
+      ]);
     });
 
     test('空 map 返回空列表', () {
@@ -146,7 +154,7 @@ void main() {
       SharedPreferences.setMockInitialValues(<String, Object>{
         MoreUsageStore.storageKey:
             '{"/a": 1, "/b": {"c": "x", "t": 2}, "/c": {"c": -1, "t": 2}, '
-                '"/websites": {"c": 3, "t": 1700000000000}}',
+            '"/websites": {"c": 3, "t": 1700000000000}}',
       });
       await MoreUsageStore.instance.init();
       final records = MoreUsageStore.instance.records;

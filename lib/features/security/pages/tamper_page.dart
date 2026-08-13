@@ -30,8 +30,10 @@ class TamperPage extends ConsumerStatefulWidget {
 
 class _TamperPageState extends ConsumerState<TamperPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 4, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 4,
+    vsync: this,
+  );
 
   /// 正在执行的页面级操作（`create` / `clear`），用于禁用按钮防重复提交。
   String? _busyAction;
@@ -67,7 +69,9 @@ class _TamperPageState extends ConsumerState<TamperPage>
     if (draft == null || !mounted) return;
     setState(() => _busyAction = 'create');
     try {
-      await ref.read(securityRepoProvider).createTamperRule(
+      await ref
+          .read(securityRepoProvider)
+          .createTamperRule(
             name: draft.name,
             path: draft.path,
             exts: draft.exts,

@@ -13,26 +13,25 @@ class SystemctlRepo {
 
   /// 服务是否正在运行：`GET /api/systemctl/status`。
   Future<bool> status(String service) async {
-    final data = await _api.get('/systemctl/status', query: {
-      'service': service,
-    });
+    final data = await _api.get(
+      '/systemctl/status',
+      query: {'service': service},
+    );
     return data == true;
   }
 
   /// 服务是否已设置开机自启：`GET /api/systemctl/is_enabled`。
   Future<bool> isEnabled(String service) async {
-    final data = await _api.get('/systemctl/is_enabled', query: {
-      'service': service,
-    });
+    final data = await _api.get(
+      '/systemctl/is_enabled',
+      query: {'service': service},
+    );
     return data == true;
   }
 
   /// 同时获取运行状态与自启状态。
   Future<ServiceState> state(String service) async {
-    final results = await Future.wait([
-      status(service),
-      isEnabled(service),
-    ]);
+    final results = await Future.wait([status(service), isEnabled(service)]);
     return ServiceState(running: results[0], enabled: results[1]);
   }
 

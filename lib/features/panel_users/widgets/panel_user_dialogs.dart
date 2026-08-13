@@ -86,8 +86,9 @@ class _TextInputDialog extends StatefulWidget {
 }
 
 class _TextInputDialogState extends State<_TextInputDialog> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
   String? _error;
 
   @override
@@ -331,9 +332,9 @@ class _CreateUserDialogState extends State<_CreateUserDialog> {
       });
       return;
     }
-    Navigator.of(context).pop(
-      NewUserForm(username: username, password: password, email: email),
-    );
+    Navigator.of(
+      context,
+    ).pop(NewUserForm(username: username, password: password, email: email));
   }
 
   @override

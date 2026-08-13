@@ -113,10 +113,7 @@ List<Map<String, dynamic>> jsonMapList(dynamic v) {
 }
 
 /// 把 JSON 数组解析成模型列表；非对象元素跳过。
-List<T> jsonList<T>(
-  dynamic v,
-  T Function(Map<String, dynamic>) parse,
-) {
+List<T> jsonList<T>(dynamic v, T Function(Map<String, dynamic>) parse) {
   if (v is! List) return <T>[];
   final result = <T>[];
   for (final item in v) {

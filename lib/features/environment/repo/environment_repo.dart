@@ -65,11 +65,14 @@ class EnvironmentRepository {
     String? query,
     bool onlyInstalled = false,
   }) async {
-    final data = await _api.get('/environment/list', query: {
-      if (type != null && type.isNotEmpty) 'type': type,
-      if (query != null && query.isNotEmpty) 'query': query,
-      if (onlyInstalled) 'installed': 'true',
-    });
+    final data = await _api.get(
+      '/environment/list',
+      query: {
+        if (type != null && type.isNotEmpty) 'type': type,
+        if (query != null && query.isNotEmpty) 'query': query,
+        if (onlyInstalled) 'installed': 'true',
+      },
+    );
     final raw = data is Map<String, dynamic> ? data['items'] : data;
     return _mapList(raw, EnvironmentDetail.fromJson);
   }
@@ -131,9 +134,9 @@ class EnvironmentRepository {
 
   /// 设置 npm 镜像源。
   Future<void> setNodejsRegistry(String slug, String registry) => _api.post(
-        '/environment/nodejs/$slug/registry',
-        body: {'registry': registry},
-      );
+    '/environment/nodejs/$slug/registry',
+    body: {'registry': registry},
+  );
 
   // ---------------------------------------------------------------- Python
 
@@ -187,9 +190,9 @@ class EnvironmentRepository {
 
   /// 写入 `php-fpm.conf` 原文。
   Future<void> updatePhpFpmConfig(int version, String config) => _api.post(
-        '/environment/php/$version/fpm_config',
-        body: {'config': config},
-      );
+    '/environment/php/$version/fpm_config',
+    body: {'config': config},
+  );
 
   /// PHP-FPM 负载状态（面板读取 `phpfpm_status`，未启用时返回空列表）。
   Future<List<NameValue>> phpLoad(int version) async {
@@ -216,8 +219,10 @@ class EnvironmentRepository {
   }
 
   /// 安装 PHP 扩展（面板侧推入后台任务）。
-  Future<void> installPhpModule(int version, String moduleSlug) => _api
-      .post('/environment/php/$version/modules', body: {'slug': moduleSlug});
+  Future<void> installPhpModule(int version, String moduleSlug) => _api.post(
+    '/environment/php/$version/modules',
+    body: {'slug': moduleSlug},
+  );
 
   /// 卸载 PHP 扩展（面板侧推入后台任务）。
   Future<void> uninstallPhpModule(int version, String moduleSlug) => _api

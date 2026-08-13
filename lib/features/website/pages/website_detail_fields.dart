@@ -74,8 +74,9 @@ class _NumberField extends StatefulWidget {
 }
 
 class _NumberFieldState extends State<_NumberField> {
-  late final TextEditingController _controller =
-      TextEditingController(text: '${widget.initialValue}');
+  late final TextEditingController _controller = TextEditingController(
+    text: '${widget.initialValue}',
+  );
 
   @override
   void dispose() {

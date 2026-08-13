@@ -86,8 +86,9 @@ class _BackupStoragePageState extends ConsumerState<BackupStoragePage> {
       showInfoSnack(context, '本地存储由面板设置维护，不可在此编辑');
       return;
     }
-    final saved =
-        await context.push<bool>('/backups/storages/edit?id=${storage.id}');
+    final saved = await context.push<bool>(
+      '/backups/storages/edit?id=${storage.id}',
+    );
     if (saved == true) {
       await ref.read(backupStorageListProvider.notifier).refresh();
       ref.invalidate(storageOptionsProvider);
@@ -99,7 +100,8 @@ class _BackupStoragePageState extends ConsumerState<BackupStoragePage> {
     final ok = await showConfirmDialog(
       context,
       title: '删除备份存储',
-      content: '确定要删除「${storage.name}」吗？'
+      content:
+          '确定要删除「${storage.name}」吗？'
           '使用该存储的计划任务将无法继续上传备份。',
       confirmText: '删除',
       danger: true,

@@ -21,7 +21,8 @@ class MigrationStepIndicator extends StatelessWidget {
     return Semantics(
       container: true,
       // 逐个念「1 连接 2 预检…」对读屏用户毫无用处，合并成一句进度描述。
-      label: '迁移进度：共 ${stages.length} 步，当前第 ${current + 1} 步 '
+      label:
+          '迁移进度：共 ${stages.length} 步，当前第 ${current + 1} 步 '
           '${stages[current].label}',
       child: ExcludeSemantics(
         // 不再固定 62dp 高度：200% 系统字号下步骤名会被垂直裁切。
@@ -58,9 +59,11 @@ class MigrationStepIndicator extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: index < current
-                          ? Icon(Icons.check,
+                          ? Icon(
+                              Icons.check,
                               size: circleSize * 0.6,
-                              color: colorScheme.onPrimary)
+                              color: colorScheme.onPrimary,
+                            )
                           : Text(
                               '${index + 1}',
                               style: theme.textTheme.labelMedium?.copyWith(
@@ -77,8 +80,8 @@ class MigrationStepIndicator extends StatelessWidget {
                         color: index == current
                             ? colorScheme.primary
                             : index < current
-                                ? colorScheme.onSurface
-                                : colorScheme.onSurfaceVariant,
+                            ? colorScheme.onSurface
+                            : colorScheme.onSurfaceVariant,
                         fontWeight: index == current ? FontWeight.w600 : null,
                       ),
                     ),

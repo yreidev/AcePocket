@@ -47,10 +47,7 @@ class FirewallImportResult {
 
 /// 文本表格解析结果。
 class FirewallTableParseResult {
-  const FirewallTableParseResult({
-    required this.rules,
-    required this.errors,
-  });
+  const FirewallTableParseResult({required this.rules, required this.errors});
 
   /// 解析成功、可直接提交的规则。
   final List<FirewallRule> rules;
@@ -87,16 +84,18 @@ class FirewallRuleTable {
     final buffer = StringBuffer()..writeln(kFirewallRuleColumns.join(','));
     for (final rule in rules) {
       if (isIpRule(rule)) continue;
-      buffer.writeln(<String>[
-        _escape(rule.type.isEmpty ? 'normal' : rule.type),
-        _escape(rule.family.isEmpty ? 'ipv4' : rule.family),
-        _escape(rule.protocol.isEmpty ? 'tcp' : rule.protocol),
-        '${rule.portStart}',
-        '${rule.portEnd}',
-        _escape(rule.address),
-        _escape(rule.strategy.isEmpty ? 'accept' : rule.strategy),
-        _escape(rule.direction.isEmpty ? 'in' : rule.direction),
-      ].join(','));
+      buffer.writeln(
+        <String>[
+          _escape(rule.type.isEmpty ? 'normal' : rule.type),
+          _escape(rule.family.isEmpty ? 'ipv4' : rule.family),
+          _escape(rule.protocol.isEmpty ? 'tcp' : rule.protocol),
+          '${rule.portStart}',
+          '${rule.portEnd}',
+          _escape(rule.address),
+          _escape(rule.strategy.isEmpty ? 'accept' : rule.strategy),
+          _escape(rule.direction.isEmpty ? 'in' : rule.direction),
+        ].join(','),
+      );
     }
     return buffer.toString();
   }
@@ -175,17 +174,19 @@ class FirewallRuleTable {
         errors.add('第 ${row.line} 行：协议族「$family」不支持（ipv4 / ipv6）');
         continue;
       }
-      rules.add(FirewallRule(
-        type: _pick(cell(cells, 'type'), 'normal'),
-        family: family,
-        portStart: portStart,
-        portEnd: portEnd,
-        protocol: protocol,
-        address: cell(cells, 'address'),
-        strategy: strategy,
-        direction: direction,
-        inUse: false,
-      ));
+      rules.add(
+        FirewallRule(
+          type: _pick(cell(cells, 'type'), 'normal'),
+          family: family,
+          portStart: portStart,
+          portEnd: portEnd,
+          protocol: protocol,
+          address: cell(cells, 'address'),
+          strategy: strategy,
+          direction: direction,
+          inUse: false,
+        ),
+      );
     }
 
     if (rules.isEmpty && errors.isEmpty) {

@@ -165,7 +165,9 @@ void main() {
 
     test('family 与地址类型不匹配时给出指导', () {
       expect(
-          validateIpAddress('2001:db8::1', family: 'ipv4'), contains('IPv4'));
+        validateIpAddress('2001:db8::1', family: 'ipv4'),
+        contains('IPv4'),
+      );
       expect(validateIpAddress('192.0.2.1', family: 'ipv6'), contains('IPv6'));
       expect(validateIpAddress('192.0.2.1', family: 'ipv4'), isNull);
       expect(validateIpAddress('2001:db8::1', family: 'ipv6'), isNull);
@@ -198,9 +200,13 @@ void main() {
     test('family 匹配对 CIDR 同样生效', () {
       expect(validateIpOrCidr('192.0.2.0/24', family: 'ipv4'), isNull);
       expect(
-          validateIpOrCidr('192.0.2.0/24', family: 'ipv6'), contains('IPv6'));
+        validateIpOrCidr('192.0.2.0/24', family: 'ipv6'),
+        contains('IPv6'),
+      );
       expect(
-          validateIpOrCidr('2001:db8::/32', family: 'ipv4'), contains('IPv4'));
+        validateIpOrCidr('2001:db8::/32', family: 'ipv4'),
+        contains('IPv4'),
+      );
     });
 
     test('空输入被拒绝', () {

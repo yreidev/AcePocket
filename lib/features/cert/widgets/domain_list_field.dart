@@ -32,8 +32,9 @@ class _DomainListFieldState extends State<DomainListField> {
   @override
   void initState() {
     super.initState();
-    final initial =
-        widget.initialDomains.where((e) => e.trim().isNotEmpty).toList();
+    final initial = widget.initialDomains
+        .where((e) => e.trim().isNotEmpty)
+        .toList();
     if (initial.isEmpty) {
       _controllers.add(TextEditingController());
     } else {
@@ -52,10 +53,12 @@ class _DomainListFieldState extends State<DomainListField> {
   }
 
   void _emit() {
-    widget.onChanged(_controllers
-        .map((c) => c.text.trim())
-        .where((e) => e.isNotEmpty)
-        .toList());
+    widget.onChanged(
+      _controllers
+          .map((c) => c.text.trim())
+          .where((e) => e.isNotEmpty)
+          .toList(),
+    );
   }
 
   void _add() {
@@ -130,8 +133,8 @@ class _DomainListFieldState extends State<DomainListField> {
                     tooltip: '删除第 ${i + 1} 个${widget.label}',
                     onPressed:
                         _controllers.length == 1 && _controllers[i].text.isEmpty
-                            ? null
-                            : () => _removeAt(i),
+                        ? null
+                        : () => _removeAt(i),
                     icon: Icon(
                       Icons.remove_circle_outline,
                       color: theme.colorScheme.error,

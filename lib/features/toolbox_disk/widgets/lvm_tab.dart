@@ -96,7 +96,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除物理卷 ${pv.name}？',
-      content: '将执行 pvremove 清除该设备上的 LVM 元数据。'
+      content:
+          '将执行 pvremove 清除该设备上的 LVM 元数据。'
           '若该物理卷仍属于卷组，删除会失败，请先移除卷组。',
       confirmText: '删除',
       danger: true,
@@ -117,7 +118,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '创建卷组 ${params.name}？',
-      content: '将使用 ${params.devices.length} 个物理卷创建卷组：\n'
+      content:
+          '将使用 ${params.devices.length} 个物理卷创建卷组：\n'
           '${params.devices.join('\n')}',
       confirmText: '创建',
     );
@@ -135,7 +137,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除卷组 ${vg.name}？',
-      content: '将执行 vgremove -f，卷组内的 ${vg.lvCount} 个逻辑卷'
+      content:
+          '将执行 vgremove -f，卷组内的 ${vg.lvCount} 个逻辑卷'
           '及其上的全部数据都会被删除，操作不可撤销。',
       confirmText: '继续',
       danger: true,
@@ -164,14 +167,17 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '创建逻辑卷 ${params.name}？',
-      content: '将在卷组 ${params.vgName} 中划出 ${params.sizeGb}GB 创建逻辑卷。'
+      content:
+          '将在卷组 ${params.vgName} 中划出 ${params.sizeGb}GB 创建逻辑卷。'
           '创建后还需要格式化并挂载才能使用。',
       confirmText: '创建',
     );
     if (!confirmed || !mounted) return;
     await _run(
       'lv:create',
-      () => ref.read(toolboxDiskRepoProvider).createLv(
+      () => ref
+          .read(toolboxDiskRepoProvider)
+          .createLv(
             name: params.name,
             vgName: params.vgName,
             sizeGb: params.sizeGb,
@@ -184,7 +190,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除逻辑卷 ${lv.name}？',
-      content: '将执行 lvremove -f 删除 ${lv.path}，'
+      content:
+          '将执行 lvremove -f 删除 ${lv.path}，'
           '卷上的全部数据会被永久删除，操作不可撤销。',
       confirmText: '继续',
       danger: true,
@@ -211,14 +218,17 @@ class _LvmTabState extends ConsumerState<LvmTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '扩容 ${lv.name}？',
-      content: '将为 ${lv.path} 增加 ${params.sizeGb}GB'
+      content:
+          '将为 ${lv.path} 增加 ${params.sizeGb}GB'
           '${params.resize ? '，并同步扩展其上的文件系统' : '（不扩展文件系统）'}。',
       confirmText: '扩容',
     );
     if (!confirmed || !mounted) return;
     await _run(
       'lv:${lv.path}',
-      () => ref.read(toolboxDiskRepoProvider).extendLv(
+      () => ref
+          .read(toolboxDiskRepoProvider)
+          .extendLv(
             path: lv.path,
             sizeGb: params.sizeGb,
             resize: params.resize,
@@ -251,7 +261,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
           children: [
             if (lvm.isEmpty)
               const NoticeBar(
-                text: '当前服务器没有检测到 LVM 卷。若系统未安装 lvm2 工具包，'
+                text:
+                    '当前服务器没有检测到 LVM 卷。若系统未安装 lvm2 工具包，'
                     '相关命令不可用，创建操作也会失败。',
               ),
             _pvCard(lvm, disks),
@@ -290,7 +301,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
             _itemRow(
               icon: Icons.album_outlined,
               title: pv.name,
-              subtitle: '卷组 ${pv.vgName.isEmpty ? '未分配' : pv.vgName}'
+              subtitle:
+                  '卷组 ${pv.vgName.isEmpty ? '未分配' : pv.vgName}'
                   ' · 容量 ${pv.size}'
                   '${pv.free.isEmpty ? '' : ' · 空闲 ${pv.free}'}',
               busy: _isBusy('pv:${pv.name}'),
@@ -313,8 +325,9 @@ class _LvmTabState extends ConsumerState<LvmTab> {
       trailing: _isBusy('vg:create')
           ? const BusyIndicator()
           : TextButton.icon(
-              onPressed:
-                  _locked ? null : () => _startFlow(() => _createVg(lvm)),
+              onPressed: _locked
+                  ? null
+                  : () => _startFlow(() => _createVg(lvm)),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('创建'),
             ),
@@ -332,7 +345,8 @@ class _LvmTabState extends ConsumerState<LvmTab> {
             _itemRow(
               icon: Icons.folder_special_outlined,
               title: vg.name,
-              subtitle: 'PV ${vg.pvCount} · LV ${vg.lvCount}'
+              subtitle:
+                  'PV ${vg.pvCount} · LV ${vg.lvCount}'
                   ' · 容量 ${vg.size} · 空闲 ${vg.free}',
               busy: _isBusy('vg:${vg.name}'),
               actions: [
@@ -354,8 +368,9 @@ class _LvmTabState extends ConsumerState<LvmTab> {
       trailing: _isBusy('lv:create')
           ? const BusyIndicator()
           : TextButton.icon(
-              onPressed:
-                  _locked ? null : () => _startFlow(() => _createLv(lvm)),
+              onPressed: _locked
+                  ? null
+                  : () => _startFlow(() => _createLv(lvm)),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('创建'),
             ),
@@ -379,8 +394,9 @@ class _LvmTabState extends ConsumerState<LvmTab> {
                 A11yIconButton(
                   tooltip: '扩容逻辑卷 ${lv.name}',
                   icon: const Icon(Icons.open_in_full, size: 18),
-                  onPressed:
-                      _locked ? null : () => _startFlow(() => _extendLv(lv)),
+                  onPressed: _locked
+                      ? null
+                      : () => _startFlow(() => _extendLv(lv)),
                 ),
                 _dangerAction(
                   tooltip: '删除逻辑卷 ${lv.name}',

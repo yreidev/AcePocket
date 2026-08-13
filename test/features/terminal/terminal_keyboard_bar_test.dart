@@ -31,10 +31,7 @@ void main() {
     await tester.pumpWidget(_wrap(_bar()));
 
     final escSize = tester.getSize(
-      find.ancestor(
-        of: find.text('Esc'),
-        matching: find.byType(InkWell),
-      ),
+      find.ancestor(of: find.text('Esc'), matching: find.byType(InkWell)),
     );
     expect(escSize.height, greaterThanOrEqualTo(48));
     expect(escSize.width, greaterThanOrEqualTo(48));
@@ -46,10 +43,7 @@ void main() {
     );
 
     final size = tester.getSize(
-      find.ancestor(
-        of: find.text('Home'),
-        matching: find.byType(InkWell),
-      ),
+      find.ancestor(of: find.text('Home'), matching: find.byType(InkWell)),
     );
     expect(size.height, greaterThan(48));
     expect(tester.takeException(), isNull);
@@ -78,17 +72,18 @@ void main() {
   testWidgets('点击键帽回调对应按键；未连接时禁用', (tester) async {
     final keys = <TerminalKey>[];
     final texts = <String>[];
-    await tester.pumpWidget(
-      _wrap(_bar(onKey: keys.add, onText: texts.add)),
-    );
+    await tester.pumpWidget(_wrap(_bar(onKey: keys.add, onText: texts.add)));
 
     await tester.tap(find.text('Esc'));
     await tester.tap(find.text('Tab'));
     expect(keys, [TerminalKey.escape, TerminalKey.tab]);
 
     // 符号键在横向列表的可视区之外，先滚动过去。
-    await tester.scrollUntilVisible(find.text('/'), 200,
-        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      find.text('/'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('/'));
     expect(texts, ['/']);
 

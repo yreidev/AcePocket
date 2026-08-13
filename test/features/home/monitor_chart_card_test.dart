@@ -4,10 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// 把卡片放进一个最小可用的 App 里渲染。
 Widget _host(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: SingleChildScrollView(child: child),
-      ),
-    );
+  home: Scaffold(body: SingleChildScrollView(child: child)),
+);
 
 const _times = <String>[
   '2024-05-01 10:00:00',
@@ -70,11 +68,7 @@ void main() {
           minY: 0,
           valueFormatter: (v) => v.toStringAsFixed(2),
           series: const [
-            ChartSeries(
-              name: '1 分钟',
-              values: [0.87],
-              color: Color(0xFF6750A4),
-            ),
+            ChartSeries(name: '1 分钟', values: [0.87], color: Color(0xFF6750A4)),
           ],
         ),
       ),

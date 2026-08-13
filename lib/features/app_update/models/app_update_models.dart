@@ -13,8 +13,12 @@ library;
 ///   数字段低于非数字段，段数少者（前缀相同时）为低；
 /// - 忽略构建元数据（`+` 之后的部分，如 `1.0.0+1` 的 `+1`）。
 class SemVer implements Comparable<SemVer> {
-  const SemVer(this.major, this.minor, this.patch,
-      {this.preRelease = const []});
+  const SemVer(
+    this.major,
+    this.minor,
+    this.patch, {
+    this.preRelease = const [],
+  });
 
   final int major;
   final int minor;
@@ -198,8 +202,10 @@ const String kUniversalApkAssetName = 'app-release.apk';
 ///
 /// [preferArm64] 为 true 时优先 [kArm64ApkAssetName]，否则（或找不到时）
 /// 回退 [kUniversalApkAssetName]；两者都没有则返回 null。
-ReleaseAsset? selectApkAsset(List<ReleaseAsset> assets,
-    {required bool preferArm64}) {
+ReleaseAsset? selectApkAsset(
+  List<ReleaseAsset> assets, {
+  required bool preferArm64,
+}) {
   ReleaseAsset? byName(String name) {
     for (final asset in assets) {
       if (asset.name == name) return asset;

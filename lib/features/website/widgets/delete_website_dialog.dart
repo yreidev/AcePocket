@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 /// 删除网站的选项。
 class DeleteWebsiteOptions {
-  const DeleteWebsiteOptions(
-      {required this.deletePath, required this.deleteDb});
+  const DeleteWebsiteOptions({
+    required this.deletePath,
+    required this.deleteDb,
+  });
 
   /// 同时删除网站目录。
   final bool deletePath;
@@ -54,9 +56,9 @@ Future<DeleteWebsiteOptions?> showDeleteWebsiteDialog(
               ),
               Text(
                 '若网站已绑定证书，需先在证书管理中删除该证书。',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
               ),
             ],
           ),

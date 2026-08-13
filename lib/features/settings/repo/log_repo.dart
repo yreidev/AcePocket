@@ -20,11 +20,10 @@ class LogRepository {
     int limit = 200,
     String date = '',
   }) async {
-    final data = await _api.get('/log/list', query: {
-      'type': type,
-      'limit': limit,
-      if (date.isNotEmpty) 'date': date,
-    });
+    final data = await _api.get(
+      '/log/list',
+      query: {'type': type, 'limit': limit, if (date.isNotEmpty) 'date': date},
+    );
     if (data is List) {
       return data
           .whereType<Map<String, dynamic>>()

@@ -104,8 +104,8 @@ class SshHostTile extends StatelessWidget {
                       host.updatedAt != null
                           ? '更新于 ${formatShortTime(host.updatedAt)}'
                           : host.createdAt != null
-                              ? '创建于 ${formatShortTime(host.createdAt)}'
-                              : '时间未知',
+                          ? '创建于 ${formatShortTime(host.createdAt)}'
+                          : '时间未知',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.labelSmall?.copyWith(
@@ -121,8 +121,9 @@ class SshHostTile extends StatelessWidget {
                   A11yIconButton(
                     tooltip: '打开终端',
                     icon: const Icon(Icons.terminal_rounded),
-                    onPressed:
-                        busy ? null : () => onAction(SshHostAction.terminal),
+                    onPressed: busy
+                        ? null
+                        : () => onAction(SshHostAction.terminal),
                   ),
                   PopupMenuButton<SshHostAction>(
                     tooltip: '更多操作',

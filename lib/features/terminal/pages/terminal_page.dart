@@ -68,9 +68,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
         body: Column(
           children: [
             const Expanded(
-              child: ErrorView(
-                error: ApiException('尚未选择服务器，无法打开终端'),
-              ),
+              child: ErrorView(error: ApiException('尚未选择服务器，无法打开终端')),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
@@ -90,8 +88,10 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
     final controller = _session;
 
     // 连接成功后自动聚焦，弹出软键盘。
-    ref.listen<TerminalSessionState>(terminalSessionProvider(_spec),
-        (previous, next) {
+    ref.listen<TerminalSessionState>(terminalSessionProvider(_spec), (
+      previous,
+      next,
+    ) {
       if (previous?.status != TerminalStatus.connected &&
           next.status == TerminalStatus.connected &&
           mounted) {
@@ -153,8 +153,9 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
             ),
             A11yIconButton(
               tooltip: '重新连接终端',
-              onPressed:
-                  state.isConnecting ? null : () => controller.reconnect(),
+              onPressed: state.isConnecting
+                  ? null
+                  : () => controller.reconnect(),
               icon: const Icon(Icons.refresh),
             ),
             PopupMenuButton<_TerminalMenuAction>(
@@ -219,78 +220,85 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
         ),
         // 横屏 + 输入法展开时，正文区可能只剩几十 dp：此时按
         // 「终端 > 快捷键条 > 提示条」的优先级依次让位，避免 Column 溢出。
-        body: LayoutBuilder(builder: (context, constraints) {
-          final available = constraints.maxHeight;
-          final showBanner = available >= 160;
-          final showKeyboardBar = settings.showKeyboardBar && available >= 120;
-          return Column(
-            children: [
-              if (!showBanner)
-                const SizedBox.shrink()
-              else if (state.status == TerminalStatus.disconnected)
-                TerminalConnectionBanner.disconnected(
-                  context,
-                  message: state.message ?? '连接已断开',
-                  onReconnect: () => controller.reconnect(),
-                )
-              else if (state.isConnecting && state.hasOutput)
-                TerminalConnectionBanner.connecting(context)
-              else if (state.isConnected && state.unstable)
-                TerminalConnectionBanner.unstable(
-                  context,
-                  onReconnect: () => controller.reconnect(),
-                ),
-              Expanded(
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Container(
-                        color: theme.colorScheme.surfaceContainerLowest,
-                        padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
-                        child: TerminalView(
-                          controller.terminal,
-                          controller: _terminalController,
-                          focusNode: _focusNode,
-                          theme: buildTerminalTheme(theme.colorScheme),
-                          textStyle: TerminalStyle(fontSize: settings.fontSize),
-                          autofocus: false,
-                        ),
-                      ),
-                    ),
-                    if (state.isConnecting && !state.hasOutput)
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            final available = constraints.maxHeight;
+            final showBanner = available >= 160;
+            final showKeyboardBar =
+                settings.showKeyboardBar && available >= 120;
+            return Column(
+              children: [
+                if (!showBanner)
+                  const SizedBox.shrink()
+                else if (state.status == TerminalStatus.disconnected)
+                  TerminalConnectionBanner.disconnected(
+                    context,
+                    message: state.message ?? '连接已断开',
+                    onReconnect: () => controller.reconnect(),
+                  )
+                else if (state.isConnecting && state.hasOutput)
+                  TerminalConnectionBanner.connecting(context)
+                else if (state.isConnected && state.unstable)
+                  TerminalConnectionBanner.unstable(
+                    context,
+                    onReconnect: () => controller.reconnect(),
+                  ),
+                Expanded(
+                  child: Stack(
+                    children: [
                       Positioned.fill(
-                        child: ColoredBox(
-                          color:
-                              theme.colorScheme.surface.withValues(alpha: 0.86),
-                          child: const LoadingView(message: '正在连接终端…'),
+                        child: Container(
+                          color: theme.colorScheme.surfaceContainerLowest,
+                          padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
+                          child: TerminalView(
+                            controller.terminal,
+                            controller: _terminalController,
+                            focusNode: _focusNode,
+                            theme: buildTerminalTheme(theme.colorScheme),
+                            textStyle: TerminalStyle(
+                              fontSize: settings.fontSize,
+                            ),
+                            autofocus: false,
+                          ),
                         ),
                       ),
-                    if (state.status == TerminalStatus.failed)
-                      Positioned.fill(
-                        child: _FailureOverlay(
-                          state: state,
-                          onRetry: () => controller.reconnect(),
-                          onEditServer: () => _openServerConfig(server.id),
-                          onInputPassCode: _promptPassCode,
+                      if (state.isConnecting && !state.hasOutput)
+                        Positioned.fill(
+                          child: ColoredBox(
+                            color: theme.colorScheme.surface.withValues(
+                              alpha: 0.86,
+                            ),
+                            child: const LoadingView(message: '正在连接终端…'),
+                          ),
                         ),
-                      ),
-                  ],
+                      if (state.status == TerminalStatus.failed)
+                        Positioned.fill(
+                          child: _FailureOverlay(
+                            state: state,
+                            onRetry: () => controller.reconnect(),
+                            onEditServer: () => _openServerConfig(server.id),
+                            onInputPassCode: _promptPassCode,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              if (showKeyboardBar)
-                TerminalKeyboardBar(
-                  enabled: state.isConnected,
-                  onKey: (key) => _keepKeyboard(() => controller.sendKey(key)),
-                  onText: (text) =>
-                      _keepKeyboard(() => controller.sendText(text)),
-                  onCtrl: (letter) =>
-                      _keepKeyboard(() => controller.sendCtrlChar(letter)),
-                )
-              else
-                const SafeArea(top: false, child: SizedBox.shrink()),
-            ],
-          );
-        }),
+                if (showKeyboardBar)
+                  TerminalKeyboardBar(
+                    enabled: state.isConnected,
+                    onKey: (key) =>
+                        _keepKeyboard(() => controller.sendKey(key)),
+                    onText: (text) =>
+                        _keepKeyboard(() => controller.sendText(text)),
+                    onCtrl: (letter) =>
+                        _keepKeyboard(() => controller.sendCtrlChar(letter)),
+                  )
+                else
+                  const SafeArea(top: false, child: SizedBox.shrink()),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

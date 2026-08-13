@@ -52,7 +52,8 @@ class MonitorPage extends ConsumerWidget {
     final ok = await showConfirmDialog(
       context,
       title: '清空监控数据',
-      content: '将删除面板上全部历史监控记录，且不可恢复。\n'
+      content:
+          '将删除面板上全部历史监控记录，且不可恢复。\n'
           '清空后需要等采集任务重新积累数据，本页会暂时无图。确定继续吗？',
       confirmText: '清空',
       danger: true,
@@ -246,8 +247,11 @@ class _DisabledHint extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.info_outline,
-              size: 16, color: theme.colorScheme.onTertiaryContainer),
+          Icon(
+            Icons.info_outline,
+            size: 16,
+            color: theme.colorScheme.onTertiaryContainer,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -381,16 +385,8 @@ class _MonitorCharts extends ConsumerWidget {
                   ref.read(monitorNetDeviceProvider.notifier).state = value,
             ),
             series: [
-              ChartSeries(
-                name: '上行',
-                values: net.tx,
-                color: colors.primary,
-              ),
-              ChartSeries(
-                name: '下行',
-                values: net.rx,
-                color: colors.tertiary,
-              ),
+              ChartSeries(name: '上行', values: net.tx, color: colors.primary),
+              ChartSeries(name: '下行', values: net.rx, color: colors.tertiary),
             ],
           ),
         if (net != null)
@@ -406,16 +402,8 @@ class _MonitorCharts extends ConsumerWidget {
                   ref.read(monitorNetDeviceProvider.notifier).state = value,
             ),
             series: [
-              ChartSeries(
-                name: '发送',
-                values: net.sent,
-                color: colors.primary,
-              ),
-              ChartSeries(
-                name: '接收',
-                values: net.recv,
-                color: colors.tertiary,
-              ),
+              ChartSeries(name: '发送', values: net.sent, color: colors.primary),
+              ChartSeries(name: '接收', values: net.recv, color: colors.tertiary),
             ],
           ),
         if (disk != null)

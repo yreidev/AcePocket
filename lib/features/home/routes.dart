@@ -15,10 +15,7 @@ export 'widgets/quick_entry_grid.dart' show QuickEntry, kDefaultQuickEntries;
 /// - `/panel/update` —— 面板升级（更新日志 + WebSocket 实时升级进度）；
 /// - `/panel/runtime` —— 运行时诊断（Go 运行时统计 + 协程堆栈）。
 final List<RouteBase> homeRoutes = [
-  GoRoute(
-    path: '/monitor',
-    builder: (context, state) => const MonitorPage(),
-  ),
+  GoRoute(path: '/monitor', builder: (context, state) => const MonitorPage()),
   GoRoute(
     path: '/panel/update',
     name: 'panelUpdate',

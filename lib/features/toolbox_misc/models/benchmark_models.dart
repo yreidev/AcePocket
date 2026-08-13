@@ -110,13 +110,13 @@ class DiskIoResult {
   final String writeSpeed;
 
   factory DiskIoResult.fromJson(Map<String, dynamic> json) => DiskIoResult(
-        readSpeed: (json['read_speed'] as String?)?.trim().isNotEmpty == true
-            ? (json['read_speed'] as String).trim()
-            : 'N/A',
-        writeSpeed: (json['write_speed'] as String?)?.trim().isNotEmpty == true
-            ? (json['write_speed'] as String).trim()
-            : 'N/A',
-      );
+    readSpeed: (json['read_speed'] as String?)?.trim().isNotEmpty == true
+        ? (json['read_speed'] as String).trim()
+        : 'N/A',
+    writeSpeed: (json['write_speed'] as String?)?.trim().isNotEmpty == true
+        ? (json['write_speed'] as String).trim()
+        : 'N/A',
+  );
 }
 
 /// 磁盘跑分结果（`{"4": {...}, "64": {...}, "1024": {...}, "score": 123}`）。
@@ -131,11 +131,11 @@ class DiskBenchmark {
   static const List<String> blockKeys = <String>['4', '64', '1024'];
 
   static String blockLabel(String key) => switch (key) {
-        '4' => '4 KB',
-        '64' => '64 KB',
-        '1024' => '1 MB',
-        _ => '$key KB',
-      };
+    '4' => '4 KB',
+    '64' => '64 KB',
+    '1024' => '1 MB',
+    _ => '$key KB',
+  };
 
   factory DiskBenchmark.fromJson(Map<String, dynamic> json) {
     final blocks = <String, DiskIoResult>{};
@@ -227,19 +227,18 @@ class BenchmarkState {
     bool? stopping,
     DateTime? startedAt,
     bool? stopped,
-  }) =>
-      BenchmarkState(
-        running: running ?? this.running,
-        currentKey: clearCurrentKey ? null : (currentKey ?? this.currentKey),
-        completed: completed ?? this.completed,
-        planned: planned ?? this.planned,
-        cpuScores: cpuScores ?? this.cpuScores,
-        memory: memory ?? this.memory,
-        disk: disk ?? this.disk,
-        errors: errors ?? this.errors,
-        finishedAt: finishedAt ?? this.finishedAt,
-        stopping: stopping ?? this.stopping,
-        startedAt: startedAt ?? this.startedAt,
-        stopped: stopped ?? this.stopped,
-      );
+  }) => BenchmarkState(
+    running: running ?? this.running,
+    currentKey: clearCurrentKey ? null : (currentKey ?? this.currentKey),
+    completed: completed ?? this.completed,
+    planned: planned ?? this.planned,
+    cpuScores: cpuScores ?? this.cpuScores,
+    memory: memory ?? this.memory,
+    disk: disk ?? this.disk,
+    errors: errors ?? this.errors,
+    finishedAt: finishedAt ?? this.finishedAt,
+    stopping: stopping ?? this.stopping,
+    startedAt: startedAt ?? this.startedAt,
+    stopped: stopped ?? this.stopped,
+  );
 }

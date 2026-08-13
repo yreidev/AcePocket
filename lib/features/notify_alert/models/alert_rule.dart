@@ -77,16 +77,16 @@ class AlertRule {
 
   /// 创建 / 更新请求体（`request.AlertRuleCreate` / `AlertRuleUpdate`）。
   Map<String, dynamic> toRequestJson() => <String, dynamic>{
-        'name': name,
-        'type': type,
-        'target': target,
-        'operator': op,
-        'threshold': threshold,
-        'duration': duration,
-        'silence': silence,
-        'channels': channels,
-        'enabled': enabled,
-      };
+    'name': name,
+    'type': type,
+    'target': target,
+    'operator': op,
+    'threshold': threshold,
+    'duration': duration,
+    'silence': silence,
+    'channels': channels,
+    'enabled': enabled,
+  };
 
   AlertRule copyWith({
     String? name,
@@ -117,17 +117,17 @@ class AlertRule {
 
   /// 新建规则时的默认值（与面板前端默认表单一致）。
   static AlertRule empty() => const AlertRule(
-        id: 0,
-        name: '',
-        type: 'cpu',
-        target: '',
-        op: 'gt',
-        threshold: 90,
-        duration: 3,
-        silence: 30,
-        channels: <int>[],
-        enabled: true,
-      );
+    id: 0,
+    name: '',
+    type: 'cpu',
+    target: '',
+    op: 'gt',
+    threshold: 90,
+    duration: 3,
+    silence: 30,
+    channels: <int>[],
+    enabled: true,
+  );
 }
 
 /// 告警记录（对应面板 `internal/biz/alert.go` 的 `Alert`）。
@@ -161,14 +161,14 @@ class AlertRecord {
   String get metricTitle => alertMetricTitle(type, target);
 
   factory AlertRecord.fromJson(Map<String, dynamic> json) => AlertRecord(
-        id: jsonInt(json['id']),
-        ruleId: jsonInt(json['rule_id']),
-        ruleName: jsonString(json['rule_name']),
-        type: jsonString(json['type']),
-        target: jsonString(json['target']),
-        value: jsonDouble(json['value']),
-        message: jsonString(json['message']),
-        notified: jsonBool(json['notified']),
-        createdAt: jsonTime(json['created_at']),
-      );
+    id: jsonInt(json['id']),
+    ruleId: jsonInt(json['rule_id']),
+    ruleName: jsonString(json['rule_name']),
+    type: jsonString(json['type']),
+    target: jsonString(json['target']),
+    value: jsonDouble(json['value']),
+    message: jsonString(json['message']),
+    notified: jsonBool(json['notified']),
+    createdAt: jsonTime(json['created_at']),
+  );
 }

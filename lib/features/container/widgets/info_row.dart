@@ -78,8 +78,9 @@ class MonoBlock extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
-      constraints:
-          maxHeight == null ? null : BoxConstraints(maxHeight: maxHeight!),
+      constraints: maxHeight == null
+          ? null
+          : BoxConstraints(maxHeight: maxHeight!),
       decoration: BoxDecoration(
         color: theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),

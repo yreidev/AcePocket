@@ -33,11 +33,8 @@ class ListenListField extends StatefulWidget {
 class _ListenListFieldState extends State<ListenListField> {
   final Map<ListenConfig, TextEditingController> _controllers = {};
 
-  TextEditingController _controllerFor(ListenConfig listen) =>
-      _controllers.putIfAbsent(
-        listen,
-        () => TextEditingController(text: listen.address),
-      );
+  TextEditingController _controllerFor(ListenConfig listen) => _controllers
+      .putIfAbsent(listen, () => TextEditingController(text: listen.address));
 
   @override
   void dispose() {

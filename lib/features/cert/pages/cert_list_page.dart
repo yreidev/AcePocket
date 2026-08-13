@@ -97,7 +97,9 @@ class _CertListPageState extends ConsumerState<CertListPage> {
 
   Future<void> _toggleAutoRenewal(CertListItem cert) async {
     await _runBusy(cert.id, () async {
-      await ref.read(certRepoProvider).updateCert(
+      await ref
+          .read(certRepoProvider)
+          .updateCert(
             id: cert.id,
             type: cert.type,
             domains: cert.domains,
@@ -132,7 +134,9 @@ class _CertListPageState extends ConsumerState<CertListPage> {
 
     await _runBusy(cert.id, () async {
       for (final websiteId in selection.websiteIds) {
-        await ref.read(certRepoProvider).deploy(
+        await ref
+            .read(certRepoProvider)
+            .deploy(
               id: cert.id,
               websiteId: websiteId,
               enableHttps: selection.enableHttps,
@@ -332,8 +336,9 @@ class _ListFooter extends StatelessWidget {
               // 直接插值会把 `XxxException: ` 前缀暴露给用户。
               '加载失败：${errorMessage(error!)}',
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
             const SizedBox(height: 8),
             TextButton.icon(

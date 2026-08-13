@@ -71,10 +71,7 @@ void main() {
     test('缺段补零：1.2 == 1.2.0', () {
       expect(isNewerVersion(current: '1.2', candidate: '1.2.0'), isFalse);
       expect(isNewerVersion(current: '1.2.0', candidate: '1.2'), isFalse);
-      expect(
-        SemVer.tryParse('1.2')!.compareTo(SemVer.tryParse('1.2.0')!),
-        0,
-      );
+      expect(SemVer.tryParse('1.2')!.compareTo(SemVer.tryParse('1.2.0')!), 0);
     });
 
     test('无法解析时 tryParse 返回 null 且 isNewerVersion 返回 false', () {
@@ -102,10 +99,11 @@ void main() {
     );
 
     test('preferArm64 为 true 时优先选择 arm64 资产', () {
-      final picked = selectApkAsset(
-        [other, universal, arm64],
-        preferArm64: true,
-      );
+      final picked = selectApkAsset([
+        other,
+        universal,
+        arm64,
+      ], preferArm64: true);
       expect(picked, same(arm64));
     });
 
@@ -115,10 +113,7 @@ void main() {
     });
 
     test('preferArm64 为 false 时直接选择通用包', () {
-      final picked = selectApkAsset(
-        [arm64, universal],
-        preferArm64: false,
-      );
+      final picked = selectApkAsset([arm64, universal], preferArm64: false);
       expect(picked, same(universal));
     });
 
@@ -152,10 +147,7 @@ void main() {
       expect(release.publishedAt, isNotNull);
       // 已转为本地时间，且与 UTC 时刻一致。
       expect(release.publishedAt!.isUtc, isFalse);
-      expect(
-        release.publishedAt!.toUtc(),
-        DateTime.utc(2026, 7, 1, 8, 30),
-      );
+      expect(release.publishedAt!.toUtc(), DateTime.utc(2026, 7, 1, 8, 30));
       expect(release.assets, hasLength(2));
       expect(release.assets[0].name, kArm64ApkAssetName);
       expect(

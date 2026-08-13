@@ -7,10 +7,11 @@ import '../repo/transfer_client.dart';
 import 'transfer_indicator.dart';
 
 /// 单次传输的执行体：把 [onProgress] 与 [cancelToken] 透传给底层传输客户端。
-typedef TransferRunner = Future<void> Function({
-  required TransferProgress onProgress,
-  required TransferCancelToken cancelToken,
-});
+typedef TransferRunner =
+    Future<void> Function({
+      required TransferProgress onProgress,
+      required TransferCancelToken cancelToken,
+    });
 
 /// 传输结果。
 class TransferResult {

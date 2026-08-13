@@ -9,9 +9,9 @@ class EnvVersion {
   final String label;
 
   factory EnvVersion.fromJson(Map<String, dynamic> json) => EnvVersion(
-        value: jsonString(json['value']),
-        label: jsonString(json['label']),
-      );
+    value: jsonString(json['value']),
+    label: jsonString(json['label']),
+  );
 }
 
 /// 已安装环境（`GET /home/installed_environment`，
@@ -64,14 +64,14 @@ class InstalledEnvironment {
 
   /// 按运行时名称取版本列表，便于对比表格遍历。
   List<EnvVersion> runtime(String key) => switch (key) {
-        'go' => go,
-        'java' => java,
-        'nodejs' => nodejs,
-        'php' => php,
-        'python' => python,
-        'dotnet' => dotnet,
-        _ => const <EnvVersion>[],
-      };
+    'go' => go,
+    'java' => java,
+    'nodejs' => nodejs,
+    'php' => php,
+    'python' => python,
+    'dotnet' => dotnet,
+    _ => const <EnvVersion>[],
+  };
 
   /// 对比表格中展示的运行时（与面板 Web 端一致，另加 .NET）。
   static const runtimeKeys = <String, String>{
@@ -86,10 +86,7 @@ class InstalledEnvironment {
 
 /// 本地与远程环境的对比结果。
 class EnvComparison {
-  const EnvComparison({
-    required this.warnings,
-    required this.blocked,
-  });
+  const EnvComparison({required this.warnings, required this.blocked});
 
   /// 提示文案（阻断项排在最前）。
   final List<String> warnings;

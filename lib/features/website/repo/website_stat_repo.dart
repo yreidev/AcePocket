@@ -15,16 +15,20 @@ class WebsiteStatRepo {
   final ApiClient _api;
 
   Map<String, dynamic> _range(StatDateRange range, String sites) => {
-        'start': range.start,
-        'end': range.end,
-        if (sites.isNotEmpty) 'sites': sites,
-      };
+    'start': range.start,
+    'end': range.end,
+    if (sites.isNotEmpty) 'sites': sites,
+  };
 
   /// 统计概览（汇总 + 时间序列 + 环比 + 站点列表）。
-  Future<StatOverview> overview(StatDateRange range,
-      {String sites = ''}) async {
-    final data =
-        await _api.get('/website/stat/overview', query: _range(range, sites));
+  Future<StatOverview> overview(
+    StatDateRange range, {
+    String sites = '',
+  }) async {
+    final data = await _api.get(
+      '/website/stat/overview',
+      query: _range(range, sites),
+    );
     return StatOverview.fromJson(jMap(data));
   }
 
@@ -39,22 +43,28 @@ class WebsiteStatRepo {
     StatDateRange range, {
     String sites = '',
   }) async {
-    final data =
-        await _api.get('/website/stat/sites', query: _range(range, sites));
+    final data = await _api.get(
+      '/website/stat/sites',
+      query: _range(range, sites),
+    );
     return jMapList(jMap(data)['items']).map(SiteStatItem.fromJson).toList();
   }
 
   /// 蜘蛛统计（最多 50 条）。
   Future<SpiderStats> spiders(StatDateRange range, {String sites = ''}) async {
-    final data =
-        await _api.get('/website/stat/spiders', query: _range(range, sites));
+    final data = await _api.get(
+      '/website/stat/spiders',
+      query: _range(range, sites),
+    );
     return SpiderStats.fromJson(jMap(data));
   }
 
   /// 客户端统计（浏览器 / 操作系统，最多 100 条明细）。
   Future<ClientStats> clients(StatDateRange range, {String sites = ''}) async {
-    final data =
-        await _api.get('/website/stat/clients', query: _range(range, sites));
+    final data = await _api.get(
+      '/website/stat/clients',
+      query: _range(range, sites),
+    );
     return ClientStats.fromJson(jMap(data));
   }
 
@@ -65,11 +75,10 @@ class WebsiteStatRepo {
     int page = 1,
     int limit = 50,
   }) async {
-    final data = await _api.get('/website/stat/ips', query: {
-      ..._range(range, sites),
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website/stat/ips',
+      query: {..._range(range, sites), 'page': page, 'limit': limit},
+    );
     return StatPage.fromData(data, IpRank.fromJson);
   }
 
@@ -82,12 +91,15 @@ class WebsiteStatRepo {
     String country = '',
     int limit = 100,
   }) async {
-    final data = await _api.get('/website/stat/geos', query: {
-      ..._range(range, sites),
-      'group_by': groupBy,
-      if (country.isNotEmpty) 'country': country,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website/stat/geos',
+      query: {
+        ..._range(range, sites),
+        'group_by': groupBy,
+        if (country.isNotEmpty) 'country': country,
+        'limit': limit,
+      },
+    );
     return jMapList(jMap(data)['items']).map(GeoRank.fromJson).toList();
   }
 
@@ -98,11 +110,10 @@ class WebsiteStatRepo {
     int page = 1,
     int limit = 50,
   }) async {
-    final data = await _api.get('/website/stat/uris', query: {
-      ..._range(range, sites),
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website/stat/uris',
+      query: {..._range(range, sites), 'page': page, 'limit': limit},
+    );
     return StatPage.fromData(data, UriRank.fromJson);
   }
 
@@ -114,12 +125,15 @@ class WebsiteStatRepo {
     int page = 1,
     int limit = 50,
   }) async {
-    final data = await _api.get('/website/stat/slow_uris', query: {
-      ..._range(range, sites),
-      if (threshold > 0) 'threshold': threshold,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website/stat/slow_uris',
+      query: {
+        ..._range(range, sites),
+        if (threshold > 0) 'threshold': threshold,
+        'page': page,
+        'limit': limit,
+      },
+    );
     return StatPage.fromData(data, UriRank.fromJson);
   }
 
@@ -131,12 +145,15 @@ class WebsiteStatRepo {
     int page = 1,
     int limit = 50,
   }) async {
-    final data = await _api.get('/website/stat/errors', query: {
-      ..._range(range, sites),
-      if (status > 0) 'status': status,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/website/stat/errors',
+      query: {
+        ..._range(range, sites),
+        if (status > 0) 'status': status,
+        'page': page,
+        'limit': limit,
+      },
+    );
     return StatPage.fromData(data, ErrorLogItem.fromJson);
   }
 

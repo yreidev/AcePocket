@@ -50,11 +50,7 @@ void main() {
 
     testWidgets('首帧直接展示内容，不做入场过渡', (tester) async {
       await tester.pumpWidget(
-        wrap(
-          const FadeSwitch(
-            child: Text('内容', key: ValueKey<String>('a')),
-          ),
-        ),
+        wrap(const FadeSwitch(child: Text('内容', key: ValueKey<String>('a')))),
       );
       expect(find.text('内容'), findsOneWidget);
       // 首帧就是稳定态：没有待完成的动画。
@@ -65,26 +61,22 @@ void main() {
       var oldTaps = 0;
 
       Widget build({required bool second}) => wrap(
-            FadeSwitch(
-              child: second
-                  ? const SizedBox(
-                      key: ValueKey<String>('b'),
-                      width: 1,
-                      height: 1,
-                    )
-                  : GestureDetector(
-                      key: const ValueKey<String>('a'),
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => oldTaps++,
-                      child: const SizedBox(width: 200, height: 200),
-                    ),
-            ),
-          );
+        FadeSwitch(
+          child: second
+              ? const SizedBox(key: ValueKey<String>('b'), width: 1, height: 1)
+              : GestureDetector(
+                  key: const ValueKey<String>('a'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => oldTaps++,
+                  child: const SizedBox(width: 200, height: 200),
+                ),
+        ),
+      );
 
       await tester.pumpWidget(build(second: false));
       final corner =
           tester.getTopLeft(find.byKey(const ValueKey<String>('a'))) +
-              const Offset(8, 8);
+          const Offset(8, 8);
       await tester.tapAt(corner);
       expect(oldTaps, 1);
 
@@ -103,16 +95,16 @@ void main() {
 
   group('AnimatedReveal', () {
     Widget build({required bool visible}) => MaterialApp(
-          home: Scaffold(
-            body: Align(
-              alignment: Alignment.topCenter,
-              child: AnimatedReveal(
-                visible: visible,
-                child: const SizedBox(width: double.infinity, height: 80),
-              ),
-            ),
+      home: Scaffold(
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: AnimatedReveal(
+            visible: visible,
+            child: const SizedBox(width: double.infinity, height: 80),
           ),
-        );
+        ),
+      ),
+    );
 
     testWidgets('隐藏时不占高度，展开后撑开到内容高度', (tester) async {
       await tester.pumpWidget(build(visible: false));

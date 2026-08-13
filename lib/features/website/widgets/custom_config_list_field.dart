@@ -61,8 +61,9 @@ class _CustomConfigListFieldState extends State<CustomConfigListField> {
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
             onPressed: () {
-              widget.configs
-                  .add(CustomConfig(name: '', scope: 'site', content: ''));
+              widget.configs.add(
+                CustomConfig(name: '', scope: 'site', content: ''),
+              );
               setState(() {});
               widget.onChanged();
             },
@@ -92,10 +93,12 @@ class _CustomConfigCard extends StatefulWidget {
 }
 
 class _CustomConfigCardState extends State<_CustomConfigCard> {
-  late final TextEditingController _name =
-      TextEditingController(text: widget.config.name);
-  late final TextEditingController _content =
-      TextEditingController(text: widget.config.content);
+  late final TextEditingController _name = TextEditingController(
+    text: widget.config.name,
+  );
+  late final TextEditingController _content = TextEditingController(
+    text: widget.config.content,
+  );
 
   @override
   void dispose() {
@@ -165,8 +168,9 @@ class _CustomConfigCardState extends State<_CustomConfigCard> {
                     controller: _content,
                     maxLines: 8,
                     minLines: 4,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontFamily: 'monospace'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontFamily: 'monospace',
+                    ),
                     decoration: const InputDecoration(
                       labelText: '配置内容',
                       alignLabelWithHint: true,

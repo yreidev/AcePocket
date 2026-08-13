@@ -24,11 +24,7 @@ class EmptyView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              size: 48,
-              color: theme.colorScheme.outline,
-            ),
+            Icon(icon, size: 48, color: theme.colorScheme.outline),
             const SizedBox(height: 16),
             Text(
               message,
@@ -37,10 +33,7 @@ class EmptyView extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
-            if (action != null) ...[
-              const SizedBox(height: 20),
-              action!,
-            ],
+            if (action != null) ...[const SizedBox(height: 20), action!],
           ],
         ),
       ),

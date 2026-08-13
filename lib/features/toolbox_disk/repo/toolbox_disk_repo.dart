@@ -66,9 +66,9 @@ class ToolboxDiskRepository {
         throw ApiException('无法解析面板返回的分区信息');
       }
     }
-    return jsonMapList(jsonMap(decoded)['blockdevices'])
-        .map(BlockDevice.fromJson)
-        .toList();
+    return jsonMapList(
+      jsonMap(decoded)['blockdevices'],
+    ).map(BlockDevice.fromJson).toList();
   }
 
   /// 挂载分区。[device] 不含 `/dev/` 前缀。
@@ -80,13 +80,15 @@ class ToolboxDiskRepository {
     required String path,
     bool writeFstab = false,
     String mountOption = '',
-  }) =>
-      _api.post('/toolbox_disk/mount', body: {
-        'device': device,
-        'path': path,
-        'write_fstab': writeFstab,
-        'mount_option': mountOption,
-      });
+  }) => _api.post(
+    '/toolbox_disk/mount',
+    body: {
+      'device': device,
+      'path': path,
+      'write_fstab': writeFstab,
+      'mount_option': mountOption,
+    },
+  );
 
   /// 卸载挂载点。
   Future<void> umount(String path) =>
@@ -94,17 +96,14 @@ class ToolboxDiskRepository {
 
   /// 格式化分区（破坏性操作，分区数据全部丢失）。
   Future<void> format({required String device, required String fsType}) =>
-      _api.post('/toolbox_disk/format', body: {
-        'device': device,
-        'fs_type': fsType,
-      });
+      _api.post(
+        '/toolbox_disk/format',
+        body: {'device': device, 'fs_type': fsType},
+      );
 
   /// 初始化磁盘：清除分区表 → 新建单个分区 → 格式化（破坏性操作）。
-  Future<void> init({required String device, required String fsType}) =>
-      _api.post('/toolbox_disk/init', body: {
-        'device': device,
-        'fs_type': fsType,
-      });
+  Future<void> init({required String device, required String fsType}) => _api
+      .post('/toolbox_disk/init', body: {'device': device, 'fs_type': fsType});
 
   // ------------------------------------------------------------------ fstab
 
@@ -139,12 +138,13 @@ class ToolboxDiskRepository {
       _api.delete('/toolbox_disk/lvm/pv', body: {'device': device});
 
   /// 创建卷组。[devices] 为物理卷的完整路径列表。
-  Future<void> createVg(
-          {required String name, required List<String> devices}) =>
-      _api.post('/toolbox_disk/lvm/vg', body: {
-        'name': name,
-        'devices': devices,
-      });
+  Future<void> createVg({
+    required String name,
+    required List<String> devices,
+  }) => _api.post(
+    '/toolbox_disk/lvm/vg',
+    body: {'name': name, 'devices': devices},
+  );
 
   /// 删除卷组（`vgremove -f`，组内逻辑卷会一并删除）。
   Future<void> removeVg(String name) =>
@@ -155,12 +155,10 @@ class ToolboxDiskRepository {
     required String name,
     required String vgName,
     required int sizeGb,
-  }) =>
-      _api.post('/toolbox_disk/lvm/lv', body: {
-        'name': name,
-        'vg_name': vgName,
-        'size': sizeGb,
-      });
+  }) => _api.post(
+    '/toolbox_disk/lvm/lv',
+    body: {'name': name, 'vg_name': vgName, 'size': sizeGb},
+  );
 
   /// 删除逻辑卷（`lvremove -f`，卷上数据全部丢失）。
   Future<void> removeLv(String path) =>
@@ -174,12 +172,10 @@ class ToolboxDiskRepository {
     required String path,
     required int sizeGb,
     required bool resize,
-  }) =>
-      _api.post('/toolbox_disk/lvm/lv/extend', body: {
-        'path': path,
-        'size': sizeGb,
-        'resize': resize,
-      });
+  }) => _api.post(
+    '/toolbox_disk/lvm/lv/extend',
+    body: {'path': path, 'size': sizeGb, 'resize': resize},
+  );
 
   // ------------------------------------------------------------------ 健康
 
@@ -191,8 +187,10 @@ class ToolboxDiskRepository {
 
   /// 指定磁盘的 SMART 详情（device 通过 query 传递）。
   Future<SmartInfo> smartInfo(String device) async {
-    final data =
-        await _api.get('/toolbox_disk/smart/info', query: {'device': device});
+    final data = await _api.get(
+      '/toolbox_disk/smart/info',
+      query: {'device': device},
+    );
     return SmartInfo.fromJson(data);
   }
 

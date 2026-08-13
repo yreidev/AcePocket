@@ -46,8 +46,8 @@ Future<bool> showWsAuthDialog(
             Text(
               missing
                   ? '终端、SSH、实时日志等功能通过 WebSocket 连接面板，'
-                      '面板不允许使用 API 令牌进行 WebSocket 认证，'
-                      '需要在服务器配置中填写面板用户名与密码。'
+                        '面板不允许使用 API 令牌进行 WebSocket 认证，'
+                        '需要在服务器配置中填写面板用户名与密码。'
                   : '面板会话建立失败，请检查服务器配置中的面板账号与密码是否正确。',
               style: theme.textTheme.bodyMedium,
             ),

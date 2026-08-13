@@ -49,7 +49,8 @@ class ToolboxMiscRepository {
   Future<TimezoneInfo> timezone() async {
     final data = await _api.get('/toolbox_system/timezone');
     return TimezoneInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 设置时区（`timedatectl set-timezone`）。
@@ -131,16 +132,19 @@ class ToolboxMiscRepository {
     required int limit,
     required NetworkFilter filter,
   }) async {
-    final data = await _api.get('/toolbox_network/list', query: {
-      'page': page,
-      'limit': limit,
-      'sort': filter.sort,
-      'order': filter.order,
-      if (filter.stateQuery != null) 'state': filter.stateQuery,
-      if (filter.pid.isNotEmpty) 'pid': filter.pid,
-      if (filter.process.isNotEmpty) 'process': filter.process,
-      if (filter.port.isNotEmpty) 'port': filter.port,
-    });
+    final data = await _api.get(
+      '/toolbox_network/list',
+      query: {
+        'page': page,
+        'limit': limit,
+        'sort': filter.sort,
+        'order': filter.order,
+        if (filter.stateQuery != null) 'state': filter.stateQuery,
+        if (filter.pid.isNotEmpty) 'pid': filter.pid,
+        if (filter.process.isNotEmpty) 'process': filter.process,
+        if (filter.port.isNotEmpty) 'port': filter.port,
+      },
+    );
     return Paged.fromJson(data, NetworkConnection.fromJson);
   }
 
@@ -175,7 +179,8 @@ class ToolboxMiscRepository {
       cancelToken: cancelToken,
     );
     return MemoryBenchmark.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 运行磁盘 IO 跑分。
@@ -187,7 +192,8 @@ class ToolboxMiscRepository {
       cancelToken: cancelToken,
     );
     return DiskBenchmark.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 }
 

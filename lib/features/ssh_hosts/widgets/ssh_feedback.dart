@@ -57,8 +57,9 @@ class _TextInputDialog extends StatefulWidget {
 }
 
 class _TextInputDialogState extends State<_TextInputDialog> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
   String? _error;
 
   @override
@@ -106,10 +107,7 @@ class _TextInputDialogState extends State<_TextInputDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('取消'),
         ),
-        FilledButton(
-          onPressed: _submit,
-          child: Text(widget.confirmText),
-        ),
+        FilledButton(onPressed: _submit, child: Text(widget.confirmText)),
       ],
     );
   }

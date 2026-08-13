@@ -99,8 +99,8 @@ void main() {
         hasMore: false,
       ),
     );
-    final refreshing =
-        const AsyncLoading<PagedState<String>>().copyWithPrevious(previous);
+    final refreshing = const AsyncLoading<PagedState<String>>()
+        .copyWithPrevious(previous);
     expect(refreshing.isRefreshing, isTrue);
     expect(refreshing.isReloading, isFalse);
 
@@ -122,16 +122,16 @@ void main() {
 
   group('占位态交叉淡入', () {
     Widget build(AsyncValue<PagedState<String>> state) => MaterialApp(
-          home: Scaffold(
-            body: PagedListView<String>(
-              state: state,
-              onRefresh: () async {},
-              onLoadMore: () {},
-              onRetry: () {},
-              itemBuilder: (_, item, __) => ListTile(title: Text(item)),
-            ),
-          ),
-        );
+      home: Scaffold(
+        body: PagedListView<String>(
+          state: state,
+          onRefresh: () async {},
+          onLoadMore: () {},
+          onRetry: () {},
+          itemBuilder: (_, item, __) => ListTile(title: Text(item)),
+        ),
+      ),
+    );
 
     const withItems = AsyncData(
       PagedState<String>(
@@ -142,12 +142,7 @@ void main() {
       ),
     );
     const withoutItems = AsyncData(
-      PagedState<String>(
-        items: <String>[],
-        total: 0,
-        page: 1,
-        hasMore: false,
-      ),
+      PagedState<String>(items: <String>[], total: 0, page: 1, hasMore: false),
     );
 
     // 过渡期间新旧内容同时挂在树上，若两个可滚动组件共用同一个

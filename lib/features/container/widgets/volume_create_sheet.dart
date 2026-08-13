@@ -48,7 +48,9 @@ class _VolumeCreateSheetState extends ConsumerState<_VolumeCreateSheet> {
       context,
       pending: '正在创建存储卷…',
       success: '存储卷已创建',
-      action: () => ref.read(containerRepoProvider).createVolume(
+      action: () => ref
+          .read(containerRepoProvider)
+          .createVolume(
             name: _nameController.text.trim(),
             labels: _labels,
             options: _options,

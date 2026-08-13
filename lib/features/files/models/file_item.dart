@@ -85,22 +85,22 @@ class FileItem {
   }
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'full': full,
-        'size': size,
-        'mode_str': modeStr,
-        'mode': mode,
-        'owner': owner,
-        'group': group,
-        'uid': uid,
-        'gid': gid,
-        'hidden': hidden,
-        'symlink': symlink,
-        'link': link,
-        'dir': dir,
-        'modify': modify,
-        'immutable': immutable,
-      };
+    'name': name,
+    'full': full,
+    'size': size,
+    'mode_str': modeStr,
+    'mode': mode,
+    'owner': owner,
+    'group': group,
+    'uid': uid,
+    'gid': gid,
+    'hidden': hidden,
+    'symlink': symlink,
+    'link': link,
+    'dir': dir,
+    'modify': modify,
+    'immutable': immutable,
+  };
 
   /// 面板 `pkg/io/compress.go` 支持的压缩包扩展名。
   static const archiveExtensions = <String>[
@@ -161,9 +161,9 @@ class FileListPage {
       total: (json['total'] as num?)?.toInt() ?? 0,
       items: rawItems is List
           ? rawItems
-              .whereType<Map<String, dynamic>>()
-              .map(FileItem.fromJson)
-              .toList()
+                .whereType<Map<String, dynamic>>()
+                .map(FileItem.fromJson)
+                .toList()
           : const [],
     );
   }
@@ -207,10 +207,10 @@ class FileTransferItem {
   final bool force;
 
   Map<String, dynamic> toJson() => {
-        'source': source,
-        'target': target,
-        'force': force,
-      };
+    'source': source,
+    'target': target,
+    'force': force,
+  };
 }
 
 // ---------------------------------------------------------------------------

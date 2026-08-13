@@ -30,8 +30,8 @@ Future<bool> composeUpAction(
                 '首次启动需要拉取镜像，可能耗时数分钟，请保持页面打开。'
                 '若仍提示超时，服务器多半还在后台执行，稍后刷新列表即可看到结果。',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               const SizedBox(height: 8),
               CheckboxListTile(
@@ -79,7 +79,8 @@ Future<bool> composeDownAction(
   final ok = await showConfirmDialog(
     context,
     title: '停止编排',
-    content: '将执行 docker compose down 停止并移除「$name」的容器与网络，'
+    content:
+        '将执行 docker compose down 停止并移除「$name」的容器与网络，'
         '数据卷会保留。确定继续吗？',
     confirmText: '停止',
     danger: true,
@@ -102,7 +103,8 @@ Future<bool> composeRemoveAction(
   final ok = await showConfirmDialog(
     context,
     title: '删除编排',
-    content: '将先停止「$name」，再删除其编排目录（含 docker-compose.yml 与 .env）。'
+    content:
+        '将先停止「$name」，再删除其编排目录（含 docker-compose.yml 与 .env）。'
         '此操作不可恢复，确定继续吗？',
     confirmText: '删除',
     danger: true,

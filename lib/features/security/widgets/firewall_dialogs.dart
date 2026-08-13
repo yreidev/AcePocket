@@ -42,7 +42,7 @@ Future<T?> _showFormSheet<T>(
   BuildContext context, {
   required String title,
   required Widget Function(BuildContext context, GlobalKey<FormState> formKey)
-      builder,
+  builder,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -396,8 +396,9 @@ class _FirewallForwardForm extends StatefulWidget {
 
 class _FirewallForwardFormState extends State<_FirewallForwardForm> {
   final TextEditingController _port = TextEditingController(text: '8080');
-  final TextEditingController _targetIp =
-      TextEditingController(text: '127.0.0.1');
+  final TextEditingController _targetIp = TextEditingController(
+    text: '127.0.0.1',
+  );
   final TextEditingController _targetPort = TextEditingController(text: '80');
 
   String _protocol = 'tcp';
@@ -513,8 +514,9 @@ Future<void> showPortUsageDialog(
               if (snapshot.hasError) {
                 return Text(
                   '${snapshot.error}',
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.error),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                 );
               }
               final processes = snapshot.data ?? const <PortProcess>[];

@@ -145,8 +145,10 @@ class _StringListEditorState extends State<StringListEditor> {
                 ),
                 A11yIconButton(
                   tooltip: '移除第 ${i + 1} 行${widget.label}',
-                  icon: Icon(Icons.remove_circle_outline,
-                      color: theme.colorScheme.error),
+                  icon: Icon(
+                    Icons.remove_circle_outline,
+                    color: theme.colorScheme.error,
+                  ),
                   onPressed: () => _removeAt(i),
                 ),
               ],

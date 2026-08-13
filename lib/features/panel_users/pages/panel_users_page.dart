@@ -55,7 +55,9 @@ class _PanelUsersPageState extends ConsumerState<PanelUsersPage> {
     final form = await showCreateUserDialog(context);
     if (form == null) return;
     await _run(-1, () async {
-      await ref.read(panelUserRepoProvider).create(
+      await ref
+          .read(panelUserRepoProvider)
+          .create(
             username: form.username,
             password: form.password,
             email: form.email,
@@ -122,11 +124,12 @@ class _PanelUsersPageState extends ConsumerState<PanelUsersPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除用户 ${user.displayName}？',
-      content: '删除后该用户的 API 令牌与通行密钥一并失效，且无法恢复。'
+      content:
+          '删除后该用户的 API 令牌与通行密钥一并失效，且无法恢复。'
           '面板不允许删除最后一个用户。'
           // 删掉令牌归属用户 = 当场把自己踢下线，必须说明白。
           '${isCurrent ? '\n\n注意：这是本 App 当前 API 令牌的归属用户，删除后 App 将立即无法访问该面板，'
-              '需要用其他用户重新签发令牌。' : ''}',
+                    '需要用其他用户重新签发令牌。' : ''}',
       confirmText: '删除',
       danger: true,
     );
@@ -269,8 +272,11 @@ class _HeaderNotice extends ConsumerWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline,
-                  color: theme.colorScheme.primary, size: 20),
+              Icon(
+                Icons.info_outline,
+                color: theme.colorScheme.primary,
+                size: 20,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -303,7 +309,7 @@ class _HeaderNotice extends ConsumerWidget {
                   child: Text(
                     account.twoFaEnabled
                         ? '${account.username}（已开启两步验证）\n'
-                            '连接终端 / SSH / 实时日志时会要求输入动态验证码。'
+                              '连接终端 / SSH / 实时日志时会要求输入动态验证码。'
                         : '${account.username}（未开启两步验证）',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
@@ -385,7 +391,9 @@ class _UserCard extends StatelessWidget {
                           const SizedBox(width: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: colorScheme.secondaryContainer,
                               borderRadius: BorderRadius.circular(10),
@@ -480,8 +488,10 @@ class _UserCard extends StatelessWidget {
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        leading: Icon(Icons.delete_outline,
-                            color: colorScheme.error),
+                        leading: Icon(
+                          Icons.delete_outline,
+                          color: colorScheme.error,
+                        ),
                         title: Text(
                           '删除用户',
                           style: TextStyle(color: colorScheme.error),
@@ -515,8 +525,11 @@ class _UserCard extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(Icons.schedule,
-                  size: 14, color: colorScheme.onSurfaceVariant),
+              Icon(
+                Icons.schedule,
+                size: 14,
+                color: colorScheme.onSurfaceVariant,
+              ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(

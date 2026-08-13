@@ -7,10 +7,8 @@ class LvOption {
   final String label;
   final String value;
 
-  factory LvOption.fromJson(Map<String, dynamic> json) => LvOption(
-        label: jString(json['label']),
-        value: jString(json['value']),
-      );
+  factory LvOption.fromJson(Map<String, dynamic> json) =>
+      LvOption(label: jString(json['label']), value: jString(json['value']));
 }
 
 /// 面板通用「标签-值」选项（整数值），对应 `pkg/types.LVInt`（PHP 版本等）。
@@ -20,10 +18,8 @@ class LvIntOption {
   final String label;
   final int value;
 
-  factory LvIntOption.fromJson(Map<String, dynamic> json) => LvIntOption(
-        label: jString(json['label']),
-        value: jInt(json['value']),
-      );
+  factory LvIntOption.fromJson(Map<String, dynamic> json) =>
+      LvIntOption(label: jString(json['label']), value: jInt(json['value']));
 }
 
 /// `GET /api/home/installed_environment` 响应（网站模块仅用到 webserver / php / db）。
@@ -87,14 +83,14 @@ class CertItem {
   String get label => domains.isEmpty ? '#$id' : '${domains.join(', ')}（#$id）';
 
   factory CertItem.fromJson(Map<String, dynamic> json) => CertItem(
-        id: jInt(json['id']),
-        domains: jStringList(json['domains']),
-        cert: jString(json['cert']),
-        key: jString(json['key']),
-        issuer: jString(json['issuer']),
-        notAfter: jString(json['not_after']),
-        websiteId: jInt(json['website_id']),
-      );
+    id: jInt(json['id']),
+    domains: jStringList(json['domains']),
+    cert: jString(json['cert']),
+    key: jString(json['key']),
+    issuer: jString(json['issuer']),
+    notAfter: jString(json['not_after']),
+    websiteId: jInt(json['website_id']),
+  );
 }
 
 /// DNS 账号（`GET /api/cert/dns`，对应 `internal/biz.CertDNS`）。
@@ -108,8 +104,8 @@ class DnsItem {
   final String type;
 
   factory DnsItem.fromJson(Map<String, dynamic> json) => DnsItem(
-        id: jInt(json['id']),
-        name: jString(json['name']),
-        type: jString(json['type']),
-      );
+    id: jInt(json['id']),
+    name: jString(json['name']),
+    type: jString(json['type']),
+  );
 }

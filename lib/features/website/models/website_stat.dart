@@ -56,21 +56,21 @@ class StatTotals {
   double get errorRate => requests == 0 ? 0 : errors / requests * 100;
 
   factory StatTotals.fromJson(Map<String, dynamic> json) => StatTotals(
-        pv: jInt(json['pv']),
-        uv: jInt(json['uv']),
-        ip: jInt(json['ip']),
-        bandwidth: jInt(json['bandwidth']),
-        bandwidthIn: jInt(json['bandwidth_in']),
-        requests: jInt(json['requests']),
-        errors: jInt(json['errors']),
-        spiders: jInt(json['spiders']),
-        requestTimeSum: jInt(json['request_time_sum']),
-        requestTimeCount: jInt(json['request_time_count']),
-        status2xx: jInt(json['status_2xx']),
-        status3xx: jInt(json['status_3xx']),
-        status4xx: jInt(json['status_4xx']),
-        status5xx: jInt(json['status_5xx']),
-      );
+    pv: jInt(json['pv']),
+    uv: jInt(json['uv']),
+    ip: jInt(json['ip']),
+    bandwidth: jInt(json['bandwidth']),
+    bandwidthIn: jInt(json['bandwidth_in']),
+    requests: jInt(json['requests']),
+    errors: jInt(json['errors']),
+    spiders: jInt(json['spiders']),
+    requestTimeSum: jInt(json['request_time_sum']),
+    requestTimeCount: jInt(json['request_time_count']),
+    status2xx: jInt(json['status_2xx']),
+    status3xx: jInt(json['status_3xx']),
+    status4xx: jInt(json['status_4xx']),
+    status5xx: jInt(json['status_5xx']),
+  );
 }
 
 /// 时间序列数据点，对应 `internal/biz.WebsiteStatSeries`。
@@ -104,10 +104,8 @@ class StatSiteOption {
   final int id;
   final String name;
 
-  factory StatSiteOption.fromJson(Map<String, dynamic> json) => StatSiteOption(
-        id: jInt(json['id']),
-        name: jString(json['name']),
-      );
+  factory StatSiteOption.fromJson(Map<String, dynamic> json) =>
+      StatSiteOption(id: jInt(json['id']), name: jString(json['name']));
 }
 
 /// `GET /api/website/stat/overview` 响应。
@@ -133,23 +131,19 @@ class StatOverview {
   final List<StatSiteOption> sites;
 
   factory StatOverview.fromJson(Map<String, dynamic> json) => StatOverview(
-        current: StatTotals.fromJson(jMap(json['current'])),
-        previous: StatTotals.fromJson(jMap(json['previous'])),
-        series: jMapList(json['series']).map(StatSeriesPoint.fromJson).toList(),
-        previousSeries: jMapList(json['previous_series'])
-            .map(StatSeriesPoint.fromJson)
-            .toList(),
-        sites: jMapList(json['sites']).map(StatSiteOption.fromJson).toList(),
-      );
+    current: StatTotals.fromJson(jMap(json['current'])),
+    previous: StatTotals.fromJson(jMap(json['previous'])),
+    series: jMapList(json['series']).map(StatSeriesPoint.fromJson).toList(),
+    previousSeries: jMapList(
+      json['previous_series'],
+    ).map(StatSeriesPoint.fromJson).toList(),
+    sites: jMapList(json['sites']).map(StatSiteOption.fromJson).toList(),
+  );
 }
 
 /// `GET /api/website/stat/realtime` 响应（全站实时，非单站点）。
 class RealtimeStats {
-  const RealtimeStats({
-    this.bandwidth = 0,
-    this.bandwidthIn = 0,
-    this.rps = 0,
-  });
+  const RealtimeStats({this.bandwidth = 0, this.bandwidthIn = 0, this.rps = 0});
 
   /// 出站字节/秒。
   final double bandwidth;
@@ -161,10 +155,10 @@ class RealtimeStats {
   final double rps;
 
   factory RealtimeStats.fromJson(Map<String, dynamic> json) => RealtimeStats(
-        bandwidth: jDouble(json['bandwidth']),
-        bandwidthIn: jDouble(json['bandwidth_in']),
-        rps: jDouble(json['rps']),
-      );
+    bandwidth: jDouble(json['bandwidth']),
+    bandwidthIn: jDouble(json['bandwidth_in']),
+    rps: jDouble(json['rps']),
+  );
 }
 
 /// 网站维度汇总项，对应 `internal/biz.WebsiteStatSiteItem`。
@@ -175,9 +169,9 @@ class SiteStatItem {
   final StatTotals totals;
 
   factory SiteStatItem.fromJson(Map<String, dynamic> json) => SiteStatItem(
-        site: jString(json['site']),
-        totals: StatTotals.fromJson(json),
-      );
+    site: jString(json['site']),
+    totals: StatTotals.fromJson(json),
+  );
 }
 
 /// 蜘蛛排名，对应 `internal/biz.WebsiteStatSpiderRank`。
@@ -193,10 +187,10 @@ class SpiderRank {
   final double percent;
 
   factory SpiderRank.fromJson(Map<String, dynamic> json) => SpiderRank(
-        spider: jString(json['spider']),
-        requests: jInt(json['requests']),
-        percent: jDouble(json['percent']),
-      );
+    spider: jString(json['spider']),
+    requests: jInt(json['requests']),
+    percent: jDouble(json['percent']),
+  );
 }
 
 /// `GET /api/website/stat/spiders` 响应。
@@ -209,9 +203,9 @@ class SpiderStats {
   final int total;
 
   factory SpiderStats.fromJson(Map<String, dynamic> json) => SpiderStats(
-        items: jMapList(json['items']).map(SpiderRank.fromJson).toList(),
-        total: jInt(json['total']),
-      );
+    items: jMapList(json['items']).map(SpiderRank.fromJson).toList(),
+    total: jInt(json['total']),
+  );
 }
 
 /// 客户端排名（浏览器 + 操作系统组合），对应 `internal/biz.WebsiteStatClientRank`。
@@ -227,10 +221,10 @@ class ClientRank {
   final int requests;
 
   factory ClientRank.fromJson(Map<String, dynamic> json) => ClientRank(
-        browser: jString(json['browser']),
-        os: jString(json['os']),
-        requests: jInt(json['requests']),
-      );
+    browser: jString(json['browser']),
+    os: jString(json['os']),
+    requests: jInt(json['requests']),
+  );
 }
 
 /// 名称 + 请求数的简单排名项（客户端统计中的 browsers / os 聚合）。
@@ -241,9 +235,9 @@ class NameRequests {
   final int requests;
 
   factory NameRequests.fromJson(Map<String, dynamic> json) => NameRequests(
-        name: jString(json['name']),
-        requests: jInt(json['requests']),
-      );
+    name: jString(json['name']),
+    requests: jInt(json['requests']),
+  );
 }
 
 /// `GET /api/website/stat/clients` 响应。
@@ -259,11 +253,10 @@ class ClientStats {
   final List<NameRequests> os;
 
   factory ClientStats.fromJson(Map<String, dynamic> json) => ClientStats(
-        items: jMapList(json['items']).map(ClientRank.fromJson).toList(),
-        browsers:
-            jMapList(json['browsers']).map(NameRequests.fromJson).toList(),
-        os: jMapList(json['os']).map(NameRequests.fromJson).toList(),
-      );
+    items: jMapList(json['items']).map(ClientRank.fromJson).toList(),
+    browsers: jMapList(json['browsers']).map(NameRequests.fromJson).toList(),
+    os: jMapList(json['os']).map(NameRequests.fromJson).toList(),
+  );
 }
 
 /// IP 排名，对应 `internal/biz.WebsiteStatIPRank`。
@@ -291,14 +284,14 @@ class IpRank {
       [country, region, city].where((e) => e.isNotEmpty).join(' ');
 
   factory IpRank.fromJson(Map<String, dynamic> json) => IpRank(
-        ip: jString(json['ip']),
-        country: jString(json['country']),
-        region: jString(json['region']),
-        city: jString(json['city']),
-        isp: jString(json['isp']),
-        requests: jInt(json['requests']),
-        bandwidth: jInt(json['bandwidth']),
-      );
+    ip: jString(json['ip']),
+    country: jString(json['country']),
+    region: jString(json['region']),
+    city: jString(json['city']),
+    isp: jString(json['isp']),
+    requests: jInt(json['requests']),
+    bandwidth: jInt(json['bandwidth']),
+  );
 }
 
 /// 地理位置统计，对应 `internal/biz.WebsiteStatGeoRank`。
@@ -323,12 +316,12 @@ class GeoRank {
   }
 
   factory GeoRank.fromJson(Map<String, dynamic> json) => GeoRank(
-        country: jString(json['country']),
-        region: jString(json['region']),
-        city: jString(json['city']),
-        requests: jInt(json['requests']),
-        bandwidth: jInt(json['bandwidth']),
-      );
+    country: jString(json['country']),
+    region: jString(json['region']),
+    city: jString(json['city']),
+    requests: jInt(json['requests']),
+    bandwidth: jInt(json['bandwidth']),
+  );
 }
 
 /// URI 排名，对应 `internal/biz.WebsiteStatURIRank`。
@@ -354,13 +347,13 @@ class UriRank {
       requestTimeCount == 0 ? 0 : requestTimeSum / requestTimeCount;
 
   factory UriRank.fromJson(Map<String, dynamic> json) => UriRank(
-        uri: jString(json['uri']),
-        requests: jInt(json['requests']),
-        bandwidth: jInt(json['bandwidth']),
-        errors: jInt(json['errors']),
-        requestTimeSum: jInt(json['request_time_sum']),
-        requestTimeCount: jInt(json['request_time_count']),
-      );
+    uri: jString(json['uri']),
+    requests: jInt(json['requests']),
+    bandwidth: jInt(json['bandwidth']),
+    errors: jInt(json['errors']),
+    requestTimeSum: jInt(json['request_time_sum']),
+    requestTimeCount: jInt(json['request_time_count']),
+  );
 }
 
 /// 错误日志条目，对应 `internal/biz.WebsiteErrorLog`。
@@ -388,16 +381,16 @@ class ErrorLogItem {
   final String createdAt;
 
   factory ErrorLogItem.fromJson(Map<String, dynamic> json) => ErrorLogItem(
-        id: jInt(json['id']),
-        site: jString(json['site']),
-        uri: jString(json['uri']),
-        method: jString(json['method']),
-        status: jInt(json['status']),
-        ip: jString(json['ip']),
-        ua: jString(json['ua']),
-        body: jString(json['body']),
-        createdAt: jString(json['created_at']),
-      );
+    id: jInt(json['id']),
+    site: jString(json['site']),
+    uri: jString(json['uri']),
+    method: jString(json['method']),
+    status: jInt(json['status']),
+    ip: jString(json['ip']),
+    ua: jString(json['ua']),
+    body: jString(json['body']),
+    createdAt: jString(json['created_at']),
+  );
 }
 
 /// 统计接口通用分页载荷（`{items, total}`）。
@@ -413,10 +406,7 @@ class StatPage<T> {
   ) {
     final map = jMap(data);
     final items = jMapList(map['items']).map(fromJson).toList();
-    return StatPage<T>(
-      items: items,
-      total: jInt(map['total'], items.length),
-    );
+    return StatPage<T>(items: items, total: jInt(map['total'], items.length));
   }
 }
 
@@ -452,33 +442,32 @@ class StatSetting {
     int? ipMaxKeys,
     int? detailMaxKeys,
     bool? bodyEnabled,
-  }) =>
-      StatSetting(
-        days: days ?? this.days,
-        errBufMax: errBufMax ?? this.errBufMax,
-        uvMaxKeys: uvMaxKeys ?? this.uvMaxKeys,
-        ipMaxKeys: ipMaxKeys ?? this.ipMaxKeys,
-        detailMaxKeys: detailMaxKeys ?? this.detailMaxKeys,
-        bodyEnabled: bodyEnabled ?? this.bodyEnabled,
-      );
+  }) => StatSetting(
+    days: days ?? this.days,
+    errBufMax: errBufMax ?? this.errBufMax,
+    uvMaxKeys: uvMaxKeys ?? this.uvMaxKeys,
+    ipMaxKeys: ipMaxKeys ?? this.ipMaxKeys,
+    detailMaxKeys: detailMaxKeys ?? this.detailMaxKeys,
+    bodyEnabled: bodyEnabled ?? this.bodyEnabled,
+  );
 
   factory StatSetting.fromJson(Map<String, dynamic> json) => StatSetting(
-        days: jInt(json['days'], 30),
-        errBufMax: jInt(json['err_buf_max'], 10000),
-        uvMaxKeys: jInt(json['uv_max_keys'], 1000000),
-        ipMaxKeys: jInt(json['ip_max_keys'], 500000),
-        detailMaxKeys: jInt(json['detail_max_keys'], 50000),
-        bodyEnabled: jBool(json['body_enabled']),
-      );
+    days: jInt(json['days'], 30),
+    errBufMax: jInt(json['err_buf_max'], 10000),
+    uvMaxKeys: jInt(json['uv_max_keys'], 1000000),
+    ipMaxKeys: jInt(json['ip_max_keys'], 500000),
+    detailMaxKeys: jInt(json['detail_max_keys'], 50000),
+    bodyEnabled: jBool(json['body_enabled']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'days': days,
-        'err_buf_max': errBufMax,
-        'uv_max_keys': uvMaxKeys,
-        'ip_max_keys': ipMaxKeys,
-        'detail_max_keys': detailMaxKeys,
-        'body_enabled': bodyEnabled,
-      };
+    'days': days,
+    'err_buf_max': errBufMax,
+    'uv_max_keys': uvMaxKeys,
+    'ip_max_keys': ipMaxKeys,
+    'detail_max_keys': detailMaxKeys,
+    'body_enabled': bodyEnabled,
+  };
 }
 
 /// 统计查询的日期范围（`start` / `end` 均为 `yyyy-MM-dd`）。
@@ -496,7 +485,8 @@ class StatDateRange {
   /// 单日查询时后端返回 24 小时序列，否则返回按天序列。
   bool get isSingleDay => start == end;
 
-  static String _fmt(DateTime d) => '${d.year.toString().padLeft(4, '0')}-'
+  static String _fmt(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-'
       '${d.month.toString().padLeft(2, '0')}-'
       '${d.day.toString().padLeft(2, '0')}';
 
@@ -508,8 +498,11 @@ class StatDateRange {
 
   static StatDateRange yesterday() {
     final now = DateTime.now();
-    final d = DateTime(now.year, now.month, now.day)
-        .subtract(const Duration(days: 1));
+    final d = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(const Duration(days: 1));
     return StatDateRange(start: _fmt(d), end: _fmt(d), label: '昨天');
   }
 

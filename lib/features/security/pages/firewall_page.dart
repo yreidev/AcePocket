@@ -25,8 +25,10 @@ class FirewallPage extends ConsumerStatefulWidget {
 
 class _FirewallPageState extends ConsumerState<FirewallPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 3,
+    vsync: this,
+  );
   bool _togglingFirewall = false;
 
   /// 新建规则在途标志：请求返回前禁用 FAB，避免连点建出重复规则。
@@ -131,10 +133,10 @@ class _FirewallPageState extends ConsumerState<FirewallPage>
   }
 
   String get _fabLabel => switch (_tabController.index) {
-        0 => '新建端口规则',
-        1 => '新建 IP 规则',
-        _ => '新建转发',
-      };
+    0 => '新建端口规则',
+    1 => '新建 IP 规则',
+    _ => '新建转发',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -230,11 +232,7 @@ class _FirewallPageState extends ConsumerState<FirewallPage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                _PortRuleTab(),
-                _IpRuleTab(),
-                _ForwardTab(),
-              ],
+              children: const [_PortRuleTab(), _IpRuleTab(), _ForwardTab()],
             ),
           ),
         ],
@@ -278,7 +276,8 @@ class _PortRuleTabState extends ConsumerState<_PortRuleTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除端口规则？',
-      content: '${FirewallLabels.protocol(rule.protocol)} ${rule.portLabel} '
+      content:
+          '${FirewallLabels.protocol(rule.protocol)} ${rule.portLabel} '
           '（${FirewallLabels.direction(rule.direction)}·'
           '${FirewallLabels.strategy(rule.strategy)}）将被移除。',
       confirmText: '删除',
@@ -304,10 +303,9 @@ class _PortRuleTabState extends ConsumerState<_PortRuleTab> {
       context,
       port: rule.portStart,
       protocol: rule.protocol == 'udp' ? 'udp' : 'tcp',
-      future: ref.read(securityRepoProvider).portUsage(
-            rule.portStart,
-            rule.protocol == 'udp' ? 'udp' : 'tcp',
-          ),
+      future: ref
+          .read(securityRepoProvider)
+          .portUsage(rule.portStart, rule.protocol == 'udp' ? 'udp' : 'tcp'),
     );
   }
 
@@ -357,10 +355,7 @@ class _PortRuleTabState extends ConsumerState<_PortRuleTab> {
               ),
               if (rule.inUse) ...[
                 const SizedBox(width: 6),
-                TagChip(
-                  label: '占用中',
-                  color: theme.colorScheme.tertiary,
-                ),
+                TagChip(label: '占用中', color: theme.colorScheme.tertiary),
               ],
             ],
           ),
@@ -420,7 +415,8 @@ class _IpRuleTabState extends ConsumerState<_IpRuleTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除 IP 规则？',
-      content: '${rule.address} 的'
+      content:
+          '${rule.address} 的'
           '${FirewallLabels.direction(rule.direction)}'
           '${FirewallLabels.strategy(rule.strategy)}规则将被移除。',
       confirmText: '删除',
@@ -522,7 +518,8 @@ class _ForwardTabState extends ConsumerState<_ForwardTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除端口转发？',
-      content: '${forward.port} → ${forward.targetIp}:${forward.targetPort} '
+      content:
+          '${forward.port} → ${forward.targetIp}:${forward.targetPort} '
           '的转发规则将被移除。',
       confirmText: '删除',
       danger: true,

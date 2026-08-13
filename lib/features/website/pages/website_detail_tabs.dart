@@ -19,16 +19,16 @@ const _realIpHeaders = [
 mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
   @override
   String _typeLabel(String type) => switch (type) {
-        'proxy' => '反向代理',
-        'php' => 'PHP',
-        'static' => '纯静态',
-        _ => type,
-      };
+    'proxy' => '反向代理',
+    'php' => 'PHP',
+    'static' => '纯静态',
+    _ => type,
+  };
 
   Widget _tabBody(List<Widget> children) => ListView(
-        padding: const EdgeInsets.only(top: 8, bottom: 120),
-        children: children,
-      );
+    padding: const EdgeInsets.only(top: 8, bottom: 120),
+    children: children,
+  );
 
   // ---------------------------------------------------------------- 常规
 
@@ -46,8 +46,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
         child: row == null
             ? Text(
                 '未能获取网站运行状态（面板无单条网站信息接口，列表中未找到该网站）',
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               )
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,10 +75,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
             _InfoLine(label: '网站名称', value: setting.name),
             _InfoLine(label: '类型', value: _typeLabel(setting.type)),
             if (row != null) ...[
-              _InfoLine(
-                label: '创建时间',
-                value: formatDateTime(row.createdAt),
-              ),
+              _InfoLine(label: '创建时间', value: formatDateTime(row.createdAt)),
               _InfoLine(label: '证书', value: row.certExpireLabel),
             ],
           ],
@@ -298,10 +296,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
                 value: '${setting.sslNotBefore} ~ ${setting.sslNotAfter}',
               ),
               if (setting.sslDnsNames.isNotEmpty)
-                _InfoLine(
-                  label: '证书域名',
-                  value: setting.sslDnsNames.join('、'),
-                ),
+                _InfoLine(label: '证书域名', value: setting.sslDnsNames.join('、')),
             ],
           ),
         ),
@@ -364,8 +359,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
                       onSelected: (selected) {
                         setState(() {
                           if (selected) {
-                            if (!setting.sslProtocols
-                                .contains(protocol.value)) {
+                            if (!setting.sslProtocols.contains(
+                              protocol.value,
+                            )) {
                               setting.sslProtocols.add(protocol.value);
                             }
                           } else {
@@ -391,8 +387,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
                 loading: () => const LinearProgressIndicator(),
                 error: (e, _) => Text(
                   '证书列表加载失败：${describeError(e)}',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.error),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                 ),
                 data: (certs) {
                   final usable = certs.where((c) => c.usable).toList();
@@ -444,8 +441,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
                 controller: _sslCertController,
                 minLines: 4,
                 maxLines: 10,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
                 decoration: const InputDecoration(
                   labelText: '证书（PEM）',
                   hintText: '-----BEGIN CERTIFICATE-----',
@@ -461,8 +459,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
                 controller: _sslKeyController,
                 minLines: 4,
                 maxLines: 10,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
                 decoration: const InputDecoration(
                   labelText: '私钥（KEY）',
                   hintText: '-----BEGIN PRIVATE KEY-----',
@@ -505,8 +504,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
             Text(
               '使用面板默认 ACME 账户为当前域名签发证书并自动部署；'
               '泛域名需要先在证书管理中配置 DNS 账号。',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 12),
             FilledButton.tonalIcon(
@@ -541,15 +541,17 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
           loading: () => const LinearProgressIndicator(),
           error: (e, _) => Text(
             '模板加载失败：${describeError(e)}',
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.error),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.error,
+            ),
           ),
           data: (rewrites) {
             if (rewrites.isEmpty) {
               return Text(
                 '面板未提供伪静态模板',
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               );
             }
             final names = rewrites.keys.toList()..sort();
@@ -608,10 +610,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
       ),
       SectionCard(
         title: '代理规则',
-        child: ProxyListField(
-          proxies: setting.proxies,
-          onChanged: _markDirty,
-        ),
+        child: ProxyListField(proxies: setting.proxies, onChanged: _markDirty),
       ),
     ]);
   }
@@ -780,8 +779,9 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
           children: [
             Text(
               '配置可信代理（CDN、Frp 等）来源后，日志与统计才能取到访客真实 IP。',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,

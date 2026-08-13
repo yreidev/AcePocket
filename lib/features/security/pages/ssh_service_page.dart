@@ -100,8 +100,8 @@ class _SshServicePageState extends ConsumerState<SshServicePage> {
                   '提示：修改端口或登录方式后面板会自动重启 SSH 服务，'
                   '已建立的连接不会中断，但请确保防火墙已放行新端口，避免失联。',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -122,7 +122,8 @@ class _SshServicePageState extends ConsumerState<SshServicePage> {
         final confirmed = await showConfirmDialog(
           context,
           title: '停止 SSH 服务？',
-          content: '停止后将无法通过 SSH 远程登录服务器，'
+          content:
+              '停止后将无法通过 SSH 远程登录服务器，'
               '若面板不可用可能导致失联，确定继续？',
           confirmText: '停止',
           danger: true,
@@ -245,7 +246,8 @@ class _SshServicePageState extends ConsumerState<SshServicePage> {
               final confirmed = await showConfirmDialog(
                 context,
                 title: '修改 SSH 端口？',
-                content: '端口将改为 $port 并重启 SSH 服务。'
+                content:
+                    '端口将改为 $port 并重启 SSH 服务。'
                     '请确认防火墙已放行该端口，否则将无法再通过 SSH 登录。',
                 confirmText: '修改',
                 danger: true,
@@ -433,7 +435,8 @@ class _SshServicePageState extends ConsumerState<SshServicePage> {
                     final confirmed = await showConfirmDialog(
                       context,
                       title: '生成 root 密钥对？',
-                      content: '将覆盖 /root/.ssh 下同名的现有密钥，'
+                      content:
+                          '将覆盖 /root/.ssh 下同名的现有密钥，'
                           '并把新公钥追加到 authorized_keys，随后重启 SSH 服务。',
                       confirmText: '生成',
                       danger: true,

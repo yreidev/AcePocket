@@ -33,7 +33,8 @@ class PanelInfo {
     return PanelInfo(
       name: json['name'] as String? ?? '',
       locale: json['locale'] as String? ?? '',
-      hiddenMenu: (json['hidden_menu'] as List?)
+      hiddenMenu:
+          (json['hidden_menu'] as List?)
               ?.map((e) => e?.toString() ?? '')
               .where((e) => e.isNotEmpty)
               .toList() ??
@@ -43,11 +44,11 @@ class PanelInfo {
   }
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'locale': locale,
-        'hidden_menu': hiddenMenu,
-        'custom_logo': customLogo,
-      };
+    'name': name,
+    'locale': locale,
+    'hidden_menu': hiddenMenu,
+    'custom_logo': customLogo,
+  };
 }
 
 /// 系统信息（`GET /api/home/system_info`）。
@@ -150,21 +151,21 @@ class SystemInfoBrief {
   }
 
   Map<String, dynamic> toJson() => {
-        'hostname': hostname,
-        'panel_version': panelVersion,
-        'commit_hash': commitHash,
-        'build_id': buildId,
-        'build_time': buildTime,
-        'go_version': goVersion,
-        'os_name': osName,
-        'kernel_arch': kernelArch,
-        'kernel_version': kernelVersion,
-        'uptime': uptimeSeconds,
-        'boot_time': bootTime,
-        'procs': procs,
-        'os_supported': osSupported,
-        'os_eol': osEol,
-      };
+    'hostname': hostname,
+    'panel_version': panelVersion,
+    'commit_hash': commitHash,
+    'build_id': buildId,
+    'build_time': buildTime,
+    'go_version': goVersion,
+    'os_name': osName,
+    'kernel_arch': kernelArch,
+    'kernel_version': kernelVersion,
+    'uptime': uptimeSeconds,
+    'boot_time': bootTime,
+    'procs': procs,
+    'os_supported': osSupported,
+    'os_eol': osEol,
+  };
 }
 
 /// 连接测试成功的结果：面板信息 + 系统信息。

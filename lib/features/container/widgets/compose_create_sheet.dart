@@ -60,7 +60,9 @@ class _ComposeCreateSheetState extends ConsumerState<_ComposeCreateSheet> {
       context,
       pending: '正在创建编排…',
       success: '编排「$name」已创建',
-      action: () => ref.read(containerRepoProvider).createCompose(
+      action: () => ref
+          .read(containerRepoProvider)
+          .createCompose(
             name: name,
             compose: _composeController.text,
             envs: _envs,
@@ -160,8 +162,10 @@ class _ComposeCreateSheetState extends ConsumerState<_ComposeCreateSheet> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      Text('docker-compose.yml',
-                          style: theme.textTheme.titleSmall),
+                      Text(
+                        'docker-compose.yml',
+                        style: theme.textTheme.titleSmall,
+                      ),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _composeController,

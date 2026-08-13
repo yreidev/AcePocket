@@ -50,45 +50,44 @@ class Website {
     String? remark,
     String? expireAt,
     bool clearExpireAt = false,
-  }) =>
-      Website(
-        id: id,
-        name: name,
-        type: type,
-        status: status ?? this.status,
-        path: path,
-        ssl: ssl,
-        remark: remark ?? this.remark,
-        expireAt: clearExpireAt ? null : (expireAt ?? this.expireAt),
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        certExpire: certExpire,
-        php: php,
-        domains: domains,
-      );
+  }) => Website(
+    id: id,
+    name: name,
+    type: type,
+    status: status ?? this.status,
+    path: path,
+    ssl: ssl,
+    remark: remark ?? this.remark,
+    expireAt: clearExpireAt ? null : (expireAt ?? this.expireAt),
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+    certExpire: certExpire,
+    php: php,
+    domains: domains,
+  );
 
   factory Website.fromJson(Map<String, dynamic> json) => Website(
-        id: jInt(json['id']),
-        name: jString(json['name']),
-        type: jString(json['type'], 'static'),
-        status: jBool(json['status'], true),
-        path: jString(json['path']),
-        ssl: jBool(json['ssl']),
-        remark: jString(json['remark']),
-        expireAt: jStringOrNull(json['expire_at']),
-        createdAt: jStringOrNull(json['created_at']),
-        updatedAt: jStringOrNull(json['updated_at']),
-        certExpire: jString(json['cert_expire']),
-        php: jInt(json['php']),
-        domains: jStringList(json['domains']),
-      );
+    id: jInt(json['id']),
+    name: jString(json['name']),
+    type: jString(json['type'], 'static'),
+    status: jBool(json['status'], true),
+    path: jString(json['path']),
+    ssl: jBool(json['ssl']),
+    remark: jString(json['remark']),
+    expireAt: jStringOrNull(json['expire_at']),
+    createdAt: jStringOrNull(json['created_at']),
+    updatedAt: jStringOrNull(json['updated_at']),
+    certExpire: jString(json['cert_expire']),
+    php: jInt(json['php']),
+    domains: jStringList(json['domains']),
+  );
 
   String get typeLabel => switch (type) {
-        'proxy' => '反向代理',
-        'php' => 'PHP',
-        'static' => '纯静态',
-        _ => type,
-      };
+    'proxy' => '反向代理',
+    'php' => 'PHP',
+    'static' => '纯静态',
+    _ => type,
+  };
 
   /// 证书剩余天数。
   ///
@@ -116,7 +115,7 @@ class WebsitePage {
   final List<Website> items;
 
   factory WebsitePage.fromJson(Map<String, dynamic> json) => WebsitePage(
-        total: jInt(json['total']),
-        items: jMapList(json['items']).map(Website.fromJson).toList(),
-      );
+    total: jInt(json['total']),
+    items: jMapList(json['items']).map(Website.fromJson).toList(),
+  );
 }

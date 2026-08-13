@@ -88,7 +88,8 @@ class _CertAccountListPageState extends ConsumerState<CertAccountListPage> {
 
   Future<void> _openForm({int? id}) async {
     await context.push(
-        id == null ? '/certs/accounts/create' : '/certs/accounts/$id/edit');
+      id == null ? '/certs/accounts/create' : '/certs/accounts/$id/edit',
+    );
     await _reloadQuietly();
   }
 
@@ -162,8 +163,9 @@ class _CertAccountListPageState extends ConsumerState<CertAccountListPage> {
                     : ' · ${DateFormat('yyyy-MM-dd').format(account.createdAt!)}';
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.secondaryContainer,
                     child: Icon(
                       Icons.verified_user_outlined,
                       color: Theme.of(context).colorScheme.onSecondaryContainer,

@@ -151,8 +151,9 @@ class MigrationSnapshot {
         startedAt: jsonTime(json['started_at']),
         endedAt: jsonTime(json['ended_at']),
         logs: json['logs'] == null ? null : jsonStringList(json['logs']),
-        newLogs:
-            json['new_logs'] == null ? null : jsonStringList(json['new_logs']),
+        newLogs: json['new_logs'] == null
+            ? null
+            : jsonStringList(json['new_logs']),
       );
 
   static const empty = MigrationSnapshot(

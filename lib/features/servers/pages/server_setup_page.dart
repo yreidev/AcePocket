@@ -93,8 +93,9 @@ class _GuideCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     // 序号圆点随系统字号放大，否则 200% 字号下数字会被 18dp 圆圈裁掉。
-    final circleSize =
-        MediaQuery.textScalerOf(context).scale(18).clamp(18.0, 32.0);
+    final circleSize = MediaQuery.textScalerOf(
+      context,
+    ).scale(18).clamp(18.0, 32.0);
 
     const steps = <String>[
       '在浏览器登录你的 AcePanel 面板',
@@ -118,8 +119,9 @@ class _GuideCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 '如何获取 API 令牌',
-                style: theme.textTheme.titleSmall
-                    ?.copyWith(color: colorScheme.onSurface),
+                style: theme.textTheme.titleSmall?.copyWith(
+                  color: colorScheme.onSurface,
+                ),
               ),
             ],
           ),

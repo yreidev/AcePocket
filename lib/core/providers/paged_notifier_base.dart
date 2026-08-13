@@ -64,8 +64,9 @@ class PagedState<T> {
       page: page ?? this.page,
       hasMore: hasMore ?? this.hasMore,
       loadingMore: loadingMore ?? this.loadingMore,
-      loadMoreError:
-          clearLoadMoreError ? null : (loadMoreError ?? this.loadMoreError),
+      loadMoreError: clearLoadMoreError
+          ? null
+          : (loadMoreError ?? this.loadMoreError),
     );
   }
 }
@@ -142,9 +143,9 @@ class PagedPager<T> {
     }
     final generation = _generation;
     _loadMoreInFlight = true;
-    write(AsyncData(
-      current.copyWith(loadingMore: true, clearLoadMoreError: true),
-    ));
+    write(
+      AsyncData(current.copyWith(loadingMore: true, clearLoadMoreError: true)),
+    );
     try {
       final nextPage = current.page + 1;
       final result = await fetch(nextPage, pageSize);
@@ -156,19 +157,21 @@ class PagedPager<T> {
       // （如筛选后 total 未变化、搜索接口对 page > 1 返回空页）时
       // 「加载更多」被反复触发。
       final total = result.items.isEmpty ? merged.length : result.total;
-      write(AsyncData(PagedState<T>(
-        items: merged,
-        total: total,
-        page: nextPage,
-        // 返回不足一页即视为到底（与 website 模块既有语义一致）。
-        hasMore: result.items.length >= pageSize && merged.length < total,
-      )));
+      write(
+        AsyncData(
+          PagedState<T>(
+            items: merged,
+            total: total,
+            page: nextPage,
+            // 返回不足一页即视为到底（与 website 模块既有语义一致）。
+            hasMore: result.items.length >= pageSize && merged.length < total,
+          ),
+        ),
+      );
     } catch (error) {
       if (isStale(generation)) return;
       final base = read().valueOrNull ?? current;
-      write(AsyncData(
-        base.copyWith(loadingMore: false, loadMoreError: error),
-      ));
+      write(AsyncData(base.copyWith(loadingMore: false, loadMoreError: error)));
     } finally {
       _loadMoreInFlight = false;
     }
@@ -218,15 +221,16 @@ mixin PagedNotifierMixin<T> {
 
   /// 上拉加载下一页（代次校验 + 在途去重 + loadMoreError 记录）。
   Future<void> loadMore() => pager.loadMore(
-        read: () => state,
-        write: (value) => state = value,
-        fetch: fetchPage,
-      );
+    read: () => state,
+    write: (value) => state = value,
+    fetch: fetchPage,
+  );
 }
 
 /// 分页 Notifier 基类（autoDispose，无 family 参数）。
 abstract class PagedAsyncNotifier<T>
-    extends AutoDisposeAsyncNotifier<PagedState<T>> with PagedNotifierMixin<T> {
+    extends AutoDisposeAsyncNotifier<PagedState<T>>
+    with PagedNotifierMixin<T> {
   @override
   Future<PagedState<T>> build() => buildFirstPage();
 }
@@ -241,7 +245,8 @@ abstract class PagedFamilyAsyncNotifier<T, Arg>
 
 /// 分页 Notifier 基类（常驻，不随页面销毁，如网站列表）。
 abstract class KeepAlivePagedAsyncNotifier<T>
-    extends AsyncNotifier<PagedState<T>> with PagedNotifierMixin<T> {
+    extends AsyncNotifier<PagedState<T>>
+    with PagedNotifierMixin<T> {
   @override
   Future<PagedState<T>> build() => buildFirstPage();
 }

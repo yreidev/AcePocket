@@ -26,12 +26,12 @@ class AppChannel {
   final String log;
 
   factory AppChannel.fromJson(Map<String, dynamic> json) => AppChannel(
-        slug: jsonString(json['slug']),
-        name: jsonString(json['name']),
-        panel: jsonString(json['panel']),
-        version: jsonString(json['version']),
-        log: jsonString(json['log']),
-      );
+    slug: jsonString(json['slug']),
+    name: jsonString(json['name']),
+    panel: jsonString(json['panel']),
+    version: jsonString(json['version']),
+    log: jsonString(json['log']),
+  );
 }
 
 /// 应用运行状态（对应源码 `pkg/types/app.go` 的常量）。
@@ -98,19 +98,19 @@ class AppItem {
   final bool customSupported;
 
   factory AppItem.fromJson(Map<String, dynamic> json) => AppItem(
-        name: jsonString(json['name']),
-        description: jsonString(json['description']),
-        categories: jsonStringList(json['categories']),
-        slug: jsonString(json['slug']),
-        channels: jsonList(json['channels'], AppChannel.fromJson),
-        installed: jsonBool(json['installed']),
-        installedChannel: jsonString(json['installed_channel']),
-        installedVersion: jsonString(json['installed_version']),
-        updateExist: jsonBool(json['update_exist']),
-        show: jsonBool(json['show']),
-        status: jsonString(json['status']),
-        customSupported: jsonBool(json['custom_supported']),
-      );
+    name: jsonString(json['name']),
+    description: jsonString(json['description']),
+    categories: jsonStringList(json['categories']),
+    slug: jsonString(json['slug']),
+    channels: jsonList(json['channels'], AppChannel.fromJson),
+    installed: jsonBool(json['installed']),
+    installedChannel: jsonString(json['installed_channel']),
+    installedVersion: jsonString(json['installed_version']),
+    updateExist: jsonBool(json['update_exist']),
+    show: jsonBool(json['show']),
+    status: jsonString(json['status']),
+    customSupported: jsonBool(json['custom_supported']),
+  );
 
   /// 已安装通道对应的通道信息（找不到时为 null）。
   AppChannel? get currentChannel {

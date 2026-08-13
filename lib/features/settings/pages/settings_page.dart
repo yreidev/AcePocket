@@ -53,15 +53,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     final settingAsync = ref.watch(panelSettingProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('面板设置'),
-      ),
+      appBar: AppBar(title: const Text('面板设置')),
       body: settingAsync.when(
         loading: () => const LoadingView(message: '正在加载面板设置…'),
-        error: (error, _) => ErrorView(
-          error: error,
-          onRetry: _reloadForm,
-        ),
+        error: (error, _) => ErrorView(error: error, onRetry: _reloadForm),
         data: (setting) => _SettingForm(
           // 内容签名保证「保存后服务端归一化的值」能回灌到表单；
           // epoch 保证「内容没变但用户要求重载」时也强制重建。
@@ -102,10 +97,7 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
     'zh_TW': '繁體中文',
     'en': 'English',
   };
-  static const Map<String, String> _channels = {
-    'stable': '稳定版',
-    'beta': '测试版',
-  };
+  static const Map<String, String> _channels = {'stable': '稳定版', 'beta': '测试版'};
   static const Map<String, String> _backupFormats = {
     'tar.xz': 'tar.xz',
     'tar.gz': 'tar.gz',
@@ -215,11 +207,13 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
 
     _channel = _channels.containsKey(s.channel) ? s.channel : 'stable';
     _locale = _locales.containsKey(s.locale) ? s.locale : 'zh_CN';
-    _backupFormat =
-        _backupFormats.containsKey(s.backupFormat) ? s.backupFormat : 'tar.xz';
+    _backupFormat = _backupFormats.containsKey(s.backupFormat)
+        ? s.backupFormat
+        : 'tar.xz';
     _ipdbType = _ipdbTypes.containsKey(s.ipdbType) ? s.ipdbType : '';
-    _entranceError =
-        _entranceErrors.containsKey(s.entranceError) ? s.entranceError : '418';
+    _entranceError = _entranceErrors.containsKey(s.entranceError)
+        ? s.entranceError
+        : '418';
     _tls = _tlsModes.containsKey(s.tls) ? s.tls : 'off';
     _loginCaptcha = s.loginCaptcha;
     _offlineMode = s.offlineMode;
@@ -304,14 +298,16 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
     final next = _buildSetting();
     final original = widget.original;
     // 端口 / 入口 / TLS 变化会改变面板访问地址，可能导致 App 连接中断。
-    final risky = next.port != original.port ||
+    final risky =
+        next.port != original.port ||
         next.entrance != original.entrance ||
         next.tls != original.tls;
     if (risky) {
       final ok = await showConfirmDialog(
         context,
         title: '确认保存',
-        content: '本次修改包含面板访问地址相关设置'
+        content:
+            '本次修改包含面板访问地址相关设置'
             '${next.port != original.port ? '\n· 端口：${original.port} → ${next.port}' : ''}'
             '${next.entrance != original.entrance ? '\n· 入口：${original.entrance.isEmpty ? '(无)' : original.entrance} → ${next.entrance}' : ''}'
             '${next.tls != original.tls ? '\n· TLS：${_tlsModes[original.tls] ?? original.tls} → ${_tlsModes[next.tls] ?? next.tls}' : ''}'
@@ -374,11 +370,12 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
     final ok = await showConfirmDialog(
       context,
       title: isAcme ? '重新签发面板证书' : '重新生成自签证书',
-      content: '${isAcme ? '将向 ACME 服务商申请新的面板证书，需要面板设置中的公网 IP 正确且可从公网访问，'
-              '过程可能耗时较久。' : '将重新生成面板自签名证书，签发完成后面板会重启。'}'
+      content:
+          '${isAcme ? '将向 ACME 服务商申请新的面板证书，需要面板设置中的公网 IP 正确且可从公网访问，'
+                    '过程可能耗时较久。' : '将重新生成面板自签名证书，签发完成后面板会重启。'}'
           '${tlsChanged ? '\n\n注意：面板会按已保存的 TLS 模式'
-              '「${_tlsModes[widget.original.tls] ?? widget.original.tls}」签发，'
-              '当前表单里未保存的改动不会生效，请先保存设置。' : ''}',
+                    '「${_tlsModes[widget.original.tls] ?? widget.original.tls}」签发，'
+                    '当前表单里未保存的改动不会生效，请先保存设置。' : ''}',
       confirmText: '开始签发',
     );
     if (!ok || !mounted) return;
@@ -655,7 +652,8 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
                       controller: _entrance,
                       onChanged: (_) => _syncDirty(),
                       hint: '/mypanel',
-                      helper: '设置后须通过该路径访问面板；留空（或 /）表示不启用。'
+                      helper:
+                          '设置后须通过该路径访问面板；留空（或 /）表示不启用。'
                           '修改后请同步更新 App 中的服务器配置',
                     ),
                     SettingDropdown<String>(
@@ -696,7 +694,8 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
                       label: '绑定 UA',
                       values: _bindUa,
                       hint: 'Mozilla/5.0 ...',
-                      helper: '限制可访问面板的 User-Agent，留空不限制。'
+                      helper:
+                          '限制可访问面板的 User-Agent，留空不限制。'
                           '注意：本 App 的 UA 与浏览器不同，谨慎使用',
                       onChanged: (v) => _update(() => _bindUa = v),
                     ),
@@ -758,8 +757,9 @@ class _SettingFormState extends ConsumerState<_SettingForm> {
                               ? const SizedBox(
                                   width: 16,
                                   height: 16,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
                               : const Icon(Icons.verified_user_outlined),
                           label: Text(

@@ -33,8 +33,8 @@ class TwoFaSetup {
   }
 
   factory TwoFaSetup.fromJson(Map<String, dynamic> json) => TwoFaSetup(
-        imageBase64: jsonString(json['img']),
-        url: jsonString(json['url']),
-        secret: jsonString(json['secret']),
-      );
+    imageBase64: jsonString(json['img']),
+    url: jsonString(json['url']),
+    secret: jsonString(json['secret']),
+  );
 }

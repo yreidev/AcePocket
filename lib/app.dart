@@ -82,10 +82,7 @@ class _AcePanelAppState extends ConsumerState<AcePanelApp> {
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
       locale: const Locale('zh', 'CN'),
-      supportedLocales: const [
-        Locale('zh', 'CN'),
-        Locale('en'),
-      ],
+      supportedLocales: const [Locale('zh', 'CN'), Locale('en')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

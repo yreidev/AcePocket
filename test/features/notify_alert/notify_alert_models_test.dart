@@ -24,8 +24,8 @@ void main() {
         channels: <int>[1],
       );
       final draft = saved
-          .copyWith(events: <String>['backup', 'login']).copyWith(
-              events: <String>['backup']);
+          .copyWith(events: <String>['backup', 'login'])
+          .copyWith(events: <String>['backup']);
       expect(draft, equals(saved));
     });
 
@@ -41,16 +41,13 @@ void main() {
 
   group('parsePagedResult', () {
     test('解析 total 与 items', () {
-      final result = parsePagedResult(
-        <String, dynamic>{
-          'total': 3,
-          'items': <dynamic>[
-            <String, dynamic>{'id': 1, 'name': 'a', 'key': 'k1'},
-            <String, dynamic>{'id': 2, 'name': 'b', 'key': 'k2'},
-          ],
-        },
-        WebHook.fromJson,
-      );
+      final result = parsePagedResult(<String, dynamic>{
+        'total': 3,
+        'items': <dynamic>[
+          <String, dynamic>{'id': 1, 'name': 'a', 'key': 'k1'},
+          <String, dynamic>{'id': 2, 'name': 'b', 'key': 'k2'},
+        ],
+      }, WebHook.fromJson);
       expect(result.total, 3);
       expect(result.items.map((e) => e.id), <int>[1, 2]);
     });
@@ -60,10 +57,9 @@ void main() {
       expect(result.total, 0);
       expect(result.items, isEmpty);
 
-      final noItems = parsePagedResult(
-        <String, dynamic>{'items': 'oops'},
-        WebHook.fromJson,
-      );
+      final noItems = parsePagedResult(<String, dynamic>{
+        'items': 'oops',
+      }, WebHook.fromJson);
       expect(noItems.total, 0);
       expect(noItems.items, isEmpty);
     });

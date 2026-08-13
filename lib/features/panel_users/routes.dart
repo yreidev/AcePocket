@@ -18,8 +18,9 @@ final List<RouteBase> panelUsersRoutes = <RouteBase>[
       GoRoute(
         path: 'passkey',
         builder: (BuildContext context, GoRouterState state) => PasskeyPage(
-          initialUserId:
-              int.tryParse(state.uri.queryParameters['user_id'] ?? ''),
+          initialUserId: int.tryParse(
+            state.uri.queryParameters['user_id'] ?? '',
+          ),
         ),
       ),
     ],

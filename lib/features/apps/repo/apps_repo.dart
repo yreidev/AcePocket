@@ -37,13 +37,16 @@ class AppsRepo {
     String query = '',
     bool installedOnly = false,
   }) async {
-    final data = await _api.get('/app/list', query: {
-      'page': page,
-      'limit': limit,
-      if (category.isNotEmpty) 'category': category,
-      if (query.isNotEmpty) 'query': query,
-      if (installedOnly) 'installed': 'true',
-    });
+    final data = await _api.get(
+      '/app/list',
+      query: {
+        'page': page,
+        'limit': limit,
+        if (category.isNotEmpty) 'category': category,
+        if (query.isNotEmpty) 'query': query,
+        if (installedOnly) 'installed': 'true',
+      },
+    );
     return Paged.parse(data, AppItem.fromJson);
   }
 
@@ -84,12 +87,10 @@ class AppsRepo {
   }
 
   /// 保存自定义编译参数：`POST /api/app/custom`。
-  Future<void> saveCustom(String slug, AppCustom custom) =>
-      _api.post('/app/custom', body: {
-        'slug': slug,
-        'pre_script': custom.preScript,
-        'args': custom.args,
-      });
+  Future<void> saveCustom(String slug, AppCustom custom) => _api.post(
+    '/app/custom',
+    body: {'slug': slug, 'pre_script': custom.preScript, 'args': custom.args},
+  );
 
   /// 更新应用商店缓存：`GET /api/app/update_cache`（离线模式下面板会拒绝）。
   Future<void> updateCache() => _api.get('/app/update_cache');

@@ -36,8 +36,10 @@ Future<UploadConflictAction?> showUploadConflictDialog(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('以下 ${names.length} 个文件在目标目录已存在：',
-                  style: theme.textTheme.bodyMedium),
+              Text(
+                '以下 ${names.length} 个文件在目标目录已存在：',
+                style: theme.textTheme.bodyMedium,
+              ),
               const SizedBox(height: 8),
               // 逐行渲染而非拼接成一个字符串：长文件名可以单独省略，
               // 不会把对话框撑出横向溢出。
@@ -51,10 +53,7 @@ Future<UploadConflictAction?> showUploadConflictDialog(
               if (names.length > previewLimit)
                 Text('… 等共 ${names.length} 个', style: hintStyle),
               const SizedBox(height: 12),
-              Text(
-                '请选择处理方式，该选择对本次上传的全部冲突文件生效。',
-                style: hintStyle,
-              ),
+              Text('请选择处理方式，该选择对本次上传的全部冲突文件生效。', style: hintStyle),
             ],
           ),
         ),

@@ -25,12 +25,14 @@ import '../../../core/models/server.dart';
 /// ```
 class SecurityRawApi {
   SecurityRawApi(this.server) {
-    _dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      sendTimeout: const Duration(minutes: 5),
-      receiveTimeout: const Duration(minutes: 5),
-      validateStatus: (_) => true,
-    ));
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(minutes: 5),
+        receiveTimeout: const Duration(minutes: 5),
+        validateStatus: (_) => true,
+      ),
+    );
     // 证书校验策略（含 TOFU 指纹固定）统一在 panel_http_client.dart 实现。
     _dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () => createPanelHttpClient(server),
@@ -154,8 +156,10 @@ class SecurityRawApi {
   static String _randomBoundary() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     final random = Random.secure();
-    final suffix =
-        List.generate(24, (_) => chars[random.nextInt(chars.length)]).join();
+    final suffix = List.generate(
+      24,
+      (_) => chars[random.nextInt(chars.length)],
+    ).join();
     return '----AcePanelMobile$suffix';
   }
 
@@ -172,18 +176,22 @@ class SecurityRawApi {
     void writeText(String text) => builder.add(utf8.encode(text));
 
     for (final entry in fields.entries) {
-      writeText('--$boundary\r\n'
-          'Content-Disposition: form-data; name="${entry.key}"\r\n\r\n'
-          '${entry.value}\r\n');
+      writeText(
+        '--$boundary\r\n'
+        'Content-Disposition: form-data; name="${entry.key}"\r\n\r\n'
+        '${entry.value}\r\n',
+      );
     }
     final safeName = fileName
         .replaceAll('"', '%22')
         .replaceAll('\r', '')
         .replaceAll('\n', '');
-    writeText('--$boundary\r\n'
-        'Content-Disposition: form-data; name="$fileField"; '
-        'filename="$safeName"\r\n'
-        'Content-Type: application/octet-stream\r\n\r\n');
+    writeText(
+      '--$boundary\r\n'
+      'Content-Disposition: form-data; name="$fileField"; '
+      'filename="$safeName"\r\n'
+      'Content-Type: application/octet-stream\r\n\r\n',
+    );
     builder.add(fileBytes);
     writeText('\r\n--$boundary--\r\n');
     return builder.toBytes();

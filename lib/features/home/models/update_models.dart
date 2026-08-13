@@ -62,7 +62,8 @@ class PanelVersion {
       description: json['description'] as String? ?? '',
       createdAt: _parseTime(json['created_at']),
       updatedAt: _parseTime(json['updated_at']),
-      downloads: (json['downloads'] as List?)
+      downloads:
+          (json['downloads'] as List?)
               ?.whereType<Map<String, dynamic>>()
               .map(PanelVersionDownload.fromJson)
               .toList() ??

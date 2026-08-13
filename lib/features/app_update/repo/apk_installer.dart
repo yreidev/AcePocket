@@ -53,13 +53,16 @@ class ApkInstaller {
   /// 刻意不复用面板的 ApiClient / PanelHttpClient：GitHub 资产下载是
   /// 公网 HTTPS，不需要面板签名，也不能沾染 TOFU 证书固定逻辑。
   ApkInstaller({Dio? dio})
-      : _dio = dio ??
-            Dio(BaseOptions(
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
               connectTimeout: const Duration(seconds: 10),
               // APK 体积大、网络不定，接收不设超时；取消由 CancelToken 负责。
               receiveTimeout: Duration.zero,
               // dio 默认跟随重定向（GitHub 资产下载会 302 到 CDN），无需额外配置。
-            ));
+            ),
+          );
 
   final Dio _dio;
 

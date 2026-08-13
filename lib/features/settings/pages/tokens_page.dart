@@ -94,7 +94,9 @@ class _TokensPageState extends ConsumerState<TokensPage> {
 
     setState(() => _busy = true);
     try {
-      final token = await ref.read(tokenRepoProvider).create(
+      final token = await ref
+          .read(tokenRepoProvider)
+          .create(
             userId: user.id,
             ips: result.ips,
             expiredAt: result.expiredAt,
@@ -116,11 +118,9 @@ class _TokensPageState extends ConsumerState<TokensPage> {
 
     setState(() => _busy = true);
     try {
-      await ref.read(tokenRepoProvider).update(
-            id: token.id,
-            ips: result.ips,
-            expiredAt: result.expiredAt,
-          );
+      await ref
+          .read(tokenRepoProvider)
+          .update(id: token.id, ips: result.ips, expiredAt: result.expiredAt);
       await ref.read(tokenListProvider.notifier).reload();
       _ok('令牌 #${token.id} 已更新');
     } catch (e) {
@@ -135,7 +135,8 @@ class _TokensPageState extends ConsumerState<TokensPage> {
     final ok = await showConfirmDialog(
       context,
       title: '删除令牌',
-      content: '确定要删除令牌 #${token.id} 吗？删除后使用该令牌的调用方将立即失效。'
+      content:
+          '确定要删除令牌 #${token.id} 吗？删除后使用该令牌的调用方将立即失效。'
           '${inUse ? '\n\n警告：这是本 App 当前正在使用的令牌，删除后将无法继续连接该服务器！' : ''}',
       confirmText: '删除令牌',
       danger: true,

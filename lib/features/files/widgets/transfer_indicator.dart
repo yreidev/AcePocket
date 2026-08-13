@@ -46,8 +46,9 @@ class TransferIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final double? value =
-        total > 0 ? (transferred / total).clamp(0.0, 1.0) : null;
+    final double? value = total > 0
+        ? (transferred / total).clamp(0.0, 1.0)
+        : null;
     final percent = value == null ? '' : '${(value * 100).floor()}%';
 
     return Column(
@@ -83,7 +84,7 @@ class TransferIndicator extends StatelessWidget {
               child: Text(
                 total > 0
                     ? '${formatTransferBytes(transferred)} / '
-                        '${formatTransferBytes(total)}'
+                          '${formatTransferBytes(total)}'
                     : formatTransferBytes(transferred),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

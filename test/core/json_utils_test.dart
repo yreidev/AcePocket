@@ -61,14 +61,11 @@ void main() {
       expect(jsonMapOrNull(null), isNull);
       expect(jsonMap({1: 'a'}), {'1': 'a'});
       expect(
-        jsonList(
-          [
-            {'id': 1},
-            'skip',
-            {2: 3},
-          ],
-          (m) => m,
-        ).length,
+        jsonList([
+          {'id': 1},
+          'skip',
+          {2: 3},
+        ], (m) => m).length,
         2,
       );
     });
@@ -82,8 +79,10 @@ void main() {
       final parsed = jsonTime('2026-07-26T18:13:00+08:00');
       expect(parsed, isNotNull);
       expect(parsed!.isUtc, isFalse);
-      expect(jsonTime(1700000000),
-          DateTime.fromMillisecondsSinceEpoch(1700000000 * 1000).toLocal());
+      expect(
+        jsonTime(1700000000),
+        DateTime.fromMillisecondsSinceEpoch(1700000000 * 1000).toLocal(),
+      );
     });
   });
 }

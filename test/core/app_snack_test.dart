@@ -37,16 +37,14 @@ void main() {
     ('浅色', AppTheme.light),
     ('深色', AppTheme.dark),
   ]) {
-    testWidgets('$name主题下错误提示用 errorContainer / onErrorContainer 配对',
-        (tester) async {
+    testWidgets('$name主题下错误提示用 errorContainer / onErrorContainer 配对', (
+      tester,
+    ) async {
       final scheme = theme.colorScheme;
       final (snack, style) = await _showAndInspect(
         tester,
         theme,
-        (context) => showErrorSnack(
-          context,
-          const ApiException('磁盘空间不足'),
-        ),
+        (context) => showErrorSnack(context, const ApiException('磁盘空间不足')),
       );
 
       expect(find.text('磁盘空间不足'), findsOneWidget);

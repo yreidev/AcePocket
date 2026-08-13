@@ -48,13 +48,13 @@ class TaskRepository {
     int offset = 0,
     int limit = 500,
   }) async {
-    final data = await _api.get('/file/tail', query: {
-      'path': path,
-      'offset': offset,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/file/tail',
+      query: {'path': path, 'offset': offset, 'limit': limit},
+    );
     return FileTailResult.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 清空日志文件（`POST /api/file/truncate`）。

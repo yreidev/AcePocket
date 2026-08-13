@@ -101,11 +101,9 @@ class _CronLogPageState extends ConsumerState<CronLogPage> {
     if (_loadingMore || !_hasMore) return;
     setState(() => _loadingMore = true);
     try {
-      final result = await ref.read(cronRepoProvider).tailLog(
-            widget.path,
-            offset: _tailLoaded,
-            limit: _pageLines,
-          );
+      final result = await ref
+          .read(cronRepoProvider)
+          .tailLog(widget.path, offset: _tailLoaded, limit: _pageLines);
       if (!mounted) return;
       setState(() {
         _lines = [...result.lines, ..._lines];
@@ -215,8 +213,10 @@ class _CronLogPageState extends ConsumerState<CronLogPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('无法开启实时跟踪'),
-        content: Text('$message\n\n'
-            '实时日志走面板会话认证，需要在「服务器配置」中补充面板登录用户名与密码。'),
+        content: Text(
+          '$message\n\n'
+          '实时日志走面板会话认证，需要在「服务器配置」中补充面板登录用户名与密码。',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -299,8 +299,10 @@ class _CronLogPageState extends ConsumerState<CronLogPage> {
               const PopupMenuItem(value: 'copy', child: Text('复制全部')),
               PopupMenuItem(
                 value: 'clear',
-                child: Text('清空日志',
-                    style: TextStyle(color: theme.colorScheme.error)),
+                child: Text(
+                  '清空日志',
+                  style: TextStyle(color: theme.colorScheme.error),
+                ),
               ),
             ],
           ),
@@ -309,10 +311,10 @@ class _CronLogPageState extends ConsumerState<CronLogPage> {
       body: server == null
           ? const NoServerView()
           : _loading
-              ? const LoadingView(message: '正在读取日志…')
-              : _error != null
-                  ? ErrorView(error: _error!, onRetry: _reload)
-                  : _buildContent(theme),
+          ? const LoadingView(message: '正在读取日志…')
+          : _error != null
+          ? ErrorView(error: _error!, onRetry: _reload)
+          : _buildContent(theme),
     );
   }
 
@@ -384,8 +386,9 @@ class _CronLogPageState extends ConsumerState<CronLogPage> {
                               child: SizedBox(
                                 width: 18,
                                 height: 18,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               ),
                             )
                           : TextButton(

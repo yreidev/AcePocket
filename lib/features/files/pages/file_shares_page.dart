@@ -59,7 +59,9 @@ class _FileSharesPageState extends ConsumerState<FileSharesPage> {
     if (form == null || !mounted) return;
     setState(() => _busy = true);
     try {
-      final share = await ref.read(fileSharesProvider.notifier).create(
+      final share = await ref
+          .read(fileSharesProvider.notifier)
+          .create(
             path: form.path,
             expireHours: form.expireHours,
             maxDownloads: form.maxDownloads,
@@ -232,7 +234,8 @@ class _FileSharesPageState extends ConsumerState<FileSharesPage> {
                   SizedBox(
                     height: 360,
                     child: EmptyView(
-                      message: '还没有创建任何分享链接\n'
+                      message:
+                          '还没有创建任何分享链接\n'
                           '分享链接无需登录即可下载指定文件，可设置有效期与下载次数',
                       icon: Icons.link_off,
                       action: FilledButton.icon(

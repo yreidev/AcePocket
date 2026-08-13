@@ -67,12 +67,15 @@ class _DefaultConfigForm extends ConsumerStatefulWidget {
 }
 
 class _DefaultConfigFormState extends ConsumerState<_DefaultConfigForm> {
-  late final TextEditingController _index =
-      TextEditingController(text: widget.original.index);
-  late final TextEditingController _stop =
-      TextEditingController(text: widget.original.stop);
-  late final TextEditingController _notFound =
-      TextEditingController(text: widget.original.notFound);
+  late final TextEditingController _index = TextEditingController(
+    text: widget.original.index,
+  );
+  late final TextEditingController _stop = TextEditingController(
+    text: widget.original.stop,
+  );
+  late final TextEditingController _notFound = TextEditingController(
+    text: widget.original.notFound,
+  );
   late final List<String> _tlsVersions = [...widget.original.tlsVersions];
 
   bool _saving = false;
@@ -113,7 +116,9 @@ class _DefaultConfigFormState extends ConsumerState<_DefaultConfigForm> {
 
     setState(() => _saving = true);
     try {
-      await ref.read(websiteRepoProvider).updateDefaultConfig(
+      await ref
+          .read(websiteRepoProvider)
+          .updateDefaultConfig(
             WebsiteDefaultConfig(
               index: _index.text,
               stop: _stop.text,
@@ -136,15 +141,15 @@ class _DefaultConfigFormState extends ConsumerState<_DefaultConfigForm> {
   Future<void> _saveDefaultSite(int target, List<Website> websites) async {
     final name = target == 0
         ? '面板内置默认页'
-        : websites
-            .where((e) => e.id == target)
-            .map((e) => e.name)
-            .followedBy(['#$target']).first;
+        : websites.where((e) => e.id == target).map((e) => e.name).followedBy([
+            '#$target',
+          ]).first;
 
     final confirmed = await showConfirmDialog(
       context,
       title: '设置默认站点？',
-      content: '默认站点用于响应未匹配任何网站域名的请求（例如直接用 IP 访问）。\n\n'
+      content:
+          '默认站点用于响应未匹配任何网站域名的请求（例如直接用 IP 访问）。\n\n'
           '新的默认站点：$name\n\n'
           '面板会迁移 nginx 配置中的 default_server 标记并重载配置，'
           '配置校验失败时会自动回滚。',
@@ -388,14 +393,16 @@ class _DefaultSiteSection extends ConsumerWidget {
           else if (currentAsync.hasError)
             Text(
               '读取默认站点失败：${describeError(currentAsync.error!)}',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             )
           else if (websitesAsync.hasError)
             Text(
               '读取网站列表失败：${describeError(websitesAsync.error!)}',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             )
           else
             Builder(
@@ -444,8 +451,9 @@ class _DefaultSiteSection extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     FilledButton.tonalIcon(
-                      onPressed:
-                          saving ? null : () => onSave(selected, websites),
+                      onPressed: saving
+                          ? null
+                          : () => onSave(selected, websites),
                       icon: saving
                           ? const SizedBox(
                               width: 16,

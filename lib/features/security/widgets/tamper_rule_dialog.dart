@@ -40,14 +40,18 @@ class _TamperRuleForm extends StatefulWidget {
 class _TamperRuleFormState extends State<_TamperRuleForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late final TextEditingController _name =
-      TextEditingController(text: widget.rule?.name ?? '');
-  late final TextEditingController _path =
-      TextEditingController(text: widget.rule?.path ?? '');
-  late final TextEditingController _exts =
-      TextEditingController(text: (widget.rule?.exts ?? const []).join(', '));
+  late final TextEditingController _name = TextEditingController(
+    text: widget.rule?.name ?? '',
+  );
+  late final TextEditingController _path = TextEditingController(
+    text: widget.rule?.path ?? '',
+  );
+  late final TextEditingController _exts = TextEditingController(
+    text: (widget.rule?.exts ?? const []).join(', '),
+  );
   late final TextEditingController _excludes = TextEditingController(
-      text: (widget.rule?.excludes ?? const []).join(', '));
+    text: (widget.rule?.excludes ?? const []).join(', '),
+  );
 
   late bool _enabled = widget.rule?.enabled ?? true;
 
@@ -157,10 +161,7 @@ class _TamperRuleFormState extends State<_TamperRuleForm> {
             onChanged: (value) => setState(() => _enabled = value),
           ),
           const SizedBox(height: 16),
-          FilledButton(
-            onPressed: _submit,
-            child: Text(_isEdit ? '保存' : '创建'),
-          ),
+          FilledButton(onPressed: _submit, child: Text(_isEdit ? '保存' : '创建')),
         ],
       ),
     );

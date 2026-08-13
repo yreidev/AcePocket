@@ -29,12 +29,15 @@ class _NetworkFilterSheet extends StatefulWidget {
 
 class _NetworkFilterSheetState extends State<_NetworkFilterSheet> {
   late Set<String> _states = {...widget.filter.states};
-  late final TextEditingController _pid =
-      TextEditingController(text: widget.filter.pid);
-  late final TextEditingController _process =
-      TextEditingController(text: widget.filter.process);
-  late final TextEditingController _port =
-      TextEditingController(text: widget.filter.port);
+  late final TextEditingController _pid = TextEditingController(
+    text: widget.filter.pid,
+  );
+  late final TextEditingController _process = TextEditingController(
+    text: widget.filter.process,
+  );
+  late final TextEditingController _port = TextEditingController(
+    text: widget.filter.port,
+  );
   late String _sort = widget.filter.sort;
   late String _order = widget.filter.order;
 
@@ -58,14 +61,16 @@ class _NetworkFilterSheetState extends State<_NetworkFilterSheet> {
   }
 
   void _apply() {
-    Navigator.of(context).pop(NetworkFilter(
-      states: _states,
-      pid: _pid.text.trim(),
-      process: _process.text.trim(),
-      port: _port.text.trim(),
-      sort: _sort,
-      order: _order,
-    ));
+    Navigator.of(context).pop(
+      NetworkFilter(
+        states: _states,
+        pid: _pid.text.trim(),
+        process: _process.text.trim(),
+        port: _port.text.trim(),
+        sort: _sort,
+        order: _order,
+      ),
+    );
   }
 
   @override

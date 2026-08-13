@@ -31,8 +31,12 @@ Future<FileAction?> showFileActionSheet(
     isScrollControlled: true,
     builder: (context) {
       final theme = Theme.of(context);
-      Widget tile(IconData icon, String label, FileAction action,
-          {bool danger = false}) {
+      Widget tile(
+        IconData icon,
+        String label,
+        FileAction action, {
+        bool danger = false,
+      }) {
         final color = danger ? theme.colorScheme.error : null;
         return ListTile(
           dense: true,
@@ -92,8 +96,11 @@ Future<FileAction?> showFileActionSheet(
               if (!item.dir)
                 tile(Icons.share_outlined, '创建分享链接', FileAction.share),
               if (!item.dir)
-                tile(Icons.cleaning_services_outlined, '清空内容',
-                    FileAction.truncate),
+                tile(
+                  Icons.cleaning_services_outlined,
+                  '清空内容',
+                  FileAction.truncate,
+                ),
               tile(Icons.link, '复制路径', FileAction.copyPath),
               tile(Icons.info_outline, '属性', FileAction.property),
               const Divider(height: 1),

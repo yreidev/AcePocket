@@ -27,11 +27,6 @@ class PanelUser {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'username': username,
-      'email': email,
-      'role': roles,
-    };
+    return {'id': id, 'username': username, 'email': email, 'role': roles};
   }
 }

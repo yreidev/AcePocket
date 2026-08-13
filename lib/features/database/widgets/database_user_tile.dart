@@ -26,8 +26,9 @@ class DatabaseUserTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final serverType = user.server?.type ?? '';
-    final title =
-        user.host.isEmpty ? user.username : '${user.username}@${user.host}';
+    final title = user.host.isEmpty
+        ? user.username
+        : '${user.username}@${user.host}';
     return SectionCard(
       padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
       onTap: onEdit,
@@ -36,10 +37,7 @@ class DatabaseUserTile extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Icon(
-              Icons.person_outline,
-              color: theme.colorScheme.primary,
-            ),
+            child: Icon(Icons.person_outline, color: theme.colorScheme.primary),
           ),
           const SizedBox(width: 12),
           Expanded(

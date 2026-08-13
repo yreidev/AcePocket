@@ -44,8 +44,9 @@ void main() {
         activeServerProvider.overrideWith(_FakeActiveServer.new),
         // 版本探测不参与本用例：给 null 即按功能可用处理。
         panelVersionProvider.overrideWith((ref) async => null),
-        databaseServerOptionsProvider('elasticsearch')
-            .overrideWith((ref) async => const [esServer]),
+        databaseServerOptionsProvider(
+          'elasticsearch',
+        ).overrideWith((ref) async => const [esServer]),
         esIndicesProvider(7).overrideWith((ref) async => const [index]),
         esDataProvider.overrideWith(_FakeEsData.new),
       ],
@@ -55,10 +56,14 @@ void main() {
 
   /// 模拟系统返回手势 / 实体返回键。
   Future<void> systemBack(WidgetTester tester) async {
-    final message =
-        const JSONMethodCodec().encodeMethodCall(const MethodCall('popRoute'));
-    await tester.binding.defaultBinaryMessenger
-        .handlePlatformMessage('flutter/navigation', message, (_) {});
+    final message = const JSONMethodCodec().encodeMethodCall(
+      const MethodCall('popRoute'),
+    );
+    await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
+      'flutter/navigation',
+      message,
+      (_) {},
+    );
     await tester.pumpAndSettle();
   }
 
@@ -94,12 +99,12 @@ void main() {
 class _FakeActiveServer extends ActiveServerNotifier {
   @override
   ServerConfig? build() => const ServerConfig(
-        id: 'test-server',
-        name: '测试面板',
-        baseUrl: 'https://192.0.2.1:8888',
-        tokenId: '1',
-        token: 'placeholder-token',
-      );
+    id: 'test-server',
+    name: '测试面板',
+    baseUrl: 'https://192.0.2.1:8888',
+    tokenId: '1',
+    token: 'placeholder-token',
+  );
 }
 
 /// 文档分页 Notifier 的替身：直接给一页固定数据，不触碰网络。

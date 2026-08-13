@@ -174,11 +174,13 @@ class _UploadProgressDialogState extends State<_UploadProgressDialog> {
     _finished = true;
     _ticker?.cancel();
     if (!mounted) return;
-    Navigator.of(context).pop(UploadOutcome(
-      succeeded: _succeeded,
-      failures: List.unmodifiable(_failures),
-      cancelled: _cancelToken.isCancelled,
-    ));
+    Navigator.of(context).pop(
+      UploadOutcome(
+        succeeded: _succeeded,
+        failures: List.unmodifiable(_failures),
+        cancelled: _cancelToken.isCancelled,
+      ),
+    );
   }
 
   void _cancel() {

@@ -29,8 +29,10 @@ class RedisDataQuery {
 }
 
 /// 指定 Redis 服务器的数据库数量（读取失败或返回 0 时回退为 16）。
-final redisDatabaseCountProvider =
-    FutureProvider.autoDispose.family<int, int>((ref, serverId) async {
+final redisDatabaseCountProvider = FutureProvider.autoDispose.family<int, int>((
+  ref,
+  serverId,
+) async {
   final count = await ref.watch(databaseRepoProvider).redisDatabases(serverId);
   return count > 0 ? count : 16;
 });
@@ -38,8 +40,8 @@ final redisDatabaseCountProvider =
 /// Redis 键值分页列表。
 final redisDataProvider = AsyncNotifierProvider.autoDispose
     .family<RedisDataNotifier, PagedState<RedisKv>, RedisDataQuery>(
-  RedisDataNotifier.new,
-);
+      RedisDataNotifier.new,
+    );
 
 class RedisDataNotifier extends DatabasePagedNotifier<RedisKv, RedisDataQuery> {
   @override
@@ -51,7 +53,9 @@ class RedisDataNotifier extends DatabasePagedNotifier<RedisKv, RedisDataQuery> {
 
   @override
   PageFetcher<RedisKv> get fetcher =>
-      (page, limit) => ref.read(databaseRepoProvider).redisData(
+      (page, limit) => ref
+          .read(databaseRepoProvider)
+          .redisData(
             serverId: arg.serverId,
             db: arg.db,
             page: page,

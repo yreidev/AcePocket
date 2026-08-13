@@ -28,10 +28,11 @@ class QuickEntry {
 /// 默认快捷入口（外壳可通过 [HomePage.quickEntries] 覆盖以适配实际注册的路由）。
 const List<QuickEntry> kDefaultQuickEntries = [
   QuickEntry(
-      label: '网站',
-      icon: Icons.language_rounded,
-      path: '/websites',
-      isTab: true),
+    label: '网站',
+    icon: Icons.language_rounded,
+    path: '/websites',
+    isTab: true,
+  ),
   QuickEntry(label: '数据库', icon: Icons.storage_rounded, path: '/databases'),
   QuickEntry(label: '文件', icon: Icons.folder_outlined, path: '/files'),
   QuickEntry(label: '容器', icon: Icons.widgets_outlined, path: '/containers'),

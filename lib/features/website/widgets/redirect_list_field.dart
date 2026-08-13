@@ -56,13 +56,15 @@ class _RedirectListFieldState extends State<RedirectListField> {
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
             onPressed: () {
-              widget.redirects.add(RedirectConfig(
-                type: 'url',
-                from: '/',
-                to: '',
-                keepUri: true,
-                statusCode: 308,
-              ));
+              widget.redirects.add(
+                RedirectConfig(
+                  type: 'url',
+                  from: '/',
+                  to: '',
+                  keepUri: true,
+                  statusCode: 308,
+                ),
+              );
               setState(() {});
               widget.onChanged();
             },
@@ -92,10 +94,12 @@ class _RedirectCard extends StatefulWidget {
 }
 
 class _RedirectCardState extends State<_RedirectCard> {
-  late final TextEditingController _from =
-      TextEditingController(text: widget.redirect.from);
-  late final TextEditingController _to =
-      TextEditingController(text: widget.redirect.to);
+  late final TextEditingController _from = TextEditingController(
+    text: widget.redirect.from,
+  );
+  late final TextEditingController _to = TextEditingController(
+    text: widget.redirect.to,
+  );
 
   static const _statusCodes = [301, 302, 307, 308];
 

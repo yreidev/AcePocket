@@ -45,10 +45,10 @@ final healthProvider = FutureProvider.autoDispose<List<HealthIssue>>((ref) {
 });
 
 /// 占用最高进程（type: cpu / memory / disk_io）。
-final topProcessesProvider =
-    FutureProvider.autoDispose.family<List<ProcessStat>, String>((ref, type) {
-  return ref.watch(homeRepoProvider).topProcesses(type);
-});
+final topProcessesProvider = FutureProvider.autoDispose
+    .family<List<ProcessStat>, String>((ref, type) {
+      return ref.watch(homeRepoProvider).topProcesses(type);
+    });
 
 /// 面板是否有新版本。
 ///
@@ -66,8 +66,9 @@ final panelUpdateProvider = FutureProvider.autoDispose<bool>((ref) async {
 ///
 /// 面板返回的顺序不保证，这里按版本号倒序整理，方便「最新版本在最上面」展示。
 /// 已是最新版 / 离线模式 / 拉取失败时接口返回错误，交由页面展示。
-final panelUpdateInfoProvider =
-    FutureProvider.autoDispose<List<PanelVersion>>((ref) async {
+final panelUpdateInfoProvider = FutureProvider.autoDispose<List<PanelVersion>>((
+  ref,
+) async {
   final versions = await ref.watch(homeRepoProvider).updateInfo();
   final sorted = [...versions]
     ..sort((a, b) => _compareVersion(b.version, a.version));
@@ -103,8 +104,9 @@ final runtimeInfoProvider = FutureProvider.autoDispose<RuntimeInfo>((ref) {
 });
 
 /// 面板协程堆栈（按协程编号升序）。
-final goroutinesProvider =
-    FutureProvider.autoDispose<List<GoroutineInfo>>((ref) async {
+final goroutinesProvider = FutureProvider.autoDispose<List<GoroutineInfo>>((
+  ref,
+) async {
   final list = await ref.watch(homeRepoProvider).goroutines();
   return [...list]..sort((a, b) => a.id.compareTo(b.id));
 });
@@ -166,7 +168,8 @@ class RealtimeState {
 /// 恢复（回前台且回到首页）时立即拉取一次并重启定时。
 final homeRealtimeProvider =
     AsyncNotifierProvider.autoDispose<HomeRealtimeNotifier, RealtimeState>(
-        HomeRealtimeNotifier.new);
+      HomeRealtimeNotifier.new,
+    );
 
 class HomeRealtimeNotifier extends AutoDisposeAsyncNotifier<RealtimeState> {
   /// 轮询间隔（秒），来自「应用设置」（homePollIntervalProvider）；0 = 关闭轮询。
@@ -279,8 +282,10 @@ class HomeRealtimeNotifier extends AutoDisposeAsyncNotifier<RealtimeState> {
       return;
     }
     if (_timer != null) return;
-    _timer =
-        Timer.periodic(Duration(seconds: _intervalSeconds), (_) => _tick());
+    _timer = Timer.periodic(
+      Duration(seconds: _intervalSeconds),
+      (_) => _tick(),
+    );
     if (refreshOnResume) unawaited(_tick());
   }
 
@@ -313,10 +318,11 @@ class HomeRealtimeNotifier extends AutoDisposeAsyncNotifier<RealtimeState> {
 
     final prev = _prev;
     if (prev != null) {
-      var elapsed = (_intervalSeconds > 0
-              ? _intervalSeconds
-              : kDefaultHomePollIntervalSeconds)
-          .toDouble();
+      var elapsed =
+          (_intervalSeconds > 0
+                  ? _intervalSeconds
+                  : kDefaultHomePollIntervalSeconds)
+              .toDouble();
       final t1 = prev.time;
       final t2 = info.time;
       if (t1 != null && t2 != null) {

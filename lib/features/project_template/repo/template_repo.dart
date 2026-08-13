@@ -24,12 +24,15 @@ class TemplateRepo {
     String category = '',
     String query = '',
   }) async {
-    final data = await _api.get('/template', query: {
-      'page': page,
-      'limit': limit,
-      if (category.isNotEmpty) 'category': category,
-      if (query.isNotEmpty) 'query': query,
-    });
+    final data = await _api.get(
+      '/template',
+      query: {
+        'page': page,
+        'limit': limit,
+        if (category.isNotEmpty) 'category': category,
+        if (query.isNotEmpty) 'query': query,
+      },
+    );
     return Paged.parse(data, AppTemplate.fromJson);
   }
 
@@ -55,13 +58,16 @@ class TemplateRepo {
     List<KvPair> envs = const <KvPair>[],
     bool autoFirewall = false,
   }) async {
-    final data = await _api.post('/template', body: {
-      'slug': slug,
-      'name': name,
-      'compose': compose,
-      'envs': envs.map((e) => e.toJson()).toList(),
-      'auto_firewall': autoFirewall,
-    });
+    final data = await _api.post(
+      '/template',
+      body: {
+        'slug': slug,
+        'name': name,
+        'compose': compose,
+        'envs': envs.map((e) => e.toJson()).toList(),
+        'auto_firewall': autoFirewall,
+      },
+    );
     return data is String ? data : '';
   }
 

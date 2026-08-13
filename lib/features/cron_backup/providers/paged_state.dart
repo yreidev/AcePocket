@@ -4,10 +4,8 @@ import '../models/page_result.dart';
 export '../../../core/providers/paged_notifier_base.dart' show PagedState;
 
 /// 本模块分页取数函数：给定页码（从 1 开始）与每页条数，返回该页数据。
-typedef CronBackupFetcher<T> = Future<PageResult<T>> Function(
-  int page,
-  int limit,
-);
+typedef CronBackupFetcher<T> =
+    Future<PageResult<T>> Function(int page, int limit);
 
 /// 计划任务与备份模块的分页 Notifier 基类（无 family 参数）。
 ///

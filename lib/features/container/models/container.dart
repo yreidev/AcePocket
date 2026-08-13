@@ -22,22 +22,22 @@ class ContainerPort {
   final String protocol;
 
   factory ContainerPort.fromJson(Map<String, dynamic> json) => ContainerPort(
-        containerStart: asInt(json['container_start']),
-        containerEnd: asInt(json['container_end']),
-        host: asString(json['host']),
-        hostStart: asInt(json['host_start']),
-        hostEnd: asInt(json['host_end']),
-        protocol: asString(json['protocol']),
-      );
+    containerStart: asInt(json['container_start']),
+    containerEnd: asInt(json['container_end']),
+    host: asString(json['host']),
+    hostStart: asInt(json['host_start']),
+    hostEnd: asInt(json['host_end']),
+    protocol: asString(json['protocol']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'container_start': containerStart,
-        'container_end': containerEnd,
-        'host': host,
-        'host_start': hostStart,
-        'host_end': hostEnd,
-        'protocol': protocol,
-      };
+    'container_start': containerStart,
+    'container_end': containerEnd,
+    'host': host,
+    'host_start': hostStart,
+    'host_end': hostEnd,
+    'protocol': protocol,
+  };
 
   String get _containerRange => containerStart == containerEnd
       ? '$containerStart'
@@ -52,8 +52,9 @@ class ContainerPort {
     if (hostStart == 0 && hostEnd == 0) {
       return '$_containerRange/$proto';
     }
-    final addr =
-        (host.isEmpty || host == '0.0.0.0' || host == '::') ? '' : '$host:';
+    final addr = (host.isEmpty || host == '0.0.0.0' || host == '::')
+        ? ''
+        : '$host:';
     return '$addr$_hostRange->$_containerRange/$proto';
   }
 }
@@ -101,9 +102,9 @@ class ContainerItem {
       createdAt: asDateTime(json['created_at']),
       ports: rawPorts is List
           ? rawPorts
-              .whereType<Map<String, dynamic>>()
-              .map(ContainerPort.fromJson)
-              .toList()
+                .whereType<Map<String, dynamic>>()
+                .map(ContainerPort.fromJson)
+                .toList()
           : const [],
       labels: KV.listFromJson(json['labels']),
     );

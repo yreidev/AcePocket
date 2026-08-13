@@ -191,9 +191,11 @@ class SettingValueTile extends StatelessWidget {
               child: CircularProgressIndicator(strokeWidth: 2),
             )
           : (onTap == null
-              ? null
-              : Icon(Icons.chevron_right,
-                  color: theme.colorScheme.onSurfaceVariant)),
+                ? null
+                : Icon(
+                    Icons.chevron_right,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  )),
       onTap: busy ? null : onTap,
     );
   }
@@ -248,12 +250,7 @@ class StatTile extends StatelessWidget {
 
 /// 小标签（协议 / 方向 / 状态等）。
 class TagChip extends StatelessWidget {
-  const TagChip({
-    super.key,
-    required this.label,
-    this.color,
-    this.icon,
-  });
+  const TagChip({super.key, required this.label, this.color, this.icon});
 
   final String label;
   final Color? color;
@@ -276,10 +273,7 @@ class TagChip extends StatelessWidget {
             Icon(icon, size: 12, color: base),
             const SizedBox(width: 4),
           ],
-          Text(
-            label,
-            style: theme.textTheme.labelSmall?.copyWith(color: base),
-          ),
+          Text(label, style: theme.textTheme.labelSmall?.copyWith(color: base)),
         ],
       ),
     );

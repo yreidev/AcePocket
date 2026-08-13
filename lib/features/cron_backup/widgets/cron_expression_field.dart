@@ -52,8 +52,11 @@ class CronExpressionField extends StatelessWidget {
           builder: (context, value, _) {
             return Row(
               children: [
-                Icon(Icons.schedule,
-                    size: 16, color: theme.colorScheme.primary),
+                Icon(
+                  Icons.schedule,
+                  size: 16,
+                  color: theme.colorScheme.primary,
+                ),
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
@@ -75,8 +78,9 @@ class CronExpressionField extends StatelessWidget {
             for (final preset in kCronPresets)
               ActionChip(
                 label: Text(preset.label),
-                onPressed:
-                    enabled ? () => controller.text = preset.expression : null,
+                onPressed: enabled
+                    ? () => controller.text = preset.expression
+                    : null,
               ),
           ],
         ),
@@ -118,9 +122,7 @@ class _CronBuilderSheetState extends State<_CronBuilderSheet> {
     final fields = widget.expression.trim().split(RegExp(r'\s+'));
     _controllers = List.generate(
       5,
-      (i) => TextEditingController(
-        text: fields.length == 5 ? fields[i] : '*',
-      ),
+      (i) => TextEditingController(text: fields.length == 5 ? fields[i] : '*'),
     );
   }
 

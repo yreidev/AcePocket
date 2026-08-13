@@ -59,25 +59,26 @@ final tamperStatusProvider = FutureProvider.autoDispose<TamperStatus>(
 /// 切换服务器后列表**会保留**（都是用户手输的字符串，无服务器归属），
 /// 但 [tamperPathCheckProvider] 会随 repo 重建重新查询，展示的是新服务器的
 /// 保护状态，不会串数据。
-final tamperCheckPathListProvider =
-    StateProvider<List<String>>((ref) => const <String>[]);
+final tamperCheckPathListProvider = StateProvider<List<String>>(
+  (ref) => const <String>[],
+);
 
 /// 上述路径的保护状态（POST /tamper/check_paths），路径列表变化时自动重查。
-final tamperPathCheckProvider = FutureProvider.autoDispose<TamperPathCheck>(
-  (ref) {
-    final paths = ref.watch(tamperCheckPathListProvider);
-    if (paths.isEmpty) return Future.value(TamperPathCheck.empty);
-    return ref.watch(securityRepoProvider).tamperCheckPaths(paths);
-  },
-);
+final tamperPathCheckProvider = FutureProvider.autoDispose<TamperPathCheck>((
+  ref,
+) {
+  final paths = ref.watch(tamperCheckPathListProvider);
+  if (paths.isEmpty) return Future.value(TamperPathCheck.empty);
+  return ref.watch(securityRepoProvider).tamperCheckPaths(paths);
+});
 
 // ------------------------------------------------------------ 防火墙规则导出
 
 /// 用于生成导出内容的端口规则全量列表（已剔除 IP 规则，与面板导出口径一致）。
 final firewallExportRulesProvider =
     FutureProvider.autoDispose<List<FirewallRule>>(
-  (ref) => ref.watch(securityRepoProvider).allFirewallRules(),
-);
+      (ref) => ref.watch(securityRepoProvider).allFirewallRules(),
+    );
 
 // ------------------------------------------------------------------ 分页列表
 
@@ -113,8 +114,11 @@ class FirewallRulesNotifier extends PagedNotifier<FirewallRule> {
       ref.read(securityRepoProvider).firewallRules(page: page, limit: limit);
 }
 
-final firewallRulesProvider = AsyncNotifierProvider.autoDispose<
-    FirewallRulesNotifier, PagedState<FirewallRule>>(FirewallRulesNotifier.new);
+final firewallRulesProvider =
+    AsyncNotifierProvider.autoDispose<
+      FirewallRulesNotifier,
+      PagedState<FirewallRule>
+    >(FirewallRulesNotifier.new);
 
 /// 防火墙 IP 规则列表。
 class FirewallIpRulesNotifier extends PagedNotifier<FirewallIpRule> {
@@ -130,9 +134,11 @@ class FirewallIpRulesNotifier extends PagedNotifier<FirewallIpRule> {
       ref.read(securityRepoProvider).firewallIpRules(page: page, limit: limit);
 }
 
-final firewallIpRulesProvider = AsyncNotifierProvider.autoDispose<
-    FirewallIpRulesNotifier,
-    PagedState<FirewallIpRule>>(FirewallIpRulesNotifier.new);
+final firewallIpRulesProvider =
+    AsyncNotifierProvider.autoDispose<
+      FirewallIpRulesNotifier,
+      PagedState<FirewallIpRule>
+    >(FirewallIpRulesNotifier.new);
 
 /// 防火墙端口转发列表。
 class FirewallForwardsNotifier extends PagedNotifier<FirewallForward> {
@@ -148,9 +154,11 @@ class FirewallForwardsNotifier extends PagedNotifier<FirewallForward> {
       ref.read(securityRepoProvider).firewallForwards(page: page, limit: limit);
 }
 
-final firewallForwardsProvider = AsyncNotifierProvider.autoDispose<
-    FirewallForwardsNotifier,
-    PagedState<FirewallForward>>(FirewallForwardsNotifier.new);
+final firewallForwardsProvider =
+    AsyncNotifierProvider.autoDispose<
+      FirewallForwardsNotifier,
+      PagedState<FirewallForward>
+    >(FirewallForwardsNotifier.new);
 
 /// 防篡改保护规则列表。
 class TamperRulesNotifier extends PagedNotifier<TamperRule> {
@@ -166,8 +174,11 @@ class TamperRulesNotifier extends PagedNotifier<TamperRule> {
       ref.read(securityRepoProvider).tamperRules(page: page, limit: limit);
 }
 
-final tamperRulesProvider = AsyncNotifierProvider.autoDispose<
-    TamperRulesNotifier, PagedState<TamperRule>>(TamperRulesNotifier.new);
+final tamperRulesProvider =
+    AsyncNotifierProvider.autoDispose<
+      TamperRulesNotifier,
+      PagedState<TamperRule>
+    >(TamperRulesNotifier.new);
 
 /// 防篡改拦截日志列表。
 class TamperLogsNotifier extends PagedNotifier<TamperLog> {
@@ -183,8 +194,11 @@ class TamperLogsNotifier extends PagedNotifier<TamperLog> {
       ref.read(securityRepoProvider).tamperLogs(page: page, limit: limit);
 }
 
-final tamperLogsProvider = AsyncNotifierProvider.autoDispose<TamperLogsNotifier,
-    PagedState<TamperLog>>(TamperLogsNotifier.new);
+final tamperLogsProvider =
+    AsyncNotifierProvider.autoDispose<
+      TamperLogsNotifier,
+      PagedState<TamperLog>
+    >(TamperLogsNotifier.new);
 
 // ------------------------------------------------------------------ 扫描感知
 
@@ -217,12 +231,11 @@ class ScanEventFilter {
     int? port,
     String? location,
     bool clearPort = false,
-  }) =>
-      ScanEventFilter(
-        sourceIp: sourceIp ?? this.sourceIp,
-        port: clearPort ? null : (port ?? this.port),
-        location: location ?? this.location,
-      );
+  }) => ScanEventFilter(
+    sourceIp: sourceIp ?? this.sourceIp,
+    port: clearPort ? null : (port ?? this.port),
+    location: location ?? this.location,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -237,7 +250,8 @@ class ScanEventFilter {
 }
 
 final scanEventFilterProvider = StateProvider.autoDispose<ScanEventFilter>(
-    (ref) => const ScanEventFilter());
+  (ref) => const ScanEventFilter(),
+);
 
 /// 把「最近 N 天」换算为面板要求的 `YYYY-MM-DD` 起止日期。
 ({String start, String end}) scanRangeOf(int days) {
@@ -247,29 +261,30 @@ final scanEventFilterProvider = StateProvider.autoDispose<ScanEventFilter>(
   return (start: _formatDate(start), end: _formatDate(end));
 }
 
-String _formatDate(DateTime date) => '${date.year.toString().padLeft(4, '0')}-'
+String _formatDate(DateTime date) =>
+    '${date.year.toString().padLeft(4, '0')}-'
     '${date.month.toString().padLeft(2, '0')}-'
     '${date.day.toString().padLeft(2, '0')}';
 
 /// 扫描感知概览（汇总 + 趋势 + Top 排行），随时间范围变化自动刷新。
-final scanOverviewProvider = FutureProvider.autoDispose<ScanOverview>(
-  (ref) async {
-    final repo = ref.watch(securityRepoProvider);
-    final range = scanRangeOf(ref.watch(scanRangeDaysProvider));
-    final results = await Future.wait([
-      repo.scanSummary(range.start, range.end),
-      repo.scanTrend(range.start, range.end),
-      repo.scanTopIps(range.start, range.end),
-      repo.scanTopPorts(range.start, range.end),
-    ]);
-    return ScanOverview(
-      summary: results[0] as ScanSummary,
-      trend: results[1] as List<ScanDayTrend>,
-      topIps: results[2] as List<ScanSourceRank>,
-      topPorts: results[3] as List<ScanPortRank>,
-    );
-  },
-);
+final scanOverviewProvider = FutureProvider.autoDispose<ScanOverview>((
+  ref,
+) async {
+  final repo = ref.watch(securityRepoProvider);
+  final range = scanRangeOf(ref.watch(scanRangeDaysProvider));
+  final results = await Future.wait([
+    repo.scanSummary(range.start, range.end),
+    repo.scanTrend(range.start, range.end),
+    repo.scanTopIps(range.start, range.end),
+    repo.scanTopPorts(range.start, range.end),
+  ]);
+  return ScanOverview(
+    summary: results[0] as ScanSummary,
+    trend: results[1] as List<ScanDayTrend>,
+    topIps: results[2] as List<ScanSourceRank>,
+    topPorts: results[3] as List<ScanPortRank>,
+  );
+});
 
 /// 扫描事件列表（分页，随时间范围与筛选条件变化自动刷新）。
 class ScanEventsNotifier extends PagedNotifier<ScanEvent> {
@@ -287,7 +302,9 @@ class ScanEventsNotifier extends PagedNotifier<ScanEvent> {
   Future<Paged<ScanEvent>> fetch(int page, int limit) {
     final range = scanRangeOf(ref.read(scanRangeDaysProvider));
     final filter = ref.read(scanEventFilterProvider);
-    return ref.read(securityRepoProvider).scanEvents(
+    return ref
+        .read(securityRepoProvider)
+        .scanEvents(
           start: range.start,
           end: range.end,
           page: page,
@@ -299,5 +316,8 @@ class ScanEventsNotifier extends PagedNotifier<ScanEvent> {
   }
 }
 
-final scanEventsProvider = AsyncNotifierProvider.autoDispose<ScanEventsNotifier,
-    PagedState<ScanEvent>>(ScanEventsNotifier.new);
+final scanEventsProvider =
+    AsyncNotifierProvider.autoDispose<
+      ScanEventsNotifier,
+      PagedState<ScanEvent>
+    >(ScanEventsNotifier.new);

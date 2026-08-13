@@ -53,7 +53,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     final ok = await showConfirmDialog(
       context,
       title: '取消任务',
-      content: '确定要取消任务「${task.name.isEmpty ? '#${task.id}' : task.name}」吗？'
+      content:
+          '确定要取消任务「${task.name.isEmpty ? '#${task.id}' : task.name}」吗？'
           '\n面板会尝试终止正在执行的操作，可能导致该操作处于中间状态。',
       confirmText: '取消任务',
       cancelText: '继续执行',
@@ -168,8 +169,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                   task.name.isEmpty
                                       ? '任务 #${task.id}'
                                       : task.name,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -221,8 +223,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                 icon: const Icon(Icons.delete_outline),
                                 label: const Text('删除任务记录'),
                                 style: OutlinedButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.error,
+                                  foregroundColor: Theme.of(
+                                    context,
+                                  ).colorScheme.error,
                                 ),
                               ),
                             ),
@@ -256,10 +259,7 @@ class _TaskLogCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     if (task.log.isEmpty) {
-      return const SectionCard(
-        title: '任务日志',
-        child: Text('该任务没有关联日志文件'),
-      );
+      return const SectionCard(title: '任务日志', child: Text('该任务没有关联日志文件'));
     }
 
     final logAsync = ref.watch(taskLogProvider(task.log));

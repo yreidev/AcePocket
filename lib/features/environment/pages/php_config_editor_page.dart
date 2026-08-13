@@ -167,10 +167,8 @@ class _PhpConfigEditorPageState extends ConsumerState<PhpConfigEditorPage> {
         ),
         body: config.when(
           loading: () => LoadingView(message: '读取 $_fileName…'),
-          error: (error, _) => ErrorView(
-            error: error,
-            onRetry: () => ref.invalidate(_provider),
-          ),
+          error: (error, _) =>
+              ErrorView(error: error, onRetry: () => ref.invalidate(_provider)),
           data: (_) => Column(
             children: [
               HintBanner(

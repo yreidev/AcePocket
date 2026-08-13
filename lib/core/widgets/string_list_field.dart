@@ -24,9 +24,9 @@ class StringListField extends StatefulWidget {
     String? helper,
     this.itemPrefixIcon,
     this.validator,
-  })  : hintText = hintText ?? hint,
-        helperText = helperText ?? helper,
-        addLabelText = addLabel ?? addButtonText;
+  }) : hintText = hintText ?? hint,
+       helperText = helperText ?? helper,
+       addLabelText = addLabel ?? addButtonText;
 
   final String label;
   final List<String> initialValues;
@@ -66,10 +66,12 @@ class _StringListFieldState extends State<StringListField> {
   }
 
   void _emit() {
-    widget.onChanged(_controllers
-        .map((c) => c.text.trim())
-        .where((e) => e.isNotEmpty)
-        .toList());
+    widget.onChanged(
+      _controllers
+          .map((c) => c.text.trim())
+          .where((e) => e.isNotEmpty)
+          .toList(),
+    );
   }
 
   void _add() {

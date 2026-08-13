@@ -39,10 +39,7 @@ final List<RouteBase> cronBackupRoutes = <RouteBase>[
       final path = state.uri.queryParameters['path'] ?? '';
       final name = state.uri.queryParameters['name'] ?? '';
       if (path.isEmpty) {
-        return const _MissingParamPage(
-          title: '任务日志',
-          message: '缺少日志文件路径参数',
-        );
+        return const _MissingParamPage(title: '任务日志', message: '缺少日志文件路径参数');
       }
       return CronLogPage(path: path, name: name);
     },
@@ -54,10 +51,7 @@ final List<RouteBase> cronBackupRoutes = <RouteBase>[
       final shell = state.uri.queryParameters['shell'] ?? '';
       final name = state.uri.queryParameters['name'] ?? '';
       if (shell.isEmpty) {
-        return const _MissingParamPage(
-          title: '立即执行',
-          message: '缺少任务脚本路径参数',
-        );
+        return const _MissingParamPage(title: '立即执行', message: '缺少任务脚本路径参数');
       }
       return CronRunPage(shell: shell, name: name);
     },

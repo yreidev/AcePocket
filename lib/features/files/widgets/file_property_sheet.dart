@@ -161,8 +161,9 @@ class _FilePropertySheetState extends ConsumerState<FilePropertySheet> {
                     const SizedBox(height: 8),
                     Text(
                       _sizeError!,
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: theme.colorScheme.error),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                   ],
                   const SizedBox(height: 12),
@@ -175,8 +176,9 @@ class _FilePropertySheetState extends ConsumerState<FilePropertySheet> {
                               ? const SizedBox(
                                   width: 16,
                                   height: 16,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
                               : const Icon(Icons.straighten),
                           label: Text(_calculating ? '计算中…' : '计算大小'),

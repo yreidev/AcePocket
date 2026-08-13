@@ -32,4 +32,5 @@ class TokenListNotifier extends PagedNotifier<UserToken> {
 
 final tokenListProvider =
     AsyncNotifierProvider.autoDispose<TokenListNotifier, PagedState<UserToken>>(
-        TokenListNotifier.new);
+      TokenListNotifier.new,
+    );

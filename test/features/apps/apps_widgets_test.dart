@@ -55,9 +55,7 @@ void main() {
   testWidgets('还有下一页且无错误时展示进度指示', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: PagedListFooter(hasMore: true, total: 100),
-        ),
+        home: Scaffold(body: PagedListFooter(hasMore: true, total: 100)),
       ),
     );
     expect(find.byType(CircularProgressIndicator), findsOneWidget);

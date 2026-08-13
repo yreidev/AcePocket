@@ -19,20 +19,20 @@ class EsIndex {
   final String storeSize;
 
   factory EsIndex.fromJson(Map<String, dynamic> json) => EsIndex(
-        name: json['name'] as String? ?? '',
-        health: json['health'] as String? ?? '',
-        status: json['status'] as String? ?? '',
-        docsCount: json['docs_count'] as String? ?? '',
-        storeSize: json['store_size'] as String? ?? '',
-      );
+    name: json['name'] as String? ?? '',
+    health: json['health'] as String? ?? '',
+    status: json['status'] as String? ?? '',
+    docsCount: json['docs_count'] as String? ?? '',
+    storeSize: json['store_size'] as String? ?? '',
+  );
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'health': health,
-        'status': status,
-        'docs_count': docsCount,
-        'store_size': storeSize,
-      };
+    'name': name,
+    'health': health,
+    'status': status,
+    'docs_count': docsCount,
+    'store_size': storeSize,
+  };
 }
 
 /// Elasticsearch 文档，对应源码 `pkg/db/elasticsearch.go` 的 `ESDocument`。
@@ -50,14 +50,10 @@ class EsDocument {
   final String source;
 
   factory EsDocument.fromJson(Map<String, dynamic> json) => EsDocument(
-        id: json['id'] as String? ?? '',
-        index: json['index'] as String? ?? '',
-        source: json['source'] as String? ?? '',
-      );
+    id: json['id'] as String? ?? '',
+    index: json['index'] as String? ?? '',
+    source: json['source'] as String? ?? '',
+  );
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'index': index,
-        'source': source,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'index': index, 'source': source};
 }

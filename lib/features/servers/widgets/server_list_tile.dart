@@ -80,23 +80,28 @@ class ServerListTile extends StatelessWidget {
                   '${server.normalizedBaseUrl}${server.entrancePath}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 if (!server.hasCredentials) ...[
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      Icon(Icons.info_outline,
-                          size: 14, color: colorScheme.onSurfaceVariant),
+                      Icon(
+                        Icons.info_outline,
+                        size: 14,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                       const SizedBox(width: 4),
                       Flexible(
                         child: Text(
                           '未填面板账号，终端 / 实时日志不可用',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.labelSmall
-                              ?.copyWith(color: colorScheme.onSurfaceVariant),
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
                     ],

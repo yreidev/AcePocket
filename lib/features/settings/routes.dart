@@ -22,14 +22,8 @@ final List<RouteBase> settingsRoutes = [
     path: '/settings',
     builder: (context, state) => const SettingsPage(),
     routes: [
-      GoRoute(
-        path: 'tokens',
-        builder: (context, state) => const TokensPage(),
-      ),
-      GoRoute(
-        path: 'cert',
-        builder: (context, state) => const PanelCertPage(),
-      ),
+      GoRoute(path: 'tokens', builder: (context, state) => const TokensPage()),
+      GoRoute(path: 'cert', builder: (context, state) => const PanelCertPage()),
     ],
   ),
   GoRoute(
@@ -44,12 +38,6 @@ final List<RouteBase> settingsRoutes = [
       ),
     ],
   ),
-  GoRoute(
-    path: '/logs',
-    builder: (context, state) => const LogsPage(),
-  ),
-  GoRoute(
-    path: '/about',
-    builder: (context, state) => const AboutPage(),
-  ),
+  GoRoute(path: '/logs', builder: (context, state) => const LogsPage()),
+  GoRoute(path: '/about', builder: (context, state) => const AboutPage()),
 ];

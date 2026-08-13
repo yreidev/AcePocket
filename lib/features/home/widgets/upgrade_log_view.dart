@@ -62,8 +62,9 @@ class _UpgradeLogViewState extends State<UpgradeLogView> {
   }
 
   Future<void> _copyAll() async {
-    final text =
-        widget.logs.map((e) => '${_stamp(e.time)} ${e.message}').join('\n');
+    final text = widget.logs
+        .map((e) => '${_stamp(e.time)} ${e.message}')
+        .join('\n');
     await Clipboard.setData(ClipboardData(text: text));
     if (!mounted) return;
     showSuccessSnack(context, '升级日志已复制到剪贴板');
@@ -130,17 +131,17 @@ class _LogRow extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final (IconData icon, Color color) = switch (entry.level) {
       UpgradeLogLevel.info => (
-          Icons.info_outline,
-          colorScheme.onSurfaceVariant
-        ),
+        Icons.info_outline,
+        colorScheme.onSurfaceVariant,
+      ),
       UpgradeLogLevel.progress => (
-          Icons.radio_button_checked,
-          colorScheme.primary
-        ),
+        Icons.radio_button_checked,
+        colorScheme.primary,
+      ),
       UpgradeLogLevel.success => (
-          Icons.check_circle_outline,
-          colorScheme.primary
-        ),
+        Icons.check_circle_outline,
+        colorScheme.primary,
+      ),
       UpgradeLogLevel.error => (Icons.error_outline, colorScheme.error),
     };
 

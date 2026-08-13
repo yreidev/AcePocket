@@ -127,18 +127,21 @@ class _CronListPageState extends ConsumerState<CronListPage> {
     final ok = await showConfirmDialog(
       context,
       title: '立即执行',
-      content: '将在服务器上立即运行「${cron.name}」的任务脚本，输出会实时显示。'
+      content:
+          '将在服务器上立即运行「${cron.name}」的任务脚本，输出会实时显示。'
           '任务本身的执行周期不受影响。',
       confirmText: '立即执行',
     );
     if (!ok || !mounted) return;
     if (!context.mounted) return;
-    unawaited(context.push(
-      Uri(
-        path: '/crons/run',
-        queryParameters: {'shell': cron.shell, 'name': cron.name},
-      ).toString(),
-    ));
+    unawaited(
+      context.push(
+        Uri(
+          path: '/crons/run',
+          queryParameters: {'shell': cron.shell, 'name': cron.name},
+        ).toString(),
+      ),
+    );
   }
 
   Future<void> _toggle(Cron cron, bool value) async {

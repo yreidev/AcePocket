@@ -86,10 +86,10 @@ class _SshHostFormPageState extends ConsumerState<SshHostFormPage> {
   }
 
   Widget _buildForm(SshHostDraft initial) => SshHostForm(
-        initial: initial,
-        submitting: _submitting,
-        submitLabel: _isEdit ? '保存' : '创建',
-        onSubmit: _submit,
-        onDirtyChanged: _onDirtyChanged,
-      );
+    initial: initial,
+    submitting: _submitting,
+    submitLabel: _isEdit ? '保存' : '创建',
+    onSubmit: _submit,
+    onDirtyChanged: _onDirtyChanged,
+  );
 }

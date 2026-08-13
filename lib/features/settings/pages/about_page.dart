@@ -145,8 +145,8 @@ class AboutPage extends ConsumerWidget {
                 'AcePanel 是全开源（BSD-3-Clause）、永久免费的 Linux 服务器运维面板，'
                 '本 App 为其第三方移动客户端，通过面板 API 令牌（HMAC-SHA256 签名）访问。',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
           ],
@@ -163,7 +163,9 @@ class _AppHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     // 运行时读取实际包版本，读取中 / 失败时回退编译期常量。
-    final version = ref.watch(currentAppVersionProvider).when(
+    final version = ref
+        .watch(currentAppVersionProvider)
+        .when(
           data: (v) => v,
           loading: () => kAppVersion,
           error: (_, __) => kAppVersion,
@@ -324,7 +326,10 @@ class _PanelInfoSection extends StatelessWidget {
             children: [
               InfoRow(label: '面板名称', value: info.panel.name),
               InfoRow(
-                  label: '面板版本', value: system.panelVersion, copyable: true),
+                label: '面板版本',
+                value: system.panelVersion,
+                copyable: true,
+              ),
               InfoRow(label: '构建版本', value: system.commitHash, copyable: true),
               InfoRow(label: '构建时间', value: system.buildTime),
               InfoRow(label: 'Go 版本', value: system.goVersion),
@@ -354,9 +359,10 @@ class _PanelInfoSection extends StatelessWidget {
               ),
               InfoRow(
                 label: '内核',
-                value: [system.kernelVersion, system.kernelArch]
-                    .where((e) => e.isNotEmpty)
-                    .join(' '),
+                value: [
+                  system.kernelVersion,
+                  system.kernelArch,
+                ].where((e) => e.isNotEmpty).join(' '),
               ),
               InfoRow(label: '运行时长', value: system.uptimeLabel),
               if (!system.osSupported)

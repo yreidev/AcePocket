@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 /// phpinfo 中的一个块：小节标题或一行表格。
 class PhpInfoBlock {
   const PhpInfoBlock.heading(this.title)
-      : cells = const <String>[],
-        isHeading = true;
+    : cells = const <String>[],
+      isHeading = true;
 
-  const PhpInfoBlock.row(this.cells)
-      : title = '',
-        isHeading = false;
+  const PhpInfoBlock.row(this.cells) : title = '', isHeading = false;
 
   final bool isHeading;
   final String title;
@@ -96,12 +94,14 @@ class PhpInfoView extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.only(top: 14),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: theme.colorScheme.surfaceContainerHighest
-                .withValues(alpha: 0.6),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.6,
+            ),
             child: Text(
               block.title,
-              style: theme.textTheme.titleSmall
-                  ?.copyWith(color: theme.colorScheme.primary),
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
             ),
           );
         }
@@ -122,10 +122,7 @@ class PhpInfoView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SelectableText(
-                cells.first,
-                style: theme.textTheme.bodyMedium,
-              ),
+              SelectableText(cells.first, style: theme.textTheme.bodyMedium),
               const SizedBox(height: 2),
               for (final value in cells.skip(1))
                 if (value.isNotEmpty)

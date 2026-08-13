@@ -34,28 +34,27 @@ class RedisKv {
   }
 
   factory RedisKv.fromJson(Map<String, dynamic> json) => RedisKv(
-        key: json['key'] as String? ?? '',
-        value: json['value'] as String? ?? '',
-        type: json['type'] as String? ?? '',
-        size: (json['size'] as num?)?.toInt() ?? 0,
-        length: (json['length'] as num?)?.toInt() ?? 0,
-        ttl: (json['ttl'] as num?)?.toInt() ?? -1,
-        // 面板 `pkg/db/redis.go` 的 `UpdatedAt` 为 RFC3339 带偏移，
-        // DateTime.parse 得到 isUtc=true，必须 .toLocal() 后再展示。
-        updatedAt: json['updated_at'] is String
-            ? DateTime.tryParse(json['updated_at'] as String)?.toLocal()
-            : null,
-      );
+    key: json['key'] as String? ?? '',
+    value: json['value'] as String? ?? '',
+    type: json['type'] as String? ?? '',
+    size: (json['size'] as num?)?.toInt() ?? 0,
+    length: (json['length'] as num?)?.toInt() ?? 0,
+    ttl: (json['ttl'] as num?)?.toInt() ?? -1,
+    // 面板 `pkg/db/redis.go` 的 `UpdatedAt` 为 RFC3339 带偏移，
+    // DateTime.parse 得到 isUtc=true，必须 .toLocal() 后再展示。
+    updatedAt: json['updated_at'] is String
+        ? DateTime.tryParse(json['updated_at'] as String)?.toLocal()
+        : null,
+  );
 
   Map<String, dynamic> toJson() => {
-        'key': key,
-        'value': value,
-        'type': type,
-        'size': size,
-        'length': length,
-        'ttl': ttl,
-        // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
-        if (updatedAt != null)
-          'updated_at': updatedAt!.toUtc().toIso8601String(),
-      };
+    'key': key,
+    'value': value,
+    'type': type,
+    'size': size,
+    'length': length,
+    'ttl': ttl,
+    // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
+    if (updatedAt != null) 'updated_at': updatedAt!.toUtc().toIso8601String(),
+  };
 }

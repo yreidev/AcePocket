@@ -19,11 +19,7 @@ import '../widgets/ssh_feedback.dart';
 /// （创建目录）；`id` 为 0 表示面板本机（`request.SSHFile` 的约定）。
 /// 面板的 SFTP 接口只提供目录浏览与建目录，不含上传 / 下载 / 删除。
 class SshSftpPage extends ConsumerStatefulWidget {
-  const SshSftpPage({
-    super.key,
-    required this.hostId,
-    this.initialPath = '/',
-  });
+  const SshSftpPage({super.key, required this.hostId, this.initialPath = '/'});
 
   final int hostId;
   final String initialPath;
@@ -111,10 +107,9 @@ class _SshSftpPageState extends ConsumerState<SshSftpPage> {
     if (name == null || !mounted) return;
     setState(() => _busy = true);
     try {
-      await ref.read(sshHostsRepoProvider).mkdir(
-            hostId: _hostId,
-            path: joinPath(currentPath, name),
-          );
+      await ref
+          .read(sshHostsRepoProvider)
+          .mkdir(hostId: _hostId, path: joinPath(currentPath, name));
       if (!mounted) return;
       showSuccessSnack(context, '目录「$name」已创建');
       // 刷新后再解除忙碌态，避免进度条先消失、列表却还是旧的。
@@ -159,8 +154,8 @@ class _SshSftpPageState extends ConsumerState<SshSftpPage> {
               Text(
                 '文件浏览',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
@@ -250,7 +245,8 @@ class _SshSftpPageState extends ConsumerState<SshSftpPage> {
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: EmptyView(
-                message: '$_path 下没有任何文件或目录\n'
+                message:
+                    '$_path 下没有任何文件或目录\n'
                     '下拉可重新读取；也可以在这里新建目录',
                 icon: Icons.folder_open_outlined,
                 action: Wrap(
@@ -304,11 +300,8 @@ class _SshSftpPageState extends ConsumerState<SshSftpPage> {
           return SftpFileTile(
             file: file,
             onTap: () => _onTapFile(file),
-            onShowInfo: () => showSftpFileInfoDialog(
-              context,
-              file: file,
-              directory: _path,
-            ),
+            onShowInfo: () =>
+                showSftpFileInfoDialog(context, file: file, directory: _path),
           );
         },
       ),

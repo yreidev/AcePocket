@@ -273,7 +273,8 @@ class _AppListViewState extends ConsumerState<_AppListView>
     final ok = await showConfirmDialog(
       context,
       title: '安装 ${app.name}',
-      content: '确定安装 ${app.name}（$version）吗？\n'
+      content:
+          '确定安装 ${app.name}（$version）吗？\n'
           '安装任务将在面板后台执行，可在任务中心查看进度。',
       confirmText: '安装',
     );
@@ -293,7 +294,8 @@ class _AppListViewState extends ConsumerState<_AppListView>
     final ok = await showConfirmDialog(
       context,
       title: '更新 ${app.name}',
-      content: '确定将 ${app.name} 更新到 ${target.isEmpty ? '最新版本' : target} 吗？\n'
+      content:
+          '确定将 ${app.name} 更新到 ${target.isEmpty ? '最新版本' : target} 吗？\n'
           '更新可能会将相关配置重置为默认状态。\n'
           '更新任务将在面板后台执行，可在任务中心查看进度。',
       confirmText: '更新',
@@ -317,9 +319,9 @@ class _AppListViewState extends ConsumerState<_AppListView>
       title: '卸载 ${app.name}',
       content: isWebServer
           ? '${app.name} 是 Web 服务器，重装或切换到其他 Web 服务器会重置所有网站的配置，确定卸载吗？\n'
-              '卸载任务将在面板后台执行，可在任务中心查看进度。'
+                '卸载任务将在面板后台执行，可在任务中心查看进度。'
           : '确定卸载 ${app.name} 吗？该操作不可恢复，应用数据可能一并删除。\n'
-              '卸载任务将在面板后台执行，可在任务中心查看进度。',
+                '卸载任务将在面板后台执行，可在任务中心查看进度。',
       confirmText: '卸载',
       danger: true,
     );
@@ -383,18 +385,13 @@ class _AppListViewState extends ConsumerState<_AppListView>
     final filtered = filter.keyword.isNotEmpty || filter.category.isNotEmpty;
     final categories =
         ref.watch(appCategoriesProvider).valueOrNull ?? const <AppCategory>[];
-    final categoryLabels = {
-      for (final c in categories) c.value: c.label,
-    };
+    final categoryLabels = {for (final c in categories) c.value: c.label};
 
     if (state.isLoading && state.items.isEmpty) {
       return const LoadingView(message: '加载应用列表…');
     }
     if (state.error != null && state.items.isEmpty) {
-      return ErrorView(
-        error: state.error!,
-        onRetry: () => _notifier.reload(),
-      );
+      return ErrorView(error: state.error!, onRetry: () => _notifier.reload());
     }
 
     return RefreshIndicator(
@@ -424,8 +421,8 @@ class _AppListViewState extends ConsumerState<_AppListView>
                       message: filtered
                           ? '没有匹配的应用\n可尝试更换分类或关键词'
                           : (widget.installedOnly
-                              ? '还没有已安装的应用\n可在「全部应用」中安装'
-                              : '应用列表为空\n可点击右上角更新应用商店缓存'),
+                                ? '还没有已安装的应用\n可在「全部应用」中安装'
+                                : '应用列表为空\n可点击右上角更新应用商店缓存'),
                       icon: Icons.apps_outlined,
                     ),
                   ),

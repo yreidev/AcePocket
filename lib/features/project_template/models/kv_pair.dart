@@ -9,10 +9,8 @@ class KvPair {
   final String key;
   final String value;
 
-  factory KvPair.fromJson(Map<String, dynamic> json) => KvPair(
-        key: jsonString(json['key']),
-        value: jsonString(json['value']),
-      );
+  factory KvPair.fromJson(Map<String, dynamic> json) =>
+      KvPair(key: jsonString(json['key']), value: jsonString(json['value']));
 
   Map<String, dynamic> toJson() => {'key': key, 'value': value};
 

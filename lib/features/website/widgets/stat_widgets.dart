@@ -122,13 +122,13 @@ enum StatMetric {
   final String label;
 
   double valueOf(StatTotals t) => switch (this) {
-        StatMetric.pv => t.pv.toDouble(),
-        StatMetric.uv => t.uv.toDouble(),
-        StatMetric.ip => t.ip.toDouble(),
-        StatMetric.requests => t.requests.toDouble(),
-        StatMetric.bandwidth => t.bandwidth.toDouble(),
-        StatMetric.errors => t.errors.toDouble(),
-      };
+    StatMetric.pv => t.pv.toDouble(),
+    StatMetric.uv => t.uv.toDouble(),
+    StatMetric.ip => t.ip.toDouble(),
+    StatMetric.requests => t.requests.toDouble(),
+    StatMetric.bandwidth => t.bandwidth.toDouble(),
+    StatMetric.errors => t.errors.toDouble(),
+  };
 
   String format(double value) => this == StatMetric.bandwidth
       ? formatBytes(value)
@@ -163,8 +163,9 @@ class StatSeriesChart extends StatelessWidget {
         child: Center(
           child: Text(
             '所选时间范围内暂无数据',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: scheme.onSurfaceVariant),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
           ),
         ),
       );
@@ -200,17 +201,17 @@ class StatSeriesChart extends StatelessWidget {
             show: true,
             drawVerticalLine: false,
             horizontalInterval: maxY / 4,
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: scheme.outlineVariant,
-              strokeWidth: 1,
-            ),
+            getDrawingHorizontalLine: (value) =>
+                FlLine(color: scheme.outlineVariant, strokeWidth: 1),
           ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
-            topTitles:
-                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles:
-                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,

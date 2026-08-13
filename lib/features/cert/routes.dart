@@ -26,10 +26,7 @@ import 'pages/cert_upload_page.dart';
 /// - `/certs/accounts/create`      新建 CA 账户
 /// - `/certs/accounts/:id/edit`    编辑 CA 账户
 final List<RouteBase> certRoutes = [
-  GoRoute(
-    path: '/certs',
-    builder: (context, state) => const CertListPage(),
-  ),
+  GoRoute(path: '/certs', builder: (context, state) => const CertListPage()),
   GoRoute(
     path: '/certs/create',
     builder: (context, state) => const CertCreatePage(),

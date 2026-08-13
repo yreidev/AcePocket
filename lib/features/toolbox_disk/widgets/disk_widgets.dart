@@ -96,8 +96,8 @@ class UsageBar extends StatelessWidget {
     final color = clamped > 90
         ? theme.colorScheme.error
         : clamped > 70
-            ? theme.colorScheme.tertiary
-            : theme.colorScheme.primary;
+        ? theme.colorScheme.tertiary
+        : theme.colorScheme.primary;
     final bar = ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: LinearProgressIndicator(
@@ -110,7 +110,8 @@ class UsageBar extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-            child: width == null ? bar : SizedBox(width: width, child: bar)),
+          child: width == null ? bar : SizedBox(width: width, child: bar),
+        ),
         const SizedBox(width: 8),
         Text(
           '$clamped%',
@@ -183,11 +184,11 @@ class BusyIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          semanticsLabel: semanticsLabel,
-        ),
-      );
+    width: size,
+    height: size,
+    child: CircularProgressIndicator(
+      strokeWidth: 2,
+      semanticsLabel: semanticsLabel,
+    ),
+  );
 }

@@ -54,8 +54,9 @@ class AppSettingsStore {
     try {
       final prefs = await SharedPreferences.getInstance();
       _startupTab = StartupTab.parse(prefs.getString(startupTabKey));
-      _homePollIntervalSeconds =
-          sanitizeHomePollInterval(prefs.getInt(homePollIntervalKey));
+      _homePollIntervalSeconds = sanitizeHomePollInterval(
+        prefs.getInt(homePollIntervalKey),
+      );
       _autoCheckUpdate = prefs.getBool(autoCheckUpdateKey) ?? true;
       _skippedUpdateVersion = prefs.getString(skippedUpdateVersionKey);
     } catch (_) {

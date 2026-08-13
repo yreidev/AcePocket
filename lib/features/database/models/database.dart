@@ -28,20 +28,20 @@ class Database {
   final String comment;
 
   factory Database.fromJson(Map<String, dynamic> json) => Database(
-        type: json['type'] as String? ?? '',
-        name: json['name'] as String? ?? '',
-        server: json['server'] as String? ?? '',
-        serverId: (json['server_id'] as num?)?.toInt() ?? 0,
-        encoding: json['encoding'] as String? ?? '',
-        comment: json['comment'] as String? ?? '',
-      );
+    type: json['type'] as String? ?? '',
+    name: json['name'] as String? ?? '',
+    server: json['server'] as String? ?? '',
+    serverId: (json['server_id'] as num?)?.toInt() ?? 0,
+    encoding: json['encoding'] as String? ?? '',
+    comment: json['comment'] as String? ?? '',
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'name': name,
-        'server': server,
-        'server_id': serverId,
-        'encoding': encoding,
-        'comment': comment,
-      };
+    'type': type,
+    'name': name,
+    'server': server,
+    'server_id': serverId,
+    'encoding': encoding,
+    'comment': comment,
+  };
 }

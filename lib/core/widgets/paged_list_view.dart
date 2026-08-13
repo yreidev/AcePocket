@@ -146,7 +146,8 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
                   if (widget.header != null) widget.header!,
                   SizedBox(
                     height: constraints.maxHeight * 0.6,
-                    child: widget.emptyView ??
+                    child:
+                        widget.emptyView ??
                         EmptyView(
                           message: widget.emptyMessage,
                           icon: widget.emptyIcon,
@@ -220,8 +221,9 @@ class _Footer extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
             const SizedBox(height: 8),
             TextButton.icon(
@@ -241,10 +243,7 @@ class _Footer extends StatelessWidget {
         child: CircularProgressIndicator(strokeWidth: 2),
       );
     } else if (hasMore) {
-      child = TextButton(
-        onPressed: onLoadMore,
-        child: const Text('加载更多'),
-      );
+      child = TextButton(onPressed: onLoadMore, child: const Text('加载更多'));
     } else {
       child = Text(
         totalLabel(total),

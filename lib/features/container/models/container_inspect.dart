@@ -88,13 +88,14 @@ class ContainerInspect {
       createdAt: asDateTime(json['Created']),
       state: ContainerInspectState.fromJson(asMap(json['State'])),
       config: ContainerInspectConfig.fromJson(asMap(json['Config'])),
-      hostConfig:
-          ContainerInspectHostConfig.fromJson(asMap(json['HostConfig'])),
+      hostConfig: ContainerInspectHostConfig.fromJson(
+        asMap(json['HostConfig']),
+      ),
       mounts: rawMounts is List
           ? rawMounts
-              .map((e) => ContainerMount.fromJson(asMap(e)))
-              .where((m) => m.destination.isNotEmpty || m.source.isNotEmpty)
-              .toList()
+                .map((e) => ContainerMount.fromJson(asMap(e)))
+                .where((m) => m.destination.isNotEmpty || m.source.isNotEmpty)
+                .toList()
           : const [],
       networks: networks,
       ports: ports,
@@ -268,13 +269,13 @@ class ContainerMount {
   final bool rw;
 
   factory ContainerMount.fromJson(Map<String, dynamic> json) => ContainerMount(
-        type: asString(json['Type']),
-        name: asString(json['Name']),
-        source: asString(json['Source']),
-        destination: asString(json['Destination']),
-        mode: asString(json['Mode']),
-        rw: asBool(json['RW'], true),
-      );
+    type: asString(json['Type']),
+    name: asString(json['Name']),
+    source: asString(json['Source']),
+    destination: asString(json['Destination']),
+    mode: asString(json['Mode']),
+    rw: asBool(json['RW'], true),
+  );
 
   /// 宿主机侧展示（volume 类型显示卷名）。
   String get hostText => type == 'volume' && name.isNotEmpty ? name : source;
@@ -299,12 +300,11 @@ class ContainerNetworkBinding {
   factory ContainerNetworkBinding.fromJson(
     String name,
     Map<String, dynamic> json,
-  ) =>
-      ContainerNetworkBinding(
-        name: name,
-        networkId: asString(json['NetworkID']),
-        ipAddress: asString(json['IPAddress']),
-        gateway: asString(json['Gateway']),
-        macAddress: asString(json['MacAddress']),
-      );
+  ) => ContainerNetworkBinding(
+    name: name,
+    networkId: asString(json['NetworkID']),
+    ipAddress: asString(json['IPAddress']),
+    gateway: asString(json['Gateway']),
+    macAddress: asString(json['MacAddress']),
+  );
 }

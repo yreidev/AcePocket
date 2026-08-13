@@ -22,8 +22,8 @@ class AliasListField extends StatefulWidget {
 
 class _AliasEntry {
   _AliasEntry({String key = '', String value = ''})
-      : keyController = TextEditingController(text: key),
-        valueController = TextEditingController(text: value);
+    : keyController = TextEditingController(text: key),
+      valueController = TextEditingController(text: value);
 
   final TextEditingController keyController;
   final TextEditingController valueController;

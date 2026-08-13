@@ -78,7 +78,9 @@ class _RedisKeySheetState extends ConsumerState<RedisKeySheet> {
       _loadError = null;
     });
     try {
-      final RedisKv kv = await ref.read(databaseRepoProvider).redisKeyGet(
+      final RedisKv kv = await ref
+          .read(databaseRepoProvider)
+          .redisKeyGet(
             serverId: widget.serverId,
             db: widget.db,
             key: widget.keyName!,
@@ -114,7 +116,9 @@ class _RedisKeySheetState extends ConsumerState<RedisKeySheet> {
     setState(() => _submitting = true);
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).redisKeySet(
+      () => ref
+          .read(databaseRepoProvider)
+          .redisKeySet(
             serverId: widget.serverId,
             db: widget.db,
             key: key,
@@ -189,7 +193,8 @@ class _RedisKeySheetState extends ConsumerState<RedisKeySheet> {
         ),
         if (_type != 'string')
           const SheetHint(
-            text: 'list / set / zset / hash 类型的值需要使用 JSON 格式，'
+            text:
+                'list / set / zset / hash 类型的值需要使用 JSON 格式，'
                 '例如 ["a","b"] 或 {"field":"value"}。',
           ),
       ],

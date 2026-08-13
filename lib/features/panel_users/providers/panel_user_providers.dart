@@ -27,10 +27,10 @@ final passkeyStatusProvider = FutureProvider.autoDispose<PasskeyStatus>(
 );
 
 /// 指定用户的通行密钥列表（接口无分页）。
-final passkeyListProvider =
-    FutureProvider.autoDispose.family<List<Passkey>, int>(
-  (ref, userId) => ref.watch(panelUserRepoProvider).passkeys(userId),
-);
+final passkeyListProvider = FutureProvider.autoDispose
+    .family<List<Passkey>, int>(
+      (ref, userId) => ref.watch(panelUserRepoProvider).passkeys(userId),
+    );
 
 /// App 用于 WebSocket 会话登录的面板账号状态。
 class WsAccountStatus {
@@ -47,15 +47,14 @@ class WsAccountStatus {
 }
 
 /// 当前服务器所配置的面板账号状态；未填写账号时为 null。
-final wsAccountStatusProvider = FutureProvider.autoDispose<WsAccountStatus?>(
-  (ref) async {
-    final server = ref.watch(activeServerProvider);
-    if (server == null || !server.hasCredentials) return null;
-    final twoFa =
-        await ref.watch(panelUserRepoProvider).isTwoFa(server.username);
-    return WsAccountStatus(username: server.username, twoFaEnabled: twoFa);
-  },
-);
+final wsAccountStatusProvider = FutureProvider.autoDispose<WsAccountStatus?>((
+  ref,
+) async {
+  final server = ref.watch(activeServerProvider);
+  if (server == null || !server.hasCredentials) return null;
+  final twoFa = await ref.watch(panelUserRepoProvider).isTwoFa(server.username);
+  return WsAccountStatus(username: server.username, twoFaEnabled: twoFa);
+});
 
 // ------------------------------------------------------------------ 分页列表
 
@@ -102,14 +101,18 @@ class PanelUsersNotifier extends PagedNotifier<PanelUser> {
   }
 }
 
-final panelUsersProvider = AsyncNotifierProvider.autoDispose<PanelUsersNotifier,
-    PagedState<PanelUser>>(PanelUsersNotifier.new);
+final panelUsersProvider =
+    AsyncNotifierProvider.autoDispose<
+      PanelUsersNotifier,
+      PagedState<PanelUser>
+    >(PanelUsersNotifier.new);
 
 /// 供通行密钥页选择用户的用户列表（一次拉取，最多 200 条）。
-final panelUserOptionsProvider = FutureProvider.autoDispose<List<PanelUser>>(
-  (ref) async {
-    final paged =
-        await ref.watch(panelUserRepoProvider).list(page: 1, limit: 200);
-    return paged.items;
-  },
-);
+final panelUserOptionsProvider = FutureProvider.autoDispose<List<PanelUser>>((
+  ref,
+) async {
+  final paged = await ref
+      .watch(panelUserRepoProvider)
+      .list(page: 1, limit: 200);
+  return paged.items;
+});

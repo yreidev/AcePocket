@@ -97,16 +97,16 @@ class SmtpConfig {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'host': host,
-        'port': port,
-        'encryption': encryption,
-        'username': username,
-        'password': password,
-        'from': from,
-        'from_name': fromName,
-        'to': to,
-        'skip_verify': skipVerify,
-      };
+    'host': host,
+    'port': port,
+    'encryption': encryption,
+    'username': username,
+    'password': password,
+    'from': from,
+    'from_name': fromName,
+    'to': to,
+    'skip_verify': skipVerify,
+  };
 
   SmtpConfig copyWith({
     String? host,
@@ -174,22 +174,22 @@ class NotifyChannel {
   }
 
   factory NotifyChannel.fromJson(Map<String, dynamic> json) => NotifyChannel(
-        id: jsonInt(json['id']),
-        name: jsonString(json['name']),
-        type: jsonString(json['type']),
-        config: jsonMap(json['config']),
-        enabled: jsonBool(json['enabled']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    name: jsonString(json['name']),
+    type: jsonString(json['type']),
+    config: jsonMap(json['config']),
+    enabled: jsonBool(json['enabled']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 
   /// 创建 / 更新请求体（`request.NotifyChannelCreate` / `NotifyChannelUpdate`）。
   Map<String, dynamic> toRequestJson() => <String, dynamic>{
-        'name': name,
-        'type': type,
-        'config': config,
-        'enabled': enabled,
-      };
+    'name': name,
+    'type': type,
+    'config': config,
+    'enabled': enabled,
+  };
 
   NotifyChannel copyWith({
     String? name,

@@ -74,13 +74,11 @@ class FileListTile extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       selected: selected,
-      selectedTileColor:
-          theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
+      selectedTileColor: theme.colorScheme.primaryContainer.withValues(
+        alpha: 0.35,
+      ),
       leading: selectionMode
-          ? Checkbox(
-              value: selected,
-              onChanged: (_) => onTap(),
-            )
+          ? Checkbox(value: selected, onChanged: (_) => onTap())
           : Icon(
               _icon,
               color: item.dir
@@ -106,14 +104,20 @@ class FileListTile extends StatelessWidget {
             // Tooltip 同时提供长按提示与读屏播报，纯图标对盲用户不可见。
             Tooltip(
               message: '已加防篡改锁定（chattr +i）',
-              child: Icon(Icons.lock_outline,
-                  size: 14, color: theme.colorScheme.tertiary),
+              child: Icon(
+                Icons.lock_outline,
+                size: 14,
+                color: theme.colorScheme.tertiary,
+              ),
             ),
           ],
           if (item.symlink) ...[
             const SizedBox(width: 6),
-            Icon(Icons.arrow_forward,
-                size: 14, color: theme.colorScheme.outline),
+            Icon(
+              Icons.arrow_forward,
+              size: 14,
+              color: theme.colorScheme.outline,
+            ),
             const SizedBox(width: 2),
             Flexible(
               child: Text(

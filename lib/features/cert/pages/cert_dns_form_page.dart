@@ -62,10 +62,7 @@ const Map<String, _DnsCredentialSpec> _dnsSpecs = {
     akLabel: 'API Key',
     akHint: 'Cloudflare API Token',
   ),
-  'gcore': _DnsCredentialSpec(
-    akLabel: 'API Key',
-    akHint: 'Gcore API Key',
-  ),
+  'gcore': _DnsCredentialSpec(akLabel: 'API Key', akHint: 'Gcore API Key'),
   'porkbun': _DnsCredentialSpec(
     akLabel: 'API Key',
     akHint: 'Porkbun API Key',
@@ -108,11 +105,11 @@ class CertDnsFormPage extends ConsumerWidget {
           final providers = options.dnsProviders.isEmpty
               ? [
                   for (final entry in CertDns.typeLabels.entries)
-                    (entry.key, entry.value)
+                    (entry.key, entry.value),
                 ]
               : [
                   for (final item in options.dnsProviders)
-                    (item.value, item.label)
+                    (item.value, item.label),
                 ];
 
           if (dnsId == null) {
@@ -144,14 +141,18 @@ class _DnsForm extends ConsumerStatefulWidget {
 }
 
 class _DnsFormState extends ConsumerState<_DnsForm> {
-  late final TextEditingController _nameController =
-      TextEditingController(text: widget.dns?.name ?? '');
-  late final TextEditingController _akController =
-      TextEditingController(text: widget.dns?.data.ak ?? '');
-  late final TextEditingController _skController =
-      TextEditingController(text: widget.dns?.data.sk ?? '');
-  late final TextEditingController _serverController =
-      TextEditingController(text: widget.dns?.data.dnsServer ?? '8.8.8.8');
+  late final TextEditingController _nameController = TextEditingController(
+    text: widget.dns?.name ?? '',
+  );
+  late final TextEditingController _akController = TextEditingController(
+    text: widget.dns?.data.ak ?? '',
+  );
+  late final TextEditingController _skController = TextEditingController(
+    text: widget.dns?.data.sk ?? '',
+  );
+  late final TextEditingController _serverController = TextEditingController(
+    text: widget.dns?.data.dnsServer ?? '8.8.8.8',
+  );
 
   late String _type = widget.dns?.type ?? widget.providers.first.$1;
   late bool _skipVerify = widget.dns?.data.skipVerify ?? false;
@@ -359,11 +360,13 @@ class _DnsFormState extends ConsumerState<_DnsForm> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.save_outlined),
-            label: Text(_submitting
-                ? '提交中…'
-                : widget.dns == null
-                    ? '创建'
-                    : '保存'),
+            label: Text(
+              _submitting
+                  ? '提交中…'
+                  : widget.dns == null
+                  ? '创建'
+                  : '保存',
+            ),
           ),
         ),
       ],

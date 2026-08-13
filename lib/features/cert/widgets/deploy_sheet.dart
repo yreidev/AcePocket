@@ -23,10 +23,8 @@ Future<DeploySelection?> showDeployCertSheet(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    builder: (context) => _DeploySheet(
-      websites: websites,
-      initialSelected: initialSelected,
-    ),
+    builder: (context) =>
+        _DeploySheet(websites: websites, initialSelected: initialSelected),
   );
 }
 
@@ -118,11 +116,11 @@ class _DeploySheetState extends State<_DeploySheet> {
                       onPressed: _selected.isEmpty
                           ? null
                           : () => Navigator.of(context).pop(
-                                DeploySelection(
-                                  websiteIds: _selected.toList(),
-                                  enableHttps: _enableHttps,
-                                ),
+                              DeploySelection(
+                                websiteIds: _selected.toList(),
+                                enableHttps: _enableHttps,
                               ),
+                            ),
                       child: const Text('部署'),
                     ),
                   ),

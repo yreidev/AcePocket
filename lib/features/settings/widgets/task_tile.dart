@@ -13,27 +13,27 @@ import 'format_utils.dart';
     case TaskItem.statusRunning:
       return (
         background: scheme.primaryContainer,
-        foreground: scheme.onPrimaryContainer
+        foreground: scheme.onPrimaryContainer,
       );
     case TaskItem.statusFinished:
       return (
         background: scheme.secondaryContainer,
-        foreground: scheme.onSecondaryContainer
+        foreground: scheme.onSecondaryContainer,
       );
     case TaskItem.statusFailed:
       return (
         background: scheme.errorContainer,
-        foreground: scheme.onErrorContainer
+        foreground: scheme.onErrorContainer,
       );
     case TaskItem.statusCanceled:
       return (
         background: scheme.surfaceContainerHighest,
-        foreground: scheme.onSurfaceVariant
+        foreground: scheme.onSurfaceVariant,
       );
     default: // waiting
       return (
         background: scheme.tertiaryContainer,
-        foreground: scheme.onTertiaryContainer
+        foreground: scheme.onTertiaryContainer,
       );
   }
 }

@@ -33,8 +33,9 @@ class FeatureUnsupportedBanner extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final unreleased = requiredVersionOf(feature) == kUnreleasedVersion;
-    final background =
-        unreleased ? colorScheme.tertiaryContainer : colorScheme.errorContainer;
+    final background = unreleased
+        ? colorScheme.tertiaryContainer
+        : colorScheme.errorContainer;
     final foreground = unreleased
         ? colorScheme.onTertiaryContainer
         : colorScheme.onErrorContainer;

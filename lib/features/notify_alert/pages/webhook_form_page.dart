@@ -61,12 +61,12 @@ class _WebhookFormPageState extends ConsumerState<WebhookFormPage> {
 
   /// 当前表单值的快照，用于判断是否有未保存的修改。
   String _snapshot() => <String>[
-        _nameController.text.trim(),
-        _userController.text.trim(),
-        _scriptController.text,
-        '$_raw',
-        '$_status',
-      ].join('\u0000');
+    _nameController.text.trim(),
+    _userController.text.trim(),
+    _scriptController.text,
+    '$_raw',
+    '$_status',
+  ].join('\u0000');
 
   void _onFieldChanged() {
     if (_applying) return;
@@ -167,10 +167,7 @@ class _WebhookFormPageState extends ConsumerState<WebhookFormPage> {
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.only(bottom: 96),
-            children: [
-              _basicCard(),
-              _scriptCard(),
-            ],
+            children: [_basicCard(), _scriptCard()],
           ),
         ),
         bottomNavigationBar: SafeArea(
@@ -262,8 +259,9 @@ class _WebhookFormPageState extends ConsumerState<WebhookFormPage> {
                 Expanded(
                   child: SelectableText(
                     '$baseUrl$_key',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontFamily: 'monospace'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontFamily: 'monospace',
+                    ),
                   ),
                 ),
                 A11yIconButton(
@@ -288,7 +286,8 @@ class _WebhookFormPageState extends ConsumerState<WebhookFormPage> {
         children: [
           const InfoBanner(
             margin: EdgeInsets.only(bottom: 12),
-            text: '脚本会保存为面板服务器上的可执行文件，请谨慎填写。'
+            text:
+                '脚本会保存为面板服务器上的可执行文件，请谨慎填写。'
                 '建议以 #!/bin/bash 开头。',
           ),
           TextFormField(
@@ -301,8 +300,10 @@ class _WebhookFormPageState extends ConsumerState<WebhookFormPage> {
             enableSuggestions: false,
             smartDashesType: SmartDashesType.disabled,
             smartQuotesType: SmartQuotesType.disabled,
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontFamily: 'monospace', height: 1.4),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontFamily: 'monospace',
+              height: 1.4,
+            ),
             decoration: const InputDecoration(
               hintText: '#!/bin/bash\n\nsystemctl restart nginx',
               border: OutlineInputBorder(),

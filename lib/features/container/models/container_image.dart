@@ -26,14 +26,14 @@ class ContainerImage {
   final DateTime? createdAt;
 
   factory ContainerImage.fromJson(Map<String, dynamic> json) => ContainerImage(
-        id: asString(json['id']),
-        containers: asInt(json['containers']),
-        repoTags: asStringList(json['repo_tags']),
-        repoDigests: asStringList(json['repo_digests']),
-        size: asString(json['size']),
-        labels: KV.listFromJson(json['labels']),
-        createdAt: asDateTime(json['created_at']),
-      );
+    id: asString(json['id']),
+    containers: asInt(json['containers']),
+    repoTags: asStringList(json['repo_tags']),
+    repoDigests: asStringList(json['repo_digests']),
+    size: asString(json['size']),
+    labels: KV.listFromJson(json['labels']),
+    createdAt: asDateTime(json['created_at']),
+  );
 
   String get shortIdText => shortId(id);
 

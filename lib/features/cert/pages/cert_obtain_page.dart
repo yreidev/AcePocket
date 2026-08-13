@@ -34,11 +34,7 @@ class _LogEntry {
 /// [wsConnect] 抛 [WsAuthException]，此处会提示用户补填，并提供
 /// 「无日志模式」（HTTP 同步接口）兜底。
 class CertObtainPage extends ConsumerStatefulWidget {
-  const CertObtainPage({
-    super.key,
-    required this.certId,
-    this.renew = false,
-  });
+  const CertObtainPage({super.key, required this.certId, this.renew = false});
 
   final int certId;
 
@@ -221,10 +217,7 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
         _append(_LogLevel.progress, message);
       case 'success':
         _changed = true;
-        _append(
-          _LogLevel.success,
-          widget.renew ? '续签成功' : '签发成功',
-        );
+        _append(_LogLevel.success, widget.renew ? '续签成功' : '签发成功');
         if (mounted) {
           setState(() {
             _finished = true;
@@ -336,8 +329,11 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.lock_outline,
-                            size: 20, color: theme.colorScheme.error),
+                        Icon(
+                          Icons.lock_outline,
+                          size: 20,
+                          color: theme.colorScheme.error,
+                        ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
@@ -383,8 +379,10 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
                             onPressed: () => context.push(
                               '/servers/edit?id=${server.id}&advanced=1',
                             ),
-                            icon: const Icon(Icons.manage_accounts_outlined,
-                                size: 18),
+                            icon: const Icon(
+                              Icons.manage_accounts_outlined,
+                              size: 18,
+                            ),
                             label: const Text('去填写面板账号'),
                           ),
                         );
@@ -425,18 +423,21 @@ class _CertObtainPageState extends ConsumerState<CertObtainPage> {
                             ? const SizedBox(
                                 width: 18,
                                 height: 18,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
-                            : Icon(_error == null
-                                ? Icons.play_arrow
-                                : Icons.refresh),
+                            : Icon(
+                                _error == null
+                                    ? Icons.play_arrow
+                                    : Icons.refresh,
+                              ),
                         label: Text(
                           _running
                               ? '执行中…'
                               : _error == null
-                                  ? (widget.renew ? '开始续签' : '开始签发')
-                                  : '重试',
+                              ? (widget.renew ? '开始续签' : '开始签发')
+                              : '重试',
                         ),
                       ),
               ),
@@ -460,9 +461,9 @@ class _IdleHint extends StatelessWidget {
     final text = renew
         ? '点击下方按钮开始续签，面板会实时推送续签日志。'
         : selfSigned
-            ? '自签名证书由面板本地生成，仅适用于内网或测试环境，浏览器会提示不受信任。'
-            : '点击下方按钮开始签发，面板会通过实时通道推送 ACME 验证与签发日志。\n'
-                '签发过程最长 10 分钟，请保持网络畅通。';
+        ? '自签名证书由面板本地生成，仅适用于内网或测试环境，浏览器会提示不受信任。'
+        : '点击下方按钮开始签发，面板会通过实时通道推送 ACME 验证与签发日志。\n'
+              '签发过程最长 10 分钟，请保持网络畅通。';
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -499,27 +500,31 @@ class _LogRow extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     // 级别只靠图标与颜色区分，读屏与色觉障碍用户会漏掉，补一个语义标签。
-    final (IconData icon, Color color, String levelLabel) =
-        switch (entry.level) {
+    final (
+      IconData icon,
+      Color color,
+      String levelLabel,
+    ) = switch (entry.level) {
       _LogLevel.info => (
-          Icons.info_outline,
-          colorScheme.onSurfaceVariant,
-          '提示',
-        ),
+        Icons.info_outline,
+        colorScheme.onSurfaceVariant,
+        '提示',
+      ),
       _LogLevel.progress => (
-          Icons.radio_button_checked,
-          colorScheme.primary,
-          '进行中',
-        ),
+        Icons.radio_button_checked,
+        colorScheme.primary,
+        '进行中',
+      ),
       _LogLevel.success => (
-          Icons.check_circle_outline,
-          colorScheme.primary,
-          '成功',
-        ),
+        Icons.check_circle_outline,
+        colorScheme.primary,
+        '成功',
+      ),
       _LogLevel.error => (Icons.error_outline, colorScheme.error, '失败'),
     };
     final time = entry.time;
-    final stamp = '${time.hour.toString().padLeft(2, '0')}:'
+    final stamp =
+        '${time.hour.toString().padLeft(2, '0')}:'
         '${time.minute.toString().padLeft(2, '0')}:'
         '${time.second.toString().padLeft(2, '0')}';
 

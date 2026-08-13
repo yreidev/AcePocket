@@ -7,10 +7,8 @@ class ProcessAddr {
   final String ip;
   final int port;
 
-  factory ProcessAddr.fromJson(Map<String, dynamic> json) => ProcessAddr(
-        ip: jsonString(json['ip']),
-        port: jsonInt(json['port']),
-      );
+  factory ProcessAddr.fromJson(Map<String, dynamic> json) =>
+      ProcessAddr(ip: jsonString(json['ip']), port: jsonInt(json['port']));
 
   bool get isEmpty => ip.isEmpty && port == 0;
 
@@ -72,10 +70,7 @@ class ProcessOpenFile {
   final int fd;
 
   factory ProcessOpenFile.fromJson(Map<String, dynamic> json) =>
-      ProcessOpenFile(
-        path: jsonString(json['path']),
-        fd: jsonInt(json['fd']),
-      );
+      ProcessOpenFile(path: jsonString(json['path']), fd: jsonInt(json['fd']));
 }
 
 /// 进程信息（对应源码 `pkg/types/process.go` 的 `ProcessData`）。
@@ -155,31 +150,31 @@ class ProcessInfo {
   final List<ProcessConnection> connections;
 
   factory ProcessInfo.fromJson(Map<String, dynamic> json) => ProcessInfo(
-        pid: jsonInt(json['pid']),
-        name: jsonString(json['name']),
-        ppid: jsonInt(json['ppid']),
-        username: jsonString(json['username']),
-        status: jsonString(json['status']),
-        background: jsonBool(json['background']),
-        startTime: jsonString(json['start_time']),
-        numThreads: jsonInt(json['num_threads']),
-        cpu: jsonDouble(json['cpu']),
-        diskRead: jsonInt(json['disk_read']),
-        diskWrite: jsonInt(json['disk_write']),
-        cmdLine: jsonString(json['cmd_line']),
-        exe: jsonString(json['exe']),
-        cwd: jsonString(json['cwd']),
-        rss: jsonInt(json['rss']),
-        vms: jsonInt(json['vms']),
-        hwm: jsonInt(json['hwm']),
-        data: jsonInt(json['data']),
-        stack: jsonInt(json['stack']),
-        locked: jsonInt(json['locked']),
-        swap: jsonInt(json['swap']),
-        envs: jsonStringList(json['envs']),
-        openFiles: jsonList(json['open_files'], ProcessOpenFile.fromJson),
-        connections: jsonList(json['connections'], ProcessConnection.fromJson),
-      );
+    pid: jsonInt(json['pid']),
+    name: jsonString(json['name']),
+    ppid: jsonInt(json['ppid']),
+    username: jsonString(json['username']),
+    status: jsonString(json['status']),
+    background: jsonBool(json['background']),
+    startTime: jsonString(json['start_time']),
+    numThreads: jsonInt(json['num_threads']),
+    cpu: jsonDouble(json['cpu']),
+    diskRead: jsonInt(json['disk_read']),
+    diskWrite: jsonInt(json['disk_write']),
+    cmdLine: jsonString(json['cmd_line']),
+    exe: jsonString(json['exe']),
+    cwd: jsonString(json['cwd']),
+    rss: jsonInt(json['rss']),
+    vms: jsonInt(json['vms']),
+    hwm: jsonInt(json['hwm']),
+    data: jsonInt(json['data']),
+    stack: jsonInt(json['stack']),
+    locked: jsonInt(json['locked']),
+    swap: jsonInt(json['swap']),
+    envs: jsonStringList(json['envs']),
+    openFiles: jsonList(json['open_files'], ProcessOpenFile.fromJson),
+    connections: jsonList(json['connections'], ProcessConnection.fromJson),
+  );
 
   /// 状态中文文案。
   String get statusLabel {
@@ -268,11 +263,7 @@ class ProcessSignalOption {
 
 /// 进程列表查询条件。
 class ProcessQuery {
-  const ProcessQuery({
-    this.sort = 'cpu',
-    this.desc = true,
-    this.keyword = '',
-  });
+  const ProcessQuery({this.sort = 'cpu', this.desc = true, this.keyword = ''});
 
   /// 排序字段，见 [ProcessSortField]。
   final String sort;

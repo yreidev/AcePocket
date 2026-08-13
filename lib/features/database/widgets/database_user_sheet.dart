@@ -116,7 +116,9 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).createUser(
+      () => ref
+          .read(databaseRepoProvider)
+          .createUser(
             serverId: server.id,
             username: username,
             password: _password.text,
@@ -136,7 +138,9 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
     setState(() => _submitting = true);
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).updateUser(
+      () => ref
+          .read(databaseRepoProvider)
+          .updateUser(
             widget.user!.id,
             password: _password.text,
             privileges: _privileges,
@@ -156,8 +160,9 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
 
   Widget _buildEdit(BuildContext context) {
     final user = widget.user!;
-    final title =
-        user.host.isEmpty ? user.username : '${user.username}@${user.host}';
+    final title = user.host.isEmpty
+        ? user.username
+        : '${user.username}@${user.host}';
     return DbSheet(
       title: '编辑数据库用户',
       subtitle: title,
@@ -202,12 +207,13 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
       ),
       data: (servers) {
         // 仅 MySQL / PostgreSQL / ClickHouse 支持用户管理。
-        final available =
-            servers.where((s) => dbTypeSupportsUser(s.type)).toList();
+        final available = servers
+            .where((s) => dbTypeSupportsUser(s.type))
+            .toList();
         final server =
             _server != null && available.any((s) => s.id == _server!.id)
-                ? _server
-                : null;
+            ? _server
+            : null;
         final serverType = server?.type ?? '';
 
         return DbSheet(
@@ -244,10 +250,7 @@ class _DatabaseUserSheetState extends ConsumerState<DatabaseUserSheet> {
                 }
               },
             ),
-            PasswordField(
-              controller: _password,
-              onGenerate: generatePassword,
-            ),
+            PasswordField(controller: _password, onGenerate: generatePassword),
             if (dbTypeUsesHost(serverType)) ...[
               DropdownButtonFormField<String>(
                 initialValue: _hostOption,

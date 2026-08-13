@@ -112,7 +112,8 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.6,
                     child: EmptyView(
-                      message: '暂无可管理的服务\n'
+                      message:
+                          '暂无可管理的服务\n'
                           '安装应用后会自动出现，也可手动添加服务名',
                       icon: Icons.settings_suggest_outlined,
                       action: FilledButton.icon(
@@ -127,10 +128,12 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
             );
           }
 
-          final appServices =
-              services.where((s) => s.source == ServiceSource.app).toList();
-          final customServices =
-              services.where((s) => s.source == ServiceSource.custom).toList();
+          final appServices = services
+              .where((s) => s.source == ServiceSource.app)
+              .toList();
+          final customServices = services
+              .where((s) => s.source == ServiceSource.custom)
+              .toList();
 
           return RefreshIndicator(
             onRefresh: _refresh,

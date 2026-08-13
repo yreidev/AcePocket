@@ -13,9 +13,8 @@ import 'providers/files_providers.dart';
 final List<RouteBase> filesRoutes = [
   GoRoute(
     path: '/files',
-    builder: (context, state) => FileBrowserPage(
-      initialPath: state.uri.queryParameters['path'],
-    ),
+    builder: (context, state) =>
+        FileBrowserPage(initialPath: state.uri.queryParameters['path']),
     routes: [
       GoRoute(
         path: 'edit',
@@ -25,9 +24,8 @@ final List<RouteBase> filesRoutes = [
       ),
       GoRoute(
         path: 'shares',
-        builder: (context, state) => FileSharesPage(
-          initialPath: state.uri.queryParameters['path'],
-        ),
+        builder: (context, state) =>
+            FileSharesPage(initialPath: state.uri.queryParameters['path']),
       ),
     ],
   ),

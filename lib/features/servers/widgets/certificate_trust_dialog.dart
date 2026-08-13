@@ -59,7 +59,8 @@ class _CertificateTrustDialog extends StatelessWidget {
               _CertField(label: '颁发者（Issuer）', value: certificate.issuer),
               _CertField(
                 label: '有效期',
-                value: '${dateFormat.format(certificate.validFrom)} 至 '
+                value:
+                    '${dateFormat.format(certificate.validFrom)} 至 '
                     '${dateFormat.format(certificate.validTo)}',
               ),
               const SizedBox(height: 12),
@@ -67,8 +68,9 @@ class _CertificateTrustDialog extends StatelessWidget {
                 '确认信任后指纹会被记住，日后该服务器的证书发生变化时'
                 '连接将被拒绝（需在服务器编辑页清除指纹后重新确认）。'
                 '若无法核对指纹来源，请勿信任。',
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
@@ -110,8 +112,9 @@ class _CertField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: theme.textTheme.labelSmall
-                ?.copyWith(color: colorScheme.onSurfaceVariant),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 2),
           SelectableText(

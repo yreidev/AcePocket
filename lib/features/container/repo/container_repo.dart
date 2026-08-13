@@ -93,10 +93,7 @@ class ContainerRepository {
   }
 
   /// 更新容器（服务端为删除重建），返回新容器 ID。
-  Future<String> updateContainer(
-    String id,
-    Map<String, dynamic> config,
-  ) async {
+  Future<String> updateContainer(String id, Map<String, dynamic> config) async {
     final data = await _api.put('/container/container/$id', body: config);
     return asString(data);
   }
@@ -116,8 +113,10 @@ class ContainerRepository {
 
   /// 镜像是否已存在于本机。
   Future<bool> imageExists(String name) async {
-    final data =
-        await _api.get('/container/image/exist', query: {'name': name});
+    final data = await _api.get(
+      '/container/image/exist',
+      query: {'name': name},
+    );
     return data == true;
   }
 
@@ -131,17 +130,16 @@ class ContainerRepository {
     bool auth = false,
     String username = '',
     String password = '',
-  }) =>
-      _api.post(
-        '/container/image',
-        body: {
-          'name': name,
-          'auth': auth,
-          'username': username,
-          'password': password,
-        },
-        receiveTimeout: const Duration(minutes: 30),
-      );
+  }) => _api.post(
+    '/container/image',
+    body: {
+      'name': name,
+      'auth': auth,
+      'username': username,
+      'password': password,
+    },
+    receiveTimeout: const Duration(minutes: 30),
+  );
 
   Future<void> removeImage(String id) => _api.delete('/container/image/$id');
 
@@ -169,15 +167,17 @@ class ContainerRepository {
     ContainerNetworkFamilyConfig ipv6 = const ContainerNetworkFamilyConfig(),
     List<KV> labels = const [],
     List<KV> options = const [],
-  }) =>
-      _api.post('/container/network', body: {
-        'name': name,
-        'driver': driver,
-        'ipv4': ipv4.toJson(),
-        'ipv6': ipv6.toJson(),
-        'labels': labels.map((e) => e.toJson()).toList(),
-        'options': options.map((e) => e.toJson()).toList(),
-      });
+  }) => _api.post(
+    '/container/network',
+    body: {
+      'name': name,
+      'driver': driver,
+      'ipv4': ipv4.toJson(),
+      'ipv6': ipv6.toJson(),
+      'labels': labels.map((e) => e.toJson()).toList(),
+      'options': options.map((e) => e.toJson()).toList(),
+    },
+  );
 
   Future<void> removeNetwork(String id) =>
       _api.delete('/container/network/$id');
@@ -204,13 +204,15 @@ class ContainerRepository {
     String driver = 'local',
     List<KV> labels = const [],
     List<KV> options = const [],
-  }) =>
-      _api.post('/container/volume', body: {
-        'name': name,
-        'driver': driver,
-        'labels': labels.map((e) => e.toJson()).toList(),
-        'options': options.map((e) => e.toJson()).toList(),
-      });
+  }) => _api.post(
+    '/container/volume',
+    body: {
+      'name': name,
+      'driver': driver,
+      'labels': labels.map((e) => e.toJson()).toList(),
+      'options': options.map((e) => e.toJson()).toList(),
+    },
+  );
 
   /// 删除存储卷（路径参数传卷名）。
   Future<void> removeVolume(String name) =>
@@ -243,23 +245,24 @@ class ContainerRepository {
     required String name,
     required String compose,
     List<KV> envs = const [],
-  }) =>
-      _api.post('/container/compose', body: {
-        'name': name,
-        'compose': compose,
-        'envs': envs.map((e) => e.toJson()).toList(),
-      });
+  }) => _api.post(
+    '/container/compose',
+    body: {
+      'name': name,
+      'compose': compose,
+      'envs': envs.map((e) => e.toJson()).toList(),
+    },
+  );
 
   /// 更新编排内容。
   Future<void> updateCompose({
     required String name,
     required String compose,
     List<KV> envs = const [],
-  }) =>
-      _api.put('/container/compose/$name', body: {
-        'compose': compose,
-        'envs': envs.map((e) => e.toJson()).toList(),
-      });
+  }) => _api.put(
+    '/container/compose/$name',
+    body: {'compose': compose, 'envs': envs.map((e) => e.toJson()).toList()},
+  );
 
   /// 启动编排（`force` 对应 `docker compose up -d --pull always`）。
   ///
@@ -267,18 +270,18 @@ class ContainerRepository {
   /// 首次启动大镜像时远超 [ApiClient] 默认 60 秒 receiveTimeout。
   /// 与 [pullImage] 同样放宽到 30 分钟，避免客户端报超时而服务端仍在执行。
   Future<void> composeUp(String name, {bool force = false}) => _api.post(
-        '/container/compose/$name/up',
-        body: {'force': force},
-        receiveTimeout: const Duration(minutes: 30),
-      );
+    '/container/compose/$name/up',
+    body: {'force': force},
+    receiveTimeout: const Duration(minutes: 30),
+  );
 
   /// 停止编排（`docker compose down`）。
   ///
   /// 容器的停止宽限期（默认 10 秒 / 服务）叠加起来可能超过默认超时。
   Future<void> composeDown(String name) => _api.post(
-        '/container/compose/$name/down',
-        receiveTimeout: const Duration(minutes: 10),
-      );
+    '/container/compose/$name/down',
+    receiveTimeout: const Duration(minutes: 10),
+  );
 
   /// 删除编排（服务端会先 down 再删除目录）。
   ///

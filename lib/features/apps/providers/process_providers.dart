@@ -18,7 +18,8 @@ final processRepoProvider = Provider<ProcessRepo?>((ref) {
 /// 进程列表查询条件（排序字段 / 升降序 / 关键词）。
 final processQueryProvider =
     NotifierProvider<ProcessQueryNotifier, ProcessQuery>(
-        ProcessQueryNotifier.new);
+      ProcessQueryNotifier.new,
+    );
 
 class ProcessQueryNotifier extends Notifier<ProcessQuery> {
   @override
@@ -47,7 +48,8 @@ typedef ProcessListState = PagedListState<ProcessInfo>;
 /// 进程列表（查询条件或当前服务器变化时自动重新加载）。
 final processListProvider =
     NotifierProvider.autoDispose<ProcessListNotifier, ProcessListState>(
-        ProcessListNotifier.new);
+      ProcessListNotifier.new,
+    );
 
 class ProcessListNotifier extends AutoDisposeNotifier<ProcessListState> {
   ProcessRepo? _repo;
@@ -192,11 +194,11 @@ class ProcessListNotifier extends AutoDisposeNotifier<ProcessListState> {
 }
 
 /// 进程详情。
-final processDetailProvider =
-    FutureProvider.autoDispose.family<ProcessInfo, int>((ref, pid) async {
-  final repo = ref.watch(processRepoProvider);
-  if (repo == null) {
-    throw StateError('尚未选择服务器');
-  }
-  return repo.detail(pid);
-});
+final processDetailProvider = FutureProvider.autoDispose
+    .family<ProcessInfo, int>((ref, pid) async {
+      final repo = ref.watch(processRepoProvider);
+      if (repo == null) {
+        throw StateError('尚未选择服务器');
+      }
+      return repo.detail(pid);
+    });

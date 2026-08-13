@@ -15,11 +15,11 @@ class PhpModule {
   });
 
   factory PhpModule.fromJson(Map<String, dynamic> json) => PhpModule(
-        name: (json['name'] ?? '').toString(),
-        slug: (json['slug'] ?? '').toString(),
-        description: (json['description'] ?? '').toString(),
-        installed: json['installed'] == true,
-      );
+    name: (json['name'] ?? '').toString(),
+    slug: (json['slug'] ?? '').toString(),
+    description: (json['description'] ?? '').toString(),
+    installed: json['installed'] == true,
+  );
 
   /// 展示名，如 `OPcache`。
   final String name;
@@ -123,29 +123,29 @@ class PhpConfigTune {
   final String pmMaxSpareServers;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'short_open_tag': shortOpenTag,
-        'date_timezone': dateTimezone,
-        'display_errors': displayErrors,
-        'error_reporting': errorReporting,
-        'disable_functions': disableFunctions,
-        'upload_max_filesize': uploadMaxFilesize,
-        'post_max_size': postMaxSize,
-        'max_file_uploads': maxFileUploads,
-        'memory_limit': memoryLimit,
-        'max_execution_time': maxExecutionTime,
-        'max_input_time': maxInputTime,
-        'max_input_vars': maxInputVars,
-        'session_save_handler': sessionSaveHandler,
-        'session_save_path': sessionSavePath,
-        'session_gc_maxlifetime': sessionGcMaxlifetime,
-        'session_cookie_lifetime': sessionCookieLifetime,
-        // pm 带 in:static,dynamic,ondemand 校验，不允许留空
-        'pm': pm.isEmpty ? 'dynamic' : pm,
-        'pm_max_children': pmMaxChildren,
-        'pm_start_servers': pmStartServers,
-        'pm_min_spare_servers': pmMinSpareServers,
-        'pm_max_spare_servers': pmMaxSpareServers,
-      };
+    'short_open_tag': shortOpenTag,
+    'date_timezone': dateTimezone,
+    'display_errors': displayErrors,
+    'error_reporting': errorReporting,
+    'disable_functions': disableFunctions,
+    'upload_max_filesize': uploadMaxFilesize,
+    'post_max_size': postMaxSize,
+    'max_file_uploads': maxFileUploads,
+    'memory_limit': memoryLimit,
+    'max_execution_time': maxExecutionTime,
+    'max_input_time': maxInputTime,
+    'max_input_vars': maxInputVars,
+    'session_save_handler': sessionSaveHandler,
+    'session_save_path': sessionSavePath,
+    'session_gc_maxlifetime': sessionGcMaxlifetime,
+    'session_cookie_lifetime': sessionCookieLifetime,
+    // pm 带 in:static,dynamic,ondemand 校验，不允许留空
+    'pm': pm.isEmpty ? 'dynamic' : pm,
+    'pm_max_children': pmMaxChildren,
+    'pm_start_servers': pmStartServers,
+    'pm_min_spare_servers': pmMinSpareServers,
+    'pm_max_spare_servers': pmMaxSpareServers,
+  };
 
   PhpConfigTune copyWith({
     String? shortOpenTag,
@@ -169,31 +169,29 @@ class PhpConfigTune {
     String? pmStartServers,
     String? pmMinSpareServers,
     String? pmMaxSpareServers,
-  }) =>
-      PhpConfigTune(
-        shortOpenTag: shortOpenTag ?? this.shortOpenTag,
-        dateTimezone: dateTimezone ?? this.dateTimezone,
-        displayErrors: displayErrors ?? this.displayErrors,
-        errorReporting: errorReporting ?? this.errorReporting,
-        disableFunctions: disableFunctions ?? this.disableFunctions,
-        uploadMaxFilesize: uploadMaxFilesize ?? this.uploadMaxFilesize,
-        postMaxSize: postMaxSize ?? this.postMaxSize,
-        maxFileUploads: maxFileUploads ?? this.maxFileUploads,
-        memoryLimit: memoryLimit ?? this.memoryLimit,
-        maxExecutionTime: maxExecutionTime ?? this.maxExecutionTime,
-        maxInputTime: maxInputTime ?? this.maxInputTime,
-        maxInputVars: maxInputVars ?? this.maxInputVars,
-        sessionSaveHandler: sessionSaveHandler ?? this.sessionSaveHandler,
-        sessionSavePath: sessionSavePath ?? this.sessionSavePath,
-        sessionGcMaxlifetime: sessionGcMaxlifetime ?? this.sessionGcMaxlifetime,
-        sessionCookieLifetime:
-            sessionCookieLifetime ?? this.sessionCookieLifetime,
-        pm: pm ?? this.pm,
-        pmMaxChildren: pmMaxChildren ?? this.pmMaxChildren,
-        pmStartServers: pmStartServers ?? this.pmStartServers,
-        pmMinSpareServers: pmMinSpareServers ?? this.pmMinSpareServers,
-        pmMaxSpareServers: pmMaxSpareServers ?? this.pmMaxSpareServers,
-      );
+  }) => PhpConfigTune(
+    shortOpenTag: shortOpenTag ?? this.shortOpenTag,
+    dateTimezone: dateTimezone ?? this.dateTimezone,
+    displayErrors: displayErrors ?? this.displayErrors,
+    errorReporting: errorReporting ?? this.errorReporting,
+    disableFunctions: disableFunctions ?? this.disableFunctions,
+    uploadMaxFilesize: uploadMaxFilesize ?? this.uploadMaxFilesize,
+    postMaxSize: postMaxSize ?? this.postMaxSize,
+    maxFileUploads: maxFileUploads ?? this.maxFileUploads,
+    memoryLimit: memoryLimit ?? this.memoryLimit,
+    maxExecutionTime: maxExecutionTime ?? this.maxExecutionTime,
+    maxInputTime: maxInputTime ?? this.maxInputTime,
+    maxInputVars: maxInputVars ?? this.maxInputVars,
+    sessionSaveHandler: sessionSaveHandler ?? this.sessionSaveHandler,
+    sessionSavePath: sessionSavePath ?? this.sessionSavePath,
+    sessionGcMaxlifetime: sessionGcMaxlifetime ?? this.sessionGcMaxlifetime,
+    sessionCookieLifetime: sessionCookieLifetime ?? this.sessionCookieLifetime,
+    pm: pm ?? this.pm,
+    pmMaxChildren: pmMaxChildren ?? this.pmMaxChildren,
+    pmStartServers: pmStartServers ?? this.pmStartServers,
+    pmMinSpareServers: pmMinSpareServers ?? this.pmMinSpareServers,
+    pmMaxSpareServers: pmMaxSpareServers ?? this.pmMaxSpareServers,
+  );
 }
 
 /// 带单位的容量值（如 `50M`）拆解结果。
@@ -212,8 +210,10 @@ class PhpSizeValue {
   factory PhpSizeValue.parse(String raw) {
     final value = raw.trim();
     if (value.isEmpty) return const PhpSizeValue('', 'M');
-    final match =
-        RegExp(r'^(-?\d+)\s*([KMG])$', caseSensitive: false).firstMatch(value);
+    final match = RegExp(
+      r'^(-?\d+)\s*([KMG])$',
+      caseSensitive: false,
+    ).firstMatch(value);
     if (match != null) {
       return PhpSizeValue(match.group(1)!, match.group(2)!.toUpperCase());
     }

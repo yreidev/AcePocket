@@ -42,10 +42,10 @@ class SmartDisk {
   String get label => model.isEmpty ? name : '$name（$model）';
 
   factory SmartDisk.fromJson(Map<String, dynamic> json) => SmartDisk(
-        name: jsonString(json['name']),
-        model: jsonString(json['model']),
-        type: jsonString(json['type']),
-      );
+    name: jsonString(json['name']),
+    model: jsonString(json['model']),
+    type: jsonString(json['type']),
+  );
 }
 
 /// 一条 SMART 属性（ATA 属性表 / NVMe 健康日志统一成同一结构展示）。
@@ -142,15 +142,17 @@ class SmartInfo {
       for (final entry in _nvmeFields) {
         final value = nvmeLog[entry.key];
         if (value == null) continue;
-        attributes.add(SmartAttribute(
-          id: '',
-          name: entry.label,
-          value: '${jsonString(value)}${entry.unit}',
-          worst: '',
-          threshold: '',
-          raw: '',
-          whenFailed: '',
-        ));
+        attributes.add(
+          SmartAttribute(
+            id: '',
+            name: entry.label,
+            value: '${jsonString(value)}${entry.unit}',
+            worst: '',
+            threshold: '',
+            raw: '',
+            whenFailed: '',
+          ),
+        );
       }
     } else {
       final table = jsonMapList(jsonMap(root['ata_smart_attributes'])['table']);
@@ -159,15 +161,17 @@ class SmartInfo {
         final rawText = jsonString(rawMap['string']).isNotEmpty
             ? jsonString(rawMap['string'])
             : jsonString(rawMap['value']);
-        attributes.add(SmartAttribute(
-          id: jsonString(row['id']),
-          name: jsonString(row['name']),
-          value: jsonString(row['value']),
-          worst: jsonString(row['worst']),
-          threshold: jsonString(row['thresh']),
-          raw: rawText,
-          whenFailed: jsonString(row['when_failed']),
-        ));
+        attributes.add(
+          SmartAttribute(
+            id: jsonString(row['id']),
+            name: jsonString(row['name']),
+            value: jsonString(row['value']),
+            worst: jsonString(row['worst']),
+            threshold: jsonString(row['thresh']),
+            raw: rawText,
+            whenFailed: jsonString(row['when_failed']),
+          ),
+        );
       }
     }
 

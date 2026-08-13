@@ -33,8 +33,9 @@ class EnvironmentListPage extends ConsumerStatefulWidget {
 }
 
 class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
-  late final TextEditingController _searchController =
-      TextEditingController(text: ref.read(environmentFilterProvider).query);
+  late final TextEditingController _searchController = TextEditingController(
+    text: ref.read(environmentFilterProvider).query,
+  );
 
   /// 正在提交操作的环境（`type/slug`）。
   String? _busyKey;
@@ -84,7 +85,7 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
           title: '安装 ${env.name}？',
           content: env.customSupported
               ? '面板将在后台编译安装该环境，耗时较长，可在任务中心查看进度。'
-                  '如需自定义编译参数，请先在面板 Web 端配置。'
+                    '如需自定义编译参数，请先在面板 Web 端配置。'
               : '面板将在后台下载并安装该环境，可在任务中心查看进度。',
           confirmText: '安装',
         );
@@ -113,7 +114,8 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
         final ok = await showConfirmDialog(
           context,
           title: '卸载 ${env.name}？',
-          content: '卸载后依赖该环境的网站 / 应用将无法运行，配置文件也会一并删除，'
+          content:
+              '卸载后依赖该环境的网站 / 应用将无法运行，配置文件也会一并删除，'
               '此操作不可恢复。',
           confirmText: '卸载',
           danger: true,
@@ -176,8 +178,8 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
                               message: filter.query.isNotEmpty
                                   ? '没有匹配「${filter.query}」的运行环境'
                                   : filter.onlyInstalled
-                                      ? '当前筛选下没有已安装的运行环境'
-                                      : '暂无可用运行环境',
+                                  ? '当前筛选下没有已安装的运行环境'
+                                  : '暂无可用运行环境',
                               icon: Icons.dns_outlined,
                             ),
                           ),
@@ -308,21 +310,20 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
   }
 
   Widget _tile(EnvironmentDetail env) => EnvironmentTile(
-        key: ValueKey(env.key),
-        environment: env,
-        busy: _busyKey == env.key,
-        onAction: (action) => _onAction(env, action),
-      );
+    key: ValueKey(env.key),
+    environment: env,
+    busy: _busyKey == env.key,
+    onAction: (action) => _onAction(env, action),
+  );
 
   /// 按类型分组，顺序遵循 `/environment/types` 的返回顺序。
   List<(String, List<EnvironmentDetail>)> _groupByType(
     List<EnvironmentDetail> items,
   ) {
-    final types = ref.read(environmentTypesProvider).valueOrNull ??
+    final types =
+        ref.read(environmentTypesProvider).valueOrNull ??
         const <EnvironmentType>[];
-    final order = <String>[
-      for (final type in types) type.value,
-    ];
+    final order = <String>[for (final type in types) type.value];
     final buckets = <String, List<EnvironmentDetail>>{};
     for (final item in items) {
       buckets.putIfAbsent(item.type, () => <EnvironmentDetail>[]).add(item);
@@ -343,8 +344,6 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
       return environmentTypeLabel(type);
     }
 
-    return [
-      for (final key in keys) (labelOf(key), buckets[key]!),
-    ];
+    return [for (final key in keys) (labelOf(key), buckets[key]!)];
   }
 }

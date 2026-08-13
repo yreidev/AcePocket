@@ -33,8 +33,9 @@ class AlertRuleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final channelText =
-        rule.channels.isEmpty ? '仅记录' : '${rule.channels.length} 个渠道';
+    final channelText = rule.channels.isEmpty
+        ? '仅记录'
+        : '${rule.channels.length} 个渠道';
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),

@@ -99,7 +99,8 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
     final confirmed = await showConfirmDialog(
       context,
       title: '激活 eBPF 并重启系统？',
-      content: '面板会修改 GRUB 引导参数启用 bpf LSM，并立即重启整台服务器。'
+      content:
+          '面板会修改 GRUB 引导参数启用 bpf LSM，并立即重启整台服务器。'
           '重启期间所有服务将中断，确定继续？',
       confirmText: '激活并重启',
       danger: true,
@@ -135,7 +136,8 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
         final draft = _draft ??= data.setting;
         return UnsavedChangesGuard(
           hasUnsavedChanges: _dirty && !_saving,
-          message: '防篡改全局设置改了但没保存，'
+          message:
+              '防篡改全局设置改了但没保存，'
               '这些改动还没有下发到面板，返回后将丢失。',
           onDiscard: _reset,
           child: RefreshIndicator(
@@ -153,12 +155,12 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                   SectionCard(
                     child: Row(
                       children: [
-                        Icon(Icons.warning_amber_outlined,
-                            color: theme.colorScheme.error),
-                        const SizedBox(width: 12),
-                        const Expanded(
-                          child: Text('当前系统不支持防篡改功能（仅支持 Linux）'),
+                        Icon(
+                          Icons.warning_amber_outlined,
+                          color: theme.colorScheme.error,
                         ),
+                        const SizedBox(width: 12),
+                        const Expanded(child: Text('当前系统不支持防篡改功能（仅支持 Linux）')),
                       ],
                     ),
                   ),
@@ -217,7 +219,8 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                         dirty: _enabledDirty,
                         onChanged: data.supported
                             ? (value) => setState(
-                                () => _draft = draft.copyWith(enabled: value))
+                                () => _draft = draft.copyWith(enabled: value),
+                              )
                             : null,
                       ),
                       SettingValueTile(
@@ -236,14 +239,15 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                                   labelBuilder: _modeLabel,
                                   subtitleBuilder: (value) => value == 'ebpf'
                                       ? (data.ebpf.available
-                                          ? '当前环境可用'
-                                          : '当前不可用：'
-                                              '${data.ebpf.reason.isEmpty ? '环境不满足要求' : data.ebpf.reason}')
+                                            ? '当前环境可用'
+                                            : '当前不可用：'
+                                                  '${data.ebpf.reason.isEmpty ? '环境不满足要求' : data.ebpf.reason}')
                                       : '兼容性最好，推荐使用',
                                 );
                                 if (mode == null || !mounted) return;
                                 setState(
-                                    () => _draft = draft.copyWith(mode: mode));
+                                  () => _draft = draft.copyWith(mode: mode),
+                                );
                               },
                       ),
                       SettingSwitchTile(
@@ -252,8 +256,11 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                         value: draft.blockNewFiles,
                         dirty: _blockNewFilesDirty,
                         onChanged: data.supported
-                            ? (value) => setState(() =>
-                                _draft = draft.copyWith(blockNewFiles: value))
+                            ? (value) => setState(
+                                () => _draft = draft.copyWith(
+                                  blockNewFiles: value,
+                                ),
+                              )
                             : null,
                       ),
                       SettingValueTile(
@@ -273,8 +280,9 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                                   label: '天数',
                                 );
                                 if (days == null || !mounted) return;
-                                setState(() =>
-                                    _draft = draft.copyWith(logDays: days));
+                                setState(
+                                  () => _draft = draft.copyWith(logDays: days),
+                                );
                               },
                       ),
                       const SizedBox(height: 12),
@@ -288,8 +296,9 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                             ? const SizedBox(
                                 width: 16,
                                 height: 16,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
                             : const Icon(Icons.save_outlined),
                         label: Text(_dirty ? '保存设置' : '设置未变更'),
@@ -348,8 +357,9 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
                               ? const SizedBox(
                                   width: 16,
                                   height: 16,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
                               : const Icon(Icons.bolt),
                           label: const Text('激活 eBPF 并重启系统'),
@@ -367,10 +377,10 @@ class _TamperOverviewTabState extends ConsumerState<_TamperOverviewTab>
   }
 
   static String _modeLabel(String mode) => switch (mode) {
-        'chattr' => 'chattr（文件属性锁定）',
-        'ebpf' => 'eBPF（内核层拦截）',
-        _ => mode.isEmpty ? '未知' : mode,
-      };
+    'chattr' => 'chattr（文件属性锁定）',
+    'ebpf' => 'eBPF（内核层拦截）',
+    _ => mode.isEmpty ? '未知' : mode,
+  };
 }
 
 // -------------------------------------------------------------------- 保护规则
@@ -389,7 +399,9 @@ class _TamperRulesTab extends ConsumerWidget {
     final draft = await showTamperRuleSheet(context, rule: rule);
     if (draft == null) return;
     try {
-      await ref.read(securityRepoProvider).updateTamperRule(
+      await ref
+          .read(securityRepoProvider)
+          .updateTamperRule(
             id: rule.id,
             path: draft.path,
             exts: draft.exts,
@@ -413,7 +425,9 @@ class _TamperRulesTab extends ConsumerWidget {
     bool enabled,
   ) async {
     try {
-      await ref.read(securityRepoProvider).updateTamperRule(
+      await ref
+          .read(securityRepoProvider)
+          .updateTamperRule(
             id: rule.id,
             path: rule.path,
             exts: rule.exts,
@@ -483,11 +497,7 @@ class _TamperRulesTab extends ConsumerWidget {
               ? theme.colorScheme.primary
               : theme.colorScheme.outline,
         ),
-        title: Text(
-          rule.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        title: Text(rule.name, maxLines: 1, overflow: TextOverflow.ellipsis),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -672,8 +682,9 @@ class _TamperPathsTabState extends ConsumerState<_TamperPathsTab> {
   Future<void> _importFromRules() async {
     setState(() => _importing = true);
     try {
-      final paged =
-          await ref.read(securityRepoProvider).tamperRules(page: 1, limit: 200);
+      final paged = await ref
+          .read(securityRepoProvider)
+          .tamperRules(page: 1, limit: 200);
       final merged = [..._paths];
       for (final rule in paged.items) {
         if (rule.path.isNotEmpty && !merged.contains(rule.path)) {
@@ -701,7 +712,8 @@ class _TamperPathsTabState extends ConsumerState<_TamperPathsTab> {
       final confirmed = await showConfirmDialog(
         context,
         title: '解除路径保护？',
-        content: '「$path」将不再受防篡改保护。'
+        content:
+            '「$path」将不再受防篡改保护。'
             '若该路径正好是某条保护规则的根目录，规则会被删除；'
             '否则会被加入所在规则的排除列表。',
         confirmText: '解除保护',
@@ -793,7 +805,8 @@ class _TamperPathsTabState extends ConsumerState<_TamperPathsTab> {
                           final confirmed = await showConfirmDialog(
                             context,
                             title: '清空待检查列表？',
-                            content: '只会移除本页列出的 ${paths.length} 个路径，'
+                            content:
+                                '只会移除本页列出的 ${paths.length} 个路径，'
                                 '服务器上的保护规则不受影响。',
                             confirmText: '清空列表',
                           );

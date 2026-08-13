@@ -33,19 +33,22 @@ class TaskListNotifier extends PagedNotifier<TaskItem> {
 
 final taskListProvider =
     AsyncNotifierProvider.autoDispose<TaskListNotifier, PagedState<TaskItem>>(
-        TaskListNotifier.new);
+      TaskListNotifier.new,
+    );
 
 /// 单个任务详情。
-final taskDetailProvider =
-    FutureProvider.autoDispose.family<TaskItem, int>((ref, id) {
+final taskDetailProvider = FutureProvider.autoDispose.family<TaskItem, int>((
+  ref,
+  id,
+) {
   return ref.watch(taskRepoProvider).get(id);
 });
 
 /// 任务日志（读取任务 `log` 字段指向的日志文件尾部）。
 ///
 /// 参数为日志文件路径；路径为空时直接返回空结果。
-final taskLogProvider =
-    FutureProvider.autoDispose.family<FileTailResult, String>((ref, path) {
-  if (path.isEmpty) return Future.value(const FileTailResult());
-  return ref.watch(taskRepoProvider).tailLog(path, limit: 1000);
-});
+final taskLogProvider = FutureProvider.autoDispose
+    .family<FileTailResult, String>((ref, path) {
+      if (path.isEmpty) return Future.value(const FileTailResult());
+      return ref.watch(taskRepoProvider).tailLog(path, limit: 1000);
+    });

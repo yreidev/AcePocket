@@ -64,16 +64,20 @@ class ConnectionTestResultCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.warning_amber_outlined,
-                      size: 16, color: colorScheme.error),
+                  Icon(
+                    Icons.warning_amber_outlined,
+                    size: 16,
+                    color: colorScheme.error,
+                  ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
                       system.osEol
                           ? '当前系统版本已停止维护（EOL），建议尽快升级。'
                           : '当前系统版本不在面板官方支持范围内，部分功能可能异常。',
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: colorScheme.error),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.error,
+                      ),
                     ),
                   ),
                 ],

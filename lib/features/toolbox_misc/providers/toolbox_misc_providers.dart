@@ -22,41 +22,41 @@ final toolboxMiscRepoProvider = Provider<ToolboxMiscRepository>(
 /// 系统工具箱聚合信息：并行拉取 6 个分区，单个分区失败不影响其余分区。
 ///
 /// 全部分区都失败（通常是网络 / 认证问题）时抛出首个异常，由页面整体展示错误。
-final systemToolsProvider = FutureProvider.autoDispose<SystemToolsInfo>(
-  (ref) async {
-    final repo = ref.watch(toolboxMiscRepoProvider);
+final systemToolsProvider = FutureProvider.autoDispose<SystemToolsInfo>((
+  ref,
+) async {
+  final repo = ref.watch(toolboxMiscRepoProvider);
 
-    Future<SectionResult<T>> load<T>(Future<T> Function() task) async {
-      try {
-        return SectionResult<T>.data(await task());
-      } catch (e) {
-        return SectionResult<T>.failure(e);
-      }
+  Future<SectionResult<T>> load<T>(Future<T> Function() task) async {
+    try {
+      return SectionResult<T>.data(await task());
+    } catch (e) {
+      return SectionResult<T>.failure(e);
     }
+  }
 
-    final results = await Future.wait(<Future<SectionResult<Object>>>[
-      load<DnsInfo>(repo.dns),
-      load<SwapInfo>(repo.swap),
-      load<TimezoneInfo>(repo.timezone),
-      load<NtpConfig>(repo.ntpServers),
-      load<String>(repo.hostname),
-      load<String>(repo.hosts),
-    ]);
+  final results = await Future.wait(<Future<SectionResult<Object>>>[
+    load<DnsInfo>(repo.dns),
+    load<SwapInfo>(repo.swap),
+    load<TimezoneInfo>(repo.timezone),
+    load<NtpConfig>(repo.ntpServers),
+    load<String>(repo.hostname),
+    load<String>(repo.hosts),
+  ]);
 
-    if (results.every((r) => !r.ok)) {
-      throw results.first.error!;
-    }
+  if (results.every((r) => !r.ok)) {
+    throw results.first.error!;
+  }
 
-    return SystemToolsInfo(
-      dns: results[0] as SectionResult<DnsInfo>,
-      swap: results[1] as SectionResult<SwapInfo>,
-      timezone: results[2] as SectionResult<TimezoneInfo>,
-      ntp: results[3] as SectionResult<NtpConfig>,
-      hostname: results[4] as SectionResult<String>,
-      hosts: results[5] as SectionResult<String>,
-    );
-  },
-);
+  return SystemToolsInfo(
+    dns: results[0] as SectionResult<DnsInfo>,
+    swap: results[1] as SectionResult<SwapInfo>,
+    timezone: results[2] as SectionResult<TimezoneInfo>,
+    ntp: results[3] as SectionResult<NtpConfig>,
+    hostname: results[4] as SectionResult<String>,
+    hosts: results[5] as SectionResult<String>,
+  );
+});
 
 /// /etc/hosts 全文（hosts 编辑页单独使用，避免与聚合数据互相影响）。
 final hostsContentProvider = FutureProvider.autoDispose<String>(
@@ -72,7 +72,8 @@ final hostsContentProvider = FutureProvider.autoDispose<String>(
 /// 切换服务器时（[activeServerProvider] 变化）自动重置。
 final logCleanProvider =
     NotifierProvider<LogCleanNotifier, Map<String, LogScanState>>(
-        LogCleanNotifier.new);
+      LogCleanNotifier.new,
+    );
 
 class LogCleanNotifier extends Notifier<Map<String, LogScanState>> {
   bool _disposed = false;
@@ -83,9 +84,7 @@ class LogCleanNotifier extends Notifier<Map<String, LogScanState>> {
     ref.watch(toolboxMiscRepoProvider);
     _disposed = false;
     ref.onDispose(() => _disposed = true);
-    return {
-      for (final type in kLogTypes) type.key: const LogScanState(),
-    };
+    return {for (final type in kLogTypes) type.key: const LogScanState()};
   }
 
   LogScanState stateOf(String type) => state[type] ?? const LogScanState();
@@ -102,10 +101,7 @@ class LogCleanNotifier extends Notifier<Map<String, LogScanState>> {
     _patch(type, current.copyWith(scanning: true, clearError: true));
     try {
       final items = await ref.read(toolboxMiscRepoProvider).scanLogs(type);
-      _patch(
-        type,
-        LogScanState(items: items, scanned: true),
-      );
+      _patch(type, LogScanState(items: items, scanned: true));
     } catch (e) {
       _patch(type, LogScanState(error: e, scanned: false));
     }
@@ -140,8 +136,9 @@ class LogCleanNotifier extends Notifier<Map<String, LogScanState>> {
 // ------------------------------------------------------------------ 网络连接
 
 /// 网络连接列表的筛选条件。
-final networkFilterProvider =
-    StateProvider.autoDispose<NetworkFilter>((ref) => const NetworkFilter());
+final networkFilterProvider = StateProvider.autoDispose<NetworkFilter>(
+  (ref) => const NetworkFilter(),
+);
 
 /// 网络连接分页列表：首屏加载、下拉刷新、上拉加载更多。
 ///
@@ -162,7 +159,9 @@ class NetworkConnectionsNotifier extends PagedAsyncNotifier<NetworkConnection> {
 
   @override
   Future<PagedResult<NetworkConnection>> fetchPage(int page, int limit) async {
-    final paged = await ref.read(toolboxMiscRepoProvider).networkConnections(
+    final paged = await ref
+        .read(toolboxMiscRepoProvider)
+        .networkConnections(
           page: page,
           limit: limit,
           filter: ref.read(networkFilterProvider),
@@ -177,9 +176,11 @@ class NetworkConnectionsNotifier extends PagedAsyncNotifier<NetworkConnection> {
   Future<void> refresh() => reloadFirstPage(toErrorState: false);
 }
 
-final networkConnectionsProvider = AsyncNotifierProvider.autoDispose<
-    NetworkConnectionsNotifier,
-    PagedState<NetworkConnection>>(NetworkConnectionsNotifier.new);
+final networkConnectionsProvider =
+    AsyncNotifierProvider.autoDispose<
+      NetworkConnectionsNotifier,
+      PagedState<NetworkConnection>
+    >(NetworkConnectionsNotifier.new);
 
 // ------------------------------------------------------------------ 跑分
 
@@ -189,8 +190,9 @@ final networkConnectionsProvider = AsyncNotifierProvider.autoDispose<
 /// 保留成绩；用户点「停止测试」或退出跑分页时通过 [CancelToken] 真正取消
 /// 在途请求（注意：客户端取消只是不再等待响应，面板侧当前项目仍会执行完）；
 /// 切换服务器时重置。
-final benchmarkProvider =
-    NotifierProvider<BenchmarkNotifier, BenchmarkState>(BenchmarkNotifier.new);
+final benchmarkProvider = NotifierProvider<BenchmarkNotifier, BenchmarkState>(
+  BenchmarkNotifier.new,
+);
 
 class BenchmarkNotifier extends Notifier<BenchmarkState> {
   bool _disposed = false;
@@ -244,17 +246,19 @@ class BenchmarkNotifier extends Notifier<BenchmarkState> {
       ..removeWhere((k, _) => keys.contains(k));
     final errors = {...state.errors}..removeWhere((k, _) => keys.contains(k));
 
-    _set(BenchmarkState(
-      running: true,
-      planned: keys.length,
-      completed: 0,
-      cpuScores: cpuScores,
-      memory: keys.contains('memory') ? null : state.memory,
-      disk: keys.contains('disk') ? null : state.disk,
-      errors: errors,
-      finishedAt: state.finishedAt,
-      startedAt: DateTime.now(),
-    ));
+    _set(
+      BenchmarkState(
+        running: true,
+        planned: keys.length,
+        completed: 0,
+        cpuScores: cpuScores,
+        memory: keys.contains('memory') ? null : state.memory,
+        disk: keys.contains('disk') ? null : state.disk,
+        errors: errors,
+        finishedAt: state.finishedAt,
+        startedAt: DateTime.now(),
+      ),
+    );
 
     var completed = 0;
     for (final key in keys) {
@@ -272,19 +276,17 @@ class BenchmarkNotifier extends Notifier<BenchmarkState> {
             final disk = await repo.benchmarkDisk(cancelToken: cancelToken);
             _set(state.copyWith(disk: disk));
           default:
-            final score =
-                await repo.benchmarkCpu(key, cancelToken: cancelToken);
-            _set(state.copyWith(
-              cpuScores: {...state.cpuScores, key: score},
-            ));
+            final score = await repo.benchmarkCpu(
+              key,
+              cancelToken: cancelToken,
+            );
+            _set(state.copyWith(cpuScores: {...state.cpuScores, key: score}));
         }
       } catch (e) {
         // 主动停止 / 销毁导致的取消不算失败，直接结束本轮。
         if (_disposed) return;
         if (_stopRequested) break;
-        _set(state.copyWith(
-          errors: {...state.errors, key: describeError(e)},
-        ));
+        _set(state.copyWith(errors: {...state.errors, key: describeError(e)}));
       } finally {
         _cancelToken = null;
       }
@@ -292,13 +294,15 @@ class BenchmarkNotifier extends Notifier<BenchmarkState> {
       _set(state.copyWith(completed: completed));
     }
 
-    _set(state.copyWith(
-      running: false,
-      stopping: false,
-      clearCurrentKey: true,
-      finishedAt: DateTime.now(),
-      stopped: _stopRequested,
-    ));
+    _set(
+      state.copyWith(
+        running: false,
+        stopping: false,
+        clearCurrentKey: true,
+        finishedAt: DateTime.now(),
+        stopped: _stopRequested,
+      ),
+    );
   }
 
   /// 清空全部成绩。

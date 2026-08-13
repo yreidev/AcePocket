@@ -33,7 +33,8 @@ const kBackupPageSize = 20;
 /// 备份文件列表（按类型分页）。
 final backupListProvider = AsyncNotifierProvider.autoDispose
     .family<BackupListNotifier, PagedState<BackupFile>, String>(
-        BackupListNotifier.new);
+      BackupListNotifier.new,
+    );
 
 class BackupListNotifier
     extends CronBackupPagedFamilyNotifier<BackupFile, String> {
@@ -57,18 +58,21 @@ class BackupListNotifier
     final current = state.valueOrNull;
     if (current == null) return;
     final items = current.items.where((e) => e.name != file.name).toList();
-    state = AsyncData(current.copyWith(
-      items: items,
-      total: current.total > 0 ? current.total - 1 : 0,
-    ));
+    state = AsyncData(
+      current.copyWith(
+        items: items,
+        total: current.total > 0 ? current.total - 1 : 0,
+      ),
+    );
   }
 }
 
 /// 备份页可展示的类型标签（按面板已安装的环境过滤）。
 ///
 /// 检测失败时退回展示全部类型，保证功能可用。
-final backupTypeTabsProvider =
-    FutureProvider.autoDispose<List<String>>((ref) async {
+final backupTypeTabsProvider = FutureProvider.autoDispose<List<String>>((
+  ref,
+) async {
   const fallback = BackupTypes.listable;
   try {
     final dbTypes = await ref.watch(installedDatabaseTypesProvider.future);

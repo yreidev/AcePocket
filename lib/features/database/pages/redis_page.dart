@@ -89,7 +89,9 @@ class _RedisPageState extends ConsumerState<RedisPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).redisKeyTtl(
+      () => ref
+          .read(databaseRepoProvider)
+          .redisKeyTtl(
             serverId: query.serverId,
             db: query.db,
             key: kv.key,
@@ -120,7 +122,9 @@ class _RedisPageState extends ConsumerState<RedisPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).redisKeyRename(
+      () => ref
+          .read(databaseRepoProvider)
+          .redisKeyRename(
             serverId: query.serverId,
             db: query.db,
             oldKey: kv.key,
@@ -143,11 +147,9 @@ class _RedisPageState extends ConsumerState<RedisPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).redisKeyDelete(
-            serverId: query.serverId,
-            db: query.db,
-            key: kv.key,
-          ),
+      () => ref
+          .read(databaseRepoProvider)
+          .redisKeyDelete(serverId: query.serverId, db: query.db, key: kv.key),
       success: '键已删除',
     );
     if (ok) await _refresh(query);
@@ -165,10 +167,9 @@ class _RedisPageState extends ConsumerState<RedisPage> {
 
     final ok = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).redisClear(
-            serverId: query.serverId,
-            db: query.db,
-          ),
+      () => ref
+          .read(databaseRepoProvider)
+          .redisClear(serverId: query.serverId, db: query.db),
       success: '数据库已清空',
     );
     if (ok) await _refresh(query);
@@ -223,7 +224,14 @@ class _RedisPageState extends ConsumerState<RedisPage> {
           const FeatureUnsupportedBanner(feature: PanelFeature.redis),
           Expanded(
             child: _buildBody(
-                context, serversAsync, servers, serverId, dbCount, db, query),
+              context,
+              serversAsync,
+              servers,
+              serverId,
+              dbCount,
+              db,
+              query,
+            ),
           ),
         ],
       ),

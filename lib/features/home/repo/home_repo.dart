@@ -101,8 +101,10 @@ class HomeRepository {
 
   /// GET /home/top_processes?type= — 占用最高进程（type: cpu / memory / disk_io）。
   Future<List<ProcessStat>> topProcesses(String type) async {
-    final data =
-        await _client.get('/home/top_processes', query: {'type': type});
+    final data = await _client.get(
+      '/home/top_processes',
+      query: {'type': type},
+    );
     if (data is! List) return const [];
     return data
         .whereType<Map<String, dynamic>>()

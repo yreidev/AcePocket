@@ -7,10 +7,12 @@ library;
 const String _certBegin = '-----BEGIN CERTIFICATE-----';
 const String _certEnd = '-----END CERTIFICATE-----';
 
-final RegExp _keyBeginPattern =
-    RegExp(r'-----BEGIN (RSA |EC |ENCRYPTED |OPENSSH )?PRIVATE KEY-----');
-final RegExp _keyEndPattern =
-    RegExp(r'-----END (RSA |EC |ENCRYPTED |OPENSSH )?PRIVATE KEY-----');
+final RegExp _keyBeginPattern = RegExp(
+  r'-----BEGIN (RSA |EC |ENCRYPTED |OPENSSH )?PRIVATE KEY-----',
+);
+final RegExp _keyEndPattern = RegExp(
+  r'-----END (RSA |EC |ENCRYPTED |OPENSSH )?PRIVATE KEY-----',
+);
 
 /// PEM 正文（去掉标记行后的内容）应为 Base64 字符。
 final RegExp _base64BodyPattern = RegExp(r'^[A-Za-z0-9+/=]+$');

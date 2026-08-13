@@ -95,7 +95,8 @@ class _ProjectDetailPageState extends ConsumerState<ProjectDetailPage> {
     final ok = await showConfirmDialog(
       context,
       title: '删除项目',
-      content: '确定要删除项目「${project.name}」吗？\n'
+      content:
+          '确定要删除项目「${project.name}」吗？\n'
           '面板会同时删除对应的 systemd 服务配置，项目目录中的文件不会被移除。',
       confirmText: '删除',
       danger: true,
@@ -243,123 +244,151 @@ class _ProjectDetailPageState extends ConsumerState<ProjectDetailPage> {
               ),
               SectionCard(
                 title: '基本信息',
-                child: _InfoList(items: [
-                  ('项目名称', project.name),
-                  ('项目类型', projectTypeLabel(project.type)),
-                  (
-                    '描述',
-                    project.description.isEmpty ? '—' : project.description
-                  ),
-                  ('项目目录', project.rootDir.isEmpty ? '—' : project.rootDir),
-                  (
-                    '运行目录',
-                    project.workingDir.isEmpty ? '（同项目目录）' : project.workingDir
-                  ),
-                  ('运行用户', project.user.isEmpty ? '（默认 root）' : project.user),
-                ]),
+                child: _InfoList(
+                  items: [
+                    ('项目名称', project.name),
+                    ('项目类型', projectTypeLabel(project.type)),
+                    (
+                      '描述',
+                      project.description.isEmpty ? '—' : project.description,
+                    ),
+                    ('项目目录', project.rootDir.isEmpty ? '—' : project.rootDir),
+                    (
+                      '运行目录',
+                      project.workingDir.isEmpty
+                          ? '（同项目目录）'
+                          : project.workingDir,
+                    ),
+                    ('运行用户', project.user.isEmpty ? '（默认 root）' : project.user),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '启动命令',
-                child: _InfoList(items: [
-                  (
-                    '启动前',
-                    project.execStartPre.isEmpty ? '—' : project.execStartPre
-                  ),
-                  ('启动', project.execStart.isEmpty ? '—' : project.execStart),
-                  (
-                    '启动后',
-                    project.execStartPost.isEmpty ? '—' : project.execStartPost
-                  ),
-                  ('停止', project.execStop.isEmpty ? '—' : project.execStop),
-                  ('重载', project.execReload.isEmpty ? '—' : project.execReload),
-                ]),
+                child: _InfoList(
+                  items: [
+                    (
+                      '启动前',
+                      project.execStartPre.isEmpty ? '—' : project.execStartPre,
+                    ),
+                    ('启动', project.execStart.isEmpty ? '—' : project.execStart),
+                    (
+                      '启动后',
+                      project.execStartPost.isEmpty
+                          ? '—'
+                          : project.execStartPost,
+                    ),
+                    ('停止', project.execStop.isEmpty ? '—' : project.execStop),
+                    (
+                      '重载',
+                      project.execReload.isEmpty ? '—' : project.execReload,
+                    ),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '重启策略',
-                child: _InfoList(items: [
-                  ('策略', projectRestartLabel(project.restart)),
-                  (
-                    '重启间隔',
-                    project.restartSec.isEmpty ? '—' : project.restartSec
-                  ),
-                  (
-                    '最大重启次数',
-                    project.restartMax > 0 ? '${project.restartMax}' : '不限制'
-                  ),
-                  (
-                    '启动超时',
-                    project.timeoutStartSec > 0
-                        ? '${project.timeoutStartSec} 秒'
-                        : '默认'
-                  ),
-                  (
-                    '停止超时',
-                    project.timeoutStopSec > 0
-                        ? '${project.timeoutStopSec} 秒'
-                        : '默认'
-                  ),
-                ]),
+                child: _InfoList(
+                  items: [
+                    ('策略', projectRestartLabel(project.restart)),
+                    (
+                      '重启间隔',
+                      project.restartSec.isEmpty ? '—' : project.restartSec,
+                    ),
+                    (
+                      '最大重启次数',
+                      project.restartMax > 0 ? '${project.restartMax}' : '不限制',
+                    ),
+                    (
+                      '启动超时',
+                      project.timeoutStartSec > 0
+                          ? '${project.timeoutStartSec} 秒'
+                          : '默认',
+                    ),
+                    (
+                      '停止超时',
+                      project.timeoutStopSec > 0
+                          ? '${project.timeoutStopSec} 秒'
+                          : '默认',
+                    ),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '环境变量',
                 child: project.environments.isEmpty
                     ? const _EmptyHint(text: '未配置环境变量')
-                    : _InfoList(items: [
-                        for (final env in project.environments)
-                          (env.key, env.value.isEmpty ? '（空）' : env.value),
-                      ]),
+                    : _InfoList(
+                        items: [
+                          for (final env in project.environments)
+                            (env.key, env.value.isEmpty ? '（空）' : env.value),
+                        ],
+                      ),
               ),
               SectionCard(
                 title: '日志输出',
-                child: _InfoList(items: [
-                  (
-                    '标准输出',
-                    project.standardOutput.isEmpty
-                        ? '默认（journal）'
-                        : project.standardOutput
-                  ),
-                  (
-                    '标准错误',
-                    project.standardError.isEmpty
-                        ? '默认（journal）'
-                        : project.standardError
-                  ),
-                ]),
+                child: _InfoList(
+                  items: [
+                    (
+                      '标准输出',
+                      project.standardOutput.isEmpty
+                          ? '默认（journal）'
+                          : project.standardOutput,
+                    ),
+                    (
+                      '标准错误',
+                      project.standardError.isEmpty
+                          ? '默认（journal）'
+                          : project.standardError,
+                    ),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '依赖与启动顺序',
-                child: _InfoList(items: [
-                  ('强依赖 Requires', _joinOrDash(project.requires)),
-                  ('弱依赖 Wants', _joinOrDash(project.wants)),
-                  ('在其之后启动 After', _joinOrDash(project.after)),
-                  ('在其之前启动 Before', _joinOrDash(project.before)),
-                ]),
+                child: _InfoList(
+                  items: [
+                    ('强依赖 Requires', _joinOrDash(project.requires)),
+                    ('弱依赖 Wants', _joinOrDash(project.wants)),
+                    ('在其之后启动 After', _joinOrDash(project.after)),
+                    ('在其之前启动 Before', _joinOrDash(project.before)),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '资源限制',
-                child: _InfoList(items: [
-                  (
-                    '内存限制',
-                    project.memoryLimit > 0
-                        ? formatBytes(project.memoryLimit, fractionDigits: 1)
-                        : '不限制'
-                  ),
-                  ('CPU 限制', _cpuQuotaLabel(project.cpuQuota)),
-                ]),
+                child: _InfoList(
+                  items: [
+                    (
+                      '内存限制',
+                      project.memoryLimit > 0
+                          ? formatBytes(project.memoryLimit, fractionDigits: 1)
+                          : '不限制',
+                    ),
+                    ('CPU 限制', _cpuQuotaLabel(project.cpuQuota)),
+                  ],
+                ),
               ),
               SectionCard(
                 title: '安全加固',
-                child: _InfoList(items: [
-                  ('禁止提权 NoNewPrivileges', project.noNewPrivileges ? '是' : '否'),
-                  ('保护临时目录 ProtectTmp', project.protectTmp ? '是' : '否'),
-                  ('保护主目录 ProtectHome', project.protectHome ? '是' : '否'),
-                  (
-                    '保护系统 ProtectSystem',
-                    project.protectSystem.isEmpty ? '关闭' : project.protectSystem
-                  ),
-                  ('可读写路径', _joinOrDash(project.readWritePaths)),
-                  ('只读路径', _joinOrDash(project.readOnlyPaths)),
-                ]),
+                child: _InfoList(
+                  items: [
+                    (
+                      '禁止提权 NoNewPrivileges',
+                      project.noNewPrivileges ? '是' : '否',
+                    ),
+                    ('保护临时目录 ProtectTmp', project.protectTmp ? '是' : '否'),
+                    ('保护主目录 ProtectHome', project.protectHome ? '是' : '否'),
+                    (
+                      '保护系统 ProtectSystem',
+                      project.protectSystem.isEmpty
+                          ? '关闭'
+                          : project.protectSystem,
+                    ),
+                    ('可读写路径', _joinOrDash(project.readWritePaths)),
+                    ('只读路径', _joinOrDash(project.readOnlyPaths)),
+                  ],
+                ),
               ),
             ],
           ),
@@ -400,18 +429,18 @@ class _StatusCard extends StatelessWidget {
     final status = projectStatusOf(project.status);
     final (Color color, Color background) = switch (status) {
       ProjectStatus.active => (
-          colorScheme.primary,
-          colorScheme.primaryContainer
-        ),
+        colorScheme.primary,
+        colorScheme.primaryContainer,
+      ),
       ProjectStatus.activating || ProjectStatus.deactivating => (
-          colorScheme.tertiary,
-          colorScheme.tertiaryContainer
-        ),
+        colorScheme.tertiary,
+        colorScheme.tertiaryContainer,
+      ),
       ProjectStatus.failed => (colorScheme.error, colorScheme.errorContainer),
       ProjectStatus.inactive || ProjectStatus.unknown => (
-          colorScheme.onSurfaceVariant,
-          colorScheme.surfaceContainerHighest
-        ),
+        colorScheme.onSurfaceVariant,
+        colorScheme.surfaceContainerHighest,
+      ),
     };
 
     return SectionCard(
@@ -422,8 +451,10 @@ class _StatusCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: background,
                   borderRadius: BorderRadius.circular(8),

@@ -28,11 +28,10 @@ class ProjectRepo {
     required int limit,
     String type = 'all',
   }) async {
-    final data = await _api.get('/project', query: {
-      'type': type,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/project',
+      query: {'type': type, 'page': page, 'limit': limit},
+    );
     return Paged.parse(data, ProjectDetail.fromJson);
   }
 
@@ -70,17 +69,19 @@ class ProjectRepo {
 
   /// 服务是否在运行：GET /api/systemctl/status?service=。
   Future<bool> serviceRunning(String service) async {
-    final data = await _api.get('/systemctl/status', query: {
-      'service': service,
-    });
+    final data = await _api.get(
+      '/systemctl/status',
+      query: {'service': service},
+    );
     return data == true;
   }
 
   /// 服务是否已设置自启：GET /api/systemctl/is_enabled?service=。
   Future<bool> serviceEnabled(String service) async {
-    final data = await _api.get('/systemctl/is_enabled', query: {
-      'service': service,
-    });
+    final data = await _api.get(
+      '/systemctl/is_enabled',
+      query: {'service': service},
+    );
     return data == true;
   }
 

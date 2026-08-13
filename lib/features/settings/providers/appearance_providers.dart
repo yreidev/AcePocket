@@ -55,8 +55,9 @@ class AppearanceStore {
 ///
 /// 首帧先返回 [ThemeMode.system]，随后异步读取本地偏好并刷新，
 /// `app.dart` 只需 `themeMode: ref.watch(appThemeModeProvider)`。
-final appThemeModeProvider =
-    NotifierProvider<AppThemeModeNotifier, ThemeMode>(AppThemeModeNotifier.new);
+final appThemeModeProvider = NotifierProvider<AppThemeModeNotifier, ThemeMode>(
+  AppThemeModeNotifier.new,
+);
 
 class AppThemeModeNotifier extends Notifier<ThemeMode> {
   @override

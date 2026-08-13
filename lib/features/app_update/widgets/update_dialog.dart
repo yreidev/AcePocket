@@ -69,8 +69,9 @@ class _UpdateInfoDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () async {
-            await AppSettingsStore.instance
-                .saveSkippedUpdateVersion(release.version);
+            await AppSettingsStore.instance.saveSkippedUpdateVersion(
+              release.version,
+            );
             if (context.mounted) Navigator.of(context).pop(false);
           },
           child: const Text('稍后'),
@@ -89,10 +90,7 @@ String _cleanChangelog(String body) {
   final lines = body.replaceAll('\r\n', '\n').split('\n');
   final cleaned = lines.map((line) {
     var s = line.replaceFirst(RegExp(r'^\s*#{1,6}\s+'), '');
-    s = s.replaceFirstMapped(
-      RegExp(r'^(\s*)[-*]\s+'),
-      (m) => '${m[1]}• ',
-    );
+    s = s.replaceFirstMapped(RegExp(r'^(\s*)[-*]\s+'), (m) => '${m[1]}• ');
     return s;
   });
   return cleaned.join('\n').trim();
@@ -130,17 +128,17 @@ enum _DownloadResultKind { success, cancelled, failed }
 /// 下载对话框的结束状态。
 class _DownloadResult {
   const _DownloadResult.success(String this.apkPath)
-      : kind = _DownloadResultKind.success,
-        message = null;
+    : kind = _DownloadResultKind.success,
+      message = null;
 
   const _DownloadResult.cancelled()
-      : kind = _DownloadResultKind.cancelled,
-        apkPath = null,
-        message = null;
+    : kind = _DownloadResultKind.cancelled,
+      apkPath = null,
+      message = null;
 
   const _DownloadResult.failed(String this.message)
-      : kind = _DownloadResultKind.failed,
-        apkPath = null;
+    : kind = _DownloadResultKind.failed,
+      apkPath = null;
 
   final _DownloadResultKind kind;
   final String? apkPath;
@@ -224,8 +222,8 @@ class _DownloadProgressDialogState extends State<_DownloadProgressDialog> {
               // 体积 / 百分比统一走 core/utils/format.dart，不再本地换算 MB。
               hasTotal
                   ? '${formatPercent(progress! * 100, fractionDigits: 0)}'
-                      '（${formatBytes(_received, fractionDigits: 1)} / '
-                      '${formatBytes(_total, fractionDigits: 1)}）'
+                        '（${formatBytes(_received, fractionDigits: 1)} / '
+                        '${formatBytes(_total, fractionDigits: 1)}）'
                   : '正在下载…',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,

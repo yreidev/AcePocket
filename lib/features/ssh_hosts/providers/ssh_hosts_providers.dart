@@ -32,8 +32,9 @@ class SshHostsNotifier extends PagedAsyncNotifier<SshHost> {
 
   @override
   Future<PagedResult<SshHost>> fetchPage(int page, int limit) async {
-    final paged =
-        await ref.read(sshHostsRepoProvider).list(page: page, limit: limit);
+    final paged = await ref
+        .read(sshHostsRepoProvider)
+        .list(page: page, limit: limit);
     return PagedResult<SshHost>(items: paged.items, total: paged.total);
   }
 
@@ -44,19 +45,23 @@ class SshHostsNotifier extends PagedAsyncNotifier<SshHost> {
 /// SSH 主机列表。
 final sshHostsProvider =
     AsyncNotifierProvider.autoDispose<SshHostsNotifier, PagedState<SshHost>>(
-        SshHostsNotifier.new);
+      SshHostsNotifier.new,
+    );
 
 // ------------------------------------------------------------------ 详情与选项
 
 /// 单台主机详情（编辑表单回填用；面板会返回解密后的密码 / 私钥）。
-final sshHostDetailProvider =
-    FutureProvider.autoDispose.family<SshHost, int>((ref, id) {
+final sshHostDetailProvider = FutureProvider.autoDispose.family<SshHost, int>((
+  ref,
+  id,
+) {
   return ref.watch(sshHostsRepoProvider).get(id);
 });
 
 /// 全部主机（供文件浏览页切换主机；面板 limit 上限 10000，这里取 500 足够）。
-final sshHostOptionsProvider =
-    FutureProvider.autoDispose<List<SshHost>>((ref) async {
+final sshHostOptionsProvider = FutureProvider.autoDispose<List<SshHost>>((
+  ref,
+) async {
   final paged = await ref.watch(sshHostsRepoProvider).list(page: 1, limit: 500);
   return paged.items;
 });
@@ -69,9 +74,9 @@ final sshHostOptionsProvider =
 typedef SftpQuery = ({int hostId, String path});
 
 /// 指定主机指定目录下的文件列表。
-final sftpListingProvider =
-    FutureProvider.autoDispose.family<List<SshFileInfo>, SftpQuery>(
-  (ref, query) => ref
-      .watch(sshHostsRepoProvider)
-      .listFiles(hostId: query.hostId, path: query.path),
-);
+final sftpListingProvider = FutureProvider.autoDispose
+    .family<List<SshFileInfo>, SftpQuery>(
+      (ref, query) => ref
+          .watch(sshHostsRepoProvider)
+          .listFiles(hostId: query.hostId, path: query.path),
+    );

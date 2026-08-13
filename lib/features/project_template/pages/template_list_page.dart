@@ -149,7 +149,8 @@ class _TemplateListPageState extends ConsumerState<TemplateListPage> {
                           height: MediaQuery.of(context).size.height * 0.15,
                         ),
                         EmptyView(
-                          message: filter.query.isNotEmpty ||
+                          message:
+                              filter.query.isNotEmpty ||
                                   filter.category.isNotEmpty
                               ? '没有匹配的模板\n换个关键词或分类再试试'
                               : '暂无模板\n请先在面板「应用商店」同步应用数据',

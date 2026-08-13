@@ -73,9 +73,7 @@ class _CodeBlockState extends State<CodeBlock> {
             onPressed: widget.code.isEmpty
                 ? null
                 : () async {
-                    await Clipboard.setData(
-                      ClipboardData(text: widget.code),
-                    );
+                    await Clipboard.setData(ClipboardData(text: widget.code));
                     if (context.mounted) {
                       showSuccessSnack(context, '已复制到剪贴板');
                     }

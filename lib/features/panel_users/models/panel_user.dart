@@ -36,24 +36,23 @@ class PanelUser {
     String? email,
     String? twoFaSecret,
     DateTime? updatedAt,
-  }) =>
-      PanelUser(
-        id: id,
-        username: username ?? this.username,
-        email: email ?? this.email,
-        twoFaSecret: twoFaSecret ?? this.twoFaSecret,
-        createdAt: createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
+  }) => PanelUser(
+    id: id,
+    username: username ?? this.username,
+    email: email ?? this.email,
+    twoFaSecret: twoFaSecret ?? this.twoFaSecret,
+    createdAt: createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
 
   factory PanelUser.fromJson(Map<String, dynamic> json) => PanelUser(
-        id: jsonInt(json['id']),
-        username: jsonString(json['username']),
-        email: jsonString(json['email']),
-        twoFaSecret: jsonString(json['two_fa']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    username: jsonString(json['username']),
+    email: jsonString(json['email']),
+    twoFaSecret: jsonString(json['two_fa']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 }
 
 /// 当前 API 令牌所属用户（`GET /api/user/info`）。
@@ -73,11 +72,11 @@ class PanelUserInfo {
   final List<String> roles;
 
   factory PanelUserInfo.fromJson(Map<String, dynamic> json) => PanelUserInfo(
-        id: jsonInt(json['id']),
-        username: jsonString(json['username']),
-        email: jsonString(json['email']),
-        roles: json['role'] is List
-            ? (json['role'] as List).map((e) => '$e').toList()
-            : const <String>[],
-      );
+    id: jsonInt(json['id']),
+    username: jsonString(json['username']),
+    email: jsonString(json['email']),
+    roles: json['role'] is List
+        ? (json['role'] as List).map((e) => '$e').toList()
+        : const <String>[],
+  );
 }

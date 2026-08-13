@@ -56,7 +56,8 @@ class _DatabaseServerSheetState extends ConsumerState<DatabaseServerSheet> {
   void initState() {
     super.initState();
     final server = widget.server;
-    _type = server?.type ??
+    _type =
+        server?.type ??
         (widget.initialType != null && widget.initialType!.isNotEmpty
             ? widget.initialType!
             : 'mysql');
@@ -247,7 +248,8 @@ class _DatabaseServerSheetState extends ConsumerState<DatabaseServerSheet> {
         ),
         if (!_isEdit)
           const SheetHint(
-            text: '本机数据库请把主机填为 127.0.0.1；远程数据库需确保面板所在机器能访问该地址，'
+            text:
+                '本机数据库请把主机填为 127.0.0.1；远程数据库需确保面板所在机器能访问该地址，'
                 '且数据库账号允许远程登录。',
           ),
       ],

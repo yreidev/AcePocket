@@ -64,7 +64,8 @@ class _AppCustomDialogState extends ConsumerState<_AppCustomDialog> {
   void _onEdited() {
     final original = _original;
     if (original == null) return;
-    final dirty = _preScriptController.text != original.preScript ||
+    final dirty =
+        _preScriptController.text != original.preScript ||
         _argsController.text != original.args;
     if (dirty != _dirty) setState(() => _dirty = dirty);
   }
@@ -118,10 +119,8 @@ class _AppCustomDialogState extends ConsumerState<_AppCustomDialog> {
       content: SizedBox(
         width: double.maxFinite,
         child: async.when(
-          loading: () => const SizedBox(
-            height: 140,
-            child: LoadingView(message: '读取中…'),
-          ),
+          loading: () =>
+              const SizedBox(height: 140, child: LoadingView(message: '读取中…')),
           error: (error, _) => SizedBox(
             height: 180,
             child: ErrorView(

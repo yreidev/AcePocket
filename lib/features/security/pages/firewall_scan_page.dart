@@ -25,8 +25,10 @@ class FirewallScanPage extends ConsumerStatefulWidget {
 
 class _FirewallScanPageState extends ConsumerState<FirewallScanPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 2, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 2,
+    vsync: this,
+  );
 
   /// 清空在途标志：不可恢复的操作，请求返回前禁用按钮防连点。
   bool _clearing = false;
@@ -115,19 +117,16 @@ class _FirewallScanPageState extends ConsumerState<FirewallScanPage>
                 ],
                 selected: {days},
                 showSelectedIcon: false,
-                onSelectionChanged: (selection) => ref
-                    .read(scanRangeDaysProvider.notifier)
-                    .state = selection.first,
+                onSelectionChanged: (selection) =>
+                    ref.read(scanRangeDaysProvider.notifier).state =
+                        selection.first,
               ),
             ),
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                _ScanOverviewTab(),
-                _ScanEventsTab(),
-              ],
+              children: const [_ScanOverviewTab(), _ScanEventsTab()],
             ),
           ),
         ],
@@ -440,7 +439,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
           final interfaces = ref.watch(scanInterfacesProvider);
           return UnsavedChangesGuard(
             hasUnsavedChanges: _dirty && !_saving,
-            message: '扫描感知设置改了但没保存，'
+            message:
+                '扫描感知设置改了但没保存，'
                 '这些改动还没有下发到面板，返回后将丢失。',
             onDiscard: _reset,
             child: Column(
@@ -489,14 +489,18 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                             .firstWhere(
                               (e) => e.name == name,
                               orElse: () => NetInterface(
-                                  name: name, ips: const [], status: ''),
+                                name: name,
+                                ips: const [],
+                                status: '',
+                              ),
                             )
                             .label,
                         emptyHint: '未获取到可用网卡，留空即为自动检测',
                       );
                       if (selected == null || !mounted) return;
                       setState(
-                          () => _draft = draft.copyWith(interfaces: selected));
+                        () => _draft = draft.copyWith(interfaces: selected),
+                      );
                     },
                   ),
                   SettingSwitchTile(
@@ -505,7 +509,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                     value: draft.autoBlock,
                     dirty: _autoBlockDirty,
                     onChanged: (value) => setState(
-                        () => _draft = draft.copyWith(autoBlock: value)),
+                      () => _draft = draft.copyWith(autoBlock: value),
+                    ),
                   ),
                   if (draft.autoBlock) ...[
                     SettingValueTile(
@@ -523,8 +528,9 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                           helperText: '检测窗口内扫描次数达到该值即触发封锁',
                         );
                         if (value == null || !mounted) return;
-                        setState(() =>
-                            _draft = draft.copyWith(blockThreshold: value));
+                        setState(
+                          () => _draft = draft.copyWith(blockThreshold: value),
+                        );
                       },
                     ),
                     SettingValueTile(
@@ -542,7 +548,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                         );
                         if (value == null || !mounted) return;
                         setState(
-                            () => _draft = draft.copyWith(blockWindow: value));
+                          () => _draft = draft.copyWith(blockWindow: value),
+                        );
                       },
                     ),
                     SettingValueTile(
@@ -562,8 +569,9 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                           helperText: '填 0 表示永久封锁',
                         );
                         if (value == null || !mounted) return;
-                        setState(() =>
-                            _draft = draft.copyWith(blockDuration: value));
+                        setState(
+                          () => _draft = draft.copyWith(blockDuration: value),
+                        );
                       },
                     ),
                     SettingValueTile(
@@ -582,7 +590,8 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                         );
                         if (values == null || !mounted) return;
                         setState(
-                            () => _draft = draft.copyWith(whitelist: values));
+                          () => _draft = draft.copyWith(whitelist: values),
+                        );
                       },
                     ),
                   ],
@@ -676,8 +685,8 @@ class _ScanEventsTab extends ConsumerWidget {
                   filter.isEmpty
                       ? '全部扫描事件'
                       : '筛选：'
-                          '${filter.sourceIp.isEmpty ? '' : 'IP ${filter.sourceIp} '}'
-                          '${filter.port == null ? '' : '端口 ${filter.port}'}',
+                            '${filter.sourceIp.isEmpty ? '' : 'IP ${filter.sourceIp} '}'
+                            '${filter.port == null ? '' : '端口 ${filter.port}'}',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -685,9 +694,9 @@ class _ScanEventsTab extends ConsumerWidget {
               ),
               if (!filter.isEmpty)
                 TextButton(
-                  onPressed: () => ref
-                      .read(scanEventFilterProvider.notifier)
-                      .state = const ScanEventFilter(),
+                  onPressed: () =>
+                      ref.read(scanEventFilterProvider.notifier).state =
+                          const ScanEventFilter(),
                   child: const Text('清除'),
                 ),
               A11yIconButton(

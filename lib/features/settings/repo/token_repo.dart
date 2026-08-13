@@ -21,11 +21,10 @@ class TokenRepository {
     required int page,
     required int limit,
   }) async {
-    final data = await _api.get('/user_tokens', query: {
-      'user_id': userId,
-      'page': page,
-      'limit': limit,
-    });
+    final data = await _api.get(
+      '/user_tokens',
+      query: {'user_id': userId, 'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, UserToken.fromJson);
   }
 
@@ -35,11 +34,14 @@ class TokenRepository {
     required List<String> ips,
     required DateTime expiredAt,
   }) async {
-    final data = await _api.post('/user_tokens', body: {
-      'user_id': userId,
-      'ips': ips,
-      'expired_at': expiredAt.millisecondsSinceEpoch,
-    });
+    final data = await _api.post(
+      '/user_tokens',
+      body: {
+        'user_id': userId,
+        'ips': ips,
+        'expired_at': expiredAt.millisecondsSinceEpoch,
+      },
+    );
     return UserToken.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
@@ -49,10 +51,10 @@ class TokenRepository {
     required List<String> ips,
     required DateTime expiredAt,
   }) async {
-    final data = await _api.put('/user_tokens/$id', body: {
-      'ips': ips,
-      'expired_at': expiredAt.millisecondsSinceEpoch,
-    });
+    final data = await _api.put(
+      '/user_tokens/$id',
+      body: {'ips': ips, 'expired_at': expiredAt.millisecondsSinceEpoch},
+    );
     return UserToken.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 

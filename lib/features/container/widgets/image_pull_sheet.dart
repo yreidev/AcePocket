@@ -115,12 +115,14 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
         return;
       }
       _channel = channel;
-      channel.sink.add(jsonEncode({
-        'name': name,
-        'auth': _useAuth,
-        'username': _useAuth ? _usernameController.text : '',
-        'password': _useAuth ? _passwordController.text : '',
-      }));
+      channel.sink.add(
+        jsonEncode({
+          'name': name,
+          'auth': _useAuth,
+          'username': _useAuth ? _usernameController.text : '',
+          'password': _useAuth ? _passwordController.text : '',
+        }),
+      );
       setState(() => _statusText = '正在拉取 $name …');
       _subscription = channel.stream.listen(
         _onMessage,
@@ -162,7 +164,9 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
 
   Future<void> _pullOverHttp(String name) async {
     try {
-      await ref.read(containerRepoProvider).pullImage(
+      await ref
+          .read(containerRepoProvider)
+          .pullImage(
             name: name,
             auth: _useAuth,
             username: _usernameController.text,
@@ -178,7 +182,8 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
       if (!mounted) return;
       setState(() {
         _pulling = false;
-        _error = '${describeError(error)}\n'
+        _error =
+            '${describeError(error)}\n'
             '（若为超时，镜像可能仍在服务器后台拉取，可稍后刷新列表确认）';
       });
     }
@@ -188,8 +193,8 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
     final text = message is String
         ? message
         : message is List<int>
-            ? const Utf8Decoder(allowMalformed: true).convert(message)
-            : '$message';
+        ? const Utf8Decoder(allowMalformed: true).convert(message)
+        : '$message';
     if (text.trim().isEmpty) return;
 
     dynamic decoded;
@@ -247,7 +252,8 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
       final ok = await showConfirmDialog(
         context,
         title: '关闭拉取面板',
-        content: '关闭后将不再显示拉取进度，服务器上的拉取可能仍在继续。'
+        content:
+            '关闭后将不再显示拉取进度，服务器上的拉取可能仍在继续。'
             '稍后可在镜像列表下拉刷新确认结果。确定关闭吗？',
         confirmText: '关闭',
         cancelText: '继续等待',
@@ -332,24 +338,26 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
                             TextFormField(
                               controller: _usernameController,
                               enabled: !_pulling,
-                              decoration:
-                                  const InputDecoration(labelText: '仓库用户名'),
+                              decoration: const InputDecoration(
+                                labelText: '仓库用户名',
+                              ),
                               validator: (value) =>
                                   _useAuth && (value ?? '').trim().isEmpty
-                                      ? '请输入仓库用户名'
-                                      : null,
+                                  ? '请输入仓库用户名'
+                                  : null,
                             ),
                             const SizedBox(height: 12),
                             TextFormField(
                               controller: _passwordController,
                               enabled: !_pulling,
                               obscureText: true,
-                              decoration:
-                                  const InputDecoration(labelText: '仓库密码'),
+                              decoration: const InputDecoration(
+                                labelText: '仓库密码',
+                              ),
                               validator: (value) =>
                                   _useAuth && (value ?? '').isEmpty
-                                      ? '请输入仓库密码'
-                                      : null,
+                                  ? '请输入仓库密码'
+                                  : null,
                             ),
                           ],
                         ],
@@ -376,8 +384,8 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
                         _fallbackMode
                             ? '普通模式没有逐层进度，请耐心等待…'
                             : countedLayers == 0
-                                ? '正在获取镜像层信息…'
-                                : '已完成 $_completedLayers / $countedLayers 层',
+                            ? '正在获取镜像层信息…'
+                            : '已完成 $_completedLayers / $countedLayers 层',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -459,8 +467,9 @@ class _ImagePullSheetState extends ConsumerState<_ImagePullSheet> {
                             ? const SizedBox(
                                 width: 18,
                                 height: 18,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2.4),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.4,
+                                ),
                               )
                             : const Icon(Icons.download_outlined),
                         label: Text(_pulling ? '拉取中…' : '开始拉取'),

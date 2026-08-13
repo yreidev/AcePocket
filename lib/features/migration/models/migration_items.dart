@@ -38,11 +38,7 @@ class MigrationWebsite {
 
   /// 提交给 `POST /toolbox_migration/start` 的字段
   /// （`request.ToolboxMigrationWebsite`）。
-  Map<String, dynamic> toStartJson() => {
-        'id': id,
-        'name': name,
-        'path': path,
-      };
+  Map<String, dynamic> toStartJson() => {'id': id, 'name': name, 'path': path};
 }
 
 /// 可迁移的数据库（`internal/biz/database.go` 的 `Database`）。
@@ -86,11 +82,11 @@ class MigrationDatabase {
 
   /// `request.ToolboxMigrationDatabase`。
   Map<String, dynamic> toStartJson() => {
-        'type': type,
-        'name': name,
-        'server_id': serverId,
-        'server': server,
-      };
+    'type': type,
+    'name': name,
+    'server_id': serverId,
+    'server': server,
+  };
 }
 
 /// 可迁移的数据库用户（`internal/biz/database_user.go` 的 `DatabaseUser`）。
@@ -144,14 +140,14 @@ class MigrationDatabaseUser {
   /// `request.ToolboxMigrationDatabaseUser`（与 Web 端一致，
   /// `server`/`type` 取自嵌套的数据库服务器对象）。
   Map<String, dynamic> toStartJson() => {
-        'id': id,
-        'username': username,
-        'password': password,
-        'host': host,
-        'server_id': serverId,
-        'server': serverName,
-        'type': serverType,
-      };
+    'id': id,
+    'username': username,
+    'password': password,
+    'host': host,
+    'server_id': serverId,
+    'server': serverName,
+    'type': serverType,
+  };
 }
 
 /// 可迁移的项目（`pkg/types/project.go` 的 `ProjectDetail`）。
@@ -188,11 +184,7 @@ class MigrationProject {
   }
 
   /// `request.ToolboxMigrationProject`。
-  Map<String, dynamic> toStartJson() => {
-        'id': id,
-        'name': name,
-        'path': path,
-      };
+  Map<String, dynamic> toStartJson() => {'id': id, 'name': name, 'path': path};
 }
 
 /// 本地可迁移项集合（`GET /toolbox_migration/items` 的响应）。
@@ -216,12 +208,14 @@ class MigrationItems {
       projects.isEmpty;
 
   factory MigrationItems.fromJson(Map<String, dynamic> json) => MigrationItems(
-        websites: jsonList(json['websites'], MigrationWebsite.fromJson),
-        databases: jsonList(json['databases'], MigrationDatabase.fromJson),
-        databaseUsers:
-            jsonList(json['database_users'], MigrationDatabaseUser.fromJson),
-        projects: jsonList(json['projects'], MigrationProject.fromJson),
-      );
+    websites: jsonList(json['websites'], MigrationWebsite.fromJson),
+    databases: jsonList(json['databases'], MigrationDatabase.fromJson),
+    databaseUsers: jsonList(
+      json['database_users'],
+      MigrationDatabaseUser.fromJson,
+    ),
+    projects: jsonList(json['projects'], MigrationProject.fromJson),
+  );
 
   static const empty = MigrationItems(
     websites: <MigrationWebsite>[],

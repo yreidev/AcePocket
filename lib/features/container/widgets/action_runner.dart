@@ -19,12 +19,14 @@ Future<bool> runAction(
 }) async {
   final navigator = Navigator.of(context, rootNavigator: true);
 
-  unawaited(showDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    useRootNavigator: true,
-    builder: (_) => _ProgressDialog(message: pending),
-  ));
+  unawaited(
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      useRootNavigator: true,
+      builder: (_) => _ProgressDialog(message: pending),
+    ),
+  );
 
   Object? failure;
   try {

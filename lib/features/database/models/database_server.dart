@@ -38,35 +38,33 @@ class DatabaseServer {
   String get displayAddress => port > 0 ? '$host:$port' : host;
 
   factory DatabaseServer.fromJson(Map<String, dynamic> json) => DatabaseServer(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        name: json['name'] as String? ?? '',
-        type: json['type'] as String? ?? '',
-        host: json['host'] as String? ?? '',
-        port: (json['port'] as num?)?.toInt() ?? 0,
-        username: json['username'] as String? ?? '',
-        password: json['password'] as String? ?? '',
-        status: json['status'] as String? ?? '',
-        remark: json['remark'] as String? ?? '',
-        createdAt: _parseTime(json['created_at']),
-        updatedAt: _parseTime(json['updated_at']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    name: json['name'] as String? ?? '',
+    type: json['type'] as String? ?? '',
+    host: json['host'] as String? ?? '',
+    port: (json['port'] as num?)?.toInt() ?? 0,
+    username: json['username'] as String? ?? '',
+    password: json['password'] as String? ?? '',
+    status: json['status'] as String? ?? '',
+    remark: json['remark'] as String? ?? '',
+    createdAt: _parseTime(json['created_at']),
+    updatedAt: _parseTime(json['updated_at']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'type': type,
-        'host': host,
-        'port': port,
-        'username': username,
-        'password': password,
-        'status': status,
-        'remark': remark,
-        // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
-        if (createdAt != null)
-          'created_at': createdAt!.toUtc().toIso8601String(),
-        if (updatedAt != null)
-          'updated_at': updatedAt!.toUtc().toIso8601String(),
-      };
+    'id': id,
+    'name': name,
+    'type': type,
+    'host': host,
+    'port': port,
+    'username': username,
+    'password': password,
+    'status': status,
+    'remark': remark,
+    // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
+    if (createdAt != null) 'created_at': createdAt!.toUtc().toIso8601String(),
+    if (updatedAt != null) 'updated_at': updatedAt!.toUtc().toIso8601String(),
+  };
 
   /// 解析面板返回的 RFC3339 时间（带时区偏移）。
   ///

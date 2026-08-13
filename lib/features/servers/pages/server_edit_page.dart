@@ -19,11 +19,7 @@ import '../widgets/server_form.dart';
 /// - `/servers/edit?id=<uuid>&advanced=1` —— 编辑并自动展开高级选项
 ///   （WebSocket 功能提示用户补填面板账号时使用）。
 class ServerEditPage extends ConsumerWidget {
-  const ServerEditPage({
-    super.key,
-    this.serverId,
-    this.expandAdvanced = false,
-  });
+  const ServerEditPage({super.key, this.serverId, this.expandAdvanced = false});
 
   /// 编辑时传入服务器 id；添加时为 null。
   final String? serverId;
@@ -49,7 +45,8 @@ class ServerEditPage extends ConsumerWidget {
     final ok = await showConfirmDialog(
       context,
       title: '删除服务器',
-      content: '确定要删除「${server.name}」吗？\n'
+      content:
+          '确定要删除「${server.name}」吗？\n'
           '此操作仅移除本机保存的配置与令牌，不会影响面板本身。',
       confirmText: '删除',
       danger: true,
@@ -133,11 +130,15 @@ class ServerEditPage extends ConsumerWidget {
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context)
                       ..hideCurrentSnackBar()
-                      ..showSnackBar(SnackBar(
-                        content: Text(isUpdate
-                            ? '已保存「${config.name}」'
-                            : '已添加「${config.name}」'),
-                      ));
+                      ..showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            isUpdate
+                                ? '已保存「${config.name}」'
+                                : '已添加「${config.name}」',
+                          ),
+                        ),
+                      );
                     _close(context);
                   },
                 ),

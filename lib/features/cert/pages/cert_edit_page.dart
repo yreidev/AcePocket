@@ -66,12 +66,15 @@ class _CertEditFormState extends ConsumerState<_CertEditForm> {
   late int _websiteId = widget.cert.websiteId;
   late bool _autoRenewal = widget.cert.autoRenewal;
 
-  late final TextEditingController _scriptController =
-      TextEditingController(text: widget.cert.script);
-  late final TextEditingController _certController =
-      TextEditingController(text: widget.cert.cert);
-  late final TextEditingController _keyController =
-      TextEditingController(text: widget.cert.key);
+  late final TextEditingController _scriptController = TextEditingController(
+    text: widget.cert.script,
+  );
+  late final TextEditingController _certController = TextEditingController(
+    text: widget.cert.cert,
+  );
+  late final TextEditingController _keyController = TextEditingController(
+    text: widget.cert.key,
+  );
 
   bool _submitting = false;
 
@@ -118,7 +121,9 @@ class _CertEditFormState extends ConsumerState<_CertEditForm> {
 
     setState(() => _submitting = true);
     try {
-      await ref.read(certRepoProvider).updateCert(
+      await ref
+          .read(certRepoProvider)
+          .updateCert(
             id: widget.cert.id,
             type: _type,
             // upload 类型时面板会从证书内容重新解析域名，这里回传原域名即可。

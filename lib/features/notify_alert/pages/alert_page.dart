@@ -23,8 +23,10 @@ class AlertPage extends ConsumerStatefulWidget {
 
 class _AlertPageState extends ConsumerState<AlertPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 2, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 2,
+    vsync: this,
+  );
 
   /// 正在清空告警记录（防止重复点击发起多次清空请求）。
   bool _clearing = false;
@@ -125,10 +127,7 @@ class _AlertPageState extends ConsumerState<AlertPage>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                _AlertRulesTab(),
-                _AlertRecordsTab(),
-              ],
+              children: const [_AlertRulesTab(), _AlertRecordsTab()],
             ),
           ),
         ],
@@ -199,7 +198,8 @@ class _AlertRulesTabState extends ConsumerState<_AlertRulesTab> {
     final ok = await showConfirmDialog(
       context,
       title: '删除告警规则',
-      content: '确定要删除「${rule.name.isEmpty ? '未命名规则' : rule.name}」吗？'
+      content:
+          '确定要删除「${rule.name.isEmpty ? '未命名规则' : rule.name}」吗？'
           '删除后该规则不再触发告警，已产生的告警记录会保留。',
       confirmText: '删除',
       danger: true,
@@ -218,7 +218,8 @@ class _AlertRulesTabState extends ConsumerState<_AlertRulesTab> {
     return PagedListView<AlertRule>(
       state: state,
       header: const InfoBanner(
-        text: '面板每分钟检查一次指标，条件连续满足设定次数后触发告警，'
+        text:
+            '面板每分钟检查一次指标，条件连续满足设定次数后触发告警，'
             '并按静默期去重；未选择通知渠道时只记录不发送。',
       ),
       onRefresh: () => ref.read(alertRulesProvider.notifier).refresh(),
@@ -247,9 +248,7 @@ class _AlertRecordsTab extends ConsumerWidget {
     final state = ref.watch(alertRecordsProvider);
     return PagedListView<AlertRecord>(
       state: state,
-      header: const InfoBanner(
-        text: '告警记录只保存触发历史，不代表当前状态；清空记录不影响告警规则。',
-      ),
+      header: const InfoBanner(text: '告警记录只保存触发历史，不代表当前状态；清空记录不影响告警规则。'),
       onRefresh: () => ref.read(alertRecordsProvider.notifier).refresh(),
       onLoadMore: () => ref.read(alertRecordsProvider.notifier).loadMore(),
       onRetry: () => ref.invalidate(alertRecordsProvider),

@@ -83,8 +83,9 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
       setState(() => _error = '最大下载次数不能为负数');
       return;
     }
-    Navigator.of(context)
-        .pop((path: path, expireHours: expire, maxDownloads: max));
+    Navigator.of(
+      context,
+    ).pop((path: path, expireHours: expire, maxDownloads: max));
   }
 
   @override
@@ -106,8 +107,9 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
                 minLines: 1,
                 decoration: InputDecoration(
                   labelText: '文件路径',
-                  helperText:
-                      widget.pathEditable ? '仅支持分享文件，不能分享目录' : '路径来自所选文件，不可修改',
+                  helperText: widget.pathEditable
+                      ? '仅支持分享文件，不能分享目录'
+                      : '路径来自所选文件，不可修改',
                   helperMaxLines: 2,
                 ),
                 onChanged: (_) {
@@ -137,12 +139,8 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
                     child: TextField(
                       controller: _expireController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      decoration: const InputDecoration(
-                        labelText: '有效期（小时）',
-                      ),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: const InputDecoration(labelText: '有效期（小时）'),
                       onChanged: (value) => setState(() {
                         _preset = int.tryParse(value);
                         _error = null;
@@ -154,9 +152,7 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
                     child: TextField(
                       controller: _maxController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: const InputDecoration(
                         labelText: '最大下载次数',
                         helperText: '0 为不限',
@@ -169,8 +165,9 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
                 const SizedBox(height: 12),
                 Text(
                   _error!,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.error),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                 ),
               ],
             ],
@@ -189,10 +186,7 @@ class _ShareCreateDialogState extends State<_ShareCreateDialog> {
 }
 
 /// 展示分享创建成功后的下载链接，并提供复制按钮。
-Future<void> showShareLinkDialog(
-  BuildContext context, {
-  required String url,
-}) {
+Future<void> showShareLinkDialog(BuildContext context, {required String url}) {
   return showDialog<void>(
     context: context,
     builder: (context) {
@@ -205,10 +199,7 @@ Future<void> showShareLinkDialog(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SelectableText(
-              url,
-              style: theme.textTheme.bodyMedium,
-            ),
+            SelectableText(url, style: theme.textTheme.bodyMedium),
             const SizedBox(height: 12),
             Text(
               '该链接无需登录即可下载，请谨慎分发。',

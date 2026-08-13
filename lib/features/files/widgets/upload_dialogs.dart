@@ -129,10 +129,7 @@ class _TextUploadDialogState extends State<_TextUploadDialog> {
             TextField(
               controller: _nameController,
               autofocus: true,
-              decoration: InputDecoration(
-                labelText: '文件名',
-                errorText: _error,
-              ),
+              decoration: InputDecoration(labelText: '文件名', errorText: _error),
               onChanged: (_) {
                 if (_error != null) setState(() => _error = null);
               },

@@ -6,8 +6,9 @@ import '../models/connection_test.dart';
 import '../repo/connection_test_repo.dart';
 
 /// 连接测试仓库（无状态）。
-final connectionTestRepoProvider =
-    Provider<ConnectionTestRepo>((ref) => const ConnectionTestRepo());
+final connectionTestRepoProvider = Provider<ConnectionTestRepo>(
+  (ref) => const ConnectionTestRepo(),
+);
 
 /// 按 id 查找已保存的服务器；列表尚未加载或 id 不存在时为 null。
 final serverByIdProvider = Provider.family<ServerConfig?, String>((ref, id) {
@@ -30,9 +31,9 @@ final hasServersProvider = Provider<bool>((ref) {
 /// autoDispose：对话框关闭后自动释放；重试用 `ref.invalidate(...)`。
 final serverConnectionTestProvider = FutureProvider.autoDispose
     .family<ConnectionTestResult, String>((ref, serverId) async {
-  final server = ref.watch(serverByIdProvider(serverId));
-  if (server == null) {
-    throw StateError('未找到该服务器，可能已被删除');
-  }
-  return ref.read(connectionTestRepoProvider).test(server);
-});
+      final server = ref.watch(serverByIdProvider(serverId));
+      if (server == null) {
+        throw StateError('未找到该服务器，可能已被删除');
+      }
+      return ref.read(connectionTestRepoProvider).test(server);
+    });

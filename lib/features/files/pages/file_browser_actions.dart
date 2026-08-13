@@ -109,9 +109,11 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     if (paths.isEmpty) return;
     ref.read(fileClipboardProvider.notifier).set(paths, isMove: isMove);
     setState(_selected.clear);
-    _info(isMove
-        ? '已剪切 ${paths.length} 项，进入目标目录后点顶部的「粘贴到此」'
-        : '已复制 ${paths.length} 项，进入目标目录后点顶部的「粘贴到此」');
+    _info(
+      isMove
+          ? '已剪切 ${paths.length} 项，进入目标目录后点顶部的「粘贴到此」'
+          : '已复制 ${paths.length} 项，进入目标目录后点顶部的「粘贴到此」',
+    );
   }
 
   @override
@@ -155,11 +157,13 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
         force = true;
       }
       final items = targets
-          .map((e) => FileTransferItem(
-                source: e.source,
-                target: e.target,
-                force: force,
-              ))
+          .map(
+            (e) => FileTransferItem(
+              source: e.source,
+              target: e.target,
+              force: force,
+            ),
+          )
           .toList();
       if (clip.isMove) {
         await repo.move(items);
@@ -188,8 +192,9 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     if (!mounted) return;
     final result = await showPermissionDialog(
       context,
-      targetLabel:
-          paths.length == 1 ? paths.first : '共 ${paths.length} 项（$_path）',
+      targetLabel: paths.length == 1
+          ? paths.first
+          : '共 ${paths.length} 项（$_path）',
       initialMode: mode,
       initialOwner: owner,
       initialGroup: group,
@@ -229,13 +234,17 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     final names = paths.map(posixBaseName).toList();
     final dest = await showCompressDialog(context, dir: dir, names: names);
     if (dest == null || !mounted) return;
-    await _run(() async {
-      await ref
-          .read(fileRepoProvider)
-          .compress(dir: dir, paths: names, file: dest);
-      if (mounted) setState(_selected.clear);
-      return true;
-    }, success: '压缩任务已创建', task: true);
+    await _run(
+      () async {
+        await ref
+            .read(fileRepoProvider)
+            .compress(dir: dir, paths: names, file: dest);
+        if (mounted) setState(_selected.clear);
+        return true;
+      },
+      success: '压缩任务已创建',
+      task: true,
+    );
   }
 
   Future<void> _unCompress(FileItem item) async {
@@ -245,12 +254,16 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
       currentDir: _path,
     );
     if (target == null || !mounted) return;
-    await _run(() async {
-      await ref
-          .read(fileRepoProvider)
-          .unCompress(file: item.full, path: target);
-      return true;
-    }, success: '解压任务已创建', task: true);
+    await _run(
+      () async {
+        await ref
+            .read(fileRepoProvider)
+            .unCompress(file: item.full, path: target);
+        return true;
+      },
+      success: '解压任务已创建',
+      task: true,
+    );
   }
 
   Future<void> _share(FileItem item) async {
@@ -261,7 +274,9 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     );
     if (form == null || !mounted) return;
     await _run(() async {
-      final share = await ref.read(fileSharesProvider.notifier).create(
+      final share = await ref
+          .read(fileSharesProvider.notifier)
+          .create(
             path: form.path,
             expireHours: form.expireHours,
             maxDownloads: form.maxDownloads,
@@ -332,7 +347,8 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
         final path = file.path;
         if (path != null && path.isNotEmpty) {
           sources.add(
-              await LocalFileUploadSource.open(File(path), name: file.name));
+            await LocalFileUploadSource.open(File(path), name: file.name),
+          );
         } else if (file.bytes != null) {
           sources.add(BytesUploadSource(name: file.name, bytes: file.bytes!));
         } else {
@@ -356,8 +372,9 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     final repo = ref.read(fileRepoProvider);
     final jobs = <UploadJob>[];
     try {
-      final exists =
-          await repo.exist([for (final s in sources) posixJoin(_path, s.name)]);
+      final exists = await repo.exist([
+        for (final s in sources) posixJoin(_path, s.name),
+      ]);
       final conflicts = <int>[
         for (var i = 0; i < sources.length; i++)
           if (i < exists.length && exists[i]) i,
@@ -397,7 +414,8 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
         }
         reserved.add(source.name);
         jobs.add(
-            UploadJob(source: source, targetName: source.name, force: force));
+          UploadJob(source: source, targetName: source.name, force: force),
+        );
       }
 
       for (var i = 0; i < sources.length; i++) {
@@ -447,8 +465,11 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
       messages.add('${unreadable.length} 个文件无法读取');
     }
     if (outcome.failures.isNotEmpty) {
-      _error(ApiException(
-          '上传结束：${messages.join('，')}\n${outcome.failures.join('\n')}'));
+      _error(
+        ApiException(
+          '上传结束：${messages.join('，')}\n${outcome.failures.join('\n')}',
+        ),
+      );
     } else if (messages.isEmpty) {
       _info('未上传任何文件');
     } else if (outcome.cancelled || unreadable.isNotEmpty) {
@@ -473,8 +494,9 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
       final candidates = [
         for (var i = 0; i < batch; i++) '$stem-${offset + i}$ext',
       ];
-      final exists =
-          await repo.exist([for (final n in candidates) posixJoin(_path, n)]);
+      final exists = await repo.exist([
+        for (final n in candidates) posixJoin(_path, n),
+      ]);
       for (var i = 0; i < candidates.length; i++) {
         final name = candidates[i];
         if (!(i < exists.length && exists[i]) && !reserved.contains(name)) {
@@ -495,17 +517,14 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
     final outcome = await showDownloadProgressDialog(
       context,
       fileName: item.name,
-      runner: ({
-        required savePath,
-        required onProgress,
-        required cancelToken,
-      }) =>
-          repo.downloadToLocal(
-        path: item.full,
-        savePath: savePath,
-        onProgress: onProgress,
-        cancelToken: cancelToken,
-      ),
+      runner:
+          ({required savePath, required onProgress, required cancelToken}) =>
+              repo.downloadToLocal(
+                path: item.full,
+                savePath: savePath,
+                onProgress: onProgress,
+                cancelToken: cancelToken,
+              ),
     );
     if (!mounted || outcome == null) return;
     if (outcome.cancelled) {
@@ -525,13 +544,19 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
   Future<void> _remoteDownload() async {
     final result = await showRemoteDownloadDialog(context, dir: _path);
     if (result == null || !mounted) return;
-    await _run(() async {
-      await ref.read(fileRepoProvider).remoteDownload(
-            path: posixJoin(_path, result.name),
-            url: result.url,
-          );
-      return true;
-    }, success: '下载任务已创建', task: true);
+    await _run(
+      () async {
+        await ref
+            .read(fileRepoProvider)
+            .remoteDownload(
+              path: posixJoin(_path, result.name),
+              url: result.url,
+            );
+        return true;
+      },
+      success: '下载任务已创建',
+      task: true,
+    );
   }
 
   @override
@@ -586,7 +611,8 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
       final ok = await showConfirmDialog(
         context,
         title: '文件较大',
-        content: '「${item.name}」大小为 ${item.size}，'
+        content:
+            '「${item.name}」大小为 ${item.size}，'
             '文件较大，编辑器可能卡顿，建议下载后用电脑编辑。仍要继续打开吗？',
         confirmText: '继续打开',
       );

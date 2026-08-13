@@ -26,16 +26,16 @@ class WebsiteListTile extends StatelessWidget {
   final bool busy;
 
   Color _typeColor(ColorScheme scheme) => switch (website.type) {
-        'proxy' => scheme.tertiaryContainer,
-        'php' => scheme.secondaryContainer,
-        _ => scheme.primaryContainer,
-      };
+    'proxy' => scheme.tertiaryContainer,
+    'php' => scheme.secondaryContainer,
+    _ => scheme.primaryContainer,
+  };
 
   Color _onTypeColor(ColorScheme scheme) => switch (website.type) {
-        'proxy' => scheme.onTertiaryContainer,
-        'php' => scheme.onSecondaryContainer,
-        _ => scheme.onPrimaryContainer,
-      };
+    'proxy' => scheme.onTertiaryContainer,
+    'php' => scheme.onSecondaryContainer,
+    _ => scheme.onPrimaryContainer,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -125,10 +125,14 @@ class WebsiteListTile extends StatelessWidget {
                         value: 'delete',
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
-                          leading:
-                              Icon(Icons.delete_outline, color: scheme.error),
-                          title:
-                              Text('删除', style: TextStyle(color: scheme.error)),
+                          leading: Icon(
+                            Icons.delete_outline,
+                            color: scheme.error,
+                          ),
+                          title: Text(
+                            '删除',
+                            style: TextStyle(color: scheme.error),
+                          ),
                         ),
                       ),
                     ],
@@ -173,22 +177,19 @@ class WebsiteListTile extends StatelessWidget {
                       background: certDays < 0
                           ? scheme.errorContainer
                           : certDays < 15
-                              ? scheme.tertiaryContainer
-                              : scheme.surfaceContainerHighest,
+                          ? scheme.tertiaryContainer
+                          : scheme.surfaceContainerHighest,
                       foreground: certDays < 0
                           ? scheme.onErrorContainer
                           : certDays < 15
-                              ? scheme.onTertiaryContainer
-                              : scheme.onSurfaceVariant,
+                          ? scheme.onTertiaryContainer
+                          : scheme.onSurfaceVariant,
                     ),
                 ],
               ),
               if (website.domains.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                _InfoRow(
-                  icon: Icons.link,
-                  text: website.domains.join('、'),
-                ),
+                _InfoRow(icon: Icons.link, text: website.domains.join('、')),
               ],
               if (website.path.isNotEmpty) ...[
                 const SizedBox(height: 4),
@@ -237,8 +238,9 @@ class _Chip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style:
-            Theme.of(context).textTheme.labelSmall?.copyWith(color: foreground),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: foreground),
       ),
     );
   }

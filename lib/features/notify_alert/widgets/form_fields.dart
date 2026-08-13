@@ -4,11 +4,7 @@ export '../../../core/widgets/string_list_field.dart';
 
 /// 底部选择器的一个选项。
 class PickerOption<T> {
-  const PickerOption({
-    required this.value,
-    required this.label,
-    this.subtitle,
-  });
+  const PickerOption({required this.value, required this.label, this.subtitle});
 
   final T value;
   final String label;
@@ -198,8 +194,9 @@ class StatusChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style:
-            Theme.of(context).textTheme.labelSmall?.copyWith(color: foreground),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: foreground),
       ),
     );
   }

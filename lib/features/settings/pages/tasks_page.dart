@@ -67,7 +67,8 @@ class _TasksPageState extends ConsumerState<TasksPage> {
     final ok = await showConfirmDialog(
       context,
       title: '取消任务',
-      content: '确定要取消任务「${task.name.isEmpty ? '#${task.id}' : task.name}」吗？'
+      content:
+          '确定要取消任务「${task.name.isEmpty ? '#${task.id}' : task.name}」吗？'
           '\n面板会尝试终止正在执行的操作，可能导致该操作处于中间状态。',
       confirmText: '取消任务',
       cancelText: '继续执行',

@@ -23,8 +23,10 @@ class PanelUserRepository {
 
   /// 用户列表（`GET /api/users`，`request.Paginate`）。
   Future<Paged<PanelUser>> list({required int page, required int limit}) async {
-    final data =
-        await _api.get('/users', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/users',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, PanelUser.fromJson);
   }
 
@@ -37,11 +39,10 @@ class PanelUserRepository {
     required String password,
     required String email,
   }) async {
-    final data = await _api.post('/users', body: {
-      'username': username,
-      'password': password,
-      'email': email,
-    });
+    final data = await _api.post(
+      '/users',
+      body: {'username': username, 'password': password, 'email': email},
+    );
     return PanelUser.fromJson(data is Map<String, dynamic> ? data : const {});
   }
 
@@ -110,7 +111,8 @@ class PanelUserRepository {
   Future<PanelUserInfo> currentUser() async {
     final data = await _api.get('/user/info');
     return PanelUserInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   // ------------------------------------------------------------------ 通行密钥
@@ -155,7 +157,7 @@ class PanelUserRepository {
   /// 即本 App 所用 API 令牌的归属用户（`internal/middleware/must_login.go`
   /// 会把令牌所有者写入 `user_id`）。
   Future<void> deletePasskey(int id, {int? userId}) => _api.delete(
-        '/user_passkeys/$id',
-        query: (userId != null && userId > 0) ? {'user_id': userId} : null,
-      );
+    '/user_passkeys/$id',
+    query: (userId != null && userId > 0) ? {'user_id': userId} : null,
+  );
 }

@@ -130,7 +130,7 @@ class _LogFooter extends StatelessWidget {
             canLoadMore
                 ? '已显示最近 $count 条（上限 $limit 条）'
                 : '已显示全部 $count 条'
-                    '${limit >= maxLimit ? '（已达面板上限 $maxLimit 条）' : ''}',
+                      '${limit >= maxLimit ? '（已达面板上限 $maxLimit 条）' : ''}',
             textAlign: TextAlign.center,
             style: captionStyle,
           ),
@@ -208,8 +208,9 @@ class _PanelLogViewState extends ConsumerState<_PanelLogView>
 
     final dateItems = <DropdownMenuItem<String>>[
       const DropdownMenuItem(value: '', child: Text('今天')),
-      ...(datesAsync.valueOrNull ?? const <String>[])
-          .map((d) => DropdownMenuItem(value: d, child: Text(d))),
+      ...(datesAsync.valueOrNull ?? const <String>[]).map(
+        (d) => DropdownMenuItem(value: d, child: Text(d)),
+      ),
     ];
 
     return Column(
@@ -220,8 +221,9 @@ class _PanelLogViewState extends ConsumerState<_PanelLogView>
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  initialValue:
-                      dateItems.any((e) => e.value == _date) ? _date : '',
+                  initialValue: dateItems.any((e) => e.value == _date)
+                      ? _date
+                      : '',
                   isExpanded: true,
                   decoration: const InputDecoration(labelText: '日期'),
                   items: dateItems,
@@ -252,11 +254,11 @@ class _PanelLogViewState extends ConsumerState<_PanelLogView>
         Expanded(
           child: entries == null
               ? (logsAsync.hasError
-                  ? ErrorView(
-                      error: logsAsync.error!,
-                      onRetry: () => ref.invalidate(logListProvider(_query)),
-                    )
-                  : const LoadingView(message: '正在加载日志…'))
+                    ? ErrorView(
+                        error: logsAsync.error!,
+                        onRetry: () => ref.invalidate(logListProvider(_query)),
+                      )
+                    : const LoadingView(message: '正在加载日志…'))
               : RefreshIndicator(
                   onRefresh: _refresh,
                   child: entries.isEmpty
@@ -285,8 +287,10 @@ class _PanelLogViewState extends ConsumerState<_PanelLogView>
                                 loading: logsAsync.isLoading,
                                 error: logsAsync.error,
                                 onLoadMore: () => setState(() {
-                                  _limit =
-                                      (_limit + _step).clamp(_step, _maxLimit);
+                                  _limit = (_limit + _step).clamp(
+                                    _step,
+                                    _maxLimit,
+                                  );
                                 }),
                                 onRetry: () =>
                                     ref.invalidate(logListProvider(_query)),

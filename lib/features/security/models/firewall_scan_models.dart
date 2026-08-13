@@ -44,26 +44,26 @@ class ScanSetting {
   final List<String> whitelist;
 
   factory ScanSetting.fromJson(Map<String, dynamic> json) => ScanSetting(
-        enabled: json['enabled'] as bool? ?? false,
-        days: (json['days'] as num?)?.toInt() ?? 30,
-        interfaces: _stringList(json['interfaces']),
-        autoBlock: json['auto_block'] as bool? ?? false,
-        blockThreshold: (json['block_threshold'] as num?)?.toInt() ?? 100,
-        blockWindow: (json['block_window'] as num?)?.toInt() ?? 5,
-        blockDuration: (json['block_duration'] as num?)?.toInt() ?? 0,
-        whitelist: _stringList(json['whitelist']),
-      );
+    enabled: json['enabled'] as bool? ?? false,
+    days: (json['days'] as num?)?.toInt() ?? 30,
+    interfaces: _stringList(json['interfaces']),
+    autoBlock: json['auto_block'] as bool? ?? false,
+    blockThreshold: (json['block_threshold'] as num?)?.toInt() ?? 100,
+    blockWindow: (json['block_window'] as num?)?.toInt() ?? 5,
+    blockDuration: (json['block_duration'] as num?)?.toInt() ?? 0,
+    whitelist: _stringList(json['whitelist']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'enabled': enabled,
-        'days': days,
-        'interfaces': interfaces,
-        'auto_block': autoBlock,
-        'block_threshold': blockThreshold,
-        'block_window': blockWindow,
-        'block_duration': blockDuration,
-        'whitelist': whitelist,
-      };
+    'enabled': enabled,
+    'days': days,
+    'interfaces': interfaces,
+    'auto_block': autoBlock,
+    'block_threshold': blockThreshold,
+    'block_window': blockWindow,
+    'block_duration': blockDuration,
+    'whitelist': whitelist,
+  };
 
   ScanSetting copyWith({
     bool? enabled,
@@ -74,17 +74,16 @@ class ScanSetting {
     int? blockWindow,
     int? blockDuration,
     List<String>? whitelist,
-  }) =>
-      ScanSetting(
-        enabled: enabled ?? this.enabled,
-        days: days ?? this.days,
-        interfaces: interfaces ?? this.interfaces,
-        autoBlock: autoBlock ?? this.autoBlock,
-        blockThreshold: blockThreshold ?? this.blockThreshold,
-        blockWindow: blockWindow ?? this.blockWindow,
-        blockDuration: blockDuration ?? this.blockDuration,
-        whitelist: whitelist ?? this.whitelist,
-      );
+  }) => ScanSetting(
+    enabled: enabled ?? this.enabled,
+    days: days ?? this.days,
+    interfaces: interfaces ?? this.interfaces,
+    autoBlock: autoBlock ?? this.autoBlock,
+    blockThreshold: blockThreshold ?? this.blockThreshold,
+    blockWindow: blockWindow ?? this.blockWindow,
+    blockDuration: blockDuration ?? this.blockDuration,
+    whitelist: whitelist ?? this.whitelist,
+  );
 
   static List<String> _stringList(dynamic value) =>
       value is List ? value.whereType<String>().toList() : const [];
@@ -105,10 +104,10 @@ class NetInterface {
   final String status;
 
   factory NetInterface.fromJson(Map<String, dynamic> json) => NetInterface(
-        name: json['name'] as String? ?? '',
-        ips: ScanSetting._stringList(json['ips']),
-        status: json['status'] as String? ?? '',
-      );
+    name: json['name'] as String? ?? '',
+    ips: ScanSetting._stringList(json['ips']),
+    status: json['status'] as String? ?? '',
+  );
 
   String get label => ips.isEmpty ? name : '$name（${ips.join(', ')}）';
 }
@@ -126,10 +125,10 @@ class ScanSummary {
   final int uniquePorts;
 
   factory ScanSummary.fromJson(Map<String, dynamic> json) => ScanSummary(
-        totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
-        uniqueIps: (json['unique_ips'] as num?)?.toInt() ?? 0,
-        uniquePorts: (json['unique_ports'] as num?)?.toInt() ?? 0,
-      );
+    totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
+    uniqueIps: (json['unique_ips'] as num?)?.toInt() ?? 0,
+    uniquePorts: (json['unique_ports'] as num?)?.toInt() ?? 0,
+  );
 
   static const empty = ScanSummary(totalCount: 0, uniqueIps: 0, uniquePorts: 0);
 }
@@ -148,10 +147,10 @@ class ScanDayTrend {
   final int uniqueIps;
 
   factory ScanDayTrend.fromJson(Map<String, dynamic> json) => ScanDayTrend(
-        date: json['date'] as String? ?? '',
-        totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
-        uniqueIps: (json['unique_ips'] as num?)?.toInt() ?? 0,
-      );
+    date: json['date'] as String? ?? '',
+    totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
+    uniqueIps: (json['unique_ips'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// 扫描源 IP 排行（GET /firewall/scan/top_ips）。
@@ -177,15 +176,15 @@ class ScanSourceRank {
   final String isp;
 
   factory ScanSourceRank.fromJson(Map<String, dynamic> json) => ScanSourceRank(
-        sourceIp: json['source_ip'] as String? ?? '',
-        totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
-        portCount: (json['port_count'] as num?)?.toInt() ?? 0,
-        lastSeen: json['last_seen'] as String? ?? '',
-        country: json['country'] as String? ?? '',
-        region: json['region'] as String? ?? '',
-        city: json['city'] as String? ?? '',
-        isp: json['isp'] as String? ?? '',
-      );
+    sourceIp: json['source_ip'] as String? ?? '',
+    totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
+    portCount: (json['port_count'] as num?)?.toInt() ?? 0,
+    lastSeen: json['last_seen'] as String? ?? '',
+    country: json['country'] as String? ?? '',
+    region: json['region'] as String? ?? '',
+    city: json['city'] as String? ?? '',
+    isp: json['isp'] as String? ?? '',
+  );
 
   /// 归属地展示（国家 / 地区 / 城市 / 运营商，去空去重）。
   String get location {
@@ -213,11 +212,11 @@ class ScanPortRank {
   final int ipCount;
 
   factory ScanPortRank.fromJson(Map<String, dynamic> json) => ScanPortRank(
-        port: (json['port'] as num?)?.toInt() ?? 0,
-        protocol: json['protocol'] as String? ?? 'tcp',
-        totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
-        ipCount: (json['ip_count'] as num?)?.toInt() ?? 0,
-      );
+    port: (json['port'] as num?)?.toInt() ?? 0,
+    protocol: json['protocol'] as String? ?? 'tcp',
+    totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
+    ipCount: (json['ip_count'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// 扫描感知概览（汇总 + 趋势 + Top 排行的组合，供概览页一次性展示）。
@@ -268,19 +267,19 @@ class ScanEvent {
   final DateTime? lastSeen;
 
   factory ScanEvent.fromJson(Map<String, dynamic> json) => ScanEvent(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        sourceIp: json['source_ip'] as String? ?? '',
-        port: (json['port'] as num?)?.toInt() ?? 0,
-        protocol: json['protocol'] as String? ?? 'tcp',
-        date: json['date'] as String? ?? '',
-        count: (json['count'] as num?)?.toInt() ?? 0,
-        country: json['country'] as String? ?? '',
-        region: json['region'] as String? ?? '',
-        city: json['city'] as String? ?? '',
-        isp: json['isp'] as String? ?? '',
-        firstSeen: _parseTime(json['first_seen']),
-        lastSeen: _parseTime(json['last_seen']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    sourceIp: json['source_ip'] as String? ?? '',
+    port: (json['port'] as num?)?.toInt() ?? 0,
+    protocol: json['protocol'] as String? ?? 'tcp',
+    date: json['date'] as String? ?? '',
+    count: (json['count'] as num?)?.toInt() ?? 0,
+    country: json['country'] as String? ?? '',
+    region: json['region'] as String? ?? '',
+    city: json['city'] as String? ?? '',
+    isp: json['isp'] as String? ?? '',
+    firstSeen: _parseTime(json['first_seen']),
+    lastSeen: _parseTime(json['last_seen']),
+  );
 
   String get location {
     final parts = <String>[];

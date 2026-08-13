@@ -113,23 +113,27 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
       for (final state in filter.states)
         _removableChip(state, () {
           final next = {...filter.states}..remove(state);
-          ref.read(networkFilterProvider.notifier).state =
-              filter.copyWith(states: next);
+          ref.read(networkFilterProvider.notifier).state = filter.copyWith(
+            states: next,
+          );
         }),
       if (filter.process.isNotEmpty)
         _removableChip('进程 ${filter.process}', () {
-          ref.read(networkFilterProvider.notifier).state =
-              filter.copyWith(process: '');
+          ref.read(networkFilterProvider.notifier).state = filter.copyWith(
+            process: '',
+          );
         }),
       if (filter.pid.isNotEmpty)
         _removableChip('PID ${filter.pid}', () {
-          ref.read(networkFilterProvider.notifier).state =
-              filter.copyWith(pid: '');
+          ref.read(networkFilterProvider.notifier).state = filter.copyWith(
+            pid: '',
+          );
         }),
       if (filter.port.isNotEmpty)
         _removableChip('端口 ${filter.port}', () {
-          ref.read(networkFilterProvider.notifier).state =
-              filter.copyWith(port: '');
+          ref.read(networkFilterProvider.notifier).state = filter.copyWith(
+            port: '',
+          );
         }),
     ];
 
@@ -170,7 +174,9 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
   }
 
   Widget _body(
-      AsyncValue<PagedState<NetworkConnection>> state, ThemeData theme) {
+    AsyncValue<PagedState<NetworkConnection>> state,
+    ThemeData theme,
+  ) {
     if (!state.hasValue) {
       if (state.hasError) {
         return ErrorView(
@@ -199,9 +205,9 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
                 icon: Icons.lan_outlined,
                 action: hasFilter
                     ? OutlinedButton.icon(
-                        onPressed: () => ref
-                            .read(networkFilterProvider.notifier)
-                            .state = const NetworkFilter(),
+                        onPressed: () =>
+                            ref.read(networkFilterProvider.notifier).state =
+                                const NetworkFilter(),
                         icon: const Icon(Icons.filter_alt_off_outlined),
                         label: const Text('清空筛选条件'),
                       )
@@ -318,7 +324,8 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
   }
 
   void _copy(NetworkConnection conn) {
-    final text = '${conn.type.toUpperCase()} ${conn.state}\n'
+    final text =
+        '${conn.type.toUpperCase()} ${conn.state}\n'
         '进程：${conn.process.isEmpty ? '未知' : conn.process}（PID ${conn.pid}）\n'
         '本地：${conn.local}\n远程：${conn.remote}';
     Clipboard.setData(ClipboardData(text: text));

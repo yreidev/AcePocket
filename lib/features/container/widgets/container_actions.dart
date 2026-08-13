@@ -136,7 +136,8 @@ Future<bool> performContainerAction(
       final ok = await showConfirmDialog(
         context,
         title: '强制终止容器',
-        content: '确定要强制终止「$display」吗？\n将直接向容器主进程发送 SIGKILL，'
+        content:
+            '确定要强制终止「$display」吗？\n将直接向容器主进程发送 SIGKILL，'
             '未保存的数据可能丢失。',
         confirmText: '强制终止',
         danger: true,

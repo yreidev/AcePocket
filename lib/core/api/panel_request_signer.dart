@@ -61,7 +61,8 @@ String goQueryEscape(String input) {
   const hexDigits = '0123456789ABCDEF';
   final result = StringBuffer();
   for (final byte in utf8.encode(input)) {
-    final isUnreserved = (byte >= 0x30 && byte <= 0x39) ||
+    final isUnreserved =
+        (byte >= 0x30 && byte <= 0x39) ||
         (byte >= 0x41 && byte <= 0x5a) ||
         (byte >= 0x61 && byte <= 0x7a) ||
         byte == 0x2d ||
@@ -101,9 +102,10 @@ PanelRequestSignature createPanelRequestSignature({
       '$normalizedMethod\n$normalizedPath\n$canonicalQuery\n$bodyHash';
   final stringToSign =
       'HMAC-SHA256\n$timestamp\n${sha256HexString(canonicalRequest)}';
-  final signature = Hmac(sha256, utf8.encode(token))
-      .convert(utf8.encode(stringToSign))
-      .toString();
+  final signature = Hmac(
+    sha256,
+    utf8.encode(token),
+  ).convert(utf8.encode(stringToSign)).toString();
   return PanelRequestSignature(
     method: normalizedMethod,
     apiPath: normalizedPath,

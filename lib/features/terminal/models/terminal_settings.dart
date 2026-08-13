@@ -62,11 +62,11 @@ class TerminalSettings {
   }
 
   Map<String, dynamic> toJson() => {
-        'font_size': fontSize,
-        'show_keyboard_bar': showKeyboardBar,
-        'scrollback': scrollback,
-        'auto_reconnect': autoReconnect,
-      };
+    'font_size': fontSize,
+    'show_keyboard_bar': showKeyboardBar,
+    'scrollback': scrollback,
+    'auto_reconnect': autoReconnect,
+  };
 
   @override
   bool operator ==(Object other) =>

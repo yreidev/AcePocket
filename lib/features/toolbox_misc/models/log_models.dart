@@ -66,10 +66,10 @@ class LogItem {
   final String size;
 
   factory LogItem.fromJson(Map<String, dynamic> json) => LogItem(
-        name: json['name'] as String? ?? '',
-        path: json['path'] as String? ?? '',
-        size: json['size'] as String? ?? '',
-      );
+    name: json['name'] as String? ?? '',
+    path: json['path'] as String? ?? '',
+    size: json['size'] as String? ?? '',
+  );
 
   /// 把 `1.23 MB` 解析为字节数，无法解析（如「3 个镜像」）时返回 0。
   int get sizeBytes => parseFormattedBytes(size);
@@ -107,23 +107,23 @@ class LogScanState {
     List<LogItem>? items,
     Object? error,
     bool clearError = false,
-  }) =>
-      LogScanState(
-        scanning: scanning ?? this.scanning,
-        cleaning: cleaning ?? this.cleaning,
-        scanned: scanned ?? this.scanned,
-        items: items ?? this.items,
-        error: clearError ? null : (error ?? this.error),
-      );
+  }) => LogScanState(
+    scanning: scanning ?? this.scanning,
+    cleaning: cleaning ?? this.cleaning,
+    scanned: scanned ?? this.scanned,
+    items: items ?? this.items,
+    error: clearError ? null : (error ?? this.error),
+  );
 }
 
 /// 解析面板 `tools.FormatBytes` 输出（`%.2f 单位`）为字节数。
 ///
 /// 无法识别时返回 0（例如「3 个镜像」这类计数文案）。
 int parseFormattedBytes(String text) {
-  final match = RegExp(r'^\s*([0-9]+(?:\.[0-9]+)?)\s*([KMGTPEZY]?B)\s*$',
-          caseSensitive: false)
-      .firstMatch(text);
+  final match = RegExp(
+    r'^\s*([0-9]+(?:\.[0-9]+)?)\s*([KMGTPEZY]?B)\s*$',
+    caseSensitive: false,
+  ).firstMatch(text);
   if (match == null) return 0;
   final value = double.tryParse(match.group(1)!) ?? 0;
   final unit = match.group(2)!.toUpperCase();

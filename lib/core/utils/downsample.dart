@@ -59,8 +59,8 @@ List<int> lttbIndexes(List<double> values, int threshold) {
     var maxAreaIndex = rangeOffs;
     for (var j = rangeOffs; j < rangeTo; j++) {
       // 三角形面积（× 2，比较大小无需除以 2）。
-      final area =
-          ((ax - avgX) * (values[j] - ay) - (ax - j) * (avgY - ay)).abs();
+      final area = ((ax - avgX) * (values[j] - ay) - (ax - j) * (avgY - ay))
+          .abs();
       if (area > maxArea) {
         maxArea = area;
         maxAreaIndex = j;

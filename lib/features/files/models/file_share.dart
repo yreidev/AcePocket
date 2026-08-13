@@ -54,16 +54,16 @@ class FileShare {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'token': token,
-        'path': path,
-        'downloads': downloads,
-        'max_downloads': maxDownloads,
-        // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
-        'expired_at': expiredAt?.toUtc().toIso8601String(),
-        'created_at': createdAt?.toUtc().toIso8601String(),
-        'updated_at': updatedAt?.toUtc().toIso8601String(),
-      };
+    'id': id,
+    'token': token,
+    'path': path,
+    'downloads': downloads,
+    'max_downloads': maxDownloads,
+    // 字段为本地时区实例，序列化回 UTC 以保留绝对时刻（naive 串会丢偏移）。
+    'expired_at': expiredAt?.toUtc().toIso8601String(),
+    'created_at': createdAt?.toUtc().toIso8601String(),
+    'updated_at': updatedAt?.toUtc().toIso8601String(),
+  };
 
   static DateTime? _parseTime(dynamic value) {
     if (value is! String || value.isEmpty) return null;

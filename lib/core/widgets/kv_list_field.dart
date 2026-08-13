@@ -34,8 +34,8 @@ class KeyValueListField extends StatefulWidget {
 
 class _KeyValueEntry {
   _KeyValueEntry(String key, String value)
-      : keyController = TextEditingController(text: key),
-        valueController = TextEditingController(text: value);
+    : keyController = TextEditingController(text: key),
+      valueController = TextEditingController(text: value);
 
   final TextEditingController keyController;
   final TextEditingController valueController;

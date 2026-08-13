@@ -62,11 +62,12 @@ class SocketExceptionLike implements Exception {
 
 /// 构造注入假适配器的 AppUpdateRepo。
 AppUpdateRepo _repoWith(HttpClientAdapter adapter) {
-  final dio = Dio(BaseOptions(
-    headers: {'Accept': 'application/vnd.github+json'},
-    validateStatus: (_) => true,
-  ))
-    ..httpClientAdapter = adapter;
+  final dio = Dio(
+    BaseOptions(
+      headers: {'Accept': 'application/vnd.github+json'},
+      validateStatus: (_) => true,
+    ),
+  )..httpClientAdapter = adapter;
   return AppUpdateRepo(dio: dio);
 }
 
@@ -99,18 +100,22 @@ void main() {
     });
 
     test('403（速率限制）返回 null', () async {
-      final repo = _repoWith(_FakeAdapter(
-        statusCode: 403,
-        body: jsonEncode({'message': 'API rate limit exceeded'}),
-      ));
+      final repo = _repoWith(
+        _FakeAdapter(
+          statusCode: 403,
+          body: jsonEncode({'message': 'API rate limit exceeded'}),
+        ),
+      );
       expect(await repo.fetchLatestRelease(), isNull);
     });
 
     test('404 返回 null', () async {
-      final repo = _repoWith(_FakeAdapter(
-        statusCode: 404,
-        body: jsonEncode({'message': 'Not Found'}),
-      ));
+      final repo = _repoWith(
+        _FakeAdapter(
+          statusCode: 404,
+          body: jsonEncode({'message': 'Not Found'}),
+        ),
+      );
       expect(await repo.fetchLatestRelease(), isNull);
     });
 

@@ -92,7 +92,9 @@ class WebHookTile extends StatelessWidget {
                       itemBuilder: (context) => [
                         const PopupMenuItem(value: 'edit', child: Text('编辑')),
                         const PopupMenuItem(
-                            value: 'copy', child: Text('复制回调地址')),
+                          value: 'copy',
+                          child: Text('复制回调地址'),
+                        ),
                         PopupMenuItem(
                           value: 'toggle',
                           child: Text(webhook.status ? '停用' : '启用'),

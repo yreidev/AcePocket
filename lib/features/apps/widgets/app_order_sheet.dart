@@ -169,8 +169,10 @@ class _AppOrderSheetState extends ConsumerState<_AppOrderSheet> {
                       final app = apps[index];
                       return ListTile(
                         key: ValueKey(app.slug),
-                        leading: Text('${index + 1}',
-                            style: theme.textTheme.titleMedium),
+                        leading: Text(
+                          '${index + 1}',
+                          style: theme.textTheme.titleMedium,
+                        ),
                         title: Text(app.name.isEmpty ? app.slug : app.name),
                         subtitle: Text(app.slug),
                         trailing: const Icon(Icons.drag_handle),
@@ -214,8 +216,9 @@ class _AppOrderSheetState extends ConsumerState<_AppOrderSheet> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed:
-                        _saving ? null : () => Navigator.of(context).pop(false),
+                    onPressed: _saving
+                        ? null
+                        : () => Navigator.of(context).pop(false),
                     child: const Text('取消'),
                   ),
                   const SizedBox(width: 8),

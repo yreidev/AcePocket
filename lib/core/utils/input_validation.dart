@@ -150,8 +150,9 @@ String? _checkListenPort(String portText) {
 }
 
 /// 邮箱本地部分（@ 前）允许的字符。
-final RegExp _emailLocalPattern =
-    RegExp(r"^[A-Za-z0-9!#$%&'*+/=?^_`{|}~.\-]+$");
+final RegExp _emailLocalPattern = RegExp(
+  r"^[A-Za-z0-9!#$%&'*+/=?^_`{|}~.\-]+$",
+);
 
 /// 校验邮箱地址的基本格式（`user@example.com`）。
 ///

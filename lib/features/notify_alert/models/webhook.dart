@@ -48,35 +48,35 @@ class WebHook {
   String get displayUser => user.isEmpty ? 'root' : user;
 
   factory WebHook.fromJson(Map<String, dynamic> json) => WebHook(
-        id: jsonInt(json['id']),
-        name: jsonString(json['name']),
-        key: jsonString(json['key']),
-        script: jsonString(json['script']),
-        raw: jsonBool(json['raw']),
-        user: jsonString(json['user']),
-        status: jsonBool(json['status']),
-        callCount: jsonInt(json['call_count']),
-        lastCallAt: jsonTime(json['last_call_at']),
-        createdAt: jsonTime(json['created_at']),
-        updatedAt: jsonTime(json['updated_at']),
-      );
+    id: jsonInt(json['id']),
+    name: jsonString(json['name']),
+    key: jsonString(json['key']),
+    script: jsonString(json['script']),
+    raw: jsonBool(json['raw']),
+    user: jsonString(json['user']),
+    status: jsonBool(json['status']),
+    callCount: jsonInt(json['call_count']),
+    lastCallAt: jsonTime(json['last_call_at']),
+    createdAt: jsonTime(json['created_at']),
+    updatedAt: jsonTime(json['updated_at']),
+  );
 
   /// 创建请求体（`request.WebHookCreate`，无 status 字段，面板固定置为启用）。
   Map<String, dynamic> toCreateJson() => <String, dynamic>{
-        'name': name,
-        'script': script,
-        'raw': raw,
-        'user': displayUser,
-      };
+    'name': name,
+    'script': script,
+    'raw': raw,
+    'user': displayUser,
+  };
 
   /// 更新请求体（`request.WebHookUpdate`，user 必填、含 status）。
   Map<String, dynamic> toUpdateJson() => <String, dynamic>{
-        'name': name,
-        'script': script,
-        'raw': raw,
-        'user': displayUser,
-        'status': status,
-      };
+    'name': name,
+    'script': script,
+    'raw': raw,
+    'user': displayUser,
+    'status': status,
+  };
 
   WebHook copyWith({
     String? name,
@@ -102,13 +102,13 @@ class WebHook {
 
   /// 新建时的默认值（与面板前端一致）。
   static WebHook empty() => const WebHook(
-        id: 0,
-        name: '',
-        key: '',
-        script: '#!/bin/bash\n\n',
-        raw: false,
-        user: 'root',
-        status: true,
-        callCount: 0,
-      );
+    id: 0,
+    name: '',
+    key: '',
+    script: '#!/bin/bash\n\n',
+    raw: false,
+    user: 'root',
+    status: true,
+    callCount: 0,
+  );
 }

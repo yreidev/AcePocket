@@ -37,7 +37,8 @@ class _FstabTabState extends ConsumerState<FstabTab> {
       final confirmed = await showConfirmDialog(
         context,
         title: '删除 ${entry.mountPoint} 的自动挂载？',
-        content: '将从 /etc/fstab 中移除该条目，系统重启后不再自动挂载，'
+        content:
+            '将从 /etc/fstab 中移除该条目，系统重启后不再自动挂载，'
             '面板随后会执行 mount -a 重新加载配置。当前已挂载的分区不会被卸载。',
         confirmText: '删除',
         danger: true,
@@ -67,10 +68,8 @@ class _FstabTabState extends ConsumerState<FstabTab> {
 
     return async.when(
       loading: () => const LoadingView(message: '读取 /etc/fstab…'),
-      error: (error, _) => ErrorView(
-        error: error,
-        onRetry: () => ref.invalidate(fstabProvider),
-      ),
+      error: (error, _) =>
+          ErrorView(error: error, onRetry: () => ref.invalidate(fstabProvider)),
       data: (entries) => RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(fstabProvider);
@@ -81,7 +80,8 @@ class _FstabTabState extends ConsumerState<FstabTab> {
           padding: const EdgeInsets.only(top: 6, bottom: 32),
           children: [
             const NoticeBar(
-              text: '/etc/fstab 决定开机时自动挂载哪些文件系统。'
+              text:
+                  '/etc/fstab 决定开机时自动挂载哪些文件系统。'
                   '条目错误可能导致系统无法正常启动，请谨慎删除。'
                   '如需新增，请在「磁盘」页挂载分区时勾选「开机自动挂载」。',
               icon: Icons.info_outline,
@@ -130,10 +130,7 @@ class _FstabTabState extends ConsumerState<FstabTab> {
               ),
               if (entry.isRoot)
                 Flexible(
-                  child: TagChip(
-                    label: '根挂载点',
-                    color: theme.colorScheme.error,
-                  ),
+                  child: TagChip(label: '根挂载点', color: theme.colorScheme.error),
                 ),
               if (busy)
                 const Padding(
@@ -158,7 +155,8 @@ class _FstabTabState extends ConsumerState<FstabTab> {
           InfoRow(label: '挂载选项', value: entry.options, monospace: true),
           InfoRow(
             label: '备份 / 检查',
-            value: '${entry.dump.isEmpty ? '0' : entry.dump} / '
+            value:
+                '${entry.dump.isEmpty ? '0' : entry.dump} / '
                 '${entry.pass.isEmpty ? '0' : entry.pass}',
           ),
         ],

@@ -163,8 +163,9 @@ class _NetworkTile extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           StatusBadge(
-                            label:
-                                network.driver.isEmpty ? '-' : network.driver,
+                            label: network.driver.isEmpty
+                                ? '-'
+                                : network.driver,
                             tone: BadgeTone.info,
                             dense: true,
                           ),
@@ -251,8 +252,11 @@ class _NetworkTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Icon(Icons.schedule,
-                    size: 13, color: theme.colorScheme.outline),
+                Icon(
+                  Icons.schedule,
+                  size: 13,
+                  color: theme.colorScheme.outline,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(

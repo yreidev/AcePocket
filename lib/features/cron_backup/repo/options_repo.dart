@@ -17,11 +17,10 @@ class OptionsRepo {
 
   /// 网站名称列表。
   Future<List<OptionItem>> websites() async {
-    final data = await _api.get('/website', query: {
-      'type': 'all',
-      'page': 1,
-      'limit': 1000,
-    });
+    final data = await _api.get(
+      '/website',
+      query: {'type': 'all', 'page': 1, 'limit': 1000},
+    );
     return _mapItems(data, (item) {
       final name = '${item['name'] ?? ''}';
       if (name.isEmpty) return null;
@@ -31,11 +30,10 @@ class OptionsRepo {
 
   /// 指定类型（mysql / postgresql / clickhouse）的数据库列表。
   Future<List<OptionItem>> databases(String type) async {
-    final data = await _api.get('/database', query: {
-      'page': 1,
-      'limit': 1000,
-      'type': type,
-    });
+    final data = await _api.get(
+      '/database',
+      query: {'page': 1, 'limit': 1000, 'type': type},
+    );
     return _mapItems(data, (item) {
       final name = '${item['name'] ?? ''}';
       if (name.isEmpty) return null;
@@ -49,10 +47,10 @@ class OptionsRepo {
 
   /// 容器名称列表。
   Future<List<OptionItem>> containers() async {
-    final data = await _api.get('/container/container', query: {
-      'page': 1,
-      'limit': 1000,
-    });
+    final data = await _api.get(
+      '/container/container',
+      query: {'page': 1, 'limit': 1000},
+    );
     return _mapItems(data, (item) {
       final name = '${item['name'] ?? ''}';
       if (name.isEmpty) return null;

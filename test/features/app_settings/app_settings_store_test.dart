@@ -169,10 +169,7 @@ void main() {
 
       expect(AppSettingsStore.instance.skippedUpdateVersion, '1.0.1');
       final prefs = await SharedPreferences.getInstance();
-      expect(
-        prefs.getString('app_settings.skipped_update_version'),
-        '1.0.1',
-      );
+      expect(prefs.getString('app_settings.skipped_update_version'), '1.0.1');
     });
 
     test('saveSkippedUpdateVersion(null) 会移除键', () async {

@@ -51,10 +51,7 @@ void main() {
 
     expect(result.method, 'POST');
     expect(result.apiPath, '/api/widgets');
-    expect(
-      result.canonicalRequest,
-      'POST\n/api/widgets\n$query\n$bodyHash',
-    );
+    expect(result.canonicalRequest, 'POST\n/api/widgets\n$query\n$bodyHash');
     expect(
       result.stringToSign,
       'HMAC-SHA256\n1700000000\n'

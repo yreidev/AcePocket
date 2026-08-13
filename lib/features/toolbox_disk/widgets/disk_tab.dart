@@ -81,14 +81,16 @@ class _DiskTabState extends ConsumerState<DiskTab> {
       title: '挂载 ${part.name}？',
       content: params.writeFstab
           ? '将 /dev/${part.name} 挂载到 ${params.path}，'
-              '并写入 /etc/fstab 实现开机自动挂载。'
+                '并写入 /etc/fstab 实现开机自动挂载。'
           : '将 /dev/${part.name} 挂载到 ${params.path}（重启后失效）。',
       confirmText: '挂载',
     );
     if (!confirmed || !mounted) return;
     await _run(
       '${part.name}:mount',
-      () => ref.read(toolboxDiskRepoProvider).mount(
+      () => ref
+          .read(toolboxDiskRepoProvider)
+          .mount(
             device: part.name,
             path: params.path,
             writeFstab: params.writeFstab,
@@ -107,8 +109,9 @@ class _DiskTabState extends ConsumerState<DiskTab> {
     final confirmed = await showConfirmDialog(
       context,
       title: '卸载 $mountPoint？',
-      content: '${onSystemDisk ? '注意：该挂载点位于系统盘，'
-              '若它是 /boot、/boot/efi 等系统目录，卸载后内核更新等操作会失败。\n\n' : ''}'
+      content:
+          '${onSystemDisk ? '注意：该挂载点位于系统盘，'
+                    '若它是 /boot、/boot/efi 等系统目录，卸载后内核更新等操作会失败。\n\n' : ''}'
           '卸载后该挂载点下的数据将不可访问；'
           '若有程序正在使用该目录，卸载会失败。'
           '如已写入 fstab，重启后仍会自动挂载。',
@@ -136,7 +139,8 @@ class _DiskTabState extends ConsumerState<DiskTab> {
       final acknowledged = await showConfirmDialog(
         context,
         title: '这是系统盘上的分区',
-        content: '/dev/${part.name} 位于系统盘 /dev/${disk.name}。\n\n'
+        content:
+            '/dev/${part.name} 位于系统盘 /dev/${disk.name}。\n\n'
             '系统盘上未挂载的分区通常是 EFI 引导分区、/boot 或 BIOS boot 保留分区，'
             '格式化后服务器将无法启动，只能通过服务商控制台进救援模式修复。\n\n'
             '只有在确认它是一块无用的数据分区时才继续。',
@@ -153,15 +157,16 @@ class _DiskTabState extends ConsumerState<DiskTab> {
       target: '/dev/${part.name}　${formatBytes(part.size)}',
       warning: onSystemDisk
           ? '该分区位于系统盘 /dev/${disk.name}。'
-              '格式化会清空分区上的全部数据且无法恢复；'
-              '若它参与系统启动，服务器将无法开机。'
+                '格式化会清空分区上的全部数据且无法恢复；'
+                '若它参与系统启动，服务器将无法开机。'
           : '格式化会清空该分区上的全部数据，且无法恢复。',
     );
     if (fsType == null || !mounted) return;
     final confirmed = await showConfirmDialog(
       context,
       title: '格式化 /dev/${part.name}？',
-      content: '${onSystemDisk ? '该分区在系统盘 /dev/${disk.name} 上。\n\n' : ''}'
+      content:
+          '${onSystemDisk ? '该分区在系统盘 /dev/${disk.name} 上。\n\n' : ''}'
           '该分区将被重新格式化为 $fsType，'
           '分区上的所有文件会被永久删除，操作不可撤销。',
       confirmText: '继续',
@@ -173,7 +178,7 @@ class _DiskTabState extends ConsumerState<DiskTab> {
       title: onSystemDisk ? '最终确认（系统盘）' : '最终确认',
       message: onSystemDisk
           ? '即将格式化系统盘 /dev/${disk.name} 上的 /dev/${part.name} 为 $fsType。'
-              '数据无法恢复，若该分区参与启动，服务器将无法开机。'
+                '数据无法恢复，若该分区参与启动，服务器将无法开机。'
           : '即将格式化 /dev/${part.name} 为 $fsType，数据无法恢复。',
       requiredText: part.name,
       confirmText: '格式化',
@@ -193,14 +198,16 @@ class _DiskTabState extends ConsumerState<DiskTab> {
       context,
       title: '初始化磁盘',
       target: '/dev/${disk.name}　${formatBytes(disk.size)}',
-      warning: '初始化会卸载该磁盘的所有分区、清除分区表，'
+      warning:
+          '初始化会卸载该磁盘的所有分区、清除分区表，'
           '重新创建一个占满整盘的分区并格式化，全部数据永久丢失。',
     );
     if (fsType == null || !mounted) return;
     final confirmed = await showConfirmDialog(
       context,
       title: '初始化 /dev/${disk.name}？',
-      content: '磁盘上现有的 ${disk.partitions.length} 个分区会被全部删除，'
+      content:
+          '磁盘上现有的 ${disk.partitions.length} 个分区会被全部删除，'
           '并新建单个 $fsType 分区。此操作不可撤销，'
           '请确认该磁盘上没有需要保留的数据。',
       confirmText: '继续',
@@ -227,8 +234,9 @@ class _DiskTabState extends ConsumerState<DiskTab> {
   Future<void> _showPartitions(DiskInfo disk) async {
     setState(() => _busy = '${disk.name}:detail');
     try {
-      final devices =
-          await ref.read(toolboxDiskRepoProvider).partitions(disk.name);
+      final devices = await ref
+          .read(toolboxDiskRepoProvider)
+          .partitions(disk.name);
       if (!mounted) return;
       await showPartitionDetailDialog(
         context,
@@ -264,10 +272,7 @@ class _DiskTabState extends ConsumerState<DiskTab> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: const [
                   SizedBox(height: 120),
-                  EmptyView(
-                    message: '未发现磁盘',
-                    icon: Icons.storage_outlined,
-                  ),
+                  EmptyView(message: '未发现磁盘', icon: Icons.storage_outlined),
                 ],
               )
             : ListView.builder(
@@ -427,12 +432,12 @@ class _DiskTabState extends ConsumerState<DiskTab> {
                 onPressed: _locked
                     ? null
                     : () => _startFlow(
-                          () => _umount(
-                            disk.name,
-                            disk.mountpoint,
-                            onSystemDisk: disk.isSystemDisk,
-                          ),
+                        () => _umount(
+                          disk.name,
+                          disk.mountpoint,
+                          onSystemDisk: disk.isSystemDisk,
                         ),
+                      ),
                 child: const Text('卸载'),
               ),
           ],
@@ -459,7 +464,8 @@ class _DiskTabState extends ConsumerState<DiskTab> {
 
   Widget _partitionRow(DiskInfo disk, PartitionInfo part) {
     final theme = Theme.of(context);
-    final busy = _isBusy('${part.name}:mount') ||
+    final busy =
+        _isBusy('${part.name}:mount') ||
         _isBusy('${part.name}:umount') ||
         _isBusy('${part.name}:format');
 

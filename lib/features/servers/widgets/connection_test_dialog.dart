@@ -17,10 +17,8 @@ Future<void> showConnectionTestDialog(
 }) {
   return showDialog<void>(
     context: context,
-    builder: (context) => _ConnectionTestDialog(
-      serverId: serverId,
-      serverName: serverName,
-    ),
+    builder: (context) =>
+        _ConnectionTestDialog(serverId: serverId, serverName: serverName),
   );
 }
 
@@ -39,12 +37,16 @@ class _ConnectionTestDialog extends ConsumerWidget {
     WidgetRef ref,
     CertificateTrustRequiredException error,
   ) async {
-    final trusted =
-        await showCertificateTrustDialog(context, error.certificate);
+    final trusted = await showCertificateTrustDialog(
+      context,
+      error.certificate,
+    );
     if (!trusted || !context.mounted) return;
     final server = ref.read(serverByIdProvider(serverId));
     if (server == null) return;
-    await ref.read(serverListProvider.notifier).updateServer(
+    await ref
+        .read(serverListProvider.notifier)
+        .updateServer(
           server.copyWith(pinnedCertSha256: error.certificate.sha256Hex),
         );
     ref.invalidate(serverConnectionTestProvider(serverId));

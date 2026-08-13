@@ -62,10 +62,7 @@ class _SshHostsPageState extends ConsumerState<SshHostsPage> {
     // （见 lib/features/terminal/models/terminal_session_spec.dart）。
     final uri = Uri(
       path: '/terminal',
-      queryParameters: {
-        'ssh': host.id.toString(),
-        'title': host.displayName,
-      },
+      queryParameters: {'ssh': host.id.toString(), 'title': host.displayName},
     );
     context.push(uri.toString());
   }

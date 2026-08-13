@@ -34,8 +34,9 @@ class LogEntry {
       level: json['level'] as String? ?? '',
       msg: json['msg'] as String? ?? '',
       type: json['type'] as String? ?? '',
-      operatorId:
-          json['operator_id'] is num ? (json['operator_id'] as num).toInt() : 0,
+      operatorId: json['operator_id'] is num
+          ? (json['operator_id'] as num).toInt()
+          : 0,
       operatorName: json['operator_name'] as String? ?? '',
       extra: json['extra'] is Map<String, dynamic>
           ? json['extra'] as Map<String, dynamic>

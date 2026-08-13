@@ -19,10 +19,7 @@ class SavedExportFile {
 /// 把导出内容写入本机（Android 优先写应用外部目录，便于用文件管理器查看）。
 ///
 /// [fileName] 会被清洗掉路径分隔符，重名时自动追加时间戳。
-Future<SavedExportFile> saveExportFile(
-  String fileName,
-  List<int> bytes,
-) async {
+Future<SavedExportFile> saveExportFile(String fileName, List<int> bytes) async {
   final directory = await _exportDirectory();
   final safeName = fileName.replaceAll(RegExp(r'[\\/:*?"<>|]'), '_');
   var target = File('${directory.path}${Platform.pathSeparator}$safeName');

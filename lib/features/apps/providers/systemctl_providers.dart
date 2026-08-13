@@ -19,7 +19,8 @@ final systemctlRepoProvider = Provider<SystemctlRepo?>((ref) {
 /// 其余服务需用户自行添加，这里用 shared_preferences 保存。
 final customServicesProvider =
     AsyncNotifierProvider<CustomServicesNotifier, List<String>>(
-        CustomServicesNotifier.new);
+      CustomServicesNotifier.new,
+    );
 
 class CustomServicesNotifier extends AsyncNotifier<List<String>> {
   static const _keyPrefix = 'acepanel.apps.custom_services.';
@@ -61,8 +62,9 @@ class CustomServicesNotifier extends AsyncNotifier<List<String>> {
 }
 
 /// 服务列表：已安装应用推导出的服务 + 用户自定义服务。
-final serviceListProvider =
-    FutureProvider.autoDispose<List<ServiceRef>>((ref) async {
+final serviceListProvider = FutureProvider.autoDispose<List<ServiceRef>>((
+  ref,
+) async {
   final appsRepo = ref.watch(appsRepoProvider);
   final custom = await ref.watch(customServicesProvider.future);
   if (appsRepo == null) {
@@ -98,12 +100,14 @@ final serviceListProvider =
     }
     for (final name in names) {
       if (!seen.add(name)) continue;
-      result.add(ServiceRef(
-        name: name,
-        source: ServiceSource.app,
-        appName: app.name,
-        appSlug: app.slug,
-      ));
+      result.add(
+        ServiceRef(
+          name: name,
+          source: ServiceSource.app,
+          appName: app.name,
+          appSlug: app.slug,
+        ),
+      );
     }
   }
   result.sort((a, b) => a.name.compareTo(b.name));
@@ -116,11 +120,11 @@ final serviceListProvider =
 });
 
 /// 单个服务的运行 / 自启状态。
-final serviceStateProvider =
-    FutureProvider.autoDispose.family<ServiceState, String>((ref, name) async {
-  final repo = ref.watch(systemctlRepoProvider);
-  if (repo == null) {
-    throw StateError('尚未选择服务器');
-  }
-  return repo.state(name);
-});
+final serviceStateProvider = FutureProvider.autoDispose
+    .family<ServiceState, String>((ref, name) async {
+      final repo = ref.watch(systemctlRepoProvider);
+      if (repo == null) {
+        throw StateError('尚未选择服务器');
+      }
+      return repo.state(name);
+    });

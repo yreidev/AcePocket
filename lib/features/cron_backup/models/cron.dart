@@ -62,19 +62,19 @@ class CronConfig {
   }
 
   Map<String, dynamic> toJson() => {
-        'type': subType,
-        'flock': flock,
-        'targets': targets,
-        'storage': storage,
-        'keep': keep,
-        'url': url,
-        'method': method,
-        'headers': headers,
-        'body': body,
-        'timeout': timeout,
-        'insecure': insecure,
-        'retries': retries,
-      };
+    'type': subType,
+    'flock': flock,
+    'targets': targets,
+    'storage': storage,
+    'keep': keep,
+    'url': url,
+    'method': method,
+    'headers': headers,
+    'body': body,
+    'timeout': timeout,
+    'insecure': insecure,
+    'retries': retries,
+  };
 }
 
 /// 计划任务（对应面板 `internal/biz/cron.go` 的 `Cron`）。
@@ -134,17 +134,17 @@ class Cron {
   }
 
   Cron copyWith({bool? status}) => Cron(
-        id: id,
-        name: name,
-        status: status ?? this.status,
-        type: type,
-        time: time,
-        config: config,
-        shell: shell,
-        log: log,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
+    id: id,
+    name: name,
+    status: status ?? this.status,
+    type: type,
+    time: time,
+    config: config,
+    shell: shell,
+    log: log,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  );
 }
 
 /// 计划任务类型常量与展示文案。

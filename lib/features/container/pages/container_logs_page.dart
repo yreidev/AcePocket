@@ -221,7 +221,8 @@ class _ContainerLogsPageState extends ConsumerState<ContainerLogsPage> {
     final ok = await showConfirmDialog(
       context,
       title: '清空日志',
-      content: '将清空已接收的 ${_lines.length} 行日志。'
+      content:
+          '将清空已接收的 ${_lines.length} 行日志。'
           '面板只推送接入之后产生的日志，清空后无法找回。确定继续吗？',
       confirmText: '清空',
       danger: true,
@@ -255,9 +256,11 @@ class _ContainerLogsPageState extends ConsumerState<ContainerLogsPage> {
           // 图标表示「按下会做什么」：跟随中显示暂停，暂停中显示回到底部。
           A11yIconButton(
             tooltip: _autoScroll ? '暂停自动滚动' : '恢复自动滚动并回到底部',
-            icon: Icon(_autoScroll
-                ? Icons.pause_circle_outline
-                : Icons.vertical_align_bottom),
+            icon: Icon(
+              _autoScroll
+                  ? Icons.pause_circle_outline
+                  : Icons.vertical_align_bottom,
+            ),
             onPressed: () {
               setState(() => _autoScroll = !_autoScroll);
               _scheduleScroll();
@@ -400,8 +403,8 @@ class _StatusBar extends StatelessWidget {
     final (label, color) = connecting
         ? ('连接中', theme.colorScheme.onSurfaceVariant)
         : closed
-            ? ('已断开', theme.colorScheme.error)
-            : ('已连接', theme.colorScheme.primary);
+        ? ('已断开', theme.colorScheme.error)
+        : ('已连接', theme.colorScheme.primary);
 
     return Container(
       width: double.infinity,
@@ -415,8 +418,10 @@ class _StatusBar extends StatelessWidget {
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
-          Text(label,
-              style: theme.textTheme.labelMedium?.copyWith(color: color)),
+          Text(
+            label,
+            style: theme.textTheme.labelMedium?.copyWith(color: color),
+          ),
           const SizedBox(width: 16),
           Text(
             '$lineCount 行',
@@ -460,11 +465,7 @@ class _CredentialHint extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.lock_outline,
-              size: 48,
-              color: theme.colorScheme.error,
-            ),
+            Icon(Icons.lock_outline, size: 48, color: theme.colorScheme.error),
             const SizedBox(height: 16),
             Text(
               message,

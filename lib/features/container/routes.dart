@@ -54,25 +54,22 @@ final List<RouteBase> containerRoutes = [
           GoRoute(
             path: ':name',
             name: 'containerComposeDetail',
-            builder: (context, state) => ComposeDetailPage(
-              name: state.pathParameters['name'] ?? '',
-            ),
+            builder: (context, state) =>
+                ComposeDetailPage(name: state.pathParameters['name'] ?? ''),
           ),
         ],
       ),
       GoRoute(
         path: ':id',
         name: 'containerDetail',
-        builder: (context, state) => ContainerDetailPage(
-          id: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            ContainerDetailPage(id: state.pathParameters['id'] ?? ''),
         routes: [
           GoRoute(
             path: 'logs',
             name: 'containerLogs',
-            builder: (context, state) => ContainerLogsPage(
-              id: state.pathParameters['id'] ?? '',
-            ),
+            builder: (context, state) =>
+                ContainerLogsPage(id: state.pathParameters['id'] ?? ''),
           ),
         ],
       ),

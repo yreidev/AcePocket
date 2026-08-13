@@ -76,7 +76,8 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
     return showConfirmDialog(
       context,
       title: '升级面板',
-      content: '将把面板升级到 $targetVersion。\n\n'
+      content:
+          '将把面板升级到 $targetVersion。\n\n'
           '· 升级过程中面板会自动重启，期间管理界面与 API 短暂不可用；\n'
           '· 网站、数据库、容器等业务服务不受影响；\n'
           '· 面板有后台任务正在运行时会拒绝升级；\n'
@@ -330,13 +331,10 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
           ],
         ),
         body: server == null
-            ? const EmptyView(
-                icon: Icons.dns_outlined,
-                message: '还没有配置任何服务器',
-              )
+            ? const EmptyView(icon: Icons.dns_outlined, message: '还没有配置任何服务器')
             : _started
-                ? _buildUpgradeView()
-                : _buildInfoView(),
+            ? _buildUpgradeView()
+            : _buildInfoView(),
       ),
     );
   }
@@ -353,9 +351,9 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
         ref.invalidate(panelUpdateInfoProvider);
         ref.invalidate(systemInfoProvider);
         ref.invalidate(panelUpdateProvider);
-        await ref.read(panelUpdateInfoProvider.future).catchError(
-              (Object _) => const <PanelVersion>[],
-            );
+        await ref
+            .read(panelUpdateInfoProvider.future)
+            .catchError((Object _) => const <PanelVersion>[]);
       },
       child: updateInfo.when(
         loading: () => _scrollFill(const LoadingView(message: '正在获取更新信息…')),
@@ -411,12 +409,11 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: FilledButton.icon(
-                  onPressed:
-                      versions.isEmpty ? null : () => _startUpgrade(latest),
+                  onPressed: versions.isEmpty
+                      ? null
+                      : () => _startUpgrade(latest),
                   icon: const Icon(Icons.system_update_alt_rounded),
-                  label: Text(
-                    versions.isEmpty ? '暂无可用升级' : '升级到 $latest',
-                  ),
+                  label: Text(versions.isEmpty ? '暂无可用升级' : '升级到 $latest'),
                 ),
               ),
             ],
@@ -429,7 +426,8 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
   Widget _buildUpdateError(Object error) {
     final message = _describe(error);
     // 面板对「已是最新版本」也返回错误状态码，这里转成正向提示。
-    final isLatest = message.contains('最新版本') ||
+    final isLatest =
+        message.contains('最新版本') ||
         message.toLowerCase().contains('latest version');
     if (isLatest) {
       return EmptyView(
@@ -478,8 +476,8 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
             '面板正在重启，稍后刷新即可看到新版本。',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 10),
           FilledButton.icon(
@@ -530,8 +528,11 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.lock_outline,
-                  size: 20, color: theme.colorScheme.error),
+              Icon(
+                Icons.lock_outline,
+                size: 20,
+                color: theme.colorScheme.error,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
@@ -552,9 +553,8 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
                 final server = ref.read(activeServerProvider);
                 if (server == null) return const SizedBox.shrink();
                 return TextButton.icon(
-                  onPressed: () => context.push(
-                    '/servers/edit?id=${server.id}&advanced=1',
-                  ),
+                  onPressed: () =>
+                      context.push('/servers/edit?id=${server.id}&advanced=1'),
                   icon: const Icon(Icons.manage_accounts_outlined, size: 18),
                   label: const Text('去填写面板账号'),
                 );

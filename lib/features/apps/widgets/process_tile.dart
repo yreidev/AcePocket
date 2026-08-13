@@ -69,7 +69,8 @@ class ProcessTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     DefaultTextStyle(
-                      style: theme.textTheme.bodySmall?.copyWith(
+                      style:
+                          theme.textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ) ??
                           const TextStyle(),
@@ -171,8 +172,10 @@ class ProcessTile extends StatelessWidget {
                       value: 'kill',
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: Icon(Icons.dangerous_outlined,
-                            color: colorScheme.error),
+                        leading: Icon(
+                          Icons.dangerous_outlined,
+                          color: colorScheme.error,
+                        ),
                         title: Text(
                           '结束进程',
                           style: TextStyle(color: colorScheme.error),

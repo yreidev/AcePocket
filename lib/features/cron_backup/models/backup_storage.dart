@@ -68,21 +68,21 @@ class BackupStorageInfo {
   }
 
   Map<String, dynamic> toJson() => {
-        'access_key': accessKey,
-        'secret_key': secretKey,
-        'style': style,
-        'region': region,
-        'endpoint': endpoint,
-        'scheme': scheme,
-        'bucket': bucket,
-        'url': url,
-        'host': host,
-        'port': port,
-        'username': username,
-        'password': password,
-        'private_key': privateKey,
-        'path': path,
-      };
+    'access_key': accessKey,
+    'secret_key': secretKey,
+    'style': style,
+    'region': region,
+    'endpoint': endpoint,
+    'scheme': scheme,
+    'bucket': bucket,
+    'url': url,
+    'host': host,
+    'port': port,
+    'username': username,
+    'password': password,
+    'private_key': privateKey,
+    'path': path,
+  };
 
   BackupStorageInfo copyWith({
     String? accessKey,
@@ -99,23 +99,22 @@ class BackupStorageInfo {
     String? password,
     String? privateKey,
     String? path,
-  }) =>
-      BackupStorageInfo(
-        accessKey: accessKey ?? this.accessKey,
-        secretKey: secretKey ?? this.secretKey,
-        style: style ?? this.style,
-        region: region ?? this.region,
-        endpoint: endpoint ?? this.endpoint,
-        scheme: scheme ?? this.scheme,
-        bucket: bucket ?? this.bucket,
-        url: url ?? this.url,
-        host: host ?? this.host,
-        port: port ?? this.port,
-        username: username ?? this.username,
-        password: password ?? this.password,
-        privateKey: privateKey ?? this.privateKey,
-        path: path ?? this.path,
-      );
+  }) => BackupStorageInfo(
+    accessKey: accessKey ?? this.accessKey,
+    secretKey: secretKey ?? this.secretKey,
+    style: style ?? this.style,
+    region: region ?? this.region,
+    endpoint: endpoint ?? this.endpoint,
+    scheme: scheme ?? this.scheme,
+    bucket: bucket ?? this.bucket,
+    url: url ?? this.url,
+    host: host ?? this.host,
+    port: port ?? this.port,
+    username: username ?? this.username,
+    password: password ?? this.password,
+    privateKey: privateKey ?? this.privateKey,
+    path: path ?? this.path,
+  );
 }
 
 /// 备份存储（对应面板 `internal/biz/backup_storage.go` 的 `BackupStorage`）。

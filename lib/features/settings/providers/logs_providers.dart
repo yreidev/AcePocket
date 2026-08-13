@@ -11,11 +11,7 @@ final logRepoProvider = Provider<LogRepository>(
 
 /// 日志查询条件（family 参数，需值相等语义）。
 class LogQuery {
-  const LogQuery({
-    required this.type,
-    this.date = '',
-    this.limit = 200,
-  });
+  const LogQuery({required this.type, this.date = '', this.limit = 200});
 
   /// app / db / http（`internal/biz/log.go`）。
   final String type;
@@ -27,10 +23,10 @@ class LogQuery {
   final int limit;
 
   LogQuery copyWith({String? type, String? date, int? limit}) => LogQuery(
-        type: type ?? this.type,
-        date: date ?? this.date,
-        limit: limit ?? this.limit,
-      );
+    type: type ?? this.type,
+    date: date ?? this.date,
+    limit: limit ?? this.limit,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -45,23 +41,21 @@ class LogQuery {
 }
 
 /// 指定类型可用的日志日期列表。
-final logDatesProvider =
-    FutureProvider.autoDispose.family<List<String>, String>((ref, type) {
-  return ref.watch(logRepoProvider).dates(type);
-});
+final logDatesProvider = FutureProvider.autoDispose
+    .family<List<String>, String>((ref, type) {
+      return ref.watch(logRepoProvider).dates(type);
+    });
 
 /// 日志列表。
-final logListProvider =
-    FutureProvider.autoDispose.family<List<LogEntry>, LogQuery>((ref, query) {
-  return ref.watch(logRepoProvider).list(
-        type: query.type,
-        limit: query.limit,
-        date: query.date,
-      );
-});
+final logListProvider = FutureProvider.autoDispose
+    .family<List<LogEntry>, LogQuery>((ref, query) {
+      return ref
+          .watch(logRepoProvider)
+          .list(type: query.type, limit: query.limit, date: query.date);
+    });
 
 /// SSH 登录日志（参数为条数上限）。
-final sshLogProvider =
-    FutureProvider.autoDispose.family<List<SshLoginLog>, int>((ref, limit) {
-  return ref.watch(logRepoProvider).sshLogs(limit: limit);
-});
+final sshLogProvider = FutureProvider.autoDispose
+    .family<List<SshLoginLog>, int>((ref, limit) {
+      return ref.watch(logRepoProvider).sshLogs(limit: limit);
+    });

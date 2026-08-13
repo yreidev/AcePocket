@@ -42,7 +42,8 @@ class _DatabaseListPageState extends ConsumerState<DatabaseListPage> {
     final ok = await showConfirmDialog(
       context,
       title: '删除数据库',
-      content: '确定要删除数据库「${database.name}」吗？\n'
+      content:
+          '确定要删除数据库「${database.name}」吗？\n'
           '该操作会永久删除其中的所有数据，且不可恢复。',
       confirmText: '删除',
       danger: true,
@@ -51,10 +52,9 @@ class _DatabaseListPageState extends ConsumerState<DatabaseListPage> {
 
     final success = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).deleteDatabase(
-            serverId: database.serverId,
-            name: database.name,
-          ),
+      () => ref
+          .read(databaseRepoProvider)
+          .deleteDatabase(serverId: database.serverId, name: database.name),
       success: '数据库已删除',
     );
     if (success) await _refresh();
@@ -72,7 +72,9 @@ class _DatabaseListPageState extends ConsumerState<DatabaseListPage> {
 
     final success = await runGuarded(
       context,
-      () => ref.read(databaseRepoProvider).setDatabaseComment(
+      () => ref
+          .read(databaseRepoProvider)
+          .setDatabaseComment(
             serverId: database.serverId,
             name: database.name,
             comment: comment,
@@ -168,7 +170,8 @@ class _DatabaseListPageState extends ConsumerState<DatabaseListPage> {
       if (installed.valueOrNull == false) {
         return NotInstalledView(
           title: '未安装数据库服务',
-          message: '数据库管理需要面板已安装 MySQL、PostgreSQL 或 ClickHouse '
+          message:
+              '数据库管理需要面板已安装 MySQL、PostgreSQL 或 ClickHouse '
               '等数据库应用，请先到应用商店安装后再使用本功能。',
           icon: Icons.storage_outlined,
           onRecheck: () {

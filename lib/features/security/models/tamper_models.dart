@@ -27,31 +27,30 @@ class TamperSetting {
   final int logDays;
 
   factory TamperSetting.fromJson(Map<String, dynamic> json) => TamperSetting(
-        enabled: json['enabled'] as bool? ?? false,
-        mode: json['mode'] as String? ?? 'chattr',
-        blockNewFiles: json['block_new_files'] as bool? ?? false,
-        logDays: (json['log_days'] as num?)?.toInt() ?? 30,
-      );
+    enabled: json['enabled'] as bool? ?? false,
+    mode: json['mode'] as String? ?? 'chattr',
+    blockNewFiles: json['block_new_files'] as bool? ?? false,
+    logDays: (json['log_days'] as num?)?.toInt() ?? 30,
+  );
 
   Map<String, dynamic> toJson() => {
-        'enabled': enabled,
-        'mode': mode,
-        'block_new_files': blockNewFiles,
-        'log_days': logDays,
-      };
+    'enabled': enabled,
+    'mode': mode,
+    'block_new_files': blockNewFiles,
+    'log_days': logDays,
+  };
 
   TamperSetting copyWith({
     bool? enabled,
     String? mode,
     bool? blockNewFiles,
     int? logDays,
-  }) =>
-      TamperSetting(
-        enabled: enabled ?? this.enabled,
-        mode: mode ?? this.mode,
-        blockNewFiles: blockNewFiles ?? this.blockNewFiles,
-        logDays: logDays ?? this.logDays,
-      );
+  }) => TamperSetting(
+    enabled: enabled ?? this.enabled,
+    mode: mode ?? this.mode,
+    blockNewFiles: blockNewFiles ?? this.blockNewFiles,
+    logDays: logDays ?? this.logDays,
+  );
 }
 
 /// 防篡改运行统计（tamper status 响应的 `stats` 字段）。
@@ -69,11 +68,11 @@ class TamperStats {
   final int protectedDirs;
 
   factory TamperStats.fromJson(Map<String, dynamic> json) => TamperStats(
-        mode: json['mode'] as String? ?? '',
-        running: json['running'] as bool? ?? false,
-        protectedFiles: (json['protected_files'] as num?)?.toInt() ?? 0,
-        protectedDirs: (json['protected_dirs'] as num?)?.toInt() ?? 0,
-      );
+    mode: json['mode'] as String? ?? '',
+    running: json['running'] as bool? ?? false,
+    protectedFiles: (json['protected_files'] as num?)?.toInt() ?? 0,
+    protectedDirs: (json['protected_dirs'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// eBPF 模式可用性检测（tamper status 响应的 `ebpf` 字段）。
@@ -93,12 +92,12 @@ class EbpfStatus {
   final String reason;
 
   factory EbpfStatus.fromJson(Map<String, dynamic> json) => EbpfStatus(
-        available: json['available'] as bool? ?? false,
-        kernelVersion: json['kernel_version'] as String? ?? '',
-        bpfLsmActive: json['bpf_lsm_active'] as bool? ?? false,
-        activeLsm: json['active_lsm'] as String? ?? '',
-        reason: json['reason'] as String? ?? '',
-      );
+    available: json['available'] as bool? ?? false,
+    kernelVersion: json['kernel_version'] as String? ?? '',
+    bpfLsmActive: json['bpf_lsm_active'] as bool? ?? false,
+    activeLsm: json['active_lsm'] as String? ?? '',
+    reason: json['reason'] as String? ?? '',
+  );
 }
 
 /// 防篡改整体状态（GET /tamper/status）。
@@ -116,14 +115,17 @@ class TamperStatus {
   final EbpfStatus ebpf;
 
   factory TamperStatus.fromJson(Map<String, dynamic> json) => TamperStatus(
-        supported: json['supported'] as bool? ?? false,
-        setting: TamperSetting.fromJson(
-            json['setting'] as Map<String, dynamic>? ?? const {}),
-        stats: TamperStats.fromJson(
-            json['stats'] as Map<String, dynamic>? ?? const {}),
-        ebpf: EbpfStatus.fromJson(
-            json['ebpf'] as Map<String, dynamic>? ?? const {}),
-      );
+    supported: json['supported'] as bool? ?? false,
+    setting: TamperSetting.fromJson(
+      json['setting'] as Map<String, dynamic>? ?? const {},
+    ),
+    stats: TamperStats.fromJson(
+      json['stats'] as Map<String, dynamic>? ?? const {},
+    ),
+    ebpf: EbpfStatus.fromJson(
+      json['ebpf'] as Map<String, dynamic>? ?? const {},
+    ),
+  );
 }
 
 /// 路径保护状态查询结果（POST /tamper/check_paths）。
@@ -139,8 +141,10 @@ class TamperPathCheck {
   /// 路径 -> 是否处于保护范围。
   final Map<String, bool> items;
 
-  static const TamperPathCheck empty =
-      TamperPathCheck(running: false, items: {});
+  static const TamperPathCheck empty = TamperPathCheck(
+    running: false,
+    items: {},
+  );
 
   factory TamperPathCheck.fromJson(Map<String, dynamic> json) {
     final raw = json['items'];
@@ -185,15 +189,15 @@ class TamperRule {
   final DateTime? updatedAt;
 
   factory TamperRule.fromJson(Map<String, dynamic> json) => TamperRule(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        name: json['name'] as String? ?? '',
-        path: json['path'] as String? ?? '',
-        exts: _stringList(json['exts']),
-        excludes: _stringList(json['excludes']),
-        enabled: json['enabled'] as bool? ?? false,
-        createdAt: _parseTime(json['created_at']),
-        updatedAt: _parseTime(json['updated_at']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    name: json['name'] as String? ?? '',
+    path: json['path'] as String? ?? '',
+    exts: _stringList(json['exts']),
+    excludes: _stringList(json['excludes']),
+    enabled: json['enabled'] as bool? ?? false,
+    createdAt: _parseTime(json['created_at']),
+    updatedAt: _parseTime(json['updated_at']),
+  );
 
   static List<String> _stringList(dynamic value) {
     if (value is List) {
@@ -253,21 +257,21 @@ class TamperLog {
   final DateTime? createdAt;
 
   factory TamperLog.fromJson(Map<String, dynamic> json) => TamperLog(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        path: json['path'] as String? ?? '',
-        op: json['op'] as String? ?? '',
-        pid: (json['pid'] as num?)?.toInt() ?? 0,
-        comm: json['comm'] as String? ?? '',
-        createdAt: TamperRule._parseTime(json['created_at']),
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    path: json['path'] as String? ?? '',
+    op: json['op'] as String? ?? '',
+    pid: (json['pid'] as num?)?.toInt() ?? 0,
+    comm: json['comm'] as String? ?? '',
+    createdAt: TamperRule._parseTime(json['created_at']),
+  );
 
   /// 操作类型的中文展示。
   String get opLabel => switch (op) {
-        'write' => '写入',
-        'unlink' => '删除',
-        'rename' => '重命名',
-        'setattr' => '改属性',
-        'create' => '新建',
-        _ => op,
-      };
+    'write' => '写入',
+    'unlink' => '删除',
+    'rename' => '重命名',
+    'setattr' => '改属性',
+    'create' => '新建',
+    _ => op,
+  };
 }

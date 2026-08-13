@@ -35,8 +35,10 @@ class PhpEnvironmentPage extends ConsumerStatefulWidget {
 
 class _PhpEnvironmentPageState extends ConsumerState<PhpEnvironmentPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 3,
+    vsync: this,
+  );
 
   EnvironmentRef get _ref => EnvironmentRef('php', '${widget.version}');
 
@@ -161,7 +163,8 @@ class _PhpMenuButton extends ConsumerWidget {
           final ok = await showConfirmDialog(
             context,
             title: '卸载 $name？',
-            content: '卸载后使用该 PHP 版本的网站将无法运行，配置与扩展会一并删除，'
+            content:
+                '卸载后使用该 PHP 版本的网站将无法运行，配置与扩展会一并删除，'
                 '此操作不可恢复。',
             confirmText: '卸载',
             danger: true,
@@ -253,10 +256,7 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
         padding: const EdgeInsets.only(top: 8, bottom: 32),
         children: [
           if (!isInstalled)
-            const HintBanner(
-              '该 PHP 版本当前未安装，配置与扩展相关接口都会返回错误。',
-              warning: true,
-            ),
+            const HintBanner('该 PHP 版本当前未安装，配置与扩展相关接口都会返回错误。', warning: true),
           _infoCard(env, installed, isInstalled),
           _actionCard(isInstalled),
           _configCard(isInstalled),
@@ -330,8 +330,8 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
             '「设为命令行默认版本」会把该版本的 php 链接到系统命令目录，'
             '使 SSH 中的 `php` 指向此版本。',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -342,12 +342,12 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
                 onPressed: !installed || _busy == 'cli'
                     ? null
                     : () => _run(
-                          'cli',
-                          () => ref
-                              .read(environmentRepoProvider)
-                              .phpSetCli(widget.version),
-                          '已设为命令行默认版本',
-                        ),
+                        'cli',
+                        () => ref
+                            .read(environmentRepoProvider)
+                            .phpSetCli(widget.version),
+                        '已设为命令行默认版本',
+                      ),
                 icon: _busy == 'cli'
                     ? const SizedBox(
                         width: 16,
@@ -360,14 +360,16 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
               OutlinedButton.icon(
                 onPressed: !installed
                     ? null
-                    : () => context
-                        .push('/environments/php/${widget.version}/phpinfo'),
+                    : () => context.push(
+                        '/environments/php/${widget.version}/phpinfo',
+                      ),
                 icon: const Icon(Icons.info_outline, size: 18),
                 label: const Text('查看 phpinfo'),
               ),
               OutlinedButton.icon(
-                onPressed:
-                    !installed || _busy == 'session' ? null : _cleanSession,
+                onPressed: !installed || _busy == 'session'
+                    ? null
+                    : _cleanSession,
                 icon: _busy == 'session'
                     ? const SizedBox(
                         width: 16,
@@ -388,7 +390,8 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
     final ok = await showConfirmDialog(
       context,
       title: '清理 Session 文件？',
-      content: '将删除 session.save_path 下所有 sess_* 文件，'
+      content:
+          '将删除 session.save_path 下所有 sess_* 文件，'
           '所有已登录用户的会话都会失效（仅 save_handler 为 files 时可用）。',
       confirmText: '清理',
       danger: true,
@@ -415,8 +418,8 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
         subtitle: Text(
           subtitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         trailing: const Icon(Icons.chevron_right),
         enabled: installed,
@@ -458,8 +461,8 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
         child: Text(
           '该版本尚未安装，无法获取日志路径。',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       );
     }
@@ -518,8 +521,9 @@ class _LogPathRow extends StatelessWidget {
           Expanded(
             child: Text(
               '$label：${describeError(error)}',
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: theme.colorScheme.error),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
             ),
           ),
           TextButton(onPressed: onRetry, child: const Text('重试')),
@@ -553,8 +557,8 @@ class _LogPathRow extends StatelessWidget {
                 onPressed: value.isEmpty
                     ? null
                     : () => context.push(
-                          '/files/edit?path=${Uri.encodeQueryComponent(value)}',
-                        ),
+                        '/files/edit?path=${Uri.encodeQueryComponent(value)}',
+                      ),
                 icon: const Icon(Icons.open_in_new_rounded, size: 16),
                 label: const Text('查看内容'),
               ),
@@ -665,11 +669,13 @@ class _PhpModulesTabState extends ConsumerState<_PhpModulesTab> {
               final visible = lowered.isEmpty
                   ? items
                   : items
-                      .where((m) =>
-                          m.name.toLowerCase().contains(lowered) ||
-                          m.slug.toLowerCase().contains(lowered) ||
-                          m.description.toLowerCase().contains(lowered))
-                      .toList();
+                        .where(
+                          (m) =>
+                              m.name.toLowerCase().contains(lowered) ||
+                              m.slug.toLowerCase().contains(lowered) ||
+                              m.description.toLowerCase().contains(lowered),
+                        )
+                        .toList();
               return RefreshIndicator(
                 onRefresh: () async {
                   ref.invalidate(phpModulesProvider(widget.version));
@@ -754,7 +760,8 @@ class _PhpModulesTabState extends ConsumerState<_PhpModulesTab> {
               onPressed: locked ? null : () => _toggle(module),
               style: module.installed
                   ? TextButton.styleFrom(
-                      foregroundColor: theme.colorScheme.error)
+                      foregroundColor: theme.colorScheme.error,
+                    )
                   : null,
               child: Text(module.installed ? '卸载' : '安装'),
             ),
@@ -790,7 +797,8 @@ class _PhpLoadTab extends ConsumerWidget {
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.5,
                     child: const EmptyView(
-                      message: '未获取到负载数据\n'
+                      message:
+                          '未获取到负载数据\n'
                           '需要 PHP-FPM 已启动且面板的 phpfpm_status 状态页可访问',
                       icon: Icons.monitor_heart_outlined,
                     ),

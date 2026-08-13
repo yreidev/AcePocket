@@ -66,7 +66,8 @@ class _HostsEditorPageState extends ConsumerState<HostsEditorPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '保存 hosts 文件？',
-      content: '将以当前内容覆盖服务器上的 /etc/hosts，'
+      content:
+          '将以当前内容覆盖服务器上的 /etc/hosts，'
           '错误的解析记录可能导致域名解析异常。',
       confirmText: '保存',
       danger: true,
@@ -140,8 +141,9 @@ class _HostsEditorPageState extends ConsumerState<HostsEditorPage> {
                       expands: true,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(fontFamily: 'monospace'),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontFamily: 'monospace',
+                      ),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         alignLabelWithHint: true,

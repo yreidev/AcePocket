@@ -93,8 +93,8 @@ class UsageBar extends StatelessWidget {
     final color = safePercent >= 90
         ? theme.colorScheme.error
         : safePercent >= 75
-            ? theme.colorScheme.tertiary
-            : theme.colorScheme.primary;
+        ? theme.colorScheme.tertiary
+        : theme.colorScheme.primary;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(

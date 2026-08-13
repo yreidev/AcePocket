@@ -72,12 +72,8 @@ class PhysicalVolume {
   final String size;
   final String free;
 
-  static PhysicalVolume _fromFields(List<String> f) => PhysicalVolume(
-        name: f[0],
-        vgName: f[1],
-        size: f[2],
-        free: f[3],
-      );
+  static PhysicalVolume _fromFields(List<String> f) =>
+      PhysicalVolume(name: f[0], vgName: f[1], size: f[2], free: f[3]);
 }
 
 /// 卷组。
@@ -97,12 +93,12 @@ class VolumeGroup {
   final String free;
 
   static VolumeGroup _fromFields(List<String> f) => VolumeGroup(
-        name: f[0],
-        pvCount: f[1],
-        lvCount: f[2],
-        size: f[3],
-        free: f[4],
-      );
+    name: f[0],
+    pvCount: f[1],
+    lvCount: f[2],
+    size: f[3],
+    free: f[4],
+  );
 }
 
 /// 逻辑卷。
@@ -121,10 +117,6 @@ class LogicalVolume {
   /// 逻辑卷设备路径，如 `/dev/vg0/data`（删除 / 扩容时使用）。
   final String path;
 
-  static LogicalVolume _fromFields(List<String> f) => LogicalVolume(
-        name: f[0],
-        vgName: f[1],
-        size: f[2],
-        path: f[3],
-      );
+  static LogicalVolume _fromFields(List<String> f) =>
+      LogicalVolume(name: f[0], vgName: f[1], size: f[2], path: f[3]);
 }

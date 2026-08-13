@@ -28,8 +28,10 @@ class RuntimeInfoPage extends ConsumerStatefulWidget {
 
 class _RuntimeInfoPageState extends ConsumerState<RuntimeInfoPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 2, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 2,
+    vsync: this,
+  );
 
   /// 协程状态筛选；null 为全部。
   String? _stateFilter;
@@ -68,16 +70,10 @@ class _RuntimeInfoPageState extends ConsumerState<RuntimeInfoPage>
         ),
       ),
       body: server == null
-          ? const EmptyView(
-              icon: Icons.dns_outlined,
-              message: '还没有配置任何服务器',
-            )
+          ? const EmptyView(icon: Icons.dns_outlined, message: '还没有配置任何服务器')
           : TabBarView(
               controller: _tabController,
-              children: [
-                _buildRuntimeTab(),
-                _buildGoroutineTab(),
-              ],
+              children: [_buildRuntimeTab(), _buildGoroutineTab()],
             ),
     );
   }
@@ -153,8 +149,8 @@ class _RuntimeInfoPageState extends ConsumerState<RuntimeInfoPage>
           final filtered = filter == null
               ? list
               : list
-                  .where((e) => (e.state.isEmpty ? '未知' : e.state) == filter)
-                  .toList();
+                    .where((e) => (e.state.isEmpty ? '未知' : e.state) == filter)
+                    .toList();
 
           return ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -188,9 +184,7 @@ class _RuntimeInfoPageState extends ConsumerState<RuntimeInfoPage>
 
   void _openRaw(List<GoroutineInfo> list) {
     Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (_) => _RawStackPage(list: list),
-      ),
+      MaterialPageRoute<void>(builder: (_) => _RawStackPage(list: list)),
     );
   }
 
@@ -315,9 +309,9 @@ class _RawStackPage extends StatelessWidget {
             tooltip: '复制全部协程堆栈原文',
             icon: const Icon(Icons.copy_all),
             onPressed: () async {
-              await Clipboard.setData(ClipboardData(
-                text: _RuntimeInfoPageState._rawText(list),
-              ));
+              await Clipboard.setData(
+                ClipboardData(text: _RuntimeInfoPageState._rawText(list)),
+              );
               if (!context.mounted) return;
               showSuccessSnack(context, '已复制 ${list.length} 条协程堆栈');
             },

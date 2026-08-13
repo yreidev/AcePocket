@@ -85,8 +85,9 @@ class _TextInputDialog extends StatefulWidget {
 }
 
 class _TextInputDialogState extends State<_TextInputDialog> {
-  late final TextEditingController _controller =
-      TextEditingController(text: widget.initialValue);
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialValue,
+  );
   String? _error;
 
   @override
@@ -252,10 +253,9 @@ class _SearchableSelectDialogState extends State<_SearchableSelectDialog> {
       value.toLowerCase().replaceAll(RegExp(r'[/_\-]'), ' ');
 
   void _onSearch(String keyword) {
-    final tokens = _normalize(keyword)
-        .split(' ')
-        .where((t) => t.isNotEmpty)
-        .toList(growable: false);
+    final tokens = _normalize(
+      keyword,
+    ).split(' ').where((t) => t.isNotEmpty).toList(growable: false);
     setState(() {
       _keyword = keyword;
       _filtered = tokens.isEmpty
@@ -350,8 +350,10 @@ class _SearchableSelectDialogState extends State<_SearchableSelectDialog> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           trailing: selected
-                              ? Icon(Icons.check,
-                                  color: theme.colorScheme.primary)
+                              ? Icon(
+                                  Icons.check,
+                                  color: theme.colorScheme.primary,
+                                )
                               : null,
                           onTap: () => Navigator.of(context).pop(option),
                         );
@@ -404,10 +406,12 @@ class _DnsEditDialog extends StatefulWidget {
 }
 
 class _DnsEditDialogState extends State<_DnsEditDialog> {
-  late final TextEditingController _c1 =
-      TextEditingController(text: widget.dns1);
-  late final TextEditingController _c2 =
-      TextEditingController(text: widget.dns2);
+  late final TextEditingController _c1 = TextEditingController(
+    text: widget.dns1,
+  );
+  late final TextEditingController _c2 = TextEditingController(
+    text: widget.dns2,
+  );
   String? _e1;
   String? _e2;
 
@@ -685,8 +689,9 @@ class _StringListDialogState extends State<_StringListDialog> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
                     _error!,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.error),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
                   ),
                 ),
               Row(
@@ -698,10 +703,7 @@ class _StringListDialogState extends State<_StringListDialog> {
                   ),
                   const Spacer(),
                   if (widget.presets.isNotEmpty)
-                    TextButton(
-                      onPressed: _reset,
-                      child: const Text('恢复默认'),
-                    ),
+                    TextButton(onPressed: _reset, child: const Text('恢复默认')),
                 ],
               ),
             ],

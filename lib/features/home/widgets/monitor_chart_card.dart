@@ -250,9 +250,11 @@ class MonitorChartCard extends StatelessWidget {
                     titlesData: FlTitlesData(
                       show: true,
                       topTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
                       rightTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -285,8 +287,10 @@ class MonitorChartCard extends StatelessWidget {
                               axisSide: meta.axisSide,
                               space: 6,
                               child: Text(
-                                formatChartTime(times[index],
-                                    withDate: withDate),
+                                formatChartTime(
+                                  times[index],
+                                  withDate: withDate,
+                                ),
                                 style: theme.textTheme.labelSmall?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                   fontSize: 9,
@@ -337,8 +341,8 @@ class MonitorChartCard extends StatelessWidget {
                             final index = spot.spotIndex;
                             final prefix =
                                 i == 0 && index >= 0 && index < times.length
-                                    ? '${formatTooltipTime(times[index])}\n'
-                                    : '';
+                                ? '${formatTooltipTime(times[index])}\n'
+                                : '';
                             items.add(
                               LineTooltipItem(
                                 prefix,
@@ -359,7 +363,9 @@ class MonitorChartCard extends StatelessWidget {
                                     ),
                                   if (s != null)
                                     TextSpan(
-                                        text: '${s.name}  ', style: labelStyle),
+                                      text: '${s.name}  ',
+                                      style: labelStyle,
+                                    ),
                                   TextSpan(
                                     text: valueFormatter(spot.y),
                                     style: valueStyle,
@@ -445,8 +451,10 @@ class MonitorChartCard extends StatelessWidget {
       }
       buffer
         ..write('${s.name}：当前 ${valueFormatter(s.values[count - 1])}，')
-        ..write('峰值 ${valueFormatter(s.values[maxIndex])} '
-            '出现在 ${at(maxIndex)}，')
+        ..write(
+          '峰值 ${valueFormatter(s.values[maxIndex])} '
+          '出现在 ${at(maxIndex)}，',
+        )
         ..write('最低 ${valueFormatter(s.values[minIndex])}。');
     }
     return buffer.toString();

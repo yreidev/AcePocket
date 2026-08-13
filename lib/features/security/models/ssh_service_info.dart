@@ -19,21 +19,21 @@ class SshServiceInfo {
   final String rootLogin;
 
   factory SshServiceInfo.fromJson(Map<String, dynamic> json) => SshServiceInfo(
-        service: json['service'] as String? ?? 'sshd',
-        port: (json['port'] as num?)?.toInt() ?? 22,
-        passwordAuth: json['password_auth'] as bool? ?? true,
-        pubkeyAuth: json['pubkey_auth'] as bool? ?? true,
-        rootLogin: json['root_login'] as String? ?? 'yes',
-      );
+    service: json['service'] as String? ?? 'sshd',
+    port: (json['port'] as num?)?.toInt() ?? 22,
+    passwordAuth: json['password_auth'] as bool? ?? true,
+    pubkeyAuth: json['pubkey_auth'] as bool? ?? true,
+    rootLogin: json['root_login'] as String? ?? 'yes',
+  );
 
   /// Root 登录模式的中文展示。
   static String rootLoginLabel(String mode) => switch (mode) {
-        'yes' => '允许',
-        'no' => '禁止',
-        'prohibit-password' => '仅密钥登录',
-        'forced-commands-only' => '仅限强制命令',
-        _ => mode,
-      };
+    'yes' => '允许',
+    'no' => '禁止',
+    'prohibit-password' => '仅密钥登录',
+    'forced-commands-only' => '仅限强制命令',
+    _ => mode,
+  };
 
   /// 面板支持的全部 Root 登录模式（与 `request.ToolboxSSHRootLogin` 校验一致）。
   static const rootLoginModes = [

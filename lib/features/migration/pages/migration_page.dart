@@ -76,8 +76,10 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
   MigrationFlowNotifier get _notifier =>
       ref.read(migrationFlowProvider.notifier);
 
-  Future<void> _run(Future<String?> Function() action,
-      {String? successMessage}) async {
+  Future<void> _run(
+    Future<String?> Function() action, {
+    String? successMessage,
+  }) async {
     final error = await action();
     if (!mounted) return;
     if (error != null) {
@@ -184,8 +186,9 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
     }
     if (connection.tokenId != _pushedTokenId) {
       _pushedTokenId = connection.tokenId;
-      _tokenIdController.text =
-          connection.tokenId == 0 ? '' : '${connection.tokenId}';
+      _tokenIdController.text = connection.tokenId == 0
+          ? ''
+          : '${connection.tokenId}';
     }
     if (connection.token != _pushedToken) {
       _pushedToken = connection.token;
@@ -197,8 +200,11 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.info_outline,
-                size: 20, color: theme.colorScheme.primary),
+            Icon(
+              Icons.info_outline,
+              size: 20,
+              color: theme.colorScheme.primary,
+            ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
@@ -272,9 +278,11 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
                 prefixIcon: const Icon(Icons.key),
                 suffixIcon: A11yIconButton(
                   tooltip: _obscureToken ? '显示访问令牌' : '隐藏访问令牌',
-                  icon: Icon(_obscureToken
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined),
+                  icon: Icon(
+                    _obscureToken
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                  ),
                   onPressed: () =>
                       setState(() => _obscureToken = !_obscureToken),
                 ),
@@ -349,10 +357,7 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: Text(
-                          warning,
-                          style: theme.textTheme.bodySmall,
-                        ),
+                        child: Text(warning, style: theme.textTheme.bodySmall),
                       ),
                     ],
                   ),
@@ -364,8 +369,11 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
         SectionCard(
           child: Row(
             children: [
-              Icon(Icons.check_circle_outline,
-                  size: 20, color: theme.colorScheme.primary),
+              Icon(
+                Icons.check_circle_outline,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
@@ -398,7 +406,8 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
               final confirmed = await showConfirmDialog(
                 context,
                 title: '忽略环境校验？',
-                content: '本机与远程的 Web 服务器不一致，迁移过去的网站很可能无法正常运行。'
+                content:
+                    '本机与远程的 Web 服务器不一致，迁移过去的网站很可能无法正常运行。'
                     '确定继续吗？',
                 confirmText: '继续',
                 danger: true,
@@ -594,12 +603,8 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
     final (IconData icon, String text, Color color) = state.live
         ? (Icons.podcasts, '实时通道已连接，面板每秒推送一次进度', theme.colorScheme.primary)
         : state.polling
-            ? (
-                Icons.sync,
-                '实时通道不可用，已回退为每 3 秒轮询一次结果',
-                theme.colorScheme.tertiary
-              )
-            : (Icons.sync_problem, '实时通道已断开，正在尝试重连…', theme.colorScheme.error);
+        ? (Icons.sync, '实时通道不可用，已回退为每 3 秒轮询一次结果', theme.colorScheme.tertiary)
+        : (Icons.sync_problem, '实时通道已断开，正在尝试重连…', theme.colorScheme.error);
 
     return SectionCard(
       child: Column(
@@ -609,9 +614,7 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
             children: [
               Icon(icon, size: 20, color: color),
               const SizedBox(width: 10),
-              Expanded(
-                child: Text(text, style: theme.textTheme.bodySmall),
-              ),
+              Expanded(child: Text(text, style: theme.textTheme.bodySmall)),
             ],
           ),
           const SizedBox(height: 8),
@@ -647,8 +650,11 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.lock_outline,
-                  size: 20, color: theme.colorScheme.error),
+              Icon(
+                Icons.lock_outline,
+                size: 20,
+                color: theme.colorScheme.error,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
@@ -696,77 +702,78 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
   Widget _bottomBar(MigrationFlowState state) {
     final List<Widget> children = switch (state.stage) {
       MigrationStage.connect => [
-          Expanded(
-            child: FilledButton.icon(
-              onPressed: state.busy || !state.connection.isValid
-                  ? null
-                  : () => _run(_notifier.precheck),
-              icon: const Icon(Icons.travel_explore, size: 18),
-              label: const Text('连接并预检'),
-            ),
+        Expanded(
+          child: FilledButton.icon(
+            onPressed: state.busy || !state.connection.isValid
+                ? null
+                : () => _run(_notifier.precheck),
+            icon: const Icon(Icons.travel_explore, size: 18),
+            label: const Text('连接并预检'),
           ),
-        ],
+        ),
+      ],
       MigrationStage.precheck => [
-          TextButton(
-            onPressed: state.busy ? null : _notifier.back,
-            child: const Text('上一步'),
+        TextButton(
+          onPressed: state.busy ? null : _notifier.back,
+          child: const Text('上一步'),
+        ),
+        TextButton(
+          onPressed: state.busy ? null : () => _run(_notifier.precheck),
+          child: const Text('重新预检'),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: FilledButton.icon(
+            onPressed: state.busy || !state.canProceedAfterPrecheck
+                ? null
+                : () => _run(_notifier.loadItems),
+            icon: const Icon(Icons.arrow_forward, size: 18),
+            label: const Text('下一步'),
           ),
-          TextButton(
-            onPressed: state.busy ? null : () => _run(_notifier.precheck),
-            child: const Text('重新预检'),
-          ),
-          const SizedBox(width: 6),
-          Expanded(
-            child: FilledButton.icon(
-              onPressed: state.busy || !state.canProceedAfterPrecheck
-                  ? null
-                  : () => _run(_notifier.loadItems),
-              icon: const Icon(Icons.arrow_forward, size: 18),
-              label: const Text('下一步'),
-            ),
-          ),
-        ],
+        ),
+      ],
       MigrationStage.select => [
-          TextButton(
-            onPressed: state.busy ? null : _notifier.back,
-            child: const Text('上一步'),
+        TextButton(
+          onPressed: state.busy ? null : _notifier.back,
+          child: const Text('上一步'),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: FilledButton.icon(
+            onPressed: state.busy || state.selectedCount == 0
+                ? null
+                : _confirmStart,
+            icon: const Icon(Icons.play_arrow, size: 18),
+            label: Text('开始迁移（${state.selectedCount}）'),
           ),
-          const SizedBox(width: 6),
-          Expanded(
-            child: FilledButton.icon(
-              onPressed:
-                  state.busy || state.selectedCount == 0 ? null : _confirmStart,
-              icon: const Icon(Icons.play_arrow, size: 18),
-              label: Text('开始迁移（${state.selectedCount}）'),
-            ),
-          ),
-        ],
+        ),
+      ],
       MigrationStage.running => [
-          Expanded(
-            child: OutlinedButton.icon(
-              onPressed: () => _run(_notifier.loadResults),
-              icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('刷新进度'),
-            ),
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () => _run(_notifier.loadResults),
+            icon: const Icon(Icons.refresh, size: 18),
+            label: const Text('刷新进度'),
           ),
-        ],
+        ),
+      ],
       MigrationStage.done => [
-          Expanded(
-            child: OutlinedButton.icon(
-              onPressed: () => context.push('/migration/results'),
-              icon: const Icon(Icons.fact_check_outlined, size: 18),
-              label: const Text('结果详情'),
-            ),
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () => context.push('/migration/results'),
+            icon: const Icon(Icons.fact_check_outlined, size: 18),
+            label: const Text('结果详情'),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: FilledButton.icon(
-              onPressed: state.busy ? null : _confirmReset,
-              icon: const Icon(Icons.restart_alt, size: 18),
-              label: const Text('开始新的迁移'),
-            ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: FilledButton.icon(
+            onPressed: state.busy ? null : _confirmReset,
+            icon: const Icon(Icons.restart_alt, size: 18),
+            label: const Text('开始新的迁移'),
           ),
-        ],
+        ),
+      ],
     };
 
     return SafeArea(
@@ -806,7 +813,8 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '开始迁移？',
-      content: '将把已选中的 ${state.selectedCount} 项推送到远程面板，'
+      content:
+          '将把已选中的 ${state.selectedCount} 项推送到远程面板，'
           '远程同名对象可能被覆盖'
           '${state.stopOnMig ? '，且迁移期间本机对应服务会被停止' : ''}。确定继续吗？',
       confirmText: '开始迁移',
@@ -820,7 +828,8 @@ class _MigrationPageState extends ConsumerState<MigrationPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '重置迁移状态？',
-      content: '将清空面板上保存的连接信息、迁移结果与日志，'
+      content:
+          '将清空面板上保存的连接信息、迁移结果与日志，'
           '已经迁移到远程的数据不受影响。',
       confirmText: '重置',
       danger: true,

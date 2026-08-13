@@ -31,7 +31,9 @@ final cachedPanelVersionProvider = Provider<PanelVersion?>((ref) {
 });
 
 /// 某功能在当前服务器上是否可用。
-final featureSupportedProvider =
-    Provider.family<bool, PanelFeature>((ref, feature) {
+final featureSupportedProvider = Provider.family<bool, PanelFeature>((
+  ref,
+  feature,
+) {
   return isFeatureSupported(feature, ref.watch(cachedPanelVersionProvider));
 });

@@ -40,8 +40,10 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/firewall/rule', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/firewall/rule',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, FirewallRule.fromJson);
   }
 
@@ -56,16 +58,18 @@ class SecurityRepository {
     required String address,
     required String strategy,
     required String direction,
-  }) =>
-      _api.post('/firewall/rule', body: {
-        'family': family,
-        'protocol': protocol,
-        'port_start': portStart,
-        'port_end': portEnd,
-        'address': address,
-        'strategy': strategy,
-        'direction': direction,
-      });
+  }) => _api.post(
+    '/firewall/rule',
+    body: {
+      'family': family,
+      'protocol': protocol,
+      'port_start': portStart,
+      'port_end': portEnd,
+      'address': address,
+      'strategy': strategy,
+      'direction': direction,
+    },
+  );
 
   /// 删除端口规则（请求体为规则全部字段）。
   Future<void> deleteFirewallRule(FirewallRule rule) =>
@@ -76,8 +80,10 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data = await _api
-        .get('/firewall/ip_rule', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/firewall/ip_rule',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, FirewallIpRule.fromJson);
   }
 
@@ -94,8 +100,10 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data = await _api
-        .get('/firewall/forward', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/firewall/forward',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, FirewallForward.fromJson);
   }
 
@@ -113,10 +121,7 @@ class SecurityRepository {
   Future<List<PortProcess>> portUsage(int port, String protocol) async {
     final data = await _api.get(
       '/firewall/rule/port_usage',
-      query: {
-        'port': port,
-        'protocol': protocol == 'udp' ? 'udp' : 'tcp',
-      },
+      query: {'port': port, 'protocol': protocol == 'udp' ? 'udp' : 'tcp'},
     );
     if (data is! List) return const [];
     return data
@@ -148,7 +153,8 @@ class SecurityRepository {
       fileBytes: bytes,
     );
     return FirewallImportResult.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 拉取用于本地生成 CSV 的全部端口规则（已剔除面板视作 IP 规则的条目）。
@@ -190,16 +196,20 @@ class SecurityRepository {
 
   /// 扫描汇总（[start] / [end] 为 `YYYY-MM-DD`）。
   Future<ScanSummary> scanSummary(String start, String end) async {
-    final data = await _api
-        .get('/firewall/scan/summary', query: {'start': start, 'end': end});
+    final data = await _api.get(
+      '/firewall/scan/summary',
+      query: {'start': start, 'end': end},
+    );
     if (data is! Map<String, dynamic>) return ScanSummary.empty;
     return ScanSummary.fromJson(data);
   }
 
   /// 每日扫描趋势。
   Future<List<ScanDayTrend>> scanTrend(String start, String end) async {
-    final data = await _api
-        .get('/firewall/scan/trend', query: {'start': start, 'end': end});
+    final data = await _api.get(
+      '/firewall/scan/trend',
+      query: {'start': start, 'end': end},
+    );
     if (data is! List) return const [];
     return data
         .whereType<Map<String, dynamic>>()
@@ -213,8 +223,10 @@ class SecurityRepository {
     String end, {
     int limit = 10,
   }) async {
-    final data = await _api.get('/firewall/scan/top_ips',
-        query: {'start': start, 'end': end, 'limit': limit});
+    final data = await _api.get(
+      '/firewall/scan/top_ips',
+      query: {'start': start, 'end': end, 'limit': limit},
+    );
     if (data is! List) return const [];
     return data
         .whereType<Map<String, dynamic>>()
@@ -228,8 +240,10 @@ class SecurityRepository {
     String end, {
     int limit = 10,
   }) async {
-    final data = await _api.get('/firewall/scan/top_ports',
-        query: {'start': start, 'end': end, 'limit': limit});
+    final data = await _api.get(
+      '/firewall/scan/top_ports',
+      query: {'start': start, 'end': end, 'limit': limit},
+    );
     if (data is! List) return const [];
     return data
         .whereType<Map<String, dynamic>>()
@@ -247,15 +261,18 @@ class SecurityRepository {
     int? port,
     String? location,
   }) async {
-    final data = await _api.get('/firewall/scan/events', query: {
-      'start': start,
-      'end': end,
-      'page': page,
-      'limit': limit,
-      if (sourceIp != null && sourceIp.isNotEmpty) 'source_ip': sourceIp,
-      if (port != null && port > 0) 'port': port,
-      if (location != null && location.isNotEmpty) 'location': location,
-    });
+    final data = await _api.get(
+      '/firewall/scan/events',
+      query: {
+        'start': start,
+        'end': end,
+        'page': page,
+        'limit': limit,
+        if (sourceIp != null && sourceIp.isNotEmpty) 'source_ip': sourceIp,
+        if (port != null && port > 0) 'port': port,
+        if (location != null && location.isNotEmpty) 'location': location,
+      },
+    );
     return Paged.fromJson(data, ScanEvent.fromJson);
   }
 
@@ -268,7 +285,8 @@ class SecurityRepository {
   Future<PanelSetting> panelSetting() async {
     final data = await _api.get('/setting');
     return PanelSetting.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 更新面板设置（POST /setting）。
@@ -296,7 +314,8 @@ class SecurityRepository {
   Future<SshServiceInfo> sshInfo() async {
     final data = await _api.get('/toolbox_ssh/info');
     return SshServiceInfo.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 修改 SSH 端口（面板会自动重启 SSH 服务）。
@@ -335,8 +354,10 @@ class SecurityRepository {
 
   /// 获取服务运行状态（用于 SSH 服务开关）。
   Future<bool> serviceStatus(String service) async {
-    final data =
-        await _api.get('/systemctl/status', query: {'service': service});
+    final data = await _api.get(
+      '/systemctl/status',
+      query: {'service': service},
+    );
     return data == true;
   }
 
@@ -358,7 +379,8 @@ class SecurityRepository {
   Future<TamperStatus> tamperStatus() async {
     final data = await _api.get('/tamper/status');
     return TamperStatus.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 保存防篡改全局设置（含总开关，立即生效）。
@@ -376,7 +398,8 @@ class SecurityRepository {
     if (paths.isEmpty) return TamperPathCheck.empty;
     final data = await _api.post('/tamper/check_paths', body: {'paths': paths});
     return TamperPathCheck.fromJson(
-        data is Map<String, dynamic> ? data : const {});
+      data is Map<String, dynamic> ? data : const {},
+    );
   }
 
   /// 切换单个路径的保护状态（`POST /tamper/protect`）。
@@ -392,8 +415,10 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/tamper/rule', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/tamper/rule',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, TamperRule.fromJson);
   }
 
@@ -404,14 +429,16 @@ class SecurityRepository {
     required List<String> exts,
     required List<String> excludes,
     required bool enabled,
-  }) =>
-      _api.post('/tamper/rule', body: {
-        'name': name,
-        'path': path,
-        'exts': exts,
-        'excludes': excludes,
-        'enabled': enabled,
-      });
+  }) => _api.post(
+    '/tamper/rule',
+    body: {
+      'name': name,
+      'path': path,
+      'exts': exts,
+      'excludes': excludes,
+      'enabled': enabled,
+    },
+  );
 
   /// 更新保护规则（name 不可修改，与面板一致）。
   Future<void> updateTamperRule({
@@ -420,14 +447,16 @@ class SecurityRepository {
     required List<String> exts,
     required List<String> excludes,
     required bool enabled,
-  }) =>
-      _api.put('/tamper/rule/$id', body: {
-        'id': id,
-        'path': path,
-        'exts': exts,
-        'excludes': excludes,
-        'enabled': enabled,
-      });
+  }) => _api.put(
+    '/tamper/rule/$id',
+    body: {
+      'id': id,
+      'path': path,
+      'exts': exts,
+      'excludes': excludes,
+      'enabled': enabled,
+    },
+  );
 
   /// 删除保护规则。
   Future<void> deleteTamperRule(int id) => _api.delete('/tamper/rule/$id');
@@ -437,8 +466,10 @@ class SecurityRepository {
     required int page,
     required int limit,
   }) async {
-    final data =
-        await _api.get('/tamper/log', query: {'page': page, 'limit': limit});
+    final data = await _api.get(
+      '/tamper/log',
+      query: {'page': page, 'limit': limit},
+    );
     return Paged.fromJson(data, TamperLog.fromJson);
   }
 

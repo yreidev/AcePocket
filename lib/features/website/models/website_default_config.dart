@@ -44,24 +44,23 @@ class WebsiteDefaultConfig {
       );
 
   Map<String, dynamic> toJson() => {
-        'index': index,
-        'stop': stop,
-        'not_found': notFound,
-        'tls_versions': tlsVersions,
-      };
+    'index': index,
+    'stop': stop,
+    'not_found': notFound,
+    'tls_versions': tlsVersions,
+  };
 
   WebsiteDefaultConfig copyWith({
     String? index,
     String? stop,
     String? notFound,
     List<String>? tlsVersions,
-  }) =>
-      WebsiteDefaultConfig(
-        index: index ?? this.index,
-        stop: stop ?? this.stop,
-        notFound: notFound ?? this.notFound,
-        tlsVersions: tlsVersions ?? this.tlsVersions,
-      );
+  }) => WebsiteDefaultConfig(
+    index: index ?? this.index,
+    stop: stop ?? this.stop,
+    notFound: notFound ?? this.notFound,
+    tlsVersions: tlsVersions ?? this.tlsVersions,
+  );
 }
 
 /// 面板支持的 TLS 版本选项（与 Web 端 `SettingView.vue` 一致）。

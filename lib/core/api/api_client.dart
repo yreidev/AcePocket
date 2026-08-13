@@ -42,15 +42,18 @@ class ApiClient {
     HttpClientAdapter? httpClientAdapter,
     int Function()? timestampProvider,
   }) : _timestampProvider = timestampProvider ?? _currentUnixTimestamp {
-    _dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      sendTimeout: const Duration(seconds: 60),
-      receiveTimeout: const Duration(seconds: 60),
-      responseType: ResponseType.plain,
-      validateStatus: (_) => true,
-    ));
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+        responseType: ResponseType.plain,
+        validateStatus: (_) => true,
+      ),
+    );
     // 证书校验策略（含 TOFU 指纹固定）统一在 panel_http_client.dart 实现。
-    _dio.httpClientAdapter = httpClientAdapter ??
+    _dio.httpClientAdapter =
+        httpClientAdapter ??
         IOHttpClientAdapter(
           createHttpClient: () => createPanelHttpClient(server),
         );
@@ -68,36 +71,48 @@ class ApiClient {
   ///
   /// [cancelToken] 用于取消在途请求（如跑分页退出 / 用户点停止）；
   /// 取消后请求以 [ApiException]（「请求已取消」）结束，省略时行为不变。
-  Future<dynamic> get(String path,
-          {Map<String, dynamic>? query,
-          Duration? receiveTimeout,
-          CancelToken? cancelToken}) =>
-      _request('GET', path,
-          query: query,
-          receiveTimeout: receiveTimeout,
-          cancelToken: cancelToken);
+  Future<dynamic> get(
+    String path, {
+    Map<String, dynamic>? query,
+    Duration? receiveTimeout,
+    CancelToken? cancelToken,
+  }) => _request(
+    'GET',
+    path,
+    query: query,
+    receiveTimeout: receiveTimeout,
+    cancelToken: cancelToken,
+  );
 
-  Future<dynamic> post(String path,
-          {Object? body,
-          Map<String, dynamic>? query,
-          Duration? receiveTimeout,
-          CancelToken? cancelToken}) =>
-      _request('POST', path,
-          body: body,
-          query: query,
-          receiveTimeout: receiveTimeout,
-          cancelToken: cancelToken);
+  Future<dynamic> post(
+    String path, {
+    Object? body,
+    Map<String, dynamic>? query,
+    Duration? receiveTimeout,
+    CancelToken? cancelToken,
+  }) => _request(
+    'POST',
+    path,
+    body: body,
+    query: query,
+    receiveTimeout: receiveTimeout,
+    cancelToken: cancelToken,
+  );
 
-  Future<dynamic> put(String path,
-          {Object? body,
-          Map<String, dynamic>? query,
-          Duration? receiveTimeout,
-          CancelToken? cancelToken}) =>
-      _request('PUT', path,
-          body: body,
-          query: query,
-          receiveTimeout: receiveTimeout,
-          cancelToken: cancelToken);
+  Future<dynamic> put(
+    String path, {
+    Object? body,
+    Map<String, dynamic>? query,
+    Duration? receiveTimeout,
+    CancelToken? cancelToken,
+  }) => _request(
+    'PUT',
+    path,
+    body: body,
+    query: query,
+    receiveTimeout: receiveTimeout,
+    cancelToken: cancelToken,
+  );
 
   /// DELETE 请求。
   ///
@@ -105,12 +120,18 @@ class ApiClient {
   /// （如 `DELETE /api/user_passkeys/{id}?user_id=`，见
   /// `internal/request/user_passkey.go`）；query 会参与 HMAC 签名的规范化，
   /// 因此**必须**通过本参数传入，不能自行拼接到 [path] 上。
-  Future<dynamic> delete(String path,
-          {Object? body,
-          Map<String, dynamic>? query,
-          CancelToken? cancelToken}) =>
-      _request('DELETE', path,
-          body: body, query: query, cancelToken: cancelToken);
+  Future<dynamic> delete(
+    String path, {
+    Object? body,
+    Map<String, dynamic>? query,
+    CancelToken? cancelToken,
+  }) => _request(
+    'DELETE',
+    path,
+    body: body,
+    query: query,
+    cancelToken: cancelToken,
+  );
 
   Future<dynamic> _request(
     String method,
@@ -197,7 +218,8 @@ class ApiClient {
       // 401/403 统一为可读文案：低权限令牌访问受限接口时，
       // 面板只回一句原始 msg，用户难以自行定位原因。
       // 原始 msg 保留在 panelMessage 供定制文案（如连接测试）使用。
-      message = '当前账号无权访问该功能，请使用管理员账号或检查 API 令牌权限'
+      message =
+          '当前账号无权访问该功能，请使用管理员账号或检查 API 令牌权限'
           '（HTTP $status${panelMsg == null ? '' : '：$panelMsg'}）';
     } else if (panelMsg != null) {
       message = panelMsg;

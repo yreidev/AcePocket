@@ -102,7 +102,8 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '导入端口规则？',
-      content: '${isXlsx ? '' : '所选文件不是 .xlsx，面板可能无法解析。\n\n'}'
+      content:
+          '${isXlsx ? '' : '所选文件不是 .xlsx，面板可能无法解析。\n\n'}'
           '文件：${file.name}\n'
           '大小：${formatBytes(bytes.length, fractionDigits: 1)}\n\n'
           '面板会把文件中的每一行写入系统防火墙，已存在的规则会被跳过或覆盖。',
@@ -115,21 +116,16 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
       _resultTitle = null;
     });
     try {
-      final result = await ref.read(securityRepoProvider).importFirewallRules(
-            bytes: bytes,
-            fileName: file.name,
-          );
+      final result = await ref
+          .read(securityRepoProvider)
+          .importFirewallRules(bytes: bytes, fileName: file.name);
       _invalidateLists();
       if (!mounted) return;
-      _setResult(
-        '面板导入完成',
-        [
-          '成功写入 ${result.succeeded} 条规则',
-          if (result.failed > 0) '失败 / 跳过 ${result.failed} 条（端口不合法或写入被拒绝）',
-          '文件：${file.name}',
-        ],
-        error: result.succeeded == 0 && result.failed > 0,
-      );
+      _setResult('面板导入完成', [
+        '成功写入 ${result.succeeded} 条规则',
+        if (result.failed > 0) '失败 / 跳过 ${result.failed} 条（端口不合法或写入被拒绝）',
+        '文件：${file.name}',
+      ], error: result.succeeded == 0 && result.failed > 0);
       showSuccessSnack(context, '导入完成：成功 ${result.succeeded} 条');
     } catch (e) {
       if (!mounted) return;
@@ -184,7 +180,8 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '导入 ${parsed.rules.length} 条规则？',
-      content: 'App 会逐条调用面板的「创建端口规则」接口写入防火墙，'
+      content:
+          'App 会逐条调用面板的「创建端口规则」接口写入防火墙，'
           '过程中请勿退出本页。',
       confirmText: '开始导入',
     );
@@ -225,17 +222,13 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
     _invalidateLists();
     if (!mounted) return;
     setState(() => _creating = false);
-    _setResult(
-      '粘贴导入完成',
-      [
-        '成功创建 $succeeded 条规则',
-        if (failures.isNotEmpty) '失败 ${failures.length} 条：',
-        ...failures.take(10),
-        if (failures.length > 10) '… 其余 ${failures.length - 10} 条失败原因相同或类似',
-        if (parsed.errors.isNotEmpty) '另有 ${parsed.errors.length} 行因格式问题未提交',
-      ],
-      error: succeeded == 0,
-    );
+    _setResult('粘贴导入完成', [
+      '成功创建 $succeeded 条规则',
+      if (failures.isNotEmpty) '失败 ${failures.length} 条：',
+      ...failures.take(10),
+      if (failures.length > 10) '… 其余 ${failures.length - 10} 条失败原因相同或类似',
+      if (parsed.errors.isNotEmpty) '另有 ${parsed.errors.length} 行因格式问题未提交',
+    ], error: succeeded == 0);
     if (succeeded == 0) {
       showErrorSnack(
         context,
@@ -262,7 +255,8 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
         final abort = await showConfirmDialog(
           context,
           title: '中断导入？',
-          content: '还有规则没有写入防火墙，现在返回会中断剩余条目的导入，'
+          content:
+              '还有规则没有写入防火墙，现在返回会中断剩余条目的导入，'
               '已写入的规则不会回滚。',
           confirmText: '中断导入',
           cancelText: '继续导入',
@@ -323,12 +317,14 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
                     maxLines: 12,
                     enabled: !busy,
                     keyboardType: TextInputType.multiline,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontFamily: 'monospace'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontFamily: 'monospace',
+                    ),
                     decoration: const InputDecoration(
                       labelText: '规则表格',
                       alignLabelWithHint: true,
-                      hintText: 'type,family,protocol,port_start,port_end,'
+                      hintText:
+                          'type,family,protocol,port_start,port_end,'
                           'address,strategy,direction',
                       border: OutlineInputBorder(),
                     ),
@@ -367,8 +363,9 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
                     const SizedBox(height: 12),
                     Text(
                       _parseError!,
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: theme.colorScheme.error),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                   ],
                 ],
@@ -431,8 +428,9 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
                       const Divider(height: 24),
                       Text(
                         '${parsed.errors.length} 行存在问题，将被跳过：',
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(color: theme.colorScheme.error),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.error,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       for (final message in parsed.errors.take(10))

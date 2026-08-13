@@ -32,7 +32,8 @@ class ImageListPage extends ConsumerWidget {
     final ok = await showConfirmDialog(
       context,
       title: '删除镜像',
-      content: '确定要删除镜像「${image.displayName}」吗？此操作不可恢复。'
+      content:
+          '确定要删除镜像「${image.displayName}」吗？此操作不可恢复。'
           '${image.inUse ? '\n该镜像仍被 ${image.containers} 个容器使用，删除可能失败。' : ''}',
       confirmText: '删除',
       danger: true,
@@ -168,8 +169,8 @@ class _ImageTile extends StatelessWidget {
                             label: image.usageUnknown
                                 ? '引用数未知'
                                 : image.inUse
-                                    ? '${image.containers} 个容器使用中'
-                                    : '未使用',
+                                ? '${image.containers} 个容器使用中'
+                                : '未使用',
                             tone: image.inUse
                                 ? BadgeTone.success
                                 : BadgeTone.neutral,
@@ -213,8 +214,11 @@ class _ImageTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Icon(Icons.schedule,
-                    size: 13, color: theme.colorScheme.outline),
+                Icon(
+                  Icons.schedule,
+                  size: 13,
+                  color: theme.colorScheme.outline,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(

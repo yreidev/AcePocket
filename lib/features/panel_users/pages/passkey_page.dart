@@ -59,7 +59,8 @@ class _PasskeyPageState extends ConsumerState<PasskeyPage> {
     final confirmed = await showConfirmDialog(
       context,
       title: '删除通行密钥？',
-      content: '「${passkey.name.isEmpty ? '未命名' : passkey.name}」删除后，'
+      content:
+          '「${passkey.name.isEmpty ? '未命名' : passkey.name}」删除后，'
           '该设备将无法再用于免密登录面板。',
       confirmText: '删除',
       danger: true,
@@ -202,7 +203,7 @@ class _PasskeyPageState extends ConsumerState<PasskeyPage> {
               hint: status.supported
                   ? null
                   : '通行密钥要求面板通过可信 HTTPS 访问（自签名证书不可用），'
-                      '可为面板配置受信任证书或用反向代理终止 TLS。',
+                        '可为面板配置受信任证书或用反向代理终止 TLS。',
             ),
             const SizedBox(height: 8),
             _StatusRow(
@@ -273,8 +274,9 @@ class _PasskeyPageState extends ConsumerState<PasskeyPage> {
               icon: Icons.person_outline,
             );
           }
-          final value =
-              users.any((u) => u.id == userId) ? userId : users.first.id;
+          final value = users.any((u) => u.id == userId)
+              ? userId
+              : users.first.id;
           // 令牌所属用户不在列表首页（超过 200 条）等极端情况下同步一次选择。
           if (value != userId) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -381,9 +383,7 @@ class _StatusRow extends StatelessWidget {
           children: [
             Icon(icon, size: 18, color: color),
             const SizedBox(width: 10),
-            Expanded(
-              child: Text(label, style: theme.textTheme.bodyMedium),
-            ),
+            Expanded(child: Text(label, style: theme.textTheme.bodyMedium)),
             Text(
               value,
               style: theme.textTheme.labelLarge?.copyWith(color: color),

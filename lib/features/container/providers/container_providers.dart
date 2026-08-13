@@ -24,10 +24,12 @@ final containerRepoProvider = Provider<ContainerRepository>(
 /// 仅在容器列表加载失败时用于区分「未安装」与其他错误，
 /// 从而展示带「去应用商店安装」入口的专门空态；
 /// 检测请求本身失败时由页面回退到通用错误视图。
-final containerEngineInstalledProvider =
-    FutureProvider.autoDispose<bool>((ref) {
-  return AppsRepo(ref.watch(apiClientProvider))
-      .isInstalled(const ['docker', 'podman']);
+final containerEngineInstalledProvider = FutureProvider.autoDispose<bool>((
+  ref,
+) {
+  return AppsRepo(
+    ref.watch(apiClientProvider),
+  ).isInstalled(const ['docker', 'podman']);
 });
 
 // --------------------------------------------------------------- 分页状态
@@ -92,14 +94,17 @@ class ContainersNotifier extends PagedNotifier<ContainerItem> {
   }
 }
 
-final containersProvider = AsyncNotifierProvider.autoDispose<ContainersNotifier,
-    PagedState<ContainerItem>>(ContainersNotifier.new);
+final containersProvider =
+    AsyncNotifierProvider.autoDispose<
+      ContainersNotifier,
+      PagedState<ContainerItem>
+    >(ContainersNotifier.new);
 
 /// 单个容器详情。
-final containerInspectProvider =
-    FutureProvider.autoDispose.family<ContainerInspect, String>(
-  (ref, id) => ref.watch(containerRepoProvider).inspectContainer(id),
-);
+final containerInspectProvider = FutureProvider.autoDispose
+    .family<ContainerInspect, String>(
+      (ref, id) => ref.watch(containerRepoProvider).inspectContainer(id),
+    );
 
 // ------------------------------------------------------------------ 镜像
 
@@ -116,10 +121,11 @@ class ContainerImagesNotifier extends PagedNotifier<ContainerImage> {
       ref.read(containerRepoProvider).listImages(page: page, limit: limit);
 }
 
-final containerImagesProvider = AsyncNotifierProvider.autoDispose<
-    ContainerImagesNotifier, PagedState<ContainerImage>>(
-  ContainerImagesNotifier.new,
-);
+final containerImagesProvider =
+    AsyncNotifierProvider.autoDispose<
+      ContainerImagesNotifier,
+      PagedState<ContainerImage>
+    >(ContainerImagesNotifier.new);
 
 // ------------------------------------------------------------------ 网络
 
@@ -136,10 +142,11 @@ class ContainerNetworksNotifier extends PagedNotifier<ContainerNetwork> {
       ref.read(containerRepoProvider).listNetworks(page: page, limit: limit);
 }
 
-final containerNetworksProvider = AsyncNotifierProvider.autoDispose<
-    ContainerNetworksNotifier, PagedState<ContainerNetwork>>(
-  ContainerNetworksNotifier.new,
-);
+final containerNetworksProvider =
+    AsyncNotifierProvider.autoDispose<
+      ContainerNetworksNotifier,
+      PagedState<ContainerNetwork>
+    >(ContainerNetworksNotifier.new);
 
 // ---------------------------------------------------------------- 存储卷
 
@@ -156,10 +163,11 @@ class ContainerVolumesNotifier extends PagedNotifier<ContainerVolume> {
       ref.read(containerRepoProvider).listVolumes(page: page, limit: limit);
 }
 
-final containerVolumesProvider = AsyncNotifierProvider.autoDispose<
-    ContainerVolumesNotifier, PagedState<ContainerVolume>>(
-  ContainerVolumesNotifier.new,
-);
+final containerVolumesProvider =
+    AsyncNotifierProvider.autoDispose<
+      ContainerVolumesNotifier,
+      PagedState<ContainerVolume>
+    >(ContainerVolumesNotifier.new);
 
 // ------------------------------------------------------------------ 编排
 
@@ -176,13 +184,14 @@ class ContainerComposesNotifier extends PagedNotifier<ContainerCompose> {
       ref.read(containerRepoProvider).listComposes(page: page, limit: limit);
 }
 
-final containerComposesProvider = AsyncNotifierProvider.autoDispose<
-    ContainerComposesNotifier, PagedState<ContainerCompose>>(
-  ContainerComposesNotifier.new,
-);
+final containerComposesProvider =
+    AsyncNotifierProvider.autoDispose<
+      ContainerComposesNotifier,
+      PagedState<ContainerCompose>
+    >(ContainerComposesNotifier.new);
 
 /// 单个编排的内容与环境变量。
-final composeDetailProvider =
-    FutureProvider.autoDispose.family<ComposeDetail, String>(
-  (ref, name) => ref.watch(containerRepoProvider).getCompose(name),
-);
+final composeDetailProvider = FutureProvider.autoDispose
+    .family<ComposeDetail, String>(
+      (ref, name) => ref.watch(containerRepoProvider).getCompose(name),
+    );

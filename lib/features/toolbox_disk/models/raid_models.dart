@@ -44,9 +44,9 @@ class RaidInfo {
       available: jsonBool(root['available']),
       message: jsonString(root['message']),
       type: jsonString(root['type']),
-      controllers: jsonMapList(root['controllers'])
-          .map(RaidController.fromJson)
-          .toList(),
+      controllers: jsonMapList(
+        root['controllers'],
+      ).map(RaidController.fromJson).toList(),
       arrays: jsonMapList(root['arrays']).map(RaidArray.fromJson).toList(),
     );
   }
@@ -67,11 +67,11 @@ class RaidController {
   final String cacheSize;
 
   factory RaidController.fromJson(Map<String, dynamic> json) => RaidController(
-        model: jsonString(json['model']),
-        serial: jsonString(json['serial']),
-        firmware: jsonString(json['firmware']),
-        cacheSize: jsonString(json['cache_size']),
-      );
+    model: jsonString(json['model']),
+    serial: jsonString(json['serial']),
+    firmware: jsonString(json['firmware']),
+    cacheSize: jsonString(json['cache_size']),
+  );
 }
 
 /// RAID 阵列。
@@ -102,16 +102,16 @@ class RaidArray {
   final List<RaidDevice> devices;
 
   factory RaidArray.fromJson(Map<String, dynamic> json) => RaidArray(
-        name: jsonString(json['name']),
-        raidLevel: jsonString(json['raid_level']),
-        size: jsonString(json['size']),
-        state: jsonString(json['state']),
-        stripSize: jsonString(json['strip_size']),
-        activeDevices: jsonInt(json['active_devices']),
-        totalDevices: jsonInt(json['total_devices']),
-        rebuildPct: jsonString(json['rebuild_pct']),
-        devices: jsonMapList(json['devices']).map(RaidDevice.fromJson).toList(),
-      );
+    name: jsonString(json['name']),
+    raidLevel: jsonString(json['raid_level']),
+    size: jsonString(json['size']),
+    state: jsonString(json['state']),
+    stripSize: jsonString(json['strip_size']),
+    activeDevices: jsonInt(json['active_devices']),
+    totalDevices: jsonInt(json['total_devices']),
+    rebuildPct: jsonString(json['rebuild_pct']),
+    devices: jsonMapList(json['devices']).map(RaidDevice.fromJson).toList(),
+  );
 }
 
 /// RAID 成员磁盘。
@@ -133,13 +133,13 @@ class RaidDevice {
   final String serial;
 
   factory RaidDevice.fromJson(Map<String, dynamic> json) => RaidDevice(
-        name: jsonString(json['name']),
-        slot: jsonString(json['slot']),
-        size: jsonString(json['size']),
-        state: jsonString(json['state']),
-        model: jsonString(json['model']),
-        serial: jsonString(json['serial']),
-      );
+    name: jsonString(json['name']),
+    slot: jsonString(json['slot']),
+    size: jsonString(json['size']),
+    state: jsonString(json['state']),
+    model: jsonString(json['model']),
+    serial: jsonString(json['serial']),
+  );
 }
 
 /// 阵列 / 磁盘状态的健康等级（用于选择展示颜色）。

@@ -110,8 +110,11 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
       expands: true,
       keyboardType: TextInputType.multiline,
       textAlignVertical: TextAlignVertical.top,
-      style:
-          const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.4),
+      style: const TextStyle(
+        fontFamily: 'monospace',
+        fontSize: 13,
+        height: 1.4,
+      ),
       decoration: const InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.all(12),
@@ -143,8 +146,9 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
                 // 不限宽会把左侧路径挤到 0 宽完全看不见；
                 // 这里最多占四成宽度，短 MIME 仍按自身宽度展示。
                 ConstrainedBox(
-                  constraints:
-                      BoxConstraints(maxWidth: constraints.maxWidth * 0.4),
+                  constraints: BoxConstraints(
+                    maxWidth: constraints.maxWidth * 0.4,
+                  ),
                   child: Text(
                     content.mime.isEmpty
                         ? '未知类型'
@@ -168,8 +172,11 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  Icon(Icons.warning_amber_outlined,
-                      size: 18, color: theme.colorScheme.onTertiaryContainer),
+                  Icon(
+                    Icons.warning_amber_outlined,
+                    size: 18,
+                    color: theme.colorScheme.onTertiaryContainer,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -217,8 +224,9 @@ class _FileEditorPageState extends ConsumerState<FileEditorPage> {
                 if (_dirty)
                   Text(
                     '未保存',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.error),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
                   ),
               ],
             ),

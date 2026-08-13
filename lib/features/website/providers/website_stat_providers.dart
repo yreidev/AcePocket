@@ -48,15 +48,14 @@ class StatQuery {
     int? threshold,
     String? groupBy,
     String? country,
-  }) =>
-      StatQuery(
-        range: range ?? this.range,
-        sites: sites ?? this.sites,
-        status: status ?? this.status,
-        threshold: threshold ?? this.threshold,
-        groupBy: groupBy ?? this.groupBy,
-        country: country ?? this.country,
-      );
+  }) => StatQuery(
+    range: range ?? this.range,
+    sites: sites ?? this.sites,
+    status: status ?? this.status,
+    threshold: threshold ?? this.threshold,
+    groupBy: groupBy ?? this.groupBy,
+    country: country ?? this.country,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -75,12 +74,12 @@ class StatQuery {
 }
 
 /// 统计概览。
-final statOverviewProvider =
-    FutureProvider.autoDispose.family<StatOverview, StatQuery>(
-  (ref, query) => ref
-      .watch(websiteStatRepoProvider)
-      .overview(query.range, sites: query.sites),
-);
+final statOverviewProvider = FutureProvider.autoDispose
+    .family<StatOverview, StatQuery>(
+      (ref, query) => ref
+          .watch(websiteStatRepoProvider)
+          .overview(query.range, sites: query.sites),
+    );
 
 /// 全站实时流量 / RPS。
 final statRealtimeProvider = FutureProvider.autoDispose<RealtimeStats>(
@@ -88,39 +87,41 @@ final statRealtimeProvider = FutureProvider.autoDispose<RealtimeStats>(
 );
 
 /// 网站维度汇总。
-final statSitesProvider =
-    FutureProvider.autoDispose.family<List<SiteStatItem>, StatQuery>(
-  (ref, query) => ref
-      .watch(websiteStatRepoProvider)
-      .siteStats(query.range, sites: query.sites),
-);
+final statSitesProvider = FutureProvider.autoDispose
+    .family<List<SiteStatItem>, StatQuery>(
+      (ref, query) => ref
+          .watch(websiteStatRepoProvider)
+          .siteStats(query.range, sites: query.sites),
+    );
 
 /// 蜘蛛统计。
-final statSpidersProvider =
-    FutureProvider.autoDispose.family<SpiderStats, StatQuery>(
-  (ref, query) => ref
-      .watch(websiteStatRepoProvider)
-      .spiders(query.range, sites: query.sites),
-);
+final statSpidersProvider = FutureProvider.autoDispose
+    .family<SpiderStats, StatQuery>(
+      (ref, query) => ref
+          .watch(websiteStatRepoProvider)
+          .spiders(query.range, sites: query.sites),
+    );
 
 /// 客户端统计。
-final statClientsProvider =
-    FutureProvider.autoDispose.family<ClientStats, StatQuery>(
-  (ref, query) => ref
-      .watch(websiteStatRepoProvider)
-      .clients(query.range, sites: query.sites),
-);
+final statClientsProvider = FutureProvider.autoDispose
+    .family<ClientStats, StatQuery>(
+      (ref, query) => ref
+          .watch(websiteStatRepoProvider)
+          .clients(query.range, sites: query.sites),
+    );
 
 /// 地理位置统计。
-final statGeosProvider =
-    FutureProvider.autoDispose.family<List<GeoRank>, StatQuery>(
-  (ref, query) => ref.watch(websiteStatRepoProvider).geos(
-        query.range,
-        sites: query.sites,
-        groupBy: query.groupBy,
-        country: query.country,
-      ),
-);
+final statGeosProvider = FutureProvider.autoDispose
+    .family<List<GeoRank>, StatQuery>(
+      (ref, query) => ref
+          .watch(websiteStatRepoProvider)
+          .geos(
+            query.range,
+            sites: query.sites,
+            groupBy: query.groupBy,
+            country: query.country,
+          ),
+    );
 
 /// 统计设置。
 final statSettingProvider = FutureProvider.autoDispose<StatSetting>(
@@ -166,18 +167,15 @@ class StatUrisNotifier extends StatPagedNotifier<UriRank> {
   }
 
   @override
-  Future<StatPage<UriRank>> fetch(StatQuery query, int page) =>
-      ref.read(websiteStatRepoProvider).uris(
-            query.range,
-            sites: query.sites,
-            page: page,
-            limit: kStatPageSize,
-          );
+  Future<StatPage<UriRank>> fetch(StatQuery query, int page) => ref
+      .read(websiteStatRepoProvider)
+      .uris(query.range, sites: query.sites, page: page, limit: kStatPageSize);
 }
 
 final statUrisProvider = AsyncNotifierProvider.autoDispose
     .family<StatUrisNotifier, StatPagedState<UriRank>, StatQuery>(
-        StatUrisNotifier.new);
+      StatUrisNotifier.new,
+    );
 
 /// 慢请求 URI 统计（分页）。
 class StatSlowUrisNotifier extends StatPagedNotifier<UriRank> {
@@ -189,19 +187,21 @@ class StatSlowUrisNotifier extends StatPagedNotifier<UriRank> {
   }
 
   @override
-  Future<StatPage<UriRank>> fetch(StatQuery query, int page) =>
-      ref.read(websiteStatRepoProvider).slowUris(
-            query.range,
-            sites: query.sites,
-            threshold: query.threshold,
-            page: page,
-            limit: kStatPageSize,
-          );
+  Future<StatPage<UriRank>> fetch(StatQuery query, int page) => ref
+      .read(websiteStatRepoProvider)
+      .slowUris(
+        query.range,
+        sites: query.sites,
+        threshold: query.threshold,
+        page: page,
+        limit: kStatPageSize,
+      );
 }
 
 final statSlowUrisProvider = AsyncNotifierProvider.autoDispose
     .family<StatSlowUrisNotifier, StatPagedState<UriRank>, StatQuery>(
-        StatSlowUrisNotifier.new);
+      StatSlowUrisNotifier.new,
+    );
 
 /// IP 统计（分页）。
 class StatIpsNotifier extends StatPagedNotifier<IpRank> {
@@ -213,18 +213,15 @@ class StatIpsNotifier extends StatPagedNotifier<IpRank> {
   }
 
   @override
-  Future<StatPage<IpRank>> fetch(StatQuery query, int page) =>
-      ref.read(websiteStatRepoProvider).ips(
-            query.range,
-            sites: query.sites,
-            page: page,
-            limit: kStatPageSize,
-          );
+  Future<StatPage<IpRank>> fetch(StatQuery query, int page) => ref
+      .read(websiteStatRepoProvider)
+      .ips(query.range, sites: query.sites, page: page, limit: kStatPageSize);
 }
 
 final statIpsProvider = AsyncNotifierProvider.autoDispose
     .family<StatIpsNotifier, StatPagedState<IpRank>, StatQuery>(
-        StatIpsNotifier.new);
+      StatIpsNotifier.new,
+    );
 
 /// 错误日志（分页）。
 class StatErrorsNotifier extends StatPagedNotifier<ErrorLogItem> {
@@ -236,16 +233,18 @@ class StatErrorsNotifier extends StatPagedNotifier<ErrorLogItem> {
   }
 
   @override
-  Future<StatPage<ErrorLogItem>> fetch(StatQuery query, int page) =>
-      ref.read(websiteStatRepoProvider).errors(
-            query.range,
-            sites: query.sites,
-            status: query.status,
-            page: page,
-            limit: kStatPageSize,
-          );
+  Future<StatPage<ErrorLogItem>> fetch(StatQuery query, int page) => ref
+      .read(websiteStatRepoProvider)
+      .errors(
+        query.range,
+        sites: query.sites,
+        status: query.status,
+        page: page,
+        limit: kStatPageSize,
+      );
 }
 
 final statErrorsProvider = AsyncNotifierProvider.autoDispose
     .family<StatErrorsNotifier, StatPagedState<ErrorLogItem>, StatQuery>(
-        StatErrorsNotifier.new);
+      StatErrorsNotifier.new,
+    );

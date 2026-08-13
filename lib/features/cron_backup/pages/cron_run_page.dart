@@ -159,8 +159,10 @@ class _CronRunPageState extends ConsumerState<CronRunPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('无法执行任务'),
-        content: Text('$message\n\n'
-            '立即执行走面板会话认证，需要在「服务器配置」中补充面板登录用户名与密码。'),
+        content: Text(
+          '$message\n\n'
+          '立即执行走面板会话认证，需要在「服务器配置」中补充面板登录用户名与密码。',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -220,10 +222,7 @@ class _CronRunPageState extends ConsumerState<CronRunPage> {
                 _StatusBar(status: _status, command: _command),
                 if (_status == _RunStatus.failed && _lines.isEmpty)
                   Expanded(
-                    child: ErrorView(
-                      error: _error ?? '执行失败',
-                      onRetry: _start,
-                    ),
+                    child: ErrorView(error: _error ?? '执行失败', onRetry: _start),
                   )
                 else if (_lines.isEmpty)
                   Expanded(
@@ -311,8 +310,10 @@ class _StatusBar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(text,
-              style: theme.textTheme.labelMedium?.copyWith(color: foreground)),
+          Text(
+            text,
+            style: theme.textTheme.labelMedium?.copyWith(color: foreground),
+          ),
           const SizedBox(height: 2),
           Text(
             command,

@@ -63,7 +63,8 @@ class _CreateFormState extends ConsumerState<_CreateForm> {
 
   /// 重算「是否有未保存的草稿」，仅在结果变化时 setState。
   void _onFormChanged() {
-    final dirty = !_created &&
+    final dirty =
+        !_created &&
         (_nameController.text.isNotEmpty ||
             _descriptionController.text.isNotEmpty ||
             _rootDirController.text.isNotEmpty ||
@@ -86,7 +87,9 @@ class _CreateFormState extends ConsumerState<_CreateForm> {
 
     setState(() => _submitting = true);
     try {
-      final project = await ref.read(projectRepoProvider).create(
+      final project = await ref
+          .read(projectRepoProvider)
+          .create(
             ProjectCreatePayload(
               name: name,
               type: _type,
@@ -150,7 +153,8 @@ class _CreateFormState extends ConsumerState<_CreateForm> {
                     validator: _validateProjectName,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-zA-Z0-9_-]')),
+                        RegExp(r'[a-zA-Z0-9_-]'),
+                      ),
                     ],
                     decoration: const InputDecoration(
                       labelText: '项目名称',
@@ -299,26 +303,31 @@ class _EditForm extends ConsumerStatefulWidget {
 }
 
 class _EditFormState extends ConsumerState<_EditForm> {
-  late final TextEditingController _nameController =
-      TextEditingController(text: widget.project.name);
+  late final TextEditingController _nameController = TextEditingController(
+    text: widget.project.name,
+  );
   late final TextEditingController _descriptionController =
       TextEditingController(text: widget.project.description);
-  late final TextEditingController _rootDirController =
-      TextEditingController(text: widget.project.rootDir);
+  late final TextEditingController _rootDirController = TextEditingController(
+    text: widget.project.rootDir,
+  );
   late final TextEditingController _workingDirController =
       TextEditingController(text: widget.project.workingDir);
   late final TextEditingController _execStartPreController =
       TextEditingController(text: widget.project.execStartPre);
-  late final TextEditingController _execStartController =
-      TextEditingController(text: widget.project.execStart);
+  late final TextEditingController _execStartController = TextEditingController(
+    text: widget.project.execStart,
+  );
   late final TextEditingController _execStartPostController =
       TextEditingController(text: widget.project.execStartPost);
-  late final TextEditingController _execStopController =
-      TextEditingController(text: widget.project.execStop);
+  late final TextEditingController _execStopController = TextEditingController(
+    text: widget.project.execStop,
+  );
   late final TextEditingController _execReloadController =
       TextEditingController(text: widget.project.execReload);
-  late final TextEditingController _userController =
-      TextEditingController(text: widget.project.user);
+  late final TextEditingController _userController = TextEditingController(
+    text: widget.project.user,
+  );
   late final TextEditingController _restartSecController =
       TextEditingController(text: widget.project.restartSec);
   late final TextEditingController _restartMaxController =
@@ -337,22 +346,26 @@ class _EditFormState extends ConsumerState<_EditForm> {
       : '';
   late final TextEditingController _memoryLimitController =
       TextEditingController(text: _initialMemoryText);
-  late final TextEditingController _cpuQuotaController =
-      TextEditingController(text: _initialCpuQuotaText);
+  late final TextEditingController _cpuQuotaController = TextEditingController(
+    text: _initialCpuQuotaText,
+  );
   late final TextEditingController _standardOutputFileController =
       TextEditingController(
-          text: _initialOutputFile(widget.project.standardOutput));
+        text: _initialOutputFile(widget.project.standardOutput),
+      );
   late final TextEditingController _standardErrorFileController =
       TextEditingController(
-          text: _initialOutputFile(widget.project.standardError));
+        text: _initialOutputFile(widget.project.standardError),
+      );
 
   late String _restart = _optionOrFirst(
     kProjectRestartOptions,
     widget.project.restart,
     'on-failure',
   );
-  late String _standardOutput =
-      _initialOutputKind(widget.project.standardOutput);
+  late String _standardOutput = _initialOutputKind(
+    widget.project.standardOutput,
+  );
   late String _standardError = _initialOutputKind(widget.project.standardError);
   late String _protectSystem = _optionOrFirst(
     kProtectSystemOptions,
@@ -360,16 +373,19 @@ class _EditFormState extends ConsumerState<_EditForm> {
     '',
   );
 
-  late List<KvPair> _environments =
-      List<KvPair>.from(widget.project.environments);
+  late List<KvPair> _environments = List<KvPair>.from(
+    widget.project.environments,
+  );
   late List<String> _requires = List<String>.from(widget.project.requires);
   late List<String> _wants = List<String>.from(widget.project.wants);
   late List<String> _after = List<String>.from(widget.project.after);
   late List<String> _before = List<String>.from(widget.project.before);
-  late List<String> _readWritePaths =
-      List<String>.from(widget.project.readWritePaths);
-  late List<String> _readOnlyPaths =
-      List<String>.from(widget.project.readOnlyPaths);
+  late List<String> _readWritePaths = List<String>.from(
+    widget.project.readWritePaths,
+  );
+  late List<String> _readOnlyPaths = List<String>.from(
+    widget.project.readOnlyPaths,
+  );
 
   late bool _noNewPrivileges = widget.project.noNewPrivileges;
   late bool _protectTmp = widget.project.protectTmp;
@@ -582,10 +598,14 @@ class _EditFormState extends ConsumerState<_EditForm> {
       timeoutStartSec: int.tryParse(_timeoutStartController.text.trim()) ?? 0,
       timeoutStopSec: int.tryParse(_timeoutStopController.text.trim()) ?? 0,
       environments: _environments,
-      standardOutput:
-          _composeOutput(_standardOutput, _standardOutputFileController),
-      standardError:
-          _composeOutput(_standardError, _standardErrorFileController),
+      standardOutput: _composeOutput(
+        _standardOutput,
+        _standardOutputFileController,
+      ),
+      standardError: _composeOutput(
+        _standardError,
+        _standardErrorFileController,
+      ),
       requires: _requires,
       wants: _wants,
       after: _after,
@@ -661,7 +681,8 @@ class _EditFormState extends ConsumerState<_EditForm> {
                     validator: _validateProjectName,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-zA-Z0-9_-]')),
+                        RegExp(r'[a-zA-Z0-9_-]'),
+                      ),
                     ],
                     decoration: const InputDecoration(
                       labelText: '项目名称',
@@ -964,8 +985,9 @@ class _EditFormState extends ConsumerState<_EditForm> {
                   TextFormField(
                     controller: _memoryLimitController,
                     enabled: !_submitting,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: _validateMemoryLimit,
                     decoration: const InputDecoration(
@@ -1109,11 +1131,7 @@ class _CommandField extends StatelessWidget {
 }
 
 class _IntField extends StatelessWidget {
-  const _IntField({
-    required this.controller,
-    required this.label,
-    this.helper,
-  });
+  const _IntField({required this.controller, required this.label, this.helper});
 
   final TextEditingController controller;
   final String label;

@@ -10,9 +10,9 @@ class LvOption {
   final String value;
 
   factory LvOption.fromJson(Map<String, dynamic> json) => LvOption(
-        label: jsonString(json['label']),
-        value: jsonString(json['value']),
-      );
+    label: jsonString(json['label']),
+    value: jsonString(json['value']),
+  );
 
   /// 从响应中的列表解析（null / 非法结构返回空列表）。
   static List<LvOption> listFrom(dynamic v) {

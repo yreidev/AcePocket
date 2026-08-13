@@ -54,11 +54,7 @@ class SystemInfoCard extends ConsumerWidget {
             InfoRow(label: '启动时间', value: formatUnixSeconds(info.bootTime)),
             Divider(color: theme.colorScheme.outlineVariant, height: 20),
             if (panel != null) InfoRow(label: '面板名称', value: panel.name),
-            InfoRow(
-              label: '面板版本',
-              value: info.panelVersion,
-              monospace: true,
-            ),
+            InfoRow(label: '面板版本', value: info.panelVersion, monospace: true),
             if (info.commitHash.isNotEmpty)
               InfoRow(
                 label: '构建版本',
@@ -84,8 +80,11 @@ class SystemInfoCard extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.warning_amber_rounded,
-              size: 14, color: theme.colorScheme.error),
+          Icon(
+            Icons.warning_amber_rounded,
+            size: 14,
+            color: theme.colorScheme.error,
+          ),
           const SizedBox(width: 6),
           Expanded(
             child: Text(

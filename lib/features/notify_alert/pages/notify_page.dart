@@ -29,8 +29,10 @@ class NotifyPage extends ConsumerStatefulWidget {
 
 class _NotifyPageState extends ConsumerState<NotifyPage>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 2, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 2,
+    vsync: this,
+  );
 
   @override
   void initState() {
@@ -129,10 +131,7 @@ class _NotifyPageState extends ConsumerState<NotifyPage>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [
-                  _ChannelsTab(),
-                  _EventSettingTab(),
-                ],
+                children: const [_ChannelsTab(), _EventSettingTab()],
               ),
             ),
           ],
@@ -201,8 +200,9 @@ class _ChannelsTabState extends ConsumerState<_ChannelsTab> {
   }
 
   Future<void> _edit(NotifyChannel channel) async {
-    final saved =
-        await context.push<bool>('/notify/channels/${channel.id}/edit');
+    final saved = await context.push<bool>(
+      '/notify/channels/${channel.id}/edit',
+    );
     if (!mounted || saved != true) return;
     await _reloadQuietly();
   }
@@ -230,7 +230,8 @@ class _ChannelsTabState extends ConsumerState<_ChannelsTab> {
     final ok = await showConfirmDialog(
       context,
       title: '删除通知渠道',
-      content: '确定要删除「${channel.name.isEmpty ? '未命名渠道' : channel.name}」吗？'
+      content:
+          '确定要删除「${channel.name.isEmpty ? '未命名渠道' : channel.name}」吗？'
           '引用该渠道的告警规则与事件通知将不再向其发送。',
       confirmText: '删除',
       danger: true,
@@ -250,7 +251,8 @@ class _ChannelsTabState extends ConsumerState<_ChannelsTab> {
     return PagedListView<NotifyChannel>(
       state: state,
       header: const InfoBanner(
-        text: '通知渠道用于发送告警与系统事件通知。渠道配置（含密码）由面板加密存储，'
+        text:
+            '通知渠道用于发送告警与系统事件通知。渠道配置（含密码）由面板加密存储，'
             '保存后可用「发送测试通知」验证是否可达。',
       ),
       onRefresh: () => ref.read(notifyChannelsProvider.notifier).refresh(),
@@ -353,7 +355,8 @@ class _EventSettingTabState extends ConsumerState<_EventSettingTab> {
     }
 
     final setting = draft ?? async.requireValue;
-    final summary = '已选 ${setting.events.length} 个事件 · '
+    final summary =
+        '已选 ${setting.events.length} 个事件 · '
         '${setting.channels.length} 个渠道';
 
     return RefreshIndicator(
@@ -363,7 +366,8 @@ class _EventSettingTabState extends ConsumerState<_EventSettingTab> {
         padding: const EdgeInsets.only(bottom: 32),
         children: [
           const InfoBanner(
-            text: '勾选需要接收的系统事件，并选择接收通知的渠道。'
+            text:
+                '勾选需要接收的系统事件，并选择接收通知的渠道。'
                 '未选择渠道时不会发送任何事件通知。修改后需要点「保存设置」才会生效。',
           ),
           SectionCard(
@@ -376,8 +380,11 @@ class _EventSettingTabState extends ConsumerState<_EventSettingTab> {
                     value: setting.events.contains(event.value),
                     onChanged: _saving
                         ? null
-                        : (value) =>
-                            _toggleEvent(event.value, value ?? false, setting),
+                        : (value) => _toggleEvent(
+                            event.value,
+                            value ?? false,
+                            setting,
+                          ),
                     dense: true,
                     contentPadding: EdgeInsets.zero,
                     controlAffinity: ListTileControlAffinity.leading,

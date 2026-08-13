@@ -89,11 +89,7 @@ class A11yIconButton extends StatelessWidget {
 /// 用 [MergeSemantics] 把标签与开关合并为一个可操作节点，读屏一次念完。
 Widget a11ySwitch({required String label, required Widget child}) {
   return MergeSemantics(
-    child: Semantics(
-      container: true,
-      label: label,
-      child: child,
-    ),
+    child: Semantics(container: true, label: label, child: child),
   );
 }
 
@@ -104,10 +100,6 @@ Widget a11ySwitch({required String label, required Widget child}) {
 Widget minTouchTarget({required Widget child, double size = 48}) {
   return ConstrainedBox(
     constraints: BoxConstraints(minWidth: size, minHeight: size),
-    child: Center(
-      widthFactor: 1,
-      heightFactor: 1,
-      child: child,
-    ),
+    child: Center(widthFactor: 1, heightFactor: 1, child: child),
   );
 }

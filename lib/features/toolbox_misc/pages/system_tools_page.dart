@@ -207,7 +207,8 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
         min: 0,
         max: 1024 * 128,
         label: '大小（MB）',
-        helperText: '填 0 表示关闭并删除面板创建的 SWAP 文件；'
+        helperText:
+            '填 0 表示关闭并删除面板创建的 SWAP 文件；'
             '常见配置为物理内存的 1 ~ 2 倍，最小 64 MB。',
         // 面板只在 size > 1 时才创建新文件：填 1 会「删除旧 swap 又不建新的」，
         // 界面上却提示设置成功，因此在客户端就把这个区间拦掉。
@@ -225,7 +226,7 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
         content: size == 0
             ? '面板会执行 swapoff 并删除面板目录下的 swap 文件，同时移除 fstab 中的挂载项。'
             : '面板会先关闭并删除已有的 SWAP 文件，再创建 $size MB 新文件并挂载。'
-                '磁盘写入耗时较长，期间请勿离开或重复操作。',
+                  '磁盘写入耗时较长，期间请勿离开或重复操作。',
         confirmText: size == 0 ? '关闭' : '设置',
         danger: true,
       );
@@ -248,8 +249,9 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
           InfoRow(
             label: '面板文件',
             value: swap.enabled ? '${swap.size} MB' : '未创建',
-            valueColor:
-                swap.enabled ? null : theme.colorScheme.onSurfaceVariant,
+            valueColor: swap.enabled
+                ? null
+                : theme.colorScheme.onSurfaceVariant,
           ),
           const SizedBox(height: 10),
           OutlinedButton.icon(
@@ -339,7 +341,8 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
       final confirmed = await showConfirmDialog(
         context,
         title: '修改系统时间？',
-        content: '服务器时钟将被设置为「$text」（按服务器所在时区 ${tz.timezone} 解读）。'
+        content:
+            '服务器时钟将被设置为「$text」（按服务器所在时区 ${tz.timezone} 解读）。'
             '时间跳变可能影响正在运行的服务与计划任务。',
         confirmText: '修改',
         danger: true,
@@ -354,10 +357,7 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
 
     Future<void> syncTime() async {
       final ntp = ntpSection.valueOrNull;
-      final candidates = <String>{
-        ...?ntp?.servers,
-        ...?ntp?.builtins,
-      }.toList();
+      final candidates = <String>{...?ntp?.servers, ...?ntp?.builtins}.toList();
       final server = await showSyncTimeDialog(context, candidates: candidates);
       if (server == null || !mounted) return;
       await _run(
@@ -387,7 +387,8 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
             title: '手动设置时间',
             // 不展示「手机当前时间」：它只在页面重建时刷新，看起来像停走的钟。
             value: '选择日期与时间后写入服务器',
-            helper: '所填时间按服务器时区${tz.timezone.isEmpty ? '' : '（${tz.timezone}）'}'
+            helper:
+                '所填时间按服务器时区${tz.timezone.isEmpty ? '' : '（${tz.timezone}）'}'
                 '写入系统时钟',
             icon: Icons.edit_calendar_outlined,
             busy: _isBusy('time'),
@@ -395,8 +396,10 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading:
-                Icon(Icons.sync, color: theme.colorScheme.onSurfaceVariant),
+            leading: Icon(
+              Icons.sync,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
             title: Text('同步网络时间', style: theme.textTheme.bodyLarge),
             subtitle: Text(
               '从 NTP 服务器校准系统时钟',
@@ -406,8 +409,10 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
             ),
             trailing: _isBusy('sync_time')
                 ? const BusyIndicator()
-                : Icon(Icons.chevron_right,
-                    color: theme.colorScheme.onSurfaceVariant),
+                : Icon(
+                    Icons.chevron_right,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
             onTap: _anyBusy ? null : syncTime,
           ),
         ],
@@ -518,8 +523,9 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
           if (v.isEmpty) return '请输入主机名';
           if (v.length > 63) return '主机名过长（最多 63 个字符）';
           // 允许单字符主机名：首尾字母数字，中间可含短横线。
-          final ok =
-              RegExp(r'^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$').hasMatch(v);
+          final ok = RegExp(
+            r'^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$',
+          ).hasMatch(v);
           return ok ? null : '主机名只能包含字母、数字与短横线，且不能以短横线开头或结尾';
         },
       );
@@ -567,8 +573,9 @@ class _SystemToolsPageState extends ConsumerState<SystemToolsPage> {
     return SectionCard(
       title: 'hosts 文件',
       trailing: TextButton(
-        onPressed:
-            _anyBusy ? null : () => context.push('/toolbox/system/hosts'),
+        onPressed: _anyBusy
+            ? null
+            : () => context.push('/toolbox/system/hosts'),
         child: const Text('编辑'),
       ),
       child: Column(

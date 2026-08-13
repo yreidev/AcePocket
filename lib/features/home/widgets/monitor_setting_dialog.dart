@@ -53,7 +53,9 @@ class _MonitorSettingDialogState extends ConsumerState<MonitorSettingDialog> {
       _error = null;
     });
     try {
-      await ref.read(monitorRepoProvider).updateSetting(
+      await ref
+          .read(monitorRepoProvider)
+          .updateSetting(
             MonitorSetting(
               enabled: _enabled,
               days: int.parse(_daysController.text.trim()),

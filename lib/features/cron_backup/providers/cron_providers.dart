@@ -17,7 +17,8 @@ const kCronPageSize = 20;
 /// 计划任务列表（分页 + 下拉刷新）。
 final cronListProvider =
     AsyncNotifierProvider.autoDispose<CronListNotifier, PagedState<Cron>>(
-        CronListNotifier.new);
+      CronListNotifier.new,
+    );
 
 class CronListNotifier extends CronBackupPagedNotifier<Cron> {
   @override
@@ -40,11 +41,13 @@ class CronListNotifier extends CronBackupPagedNotifier<Cron> {
     await ref.read(cronRepoProvider).setStatus(cron.id, status);
     final current = state.valueOrNull;
     if (current == null) return;
-    state = AsyncData(current.copyWith(
-      items: current.items
-          .map((e) => e.id == cron.id ? e.copyWith(status: status) : e)
-          .toList(),
-    ));
+    state = AsyncData(
+      current.copyWith(
+        items: current.items
+            .map((e) => e.id == cron.id ? e.copyWith(status: status) : e)
+            .toList(),
+      ),
+    );
   }
 
   /// 删除任务（成功后从列表移除）。
@@ -53,9 +56,11 @@ class CronListNotifier extends CronBackupPagedNotifier<Cron> {
     final current = state.valueOrNull;
     if (current == null) return;
     final items = current.items.where((e) => e.id != id).toList();
-    state = AsyncData(current.copyWith(
-      items: items,
-      total: current.total > 0 ? current.total - 1 : 0,
-    ));
+    state = AsyncData(
+      current.copyWith(
+        items: items,
+        total: current.total > 0 ? current.total - 1 : 0,
+      ),
+    );
   }
 }

@@ -45,7 +45,8 @@ void main() {
     Future<void> seed({int total = 60}) async {
       state = AsyncData(
         await pager.buildFirstPage(
-            (page, limit) async => pageOf(1, limit: limit, total: total)),
+          (page, limit) async => pageOf(1, limit: limit, total: total),
+        ),
       );
     }
 
@@ -56,8 +57,11 @@ void main() {
     test('loadMore 追加下一页并推进页码', () async {
       await seed();
       final fetch = FakeFetch();
-      final future =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final future = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       expect(state.requireValue.loadingMore, isTrue);
       fetch.complete(0, pageOf(2));
       await future;
@@ -74,8 +78,11 @@ void main() {
     test('空页收尾：total 修正为已加载条数且 hasMore=false', () async {
       await seed(total: 60);
       final fetch = FakeFetch();
-      final future =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final future = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       fetch.complete(0, const PagedResult(items: [], total: 60));
       await future;
 
@@ -88,10 +95,15 @@ void main() {
     test('返回不足一页视为到底', () async {
       await seed(total: 60);
       final fetch = FakeFetch();
-      final future =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final future = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       fetch.complete(
-          0, PagedResult(items: List.generate(5, (i) => 20 + i), total: 60));
+        0,
+        PagedResult(items: List.generate(5, (i) => 20 + i), total: 60),
+      );
       await future;
 
       final value = state.requireValue;
@@ -103,8 +115,11 @@ void main() {
       await seed();
       final fetch = FakeFetch();
       // loadMore 先发起但响应慢。
-      final loadMore =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final loadMore = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       // refresh 后发起先返回（列表已被删掉一条：只剩 19 条）。
       final refresh = pager.reloadFirstPage(
         fetch: fetch.call,
@@ -121,8 +136,11 @@ void main() {
       await loadMore;
 
       final value = state.requireValue;
-      expect(value.items, List.generate(19, (i) => i),
-          reason: '过期的 loadMore 响应不得追加（否则条目重复 / 已删条目复活）');
+      expect(
+        value.items,
+        List.generate(19, (i) => i),
+        reason: '过期的 loadMore 响应不得追加（否则条目重复 / 已删条目复活）',
+      );
       expect(value.page, 1);
       expect(value.loadingMore, isFalse);
     });
@@ -150,16 +168,22 @@ void main() {
       fetch.complete(0, pageOf(1));
       await slow;
 
-      expect(state.requireValue.items, List.generate(20, (i) => 100 + i),
-          reason: '慢响应后到达时不得把列表弹回旧数据');
+      expect(
+        state.requireValue.items,
+        List.generate(20, (i) => 100 + i),
+        reason: '慢响应后到达时不得把列表弹回旧数据',
+      );
     });
 
     test('loadMore 在途时重复触发不并发发起', () async {
       await seed();
       final fetch = FakeFetch();
       final first = pager.loadMore(read: read, write: write, fetch: fetch.call);
-      final second =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final second = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       await second;
       expect(fetch.calls, [(2, 20)], reason: '第二次触发应被在途标志拦截');
       fetch.complete(0, pageOf(2));
@@ -171,8 +195,11 @@ void main() {
       await seed();
       final fetch = FakeFetch();
       // loadMore A 在途。
-      final loadMoreA =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final loadMoreA = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       // refresh 完成（新一代次的第一页）。
       final refresh = pager.reloadFirstPage(
         fetch: fetch.call,
@@ -189,8 +216,11 @@ void main() {
       await loadMoreA;
       expect(state.requireValue.items.length, 20);
       // A 结束后可以正常加载下一页，且只追加一次。
-      final loadMoreC =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final loadMoreC = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       expect(fetch.calls.length, 3);
       fetch.complete(2, pageOf(2));
       await loadMoreC;
@@ -200,8 +230,11 @@ void main() {
     test('loadMore 失败记录 loadMoreError 并保留数据，重试成功后清除', () async {
       await seed();
       final fetch = FakeFetch();
-      final failed =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final failed = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       fetch.completeError(0, StateError('网络错误'));
       await failed;
 
@@ -223,8 +256,11 @@ void main() {
     test('loadMore 失败但响应已过期时不写入 loadMoreError', () async {
       await seed();
       final fetch = FakeFetch();
-      final loadMore =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final loadMore = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       final refresh = pager.reloadFirstPage(
         fetch: fetch.call,
         write: write,
@@ -265,18 +301,26 @@ void main() {
     test('buildFirstPage（依赖变化重建）使在途 loadMore 过期', () async {
       await seed();
       final fetch = FakeFetch();
-      final loadMore =
-          pager.loadMore(read: read, write: write, fetch: fetch.call);
+      final loadMore = pager.loadMore(
+        read: read,
+        write: write,
+        fetch: fetch.call,
+      );
       // 模拟切换服务器 / 筛选条件变化触发的 build 重跑。
       state = AsyncData(
-        await pager.buildFirstPage((page, limit) async =>
-            PagedResult(items: List.generate(20, (i) => 200 + i), total: 20)),
+        await pager.buildFirstPage(
+          (page, limit) async =>
+              PagedResult(items: List.generate(20, (i) => 200 + i), total: 20),
+        ),
       );
       fetch.complete(0, pageOf(2));
       await loadMore;
 
-      expect(state.requireValue.items, List.generate(20, (i) => 200 + i),
-          reason: '重建后旧代次的 loadMore 响应不得写入');
+      expect(
+        state.requireValue.items,
+        List.generate(20, (i) => 200 + i),
+        reason: '重建后旧代次的 loadMore 响应不得写入',
+      );
     });
   });
 
@@ -324,4 +368,5 @@ class TestPagedNotifier extends PagedAsyncNotifier<int> {
 
 final testPagedProvider =
     AsyncNotifierProvider.autoDispose<TestPagedNotifier, PagedState<int>>(
-        TestPagedNotifier.new);
+      TestPagedNotifier.new,
+    );

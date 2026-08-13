@@ -65,7 +65,9 @@ class _WebhookPageState extends ConsumerState<WebhookPage> {
           .updateWebhook(webhook.copyWith(status: !webhook.status));
       if (mounted) {
         showSuccessSnack(
-            context, webhook.status ? 'WebHook 已停用' : 'WebHook 已启用');
+          context,
+          webhook.status ? 'WebHook 已停用' : 'WebHook 已启用',
+        );
       }
       await _reloadQuietly();
     });
@@ -80,7 +82,8 @@ class _WebhookPageState extends ConsumerState<WebhookPage> {
     final ok = await showConfirmDialog(
       context,
       title: '删除 WebHook',
-      content: '确定要删除「${webhook.name.isEmpty ? '未命名 WebHook' : webhook.name}」吗？'
+      content:
+          '确定要删除「${webhook.name.isEmpty ? '未命名 WebHook' : webhook.name}」吗？'
           '删除后回调地址立即失效，对应脚本文件也会被移除。',
       confirmText: '删除',
       danger: true,
@@ -116,7 +119,8 @@ class _WebhookPageState extends ConsumerState<WebhookPage> {
             child: PagedListView<WebHook>(
               state: state,
               header: const InfoBanner(
-                text: '每个 WebHook 对应一个回调地址，GET / POST 请求该地址即以指定系统用户'
+                text:
+                    '每个 WebHook 对应一个回调地址，GET / POST 请求该地址即以指定系统用户'
                     '执行脚本。地址中的 Key 等同于凭据，请妥善保管。',
               ),
               onRefresh: () => ref.read(webhooksProvider.notifier).refresh(),

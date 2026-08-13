@@ -97,8 +97,9 @@ void main() {
     });
 
     testWidgets('连续删除两行', (tester) async {
-      await tester
-          .pumpWidget(const _StringHost(initial: ['/a', '/b', '/c', '/d']));
+      await tester.pumpWidget(
+        const _StringHost(initial: ['/a', '/b', '/c', '/d']),
+      );
       await tester.tap(find.byIcon(Icons.remove_circle_outline).first);
       await tester.pump();
       await tester.tap(find.byIcon(Icons.remove_circle_outline).first);
@@ -132,10 +133,10 @@ void main() {
 
   group('KvEditor 删除后显示与数据一致', () {
     List<KvEntry> seed() => [
-          KvEntry(key: 'A', value: '1'),
-          KvEntry(key: 'B', value: '2'),
-          KvEntry(key: 'C', value: '3'),
-        ];
+      KvEntry(key: 'A', value: '1'),
+      KvEntry(key: 'B', value: '2'),
+      KvEntry(key: 'C', value: '3'),
+    ];
 
     testWidgets('删除首行', (tester) async {
       await tester.pumpWidget(_KvHost(initial: seed()));

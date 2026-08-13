@@ -30,8 +30,8 @@ class Paged<T> {
       final total = rawTotal is num
           ? rawTotal.toInt()
           : (rawTotal is String
-              ? int.tryParse(rawTotal) ?? items.length
-              : items.length);
+                ? int.tryParse(rawTotal) ?? items.length
+                : items.length);
       return Paged<T>(items: items, total: total);
     }
     return Paged<T>(items: <T>[], total: 0);
@@ -41,8 +41,7 @@ class Paged<T> {
   factory Paged.parse(
     dynamic data,
     T Function(Map<String, dynamic>) parseItem,
-  ) =>
-      Paged.fromJson(data, parseItem);
+  ) => Paged.fromJson(data, parseItem);
 }
 
 /// 历史类型名，与 [Paged] 相同。
