@@ -36,29 +36,8 @@ jobs:
 
       - run: flutter pub get --enforce-lockfile
 
-      # 仓库中仍有历史未格式化文件；只检查本次改动，避免无关文件阻塞 CI。
-      - name: dart format（本次改动）
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-        run: |
-          if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
-            BASE_SHA=$(git rev-parse HEAD^ 2>/dev/null || true)
-          fi
-          if [[ -z "$BASE_SHA" ]]; then
-            echo '没有可比较的基准提交，跳过增量格式检查。'
-            exit 0
-          fi
-          if ! git cat-file -e "$BASE_SHA^{commit}"; then
-            git fetch --no-tags origin "$BASE_SHA"
-          fi
-
-          mapfile -t DART_FILES < <(git diff --name-only --diff-filter=ACMR \
-            "$BASE_SHA" "$GITHUB_SHA" -- '*.dart')
-          if (( ${#DART_FILES[@]} == 0 )); then
-            echo '本次没有 Dart 文件变更。'
-            exit 0
-          fi
-          dart format --output=none --set-exit-if-changed "${DART_FILES[@]}"
+      - name: dart format
+        run: dart format --output=none --set-exit-if-changed lib test
 
       # 本项目要求 0 error 0 warning 0 info（含 info 级废弃提示），
       # 因此不加任何 --no-fatal-* 放宽。

@@ -50,6 +50,9 @@ app.*.map.json
 # Claude Code 本地会话产物
 .claude/
 
+# Codex CLI 本地配置
+.codex/
+
 # 打包产物
 *.apk
 *.aab
