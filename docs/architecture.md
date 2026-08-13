@@ -119,6 +119,9 @@ final apiClientProvider    = ...; // Provider<ApiClient>，依赖 activeServerPr
 - 认证细节见 `docs/acepanel-api.md`。
 - 列表页统一：下拉刷新、分页（面板接口分页参数以源码为准，常见 `page`/`limit`）、
   错误用 core/widgets/error_view 展示并可重试；危险操作用 confirm_dialog 二次确认。
+- 任何要离开安全存储的凭据（目前只有「配置备份」）必须先经
+  `core/crypto/secret_box.dart` 用用户口令加密；该文件的 AES / PBKDF2 由
+  `test/core/crypto_test.dart` 的官方向量锁定，不要在没有向量验证的情况下改动。
 - Material 3，颜色从 Theme 取，不硬编码；动效时长 / 曲线同理，从 `core/theme/motion.dart`
   的 `AppMotion` 取，并用 `AppMotion.resolve` 适配系统「移除动画」设置。
   内容整体替换用 `core/widgets/fade_switch.dart` 的 `FadeSwitch`，

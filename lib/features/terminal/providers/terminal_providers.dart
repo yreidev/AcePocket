@@ -73,6 +73,11 @@ class TerminalSettingsNotifier extends Notifier<TerminalSettings> {
     unawaited(_persist());
   }
 
+  /// 整体替换（配置导入用）。
+  ///
+  /// 值已由 [TerminalSettings.fromJson] 夹紧到合法区间，这里不再逐项校验。
+  void replaceAll(TerminalSettings next) => _update(next);
+
   /// 设置字号（自动限制在 [TerminalSettings.minFontSize] ~ maxFontSize）。
   void setFontSize(double value) {
     final clamped = value

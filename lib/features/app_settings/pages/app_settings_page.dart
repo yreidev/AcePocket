@@ -10,6 +10,7 @@ import '../../terminal/models/terminal_settings.dart';
 import '../../terminal/providers/terminal_providers.dart';
 import '../models/app_settings.dart';
 import '../providers/app_settings_providers.dart';
+import '../widgets/backup_section.dart';
 import '../widgets/pinned_cert_section.dart';
 
 /// 应用设置页：App 本地偏好（外观 / 启动行为 / 数据刷新 / 终端 / 网络与安全 /
@@ -33,6 +34,7 @@ class AppSettingsPage extends ConsumerWidget {
           _TerminalSection(),
           // 自带「网络与安全」SectionCard 外壳，直接放置即可。
           PinnedCertSection(),
+          BackupSection(),
           _UsageSection(),
           _AboutEntrySection(),
         ],
