@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/widgets/animated_reveal.dart';
 import '../models/panel_models.dart';
 import '../providers/home_providers.dart';
 import 'formatters.dart';
@@ -12,9 +13,19 @@ class HealthBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final issues = ref.watch(healthProvider).valueOrNull ?? const <HealthIssue>[];
-    if (issues.isEmpty) return const SizedBox.shrink();
+    final issues =
+        ref.watch(healthProvider).valueOrNull ?? const <HealthIssue>[];
+    // 健康检查是轮询回来的，直接 if/else 会让横幅在首页上突然弹出、把下方
+    // 卡片整体顶下去；交给 AnimatedReveal 展开。
+    return AnimatedReveal(
+      visible: issues.isNotEmpty,
+      child: issues.isEmpty
+          ? const SizedBox.shrink()
+          : _buildBanner(context, issues),
+    );
+  }
 
+  Widget _buildBanner(BuildContext context, List<HealthIssue> issues) {
     final theme = Theme.of(context);
     final hasError = issues.any((i) => i.isError);
     final background = hasError
@@ -71,8 +82,13 @@ class PanelUpdateBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hasUpdate = ref.watch(panelUpdateProvider).valueOrNull ?? false;
-    if (!hasUpdate) return const SizedBox.shrink();
+    return AnimatedReveal(
+      visible: hasUpdate,
+      child: hasUpdate ? _buildBanner(context) : const SizedBox.shrink(),
+    );
+  }
 
+  Widget _buildBanner(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),

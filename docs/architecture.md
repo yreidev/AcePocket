@@ -107,6 +107,9 @@ final apiClientProvider    = ...; // Provider<ApiClient>，依赖 activeServerPr
 - 同一模块内静态段路由必须声明在动态段之前（如 `/projects/create` 排在
   `/projects/:id` 之前），否则会被路径参数吞掉。
 - 新增模块后同时在 `core/pages/more_page.dart` 的 `kMoreGroups` 里挂入口。
+- 页面转场固定为 `PredictiveBackPageTransitionsBuilder`（`core/theme/theme.dart`），
+  依赖 manifest 的 `android:enableOnBackInvokedCallback="true"`；返回拦截一律用
+  `PopScope` 的前置 `canPop`，运行时才决定放行会让预测性返回失效。
 
 ## 代码规范
 
@@ -116,7 +119,11 @@ final apiClientProvider    = ...; // Provider<ApiClient>，依赖 activeServerPr
 - 认证细节见 `docs/acepanel-api.md`。
 - 列表页统一：下拉刷新、分页（面板接口分页参数以源码为准，常见 `page`/`limit`）、
   错误用 core/widgets/error_view 展示并可重试；危险操作用 confirm_dialog 二次确认。
-- Material 3，颜色从 Theme 取，不硬编码。
+- Material 3，颜色从 Theme 取，不硬编码；动效时长 / 曲线同理，从 `core/theme/motion.dart`
+  的 `AppMotion` 取，并用 `AppMotion.resolve` 适配系统「移除动画」设置。
+  内容整体替换用 `core/widgets/fade_switch.dart` 的 `FadeSwitch`，
+  条件出现与展开 / 收起用 `core/widgets/animated_reveal.dart` 的
+  `AnimatedReveal` / `ExpandChevron`。
 - 时间：面板返回带时区偏移的 RFC3339，`DateTime.parse` 得到 `isUtc=true` 的实例，
   展示前必须 `.toLocal()`；Go 零值时间（year <= 1）按 null 处理。
 - 新 SDK（Flutter 3.44）已废弃的 API 一律不用：`withOpacity`（用 `withValues`）、

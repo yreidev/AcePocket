@@ -33,10 +33,17 @@
          Keystore 中不可导出，恢复到新设备后必然解密失败，只会让用户看到配置
          被静默清空（server_store.dart 对损坏数据的兜底）。备份既有风险又无收益，
          因此直接整体禁用，而不是用 dataExtractionRules/fullBackupContent 做排除。 -->
+    <!-- enableOnBackInvokedCallback="true"：启用 Android 13+ 的前置返回调度
+         （OnBackInvokedDispatcher），这是预测性返回动画的开关。未开启时系统不会
+         把返回手势的进度事件投递给应用，Flutter 默认的
+         PredictiveBackPageTransitionsBuilder 会一路退化成普通淡入淡出，
+         用户在滑动过程中看不到目的页预览。全项目的返回拦截已统一用 PopScope
+         的前置 canPop（见 core/widgets/unsaved_guard.dart），满足该 API 的要求。 -->
     <application
         android:label="AcePocket"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
         android:allowBackup="false">
         <activity
             android:name=".MainActivity"

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/widgets/animated_reveal.dart';
 import '../../../core/widgets/section_card.dart';
 import '../models/update_models.dart';
 import 'formatters.dart';
@@ -84,16 +85,15 @@ class _VersionCardState extends State<_VersionCard> {
                       if (version.type.isNotEmpty)
                         _Tag(
                           text: version.type,
-                          background:
-                              theme.colorScheme.surfaceContainerHighest,
+                          background: theme.colorScheme.surfaceContainerHighest,
                           foreground: theme.colorScheme.onSurfaceVariant,
                         ),
                     ],
                   ),
                 ),
                 const SizedBox(width: 8),
-                Icon(
-                  _expanded ? Icons.expand_less : Icons.expand_more,
+                ExpandChevron(
+                  expanded: _expanded,
                   size: 20,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -107,25 +107,31 @@ class _VersionCardState extends State<_VersionCard> {
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-          if (_expanded) ...[
-            const SizedBox(height: 10),
-            SelectableText(
-              description.isEmpty ? '该版本没有提供更新说明。' : description,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface,
-                height: 1.5,
-              ),
-            ),
-            if (version.downloads.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                '架构：${version.downloads.map((e) => e.arch).join('、')}',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+          AnimatedReveal(
+            visible: _expanded,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 10),
+                SelectableText(
+                  description.isEmpty ? '该版本没有提供更新说明。' : description,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface,
+                    height: 1.5,
+                  ),
                 ),
-              ),
-            ],
-          ],
+                if (version.downloads.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    '架构：${version.downloads.map((e) => e.arch).join('、')}',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
         ],
       ),
     );

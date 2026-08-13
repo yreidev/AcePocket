@@ -26,6 +26,7 @@ import '../../features/toolbox_misc/routes.dart';
 import '../../features/website/routes.dart';
 import '../pages/more_page.dart';
 import '../storage/server_store.dart';
+import '../theme/motion.dart';
 import '../widgets/error_view.dart';
 
 /// 应用路由表。
@@ -354,7 +355,10 @@ class _MainShellState extends State<_MainShell> {
   Widget _buildScaffold() {
     final navigationShell = widget.navigationShell;
     return Scaffold(
-      body: navigationShell,
+      body: _BranchFadeThrough(
+        index: navigationShell.currentIndex,
+        child: navigationShell,
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _onDestinationSelected,
@@ -376,6 +380,79 @@ class _MainShellState extends State<_MainShell> {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// 底部导航切换 tab 时的入场动效（Material 3 fade-through 的入场段）。
+///
+/// `StatefulShellRoute.indexedStack` 换分支是瞬时的——[IndexedStack] 只改显示
+/// 下标——三个 tab 之间会硬闪。这里**不替换子树**（分支导航栈必须保活，换掉
+/// 就等于清空三个 tab 的历史），只在下标变化时对整个 body 跑一次淡入 + 轻微放大。
+///
+/// [FadeTransition] / [ScaleTransition] 常驻在树上而不是「动画时才包一层」：
+/// 结构一旦变化，[StatefulNavigationShell] 会被重新挂载，三个分支的状态全丢。
+class _BranchFadeThrough extends StatefulWidget {
+  const _BranchFadeThrough({required this.index, required this.child});
+
+  /// 当前分支下标；变化即触发一次入场。
+  final int index;
+
+  final Widget child;
+
+  @override
+  State<_BranchFadeThrough> createState() => _BranchFadeThroughState();
+}
+
+class _BranchFadeThroughState extends State<_BranchFadeThrough>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: AppMotion.tabSwitch,
+    // 初始为 1：首帧就是稳定态，启动时不该有淡入。
+    value: 1,
+  );
+
+  /// 前 40% 是「旧内容已消失」的空档，之后才淡入，符合 fade-through 的时序。
+  late final CurvedAnimation _fade = CurvedAnimation(
+    parent: _controller,
+    curve: const Interval(0.4, 1, curve: AppMotion.standard),
+  );
+
+  late final CurvedAnimation _scaleCurve = CurvedAnimation(
+    parent: _controller,
+    curve: AppMotion.enter,
+  );
+
+  late final Animation<double> _scale =
+      Tween<double>(begin: 0.97, end: 1).animate(_scaleCurve);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 系统开启「移除动画」时时长归零，切换保持瞬时。
+    _controller.duration = AppMotion.resolve(context, AppMotion.tabSwitch);
+  }
+
+  @override
+  void didUpdateWidget(covariant _BranchFadeThrough oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.index != widget.index) _controller.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _fade.dispose();
+    _scaleCurve.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fade,
+      child: ScaleTransition(scale: _scale, child: widget.child),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../version/panel_feature.dart';
 import '../version/panel_version_provider.dart';
+import 'animated_reveal.dart';
 
 /// 功能不受当前面板版本支持时，显示在页面主体最上方的提示条。
 ///
@@ -17,10 +18,18 @@ class FeatureUnsupportedBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final version = ref.watch(cachedPanelVersionProvider);
-    if (isFeatureSupported(feature, version)) {
-      return const SizedBox.shrink();
-    }
+    final unsupported = !isFeatureSupported(feature, version);
+    // 面板版本是异步探测的，横幅往往比页面主体晚一步；直接返回不同高度会让
+    // 整页内容被顶下去，这里改为展开。
+    return AnimatedReveal(
+      visible: unsupported,
+      child: unsupported
+          ? _buildBanner(context, version)
+          : const SizedBox.shrink(),
+    );
+  }
 
+  Widget _buildBanner(BuildContext context, PanelVersion? version) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final unreleased = requiredVersionOf(feature) == kUnreleasedVersion;
@@ -45,8 +54,7 @@ class FeatureUnsupportedBanner extends ConsumerWidget {
               Expanded(
                 child: Text(
                   featureUnsupportedMessage(feature, version),
-                  style:
-                      theme.textTheme.bodySmall?.copyWith(color: foreground),
+                  style: theme.textTheme.bodySmall?.copyWith(color: foreground),
                 ),
               ),
             ],

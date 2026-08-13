@@ -19,6 +19,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
+      pageTransitionsTheme: _pageTransitions,
       appBarTheme: AppBarTheme(
         centerTitle: false,
         backgroundColor: colorScheme.surface,
@@ -50,4 +51,20 @@ class AppTheme {
       ),
     );
   }
+
+  /// 页面转场。
+  ///
+  /// Android 用 [PredictiveBackPageTransitionsBuilder]：Android 14+ 上返回手势
+  /// 会实时跟手缩放当前页、露出目的页，滑到一半松手可取消；低版本自动退化为
+  /// FadeForwards。它需要 `AndroidManifest.xml` 里的
+  /// `android:enableOnBackInvokedCallback="true"` 才会收到系统的手势进度事件。
+  ///
+  /// 这里显式写死而不是依赖 Flutter 默认值：Android 默认转场在近几个大版本里
+  /// 换过三次（Zoom → FadeForwards → PredictiveBack），升级 SDK 时不应该
+  /// 悄悄改变返回手势的观感。本项目只发布 Android，其余平台留给框架兜底。
+  static const PageTransitionsTheme _pageTransitions = PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
+      TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+    },
+  );
 }

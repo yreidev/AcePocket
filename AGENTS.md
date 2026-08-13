@@ -38,13 +38,21 @@ Notifier 的 `build()` 必须 `ref.watch(xxxRepoProvider)`，确保切换服务�
 
 接口路径、方法和字段以 AcePanel Go 源码为准：路由查 `internal/route/*.go`，请求查 `internal/request/*.go`，响应查 `internal/service/*.go`。补充资料见 `docs/acepanel-api.md` 和 `docs/architecture.md`。
 
+## 动效与返回手势
+
+自定义动画的时长与曲线一律取 `lib/core/theme/motion.dart` 的 `AppMotion`（转发 Material 3 的 `Durations` / `Easing`），不要自己发明数值；写入组件前用 `AppMotion.resolve` 包一层，系统开启「移除动画」时退化为瞬时。内容整体替换用 `lib/core/widgets/fade_switch.dart` 的 `FadeSwitch`（子节点必须带 `Key`，整页占位传 `expand: true`）；条件出现的通栏内容与展开 / 收起面板用 `lib/core/widgets/animated_reveal.dart` 的 `AnimatedReveal`，折叠箭头用同文件的 `ExpandChevron`。
+
+交叉淡入期间新旧内容会同时挂在树上，同一个 `ScrollController` 不能被两个可滚动组件持有，两侧至少有一侧不挂控制器。
+
+页面转场在 `lib/core/theme/theme.dart` 固定为 `PredictiveBackPageTransitionsBuilder`，配合 manifest 的 `enableOnBackInvokedCallback` 提供 Android 14+ 的预测性返回，不要依赖 Flutter 默认值。返回拦截只能用 `PopScope` 的前置 `canPop`，不要等返回发生时再决定放行，否则系统拿不到确定的返回意图，预测动画不会出现。底部导航的分支切换动效包在 `_BranchFadeThrough` 里，它必须常驻组件树——结构一变 `StatefulNavigationShell` 会重挂载，三个 tab 的导航栈全部清空。
+
 ## 测试规范
 
 测试使用 `flutter_test`，文件名以 `_test.dart` 结尾。解析、校验、仓库层和签名构造编写单元测试，可见状态与交互编写 widget test。每个缺陷修复应包含回归测试；提交前运行 `flutter analyze` 和 `flutter test`。测试只能使用 `example.com`、`192.0.2.1`、`2001:db8::` 等保留示例值，禁止出现真实地址、域名、令牌或密码。
 
 ## Android 配置约束
 
-不要运行 `flutter create .`，它会覆盖平台定制。主 manifest 必须保留 release 的 `INTERNET` 权限、对 `open_filex` 存储权限的移除规则，以及收窄后的 FileProvider 路径。修改 manifest 后运行 `cd android && ./gradlew :app:processReleaseManifest` 检查合并结果。保留 `android/build.gradle.kts` 中的 `file_picker` AGP 9 兼容段。
+不要运行 `flutter create .`，它会覆盖平台定制。主 manifest 必须保留 release 的 `INTERNET` 权限、对 `open_filex` 存储权限的移除规则、收窄后的 FileProvider 路径，以及 `android:enableOnBackInvokedCallback="true"`（预测性返回的开关，去掉后返回手势会退化成普通淡入淡出）。修改 manifest 后运行 `cd android && ./gradlew :app:processReleaseManifest` 检查合并结果。保留 `android/build.gradle.kts` 中的 `file_picker` AGP 9 兼容段。
 
 ## 提交与 Pull Request 规范
 

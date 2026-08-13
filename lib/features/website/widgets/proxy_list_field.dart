@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/a11y.dart';
+import '../../../core/widgets/animated_reveal.dart';
 import '../models/json_utils.dart';
 import '../models/website_setting.dart';
 import 'kv_list_field.dart';
@@ -201,8 +202,7 @@ class _UpstreamCardState extends State<_UpstreamCard> {
                         child: TextFormField(
                           controller: _keepalive,
                           keyboardType: TextInputType.number,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: const InputDecoration(
                             labelText: '保持连接数',
                             hintText: '0',
@@ -364,9 +364,8 @@ class _ProxyCardState extends State<_ProxyCard> {
                   ),
                 ),
                 A11yIconButton(
-                  tooltip: p.location.isEmpty
-                      ? '删除这条代理规则'
-                      : '删除代理规则 ${p.location}',
+                  tooltip:
+                      p.location.isEmpty ? '删除这条代理规则' : '删除代理规则 ${p.location}',
                   color: theme.colorScheme.error,
                   onPressed: widget.onRemove,
                   icon: const Icon(Icons.remove_circle_outline),
@@ -420,10 +419,10 @@ class _ProxyCardState extends State<_ProxyCard> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          initialValue: const ['1.0', '1.1', '2']
-                                  .contains(p.httpVersion)
-                              ? p.httpVersion
-                              : '1.1',
+                          initialValue:
+                              const ['1.0', '1.1', '2'].contains(p.httpVersion)
+                                  ? p.httpVersion
+                                  : '1.1',
                           isExpanded: true,
                           decoration:
                               const InputDecoration(labelText: 'HTTP 版本'),
@@ -445,70 +444,74 @@ class _ProxyCardState extends State<_ProxyCard> {
                     alignment: Alignment.centerLeft,
                     child: TextButton.icon(
                       onPressed: () => setState(() => _expanded = !_expanded),
-                      icon: Icon(_expanded
-                          ? Icons.expand_less
-                          : Icons.expand_more),
+                      icon: ExpandChevron(expanded: _expanded),
                       label: Text(_expanded ? '收起高级选项' : '展开高级选项'),
                     ),
                   ),
-                  if (_expanded) ...[
-                    TextField(
-                      controller: _sni,
-                      decoration: const InputDecoration(
-                        labelText: '代理 SNI',
-                        hintText: 'example.com',
-                      ),
-                      onChanged: (v) {
-                        p.sni = v.trim();
-                        widget.onChanged();
-                      },
+                  AnimatedReveal(
+                    visible: _expanded,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextField(
+                          controller: _sni,
+                          decoration: const InputDecoration(
+                            labelText: '代理 SNI',
+                            hintText: 'example.com',
+                          ),
+                          onChanged: (v) {
+                            p.sni = v.trim();
+                            widget.onChanged();
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        TextFormField(
+                          controller: _bodySize,
+                          keyboardType: TextInputType.number,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
+                            labelText: '请求体大小限制（字节）',
+                            hintText: '0 表示使用全局配置',
+                          ),
+                          validator: (value) =>
+                              _validateNonNegativeInt(value, '留空或 0 表示使用全局配置'),
+                          onChanged: (v) {
+                            final t = v.trim();
+                            final n = t.isEmpty ? 0 : int.tryParse(t);
+                            // 非法输入不写回模型，由 validator 提示用户修正。
+                            if (n != null && n >= 0) {
+                              p.extra['client_max_body_size'] = n;
+                            }
+                            widget.onChanged();
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        KeyValueListField(
+                          label: '自定义请求头',
+                          initialValues: jStringMap(p.extra['headers']),
+                          keyHint: 'X-Custom-Header',
+                          valueHint: 'value',
+                          addButtonText: '添加请求头',
+                          onChanged: (v) {
+                            p.extra['headers'] = v;
+                            widget.onChanged();
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        KeyValueListField(
+                          label: '响应内容替换',
+                          initialValues: jStringMap(p.extra['replaces']),
+                          keyHint: '/old',
+                          valueHint: '/new',
+                          addButtonText: '添加替换',
+                          onChanged: (v) {
+                            p.extra['replaces'] = v;
+                            widget.onChanged();
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    TextFormField(
-                      controller: _bodySize,
-                      keyboardType: TextInputType.number,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                        labelText: '请求体大小限制（字节）',
-                        hintText: '0 表示使用全局配置',
-                      ),
-                      validator: (value) =>
-                          _validateNonNegativeInt(value, '留空或 0 表示使用全局配置'),
-                      onChanged: (v) {
-                        final t = v.trim();
-                        final n = t.isEmpty ? 0 : int.tryParse(t);
-                        // 非法输入不写回模型，由 validator 提示用户修正。
-                        if (n != null && n >= 0) {
-                          p.extra['client_max_body_size'] = n;
-                        }
-                        widget.onChanged();
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    KeyValueListField(
-                      label: '自定义请求头',
-                      initialValues: jStringMap(p.extra['headers']),
-                      keyHint: 'X-Custom-Header',
-                      valueHint: 'value',
-                      addButtonText: '添加请求头',
-                      onChanged: (v) {
-                        p.extra['headers'] = v;
-                        widget.onChanged();
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    KeyValueListField(
-                      label: '响应内容替换',
-                      initialValues: jStringMap(p.extra['replaces']),
-                      keyHint: '/old',
-                      valueHint: '/new',
-                      addButtonText: '添加替换',
-                      onChanged: (v) {
-                        p.extra['replaces'] = v;
-                        widget.onChanged();
-                      },
-                    ),
-                  ],
+                  ),
                 ],
               ),
             ),
