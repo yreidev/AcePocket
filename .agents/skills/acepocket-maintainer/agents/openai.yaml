@@ -1,0 +1,7 @@
+interface:
+  display_name: "AcePocket 维护"
+  short_description: "交互式维护 Android-only AcePocket 与 AcePanel API"
+  default_prompt: "使用 $acepocket-maintainer 维护 AcePocket。"
+
+policy:
+  allow_implicit_invocation: true
