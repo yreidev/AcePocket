@@ -47,16 +47,14 @@ Future<String?> openSavedFile(String path) async {
 }
 
 Future<Directory> _exportDirectory() async {
-  if (Platform.isAndroid) {
-    try {
-      final external = await getExternalStorageDirectory();
-      if (external != null) {
-        await external.create(recursive: true);
-        return external;
-      }
-    } catch (_) {
-      // 回落到应用文档目录。
+  try {
+    final external = await getExternalStorageDirectory();
+    if (external != null) {
+      await external.create(recursive: true);
+      return external;
     }
+  } catch (_) {
+    // 回落到应用文档目录。
   }
   final documents = await getApplicationDocumentsDirectory();
   await documents.create(recursive: true);

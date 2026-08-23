@@ -19,7 +19,6 @@ Future<void> showAppUpdateDialog(
   BuildContext context,
   AppRelease release,
 ) async {
-  if (!supportsInAppUpdate) return;
   final update = await showDialog<bool>(
     context: context,
     builder: (context) => _UpdateInfoDialog(release: release),

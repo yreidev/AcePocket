@@ -9,13 +9,13 @@
 用 **API 令牌 + HMAC-SHA256 签名** 直连你自己的面板，不经过任何第三方服务器；
 支持同时接入多台服务器并随时切换。UI 为简体中文、Material 3，跟随系统深浅色（也可手动切换）。
 
-- 目标平台：Android / iOS（本地文件选择 / 打开依赖 `file_picker`、`open_filex`，其余代码与平台无关）
+- 目标平台：Android（本地文件选择 / 打开依赖 `file_picker`、`open_filex`）
 - Dart SDK：`^3.5.0`（Flutter 3.24+）
 - 状态管理：`flutter_riverpod` ^2.5，路由：`go_router` ^14
 - 主要依赖：`dio`、`crypto`、`web_socket_channel`、`flutter_secure_storage`、
   `shared_preferences`、`fl_chart`、`xterm`、`intl`、`file_picker`、`path_provider`、`open_filex`
 
-> 仓库已包含用 Flutter 3.44.8 生成并做过必要修补的 `android/` 与 `ios/` 外壳
+> 仓库已包含用 Flutter 3.44.8 生成并做过必要修补的 `android/` 外壳
 > （Android 主 manifest 已声明 `INTERNET` 权限、`android/build.gradle.kts` 有
 > file_picker 与 AGP 9 的兼容修补），**不要**再执行 `flutter create .` 覆盖它们。
 
@@ -277,7 +277,7 @@ lib/
 git clone <this-repo> acepanel-mobile
 cd acepanel-mobile
 
-# 1. 拉依赖（android/ ios/ 已在仓库中，不需要也不要执行 flutter create .）
+# 1. 拉依赖（android/ 已在仓库中，不需要也不要执行 flutter create .）
 flutter pub get
 
 # 2. 静态检查（可选）
@@ -288,11 +288,10 @@ flutter run
 
 # 4. 打包
 flutter build apk --release        # Android
-flutter build ipa                  # iOS（需 macOS + 签名配置）
 ```
 
 > 若确实需要重新生成平台外壳（换包名等），执行
-> `flutter create . --platforms=android,ios --org <你的域名倒写>` 之后**必须**
+> `flutter create . --platforms=android --org <你的域名倒写>` 之后**必须**
 > 重新补回下面「注意事项」里列出的两处修补：主 manifest 的 `INTERNET` 权限，
 > 以及 `android/build.gradle.kts` 末尾的 file_picker × AGP 9 兼容段。
 
@@ -321,8 +320,8 @@ flutter build ipa                  # iOS（需 macOS + 签名配置）
   执行 `flutter create .` 后若该文件被覆盖，需要重新加回：
   `<uses-permission android:name="android.permission.INTERNET"/>`。
   验证方法：`adb shell dumpsys package <包名> | grep INTERNET`。
-  App 仅接受 **HTTPS** 面板地址；Android 明文流量限制和 iOS ATS 均不会为
-  HTTP 面板放宽。请先给面板配置 HTTPS，再添加服务器。
+  App 仅接受 **HTTPS** 面板地址；Android 明文流量限制不会为 HTTP 面板放宽。
+  请先给面板配置 HTTPS，再添加服务器。
 - **自签名证书**：在「添加服务器」的高级选项中打开「允许自签名证书」即可（App 内实现，不需要改平台配置）。
 
 ---
@@ -439,7 +438,7 @@ flutter build ipa                  # iOS（需 macOS + 签名配置）
 ## 安全说明
 
 - 面板地址、令牌、账号密码保存在 `flutter_secure_storage`
-  （Android EncryptedSharedPreferences / iOS Keychain），不会上传到任何第三方。
+  （Android EncryptedSharedPreferences），不会上传到任何第三方。
 - WebSocket 会话 Cookie 只存在内存中，App 退出即失效。
 - 主题模式等非敏感偏好存在 `shared_preferences`。
 

@@ -1,6 +1,6 @@
 # AcePanel Mobile — 架构契约（所有功能模块必须遵守）
 
-Flutter 应用，包名 `acepanel_mobile`。UI 语言：简体中文。深浅色主题均支持。
+Android Flutter 应用，包名 `acepanel_mobile`。UI 语言：简体中文。深浅色主题均支持。
 
 ## 技术栈（pubspec 由 core 统一定义，功能模块不得擅自新增依赖）
 

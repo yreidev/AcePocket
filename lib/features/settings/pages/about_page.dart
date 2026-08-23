@@ -11,7 +11,6 @@ import '../../../core/widgets/loading_view.dart';
 import '../../../core/widgets/section_card.dart';
 import '../../app_settings/providers/app_settings_providers.dart';
 import '../../app_update/providers/app_update_providers.dart';
-import '../../app_update/repo/apk_installer.dart';
 import '../../app_update/widgets/update_dialog.dart';
 import '../models/panel_about.dart';
 import '../providers/settings_providers.dart';
@@ -223,7 +222,7 @@ class _SectionNote extends StatelessWidget {
   }
 }
 
-/// 「版本与更新」分区：所有平台显示当前版本，Android 额外提供应用内更新。
+/// 「版本与更新」分区：显示当前版本并提供应用内 APK 更新。
 class _UpdateSection extends ConsumerStatefulWidget {
   const _UpdateSection();
 
@@ -277,31 +276,29 @@ class _UpdateSectionState extends ConsumerState<_UpdateSection> {
               ),
             ),
           ),
-          if (supportsInAppUpdate) ...[
-            SwitchListTile(
-              value: autoCheck,
-              onChanged: (v) {
-                ref.read(autoCheckUpdateProvider.notifier).setEnabled(v);
-              },
-              title: const Text('启动时自动检查更新'),
-              subtitle: const Text('启动后在后台静默检查，发现新版本时提示'),
-            ),
-            ListTile(
-              title: const Text('检查更新'),
-              enabled: !_checking,
-              onTap: _checking ? null : _checkForUpdate,
-              trailing: _checking
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.chevron_right),
-            ),
-            const _SectionNote(
-              '更新检查通过 GitHub Releases 进行，仅在你主动或开启自动检查时发起，不会上传任何数据。',
-            ),
-          ],
+          SwitchListTile(
+            value: autoCheck,
+            onChanged: (v) {
+              ref.read(autoCheckUpdateProvider.notifier).setEnabled(v);
+            },
+            title: const Text('启动时自动检查更新'),
+            subtitle: const Text('启动后在后台静默检查，发现新版本时提示'),
+          ),
+          ListTile(
+            title: const Text('检查更新'),
+            enabled: !_checking,
+            onTap: _checking ? null : _checkForUpdate,
+            trailing: _checking
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.chevron_right),
+          ),
+          const _SectionNote(
+            '更新检查通过 GitHub Releases 进行，仅在你主动或开启自动检查时发起，不会上传任何数据。',
+          ),
         ],
       ),
     );

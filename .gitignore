@@ -25,7 +25,6 @@ migrate_working_dir/
 
 # Flutter/Dart/Pub related
 **/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins-dependencies
 .pub-cache/
@@ -56,7 +55,6 @@ app.*.map.json
 # 打包产物
 *.apk
 *.aab
-*.ipa
 
 # 发布签名：密钥与口令绝不入库
 android/key.properties

@@ -1,10 +1,10 @@
 # Repository Guidelines
 
-AcePocket 是 AcePanel 服务器面板的非官方 Flutter 手机客户端。当前开发、CI 与发布以 Android 为主；除非用户明确要求，不要新增 iOS CI 或发布工作。UI、代码注释和提交说明使用中文。
+AcePocket 是 AcePanel 服务器面板的非官方 Android Flutter 客户端。开发、CI 与发布仅面向 Android；不要新增 iOS CI、发布或平台代码。UI、代码注释和提交说明使用中文。
 
 ## 项目结构与模块组织
 
-应用入口为 `lib/main.dart` 和 `lib/app.dart`。共享 API、路由、存储、主题、生命周期、版本门控、工具及组件位于 `lib/core/`。业务代码按 `lib/features/<feature>/` 组织，通常包含 `models/`、`repo/`、`providers/`、`pages/`、`widgets/` 和 `routes.dart`。测试在 `test/core/` 与 `test/features/` 中镜像源码结构；平台工程位于 `android/` 和 `ios/`，资源和文档分别位于 `assets/` 与 `docs/`。
+应用入口为 `lib/main.dart` 和 `lib/app.dart`。共享 API、路由、存储、主题、生命周期、版本门控、工具及组件位于 `lib/core/`。业务代码按 `lib/features/<feature>/` 组织，通常包含 `models/`、`repo/`、`providers/`、`pages/`、`widgets/` 和 `routes.dart`。测试在 `test/core/` 与 `test/features/` 中镜像源码结构；Android 平台工程位于 `android/`，资源和文档分别位于 `assets/` 与 `docs/`。
 
 新增模块时，在 `routes.dart` 导出 `<camelKey>Routes`，由 `lib/core/router/router.dart` 聚合，并在 `lib/core/pages/more_page.dart` 的 `kMoreGroups` 添加入口。同一模块内静态路由必须放在动态路由之前。底部导航使用 `StatefulShellRoute.indexedStack`，其余页面使用顶层路由全屏覆盖。
 
@@ -62,7 +62,7 @@ Notifier 的 `build()` 必须 `ref.watch(xxxRepoProvider)`，确保切换服务�
 
 ## 提交与 Pull Request 规范
 
-提交遵循 Conventional Commits，type/scope 使用英文，说明使用中文，例如 `fix: 修复网络安全问题`、`feat: 添加服务器筛选`、`ci: 调整构建校验`。每个提交只处理一个逻辑变更。PR 应说明行为变化、关联 issue、列出验证命令，并为 UI 变更提供截图；迁移、安全影响和平台差异必须明确说明。
+提交遵循 Conventional Commits，type/scope 使用英文，说明使用中文，例如 `fix: 修复网络安全问题`、`feat: 添加服务器筛选`、`ci: 调整构建校验`。每个提交只处理一个逻辑变更。PR 应说明行为变化、关联 issue、列出验证命令，并为 UI 变更提供截图；迁移、安全影响和 Android 平台差异必须明确说明。
 
 ## 安全提示
 

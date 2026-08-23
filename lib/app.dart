@@ -9,7 +9,6 @@ import 'core/router/router.dart';
 import 'core/theme/theme.dart';
 import 'features/app_settings/repo/app_settings_store.dart';
 import 'features/app_update/providers/app_update_providers.dart';
-import 'features/app_update/repo/apk_installer.dart';
 import 'features/app_update/widgets/update_dialog.dart';
 import 'features/panel_users/two_factor.dart';
 import 'features/settings/providers/appearance_providers.dart';
@@ -39,7 +38,7 @@ class _AcePanelAppState extends ConsumerState<AcePanelApp> {
     // 供首页轮询、终端心跳、迁移重连等周期性任务在后台时暂停。
     ref.read(appForegroundProvider);
     // 启动后延迟自动检查更新（不阻塞首帧）；可在「应用设置」中关闭。
-    if (supportsInAppUpdate && AppSettingsStore.instance.autoCheckUpdate) {
+    if (AppSettingsStore.instance.autoCheckUpdate) {
       _autoUpdateTimer = Timer(const Duration(seconds: 5), _autoCheckUpdate);
     }
   }
@@ -86,7 +85,6 @@ class _AcePanelAppState extends ConsumerState<AcePanelApp> {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
       ],
     );
   }

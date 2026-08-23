@@ -13,9 +13,6 @@ import '../../files/repo/transfer_client.dart'
     show openLocalFile, resolveDownloadDirectory;
 import '../models/app_update_models.dart';
 
-/// 应用内下载并安装 APK 仅受 Android 支持。
-bool get supportsInAppUpdate => Platform.isAndroid;
-
 /// 当前运行时是否 arm64 架构。
 ///
 /// `Platform.version` 形如 `3.x.x (stable) ... on "android_arm64"`，

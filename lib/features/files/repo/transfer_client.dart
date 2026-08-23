@@ -437,18 +437,12 @@ class PanelTransferClient {
 
 /// 下载文件的本地保存目录：`<应用可用外部/文档目录>/AcePanel`。
 ///
-/// Android 用应用私有外部目录（无需存储权限，可被 FileProvider 分享给其他应用），
-/// iOS 用应用文档目录，桌面端优先系统下载目录。目录不存在时自动创建。
+/// Android 用应用私有外部目录（无需存储权限，可被 FileProvider 分享给其他应用）；
+/// 回退时使用应用文档目录。目录不存在时自动创建。
 Future<Directory> resolveDownloadDirectory() async {
   Directory? base;
   try {
-    if (Platform.isAndroid) {
-      base = await getExternalStorageDirectory();
-    } else if (Platform.isIOS) {
-      base = await getApplicationDocumentsDirectory();
-    } else {
-      base = await getDownloadsDirectory();
-    }
+    base = await getExternalStorageDirectory();
   } catch (_) {
     base = null;
   }
