@@ -122,9 +122,11 @@ final terminalSessionProvider = NotifierProvider.autoDispose
 ///
 /// 消息协议见 `models/terminal_messages.dart`（与 `pkg/shell/pty.go`、
 /// `pkg/ssh/turn.go`、`pkg/docker/turn.go` 逐字段对齐）。
-class TerminalSessionController
-    extends
-        AutoDisposeFamilyNotifier<TerminalSessionState, TerminalSessionSpec> {
+class TerminalSessionController extends Notifier<TerminalSessionState> {
+  TerminalSessionController(this.arg);
+
+  final TerminalSessionSpec arg;
+
   /// 心跳间隔。
   static const Duration _pingInterval = Duration(seconds: 5);
 
@@ -157,7 +159,7 @@ class TerminalSessionController
   Terminal get terminal => _terminal!;
 
   @override
-  TerminalSessionState build(TerminalSessionSpec arg) {
+  TerminalSessionState build() {
     // watch 而非 read：切换服务器时需断开旧连接并向新服务器重新建连。
     ref.watch(activeServerProvider);
     // 重建（服务器切换）会先触发 onDispose 的 _teardown，这里恢复可用标记。

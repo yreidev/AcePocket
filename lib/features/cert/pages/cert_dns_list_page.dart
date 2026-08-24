@@ -94,7 +94,7 @@ class _CertDnsListPageState extends ConsumerState<CertDnsListPage> {
   @override
   Widget build(BuildContext context) {
     final listState = ref.watch(certDnsListProvider);
-    final options = ref.watch(certOptionsProvider).valueOrNull;
+    final options = ref.watch(certOptionsProvider).value;
 
     return Scaffold(
       appBar: AppBar(title: const Text('DNS 账号')),

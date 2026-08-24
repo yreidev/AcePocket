@@ -212,26 +212,21 @@ class _BackupListPageState extends ConsumerState<BackupListPage> {
     }
     if (!mounted) return;
 
-    FilePickerResult? picked;
+    PlatformFile? picked;
     try {
-      picked = await FilePicker.pickFiles(
-        // 备份包可能有数 GB，不预读进内存，交由流式上传按需读取。
-        withData: false,
-        withReadStream: false,
-      );
+      picked = await FilePicker.pickFile();
     } catch (e) {
       if (mounted) showErrorSnack(context, '打开文件选择器失败：$e');
       return;
     }
-    if (picked == null || picked.files.isEmpty || !mounted) return;
+    if (picked == null || !mounted) return;
 
-    final choice = picked.files.first;
-    final path = choice.path;
+    final path = picked.path;
     if (path == null || path.isEmpty) {
       showErrorSnack(context, '无法读取所选文件，请换一个位置重试');
       return;
     }
-    final name = choice.name.isEmpty ? path.split('/').last : choice.name;
+    final name = picked.name.isEmpty ? path.split('/').last : picked.name;
     if (!BackupUploader.isUploadable(name)) {
       showErrorSnack(
         context,
@@ -350,7 +345,7 @@ class _TypeTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         itemCount: types.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final type = types[index];
           return ChoiceChip(

@@ -1,11 +1,11 @@
 # AcePanel Mobile — 架构契约（所有功能模块必须遵守）
 
-Android Flutter 应用，包名 `acepanel_mobile`。UI 语言：简体中文。深浅色主题均支持。
+Android Flutter 应用，包名 `acepocket`。UI 语言：简体中文。深浅色主题均支持。
 
 ## 技术栈（pubspec 由 core 统一定义，功能模块不得擅自新增依赖）
 
-- `flutter_riverpod` ^2.5 — 状态管理
-- `go_router` ^14 — 路由
+- `flutter_riverpod` ^3.4 — 状态管理
+- `go_router` ^17 — 路由
 - `dio` ^5 — HTTP
 - `crypto` ^3 — HMAC-SHA256 签名
 - `flutter_secure_storage` ^9 — 服务器凭据存储
@@ -129,7 +129,7 @@ final apiClientProvider    = ...; // Provider<ApiClient>，依赖 activeServerPr
   `AnimatedReveal` / `ExpandChevron`。
 - 时间：面板返回带时区偏移的 RFC3339，`DateTime.parse` 得到 `isUtc=true` 的实例，
   展示前必须 `.toLocal()`；Go 零值时间（year <= 1）按 null 处理。
-- 新 SDK（Flutter 3.44）已废弃的 API 一律不用：`withOpacity`（用 `withValues`）、
+- 新 SDK（Flutter 3.47）已废弃的 API 一律不用：`withOpacity`（用 `withValues`）、
   `DropdownButtonFormField.value`（用 `initialValue`）、`Radio` 的
   `groupValue`/`onChanged`（用 `RadioGroup`）、`ReorderableListView.onReorder`
   （用 `onReorderItem`）。`dart analyze lib` 必须零 issue。

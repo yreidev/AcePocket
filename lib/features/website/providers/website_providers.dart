@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../core/providers/paged_notifier_base.dart';
 import '../../../core/storage/server_store.dart';
@@ -62,7 +63,7 @@ class WebsiteListNotifier extends KeepAlivePagedAsyncNotifier<Website> {
 
   /// 本地移除某个网站条目（删除成功后即时反馈，随后仍会刷新）。
   void removeItem(int id) {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     state = AsyncData(
       current.copyWith(

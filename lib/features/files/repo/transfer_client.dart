@@ -294,9 +294,8 @@ class PanelTransferClient {
           headers: {
             'Authorization': signed.authorizationHeader(server.tokenId),
             'X-Timestamp': '${signed.timestamp}',
-            if (contentLength != null)
-              Headers.contentLengthHeader: contentLength,
-            if (contentType != null) Headers.contentTypeHeader: contentType,
+            Headers.contentLengthHeader: ?contentLength,
+            Headers.contentTypeHeader: ?contentType,
           },
         ),
       );

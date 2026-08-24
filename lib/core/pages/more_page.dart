@@ -543,7 +543,7 @@ class _MorePageState extends ConsumerState<MorePage> {
   Widget _buildNormalBody() {
     final server = ref.watch(activeServerProvider);
     final serversAsync = ref.watch(serverListProvider);
-    final servers = serversAsync.valueOrNull ?? const <ServerConfig>[];
+    final servers = serversAsync.value ?? const <ServerConfig>[];
     final panelVersion = ref.watch(cachedPanelVersionProvider);
     final frequent = _frequentEntries(ref.watch(moreUsageProvider));
 

@@ -113,7 +113,7 @@ class _PhpMenuButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final key = EnvironmentRef('php', '$version');
-    final env = ref.watch(environmentDetailProvider(key)).valueOrNull;
+    final env = ref.watch(environmentDetailProvider(key)).value;
 
     Future<void> handle(String value) async {
       final repo = ref.read(environmentRepoProvider);
@@ -238,10 +238,10 @@ class _PhpOverviewTabState extends ConsumerState<_PhpOverviewTab> {
   Widget build(BuildContext context) {
     final detail = ref.watch(environmentDetailProvider(_ref));
     final installed = ref.watch(environmentInstalledProvider(_ref));
-    final env = detail.valueOrNull;
+    final env = detail.value;
     // 列表接口的 installed 与 is_installed 探测任一为真即视为已安装，
     // 避免探测失败时误禁用全部操作。
-    final isInstalled = env?.installed == true || installed.valueOrNull == true;
+    final isInstalled = env?.installed == true || installed.value == true;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -700,7 +700,7 @@ class _PhpModulesTabState extends ConsumerState<_PhpModulesTab> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         padding: const EdgeInsets.only(bottom: 28),
                         itemCount: visible.length,
-                        separatorBuilder: (_, __) =>
+                        separatorBuilder: (_, _) =>
                             const Divider(height: 1, indent: 16, endIndent: 16),
                         itemBuilder: (context, index) =>
                             _moduleTile(visible[index]),
@@ -809,7 +809,7 @@ class _PhpLoadTab extends ConsumerWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 itemCount: items.length,
-                separatorBuilder: (_, __) =>
+                separatorBuilder: (_, _) =>
                     const Divider(height: 1, indent: 16, endIndent: 16),
                 itemBuilder: (context, index) {
                   final item = items[index];

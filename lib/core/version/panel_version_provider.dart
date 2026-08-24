@@ -27,7 +27,7 @@ final panelVersionProvider = FutureProvider<PanelVersion?>((ref) async {
 /// 供「更多」页这类需要在 build 中同步判断大量入口的场景使用，
 /// 避免每个入口都去 watch 一个 AsyncValue。
 final cachedPanelVersionProvider = Provider<PanelVersion?>((ref) {
-  return ref.watch(panelVersionProvider).valueOrNull;
+  return ref.watch(panelVersionProvider).value;
 });
 
 /// 某功能在当前服务器上是否可用。

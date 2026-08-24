@@ -362,7 +362,7 @@ class _LogCleanPageState extends ConsumerState<LogCleanPage> {
             controller: controller,
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
             itemCount: state.items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
+            separatorBuilder: (_, _) => const Divider(height: 1),
             itemBuilder: (context, index) {
               final item = state.items[index];
               return ListTile(

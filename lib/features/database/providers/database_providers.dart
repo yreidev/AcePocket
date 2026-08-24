@@ -50,11 +50,13 @@ final databaseListProvider = AsyncNotifierProvider.autoDispose
     );
 
 class DatabaseListNotifier extends DatabasePagedNotifier<Database, String> {
+  DatabaseListNotifier(super.arg);
+
   @override
-  Future<PagedState<Database>> build(String arg) {
+  Future<PagedState<Database>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(databaseRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -80,11 +82,13 @@ final databaseServerListProvider = AsyncNotifierProvider.autoDispose
 
 class DatabaseServerListNotifier
     extends DatabasePagedNotifier<DatabaseServer, String> {
+  DatabaseServerListNotifier(super.arg);
+
   @override
-  Future<PagedState<DatabaseServer>> build(String arg) {
+  Future<PagedState<DatabaseServer>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(databaseRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -110,11 +114,13 @@ final databaseUserListProvider = AsyncNotifierProvider.autoDispose
 
 class DatabaseUserListNotifier
     extends DatabasePagedNotifier<DatabaseUser, String> {
+  DatabaseUserListNotifier(super.arg);
+
   @override
-  Future<PagedState<DatabaseUser>> build(String arg) {
+  Future<PagedState<DatabaseUser>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(databaseRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override

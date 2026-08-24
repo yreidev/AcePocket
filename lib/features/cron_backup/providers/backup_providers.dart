@@ -38,14 +38,16 @@ final backupListProvider = AsyncNotifierProvider.autoDispose
 
 class BackupListNotifier
     extends CronBackupPagedFamilyNotifier<BackupFile, String> {
+  BackupListNotifier(super.arg);
+
   @override
   int get pageSize => kBackupPageSize;
 
   @override
-  Future<PagedState<BackupFile>> build(String arg) {
+  Future<PagedState<BackupFile>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(backupRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -55,7 +57,7 @@ class BackupListNotifier
   /// 删除备份文件（成功后从列表移除）。
   Future<void> delete(BackupFile file) async {
     await ref.read(backupRepoProvider).delete(type: arg, file: file.name);
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     final items = current.items.where((e) => e.name != file.name).toList();
     state = AsyncData(

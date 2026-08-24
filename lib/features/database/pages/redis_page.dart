@@ -186,14 +186,14 @@ class _RedisPageState extends ConsumerState<RedisPage> {
     }
 
     final serversAsync = ref.watch(databaseServerOptionsProvider('redis'));
-    final servers = serversAsync.valueOrNull ?? const <DatabaseServer>[];
+    final servers = serversAsync.value ?? const <DatabaseServer>[];
     final serverId = servers.any((s) => s.id == _serverId)
         ? _serverId
         : (servers.isEmpty ? null : servers.first.id);
 
     final dbCount = serverId == null
         ? 16
-        : (ref.watch(redisDatabaseCountProvider(serverId)).valueOrNull ?? 16);
+        : (ref.watch(redisDatabaseCountProvider(serverId)).value ?? 16);
     final db = _db < dbCount ? _db : 0;
 
     final query = serverId == null

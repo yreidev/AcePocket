@@ -99,7 +99,7 @@ final templateCategoriesProvider = FutureProvider.autoDispose<List<LvOption>>((
 /// 分类 slug → 中文名（分类接口不可用时原样返回 slug）。
 final templateCategoryLabelProvider =
     Provider.autoDispose<String Function(String)>((ref) {
-      final categories = ref.watch(templateCategoriesProvider).valueOrNull;
+      final categories = ref.watch(templateCategoriesProvider).value;
       return (String slug) {
         if (categories == null) return slug;
         for (final item in categories) {

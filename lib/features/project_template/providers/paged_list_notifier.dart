@@ -34,7 +34,7 @@ abstract class PagedListNotifier<T> extends PagedAsyncNotifier<T> {
 
   /// 就地替换某个条目（乐观更新，避免整列表重建）。
   void replaceWhere(bool Function(T item) test, T Function(T item) update) {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     var changed = false;
     final items = <T>[];

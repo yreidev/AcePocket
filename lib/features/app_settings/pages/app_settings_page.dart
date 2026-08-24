@@ -379,7 +379,7 @@ class _AboutEntrySection extends ConsumerWidget {
           version.when(
             data: (v) => '版本 v$v',
             loading: () => '…',
-            error: (_, __) => '未知',
+            error: (_, _) => '未知',
           ),
         ),
         trailing: const Icon(Icons.chevron_right),

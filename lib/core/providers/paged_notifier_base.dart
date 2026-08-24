@@ -134,7 +134,7 @@ class PagedPager<T> {
     required void Function(AsyncValue<PagedState<T>> value) write,
     required PagedFetcher<T> fetch,
   }) async {
-    final current = read().valueOrNull;
+    final current = read().value;
     if (current == null ||
         _loadMoreInFlight ||
         current.loadingMore ||
@@ -151,7 +151,7 @@ class PagedPager<T> {
       final result = await fetch(nextPage, pageSize);
       if (isStale(generation)) return;
       // 用写入时刻的最新 state 合并，保留期间发生的本地增删（patch / removeItem）。
-      final base = read().valueOrNull ?? current;
+      final base = read().value ?? current;
       final merged = [...base.items, ...result.items];
       // 空页即视为到底：以已加载条数收尾，避免 total 与实际条数不一致
       // （如筛选后 total 未变化、搜索接口对 page > 1 返回空页）时
@@ -170,7 +170,7 @@ class PagedPager<T> {
       );
     } catch (error) {
       if (isStale(generation)) return;
-      final base = read().valueOrNull ?? current;
+      final base = read().value ?? current;
       write(AsyncData(base.copyWith(loadingMore: false, loadMoreError: error)));
     } finally {
       _loadMoreInFlight = false;
@@ -228,8 +228,7 @@ mixin PagedNotifierMixin<T> {
 }
 
 /// 分页 Notifier 基类（autoDispose，无 family 参数）。
-abstract class PagedAsyncNotifier<T>
-    extends AutoDisposeAsyncNotifier<PagedState<T>>
+abstract class PagedAsyncNotifier<T> extends AsyncNotifier<PagedState<T>>
     with PagedNotifierMixin<T> {
   @override
   Future<PagedState<T>> build() => buildFirstPage();
@@ -237,10 +236,15 @@ abstract class PagedAsyncNotifier<T>
 
 /// 分页 Notifier 基类（autoDispose + family 参数）。
 abstract class PagedFamilyAsyncNotifier<T, Arg>
-    extends AutoDisposeFamilyAsyncNotifier<PagedState<T>, Arg>
+    extends AsyncNotifier<PagedState<T>>
     with PagedNotifierMixin<T> {
+  PagedFamilyAsyncNotifier(this.arg);
+
+  /// 当前 family 参数。
+  final Arg arg;
+
   @override
-  Future<PagedState<T>> build(Arg arg) => buildFirstPage();
+  Future<PagedState<T>> build() => buildFirstPage();
 }
 
 /// 分页 Notifier 基类（常驻，不随页面销毁，如网站列表）。

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 
 import '../../../core/api/api_exception.dart';
 import '../../../core/widgets/a11y.dart';
@@ -52,7 +53,7 @@ class _RuntimeEnvironmentPageState
   /// `GET /environment/is_installed` 的探测结果作为补充，任一为真即视为已安装，
   /// 避免探测失败时误禁用操作按钮。
   bool _installed(EnvironmentDetail? env) {
-    final probe = ref.watch(environmentInstalledProvider(_ref)).valueOrNull;
+    final probe = ref.watch(environmentInstalledProvider(_ref)).value;
     return env?.installed == true || probe == true;
   }
 
@@ -110,7 +111,7 @@ class _RuntimeEnvironmentPageState
             icon: const Icon(Icons.refresh),
             onPressed: _refreshAll,
           ),
-          _menu(detail.valueOrNull),
+          _menu(detail.value),
         ],
       ),
       body: detail.when(

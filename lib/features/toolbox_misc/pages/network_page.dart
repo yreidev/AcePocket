@@ -47,7 +47,7 @@ class _NetworkPageState extends ConsumerState<NetworkPage> {
     if (!_controller.hasClients) return;
     // 上次加载更多失败时不再自动触发，避免停在列表底部反复重试；
     // 由底部的「重试」按钮显式重发。
-    final paged = ref.read(networkConnectionsProvider).valueOrNull;
+    final paged = ref.read(networkConnectionsProvider).value;
     if (paged == null || paged.loadMoreError != null) return;
     final position = _controller.position;
     if (position.pixels >= position.maxScrollExtent - 240) {

@@ -19,6 +19,8 @@ typedef PageFetcher<T> = Future<PageData<T>> Function(int page, int limit);
 /// 因此这里统一按 limit 截断，保证各接口的分页语义一致。
 abstract class DatabasePagedNotifier<T, Arg>
     extends PagedFamilyAsyncNotifier<T, Arg> {
+  DatabasePagedNotifier(super.arg);
+
   /// 拉取指定页数据，由子类提供。
   PageFetcher<T> get fetcher;
 

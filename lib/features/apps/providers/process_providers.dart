@@ -51,7 +51,7 @@ final processListProvider =
       ProcessListNotifier.new,
     );
 
-class ProcessListNotifier extends AutoDisposeNotifier<ProcessListState> {
+class ProcessListNotifier extends Notifier<ProcessListState> {
   ProcessRepo? _repo;
   ProcessQuery _query = const ProcessQuery();
   bool _alive = true;

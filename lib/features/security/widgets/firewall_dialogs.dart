@@ -533,7 +533,7 @@ Future<void> showPortUsageDialog(
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemCount: processes.length,
-                  separatorBuilder: (_, __) => const Divider(height: 16),
+                  separatorBuilder: (_, _) => const Divider(height: 16),
                   itemBuilder: (context, index) {
                     final process = processes[index];
                     return Column(

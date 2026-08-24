@@ -46,7 +46,7 @@ Future<ProcessSignalOption?> showProcessSignalSheet(
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   itemCount: ProcessSignalOption.all.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final signal = ProcessSignalOption.all[index];
                     return ListTile(

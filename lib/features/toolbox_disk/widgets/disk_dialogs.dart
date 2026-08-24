@@ -826,7 +826,7 @@ Future<void> showPartitionDetailDialog(
               : ListView.separated(
                   shrinkWrap: true,
                   itemCount: rows.length,
-                  separatorBuilder: (_, __) => const Divider(height: 16),
+                  separatorBuilder: (_, _) => const Divider(height: 16),
                   itemBuilder: (context, index) {
                     final item = rows[index];
                     return Column(

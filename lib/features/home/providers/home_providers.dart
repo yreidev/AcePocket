@@ -171,7 +171,7 @@ final homeRealtimeProvider =
       HomeRealtimeNotifier.new,
     );
 
-class HomeRealtimeNotifier extends AutoDisposeAsyncNotifier<RealtimeState> {
+class HomeRealtimeNotifier extends AsyncNotifier<RealtimeState> {
   /// 轮询间隔（秒），来自「应用设置」（homePollIntervalProvider）；0 = 关闭轮询。
   int _intervalSeconds = kDefaultHomePollIntervalSeconds;
 
@@ -304,6 +304,8 @@ class HomeRealtimeNotifier extends AutoDisposeAsyncNotifier<RealtimeState> {
       if (_disposed) return;
       // 已有数据时保留旧数据继续轮询（网络抖动不打断页面），同时把错误一并暴露，
       // 页面据此展示「刷新失败」轻提示；首次加载失败则为纯错误态，由页面展示重试。
+      // Riverpod 3 keeps previous async data through this compatibility API.
+      // ignore: invalid_use_of_internal_member
       state = AsyncError<RealtimeState>(e, st).copyWithPrevious(state);
     } finally {
       _fetching = false;

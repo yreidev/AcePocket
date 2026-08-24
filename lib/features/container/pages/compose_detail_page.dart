@@ -41,7 +41,7 @@ class _ComposeDetailPageState extends ConsumerState<ComposeDetailPage> {
     super.initState();
     _composeController.addListener(_onComposeChanged);
     // provider 可能已有缓存值：直接填充（initState 中不可 setState）。
-    final cached = ref.read(composeDetailProvider(widget.name)).valueOrNull;
+    final cached = ref.read(composeDetailProvider(widget.name)).value;
     if (cached != null) _fill(cached);
     // 之后的数据变化（首次加载完成 / 刷新）通过监听同步到编辑器。
     ref.listenManual<AsyncValue<ComposeDetail>>(

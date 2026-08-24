@@ -242,7 +242,7 @@ class _LvmTabState extends ConsumerState<LvmTab> {
   @override
   Widget build(BuildContext context) {
     final async = ref.watch(lvmInfoProvider);
-    final disks = ref.watch(diskListProvider).valueOrNull;
+    final disks = ref.watch(diskListProvider).value;
 
     return async.when(
       loading: () => const LoadingView(message: '读取 LVM 信息…'),

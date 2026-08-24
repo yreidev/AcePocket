@@ -264,13 +264,13 @@ class _DnsFormState extends ConsumerState<_DnsForm> {
 
     final credentialFields = <Widget>[
       if (spec.skFirst) ...[
-        if (skField != null) skField,
+        ?skField,
         if (skField != null && akField != null) const SizedBox(height: 14),
-        if (akField != null) akField,
+        ?akField,
       ] else ...[
-        if (akField != null) akField,
+        ?akField,
         if (akField != null && skField != null) const SizedBox(height: 14),
-        if (skField != null) skField,
+        ?skField,
       ],
     ];
 

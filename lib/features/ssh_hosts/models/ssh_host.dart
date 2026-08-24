@@ -181,7 +181,7 @@ class SshHostDraft {
   ///
   /// 更新接口的 `id` 由 URL 路径提供，这里同时写入请求体以保证绑定成功。
   Map<String, dynamic> toJson({int? id}) => {
-    if (id != null) 'id': id,
+    'id': ?id,
     'name': name,
     'host': host,
     'port': port,

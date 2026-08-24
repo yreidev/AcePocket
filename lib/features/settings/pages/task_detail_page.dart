@@ -137,7 +137,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
           A11yIconButton(
             tooltip: '刷新任务详情',
             icon: const Icon(Icons.refresh),
-            onPressed: () => _refresh(taskAsync.valueOrNull),
+            onPressed: () => _refresh(taskAsync.value),
           ),
         ],
       ),
@@ -273,7 +273,7 @@ class _TaskLogCard extends ConsumerWidget {
             tooltip: '复制任务日志',
             visualDensity: VisualDensity.compact,
             icon: const Icon(Icons.copy_outlined, size: 18),
-            onPressed: logAsync.valueOrNull == null
+            onPressed: logAsync.value == null
                 ? null
                 : () async {
                     await Clipboard.setData(

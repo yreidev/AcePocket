@@ -44,11 +44,13 @@ final redisDataProvider = AsyncNotifierProvider.autoDispose
     );
 
 class RedisDataNotifier extends DatabasePagedNotifier<RedisKv, RedisDataQuery> {
+  RedisDataNotifier(super.arg);
+
   @override
-  Future<PagedState<RedisKv>> build(RedisDataQuery arg) {
+  Future<PagedState<RedisKv>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(databaseRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override

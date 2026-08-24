@@ -99,10 +99,7 @@ class MonitorChartCard extends StatelessWidget {
     }
     final length = math.min(rawLength, times.length);
 
-    final subtitleText = [
-      if (subtitle != null) subtitle!,
-      if (sampleNote != null) sampleNote,
-    ].join(' · ');
+    final subtitleText = [?subtitle, ?sampleNote].join(' · ');
 
     if (length < 2) {
       // 只有 0 / 1 个采样点时画不出折线，但唯一的那个采样值仍是有效信息，
@@ -261,7 +258,7 @@ class MonitorChartCard extends StatelessWidget {
                           reservedSize: 52,
                           interval: (top - bottom) / 4,
                           getTitlesWidget: (value, meta) => SideTitleWidget(
-                            axisSide: meta.axisSide,
+                            meta: meta,
                             space: 6,
                             child: Text(
                               valueFormatter(value),
@@ -284,7 +281,7 @@ class MonitorChartCard extends StatelessWidget {
                               return const SizedBox.shrink();
                             }
                             return SideTitleWidget(
-                              axisSide: meta.axisSide,
+                              meta: meta,
                               space: 6,
                               child: Text(
                                 formatChartTime(
@@ -306,7 +303,7 @@ class MonitorChartCard extends StatelessWidget {
                       handleBuiltInTouches: true,
                       touchTooltipData: LineTouchTooltipData(
                         getTooltipColor: (_) => tooltipBackground,
-                        tooltipRoundedRadius: 8,
+                        tooltipBorderRadius: BorderRadius.circular(8),
                         fitInsideHorizontally: true,
                         fitInsideVertically: true,
                         getTooltipItems: (touchedSpots) {

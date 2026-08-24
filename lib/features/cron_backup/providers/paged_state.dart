@@ -30,6 +30,8 @@ abstract class CronBackupPagedNotifier<T> extends PagedAsyncNotifier<T> {
 /// 计划任务与备份模块的分页 Notifier 基类（带 family 参数，如按备份类型分页）。
 abstract class CronBackupPagedFamilyNotifier<T, Arg>
     extends PagedFamilyAsyncNotifier<T, Arg> {
+  CronBackupPagedFamilyNotifier(super.arg);
+
   /// 拉取第 [page] 页（页码从 1 开始），由子类实现。
   Future<PageResult<T>> fetch(int page, int limit);
 

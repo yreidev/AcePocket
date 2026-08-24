@@ -479,7 +479,7 @@ class _ScanSettingCardState extends ConsumerState<_ScanSettingCard> {
                         : draft.interfaces.join('、'),
                     dirty: _interfacesDirty,
                     onTap: () async {
-                      final options = interfaces.valueOrNull ?? const [];
+                      final options = interfaces.value ?? const [];
                       final selected = await showMultiSelectDialog(
                         context,
                         title: '选择监听网卡',

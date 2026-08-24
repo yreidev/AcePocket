@@ -40,7 +40,7 @@ class BackupStorageListNotifier extends CronBackupPagedNotifier<BackupStorage> {
   /// 删除备份存储（成功后从列表移除）。
   Future<void> delete(int id) async {
     await ref.read(backupStorageRepoProvider).delete(id);
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     final items = current.items.where((e) => e.id != id).toList();
     state = AsyncData(

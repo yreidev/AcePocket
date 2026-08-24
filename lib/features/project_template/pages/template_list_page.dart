@@ -128,7 +128,7 @@ class _TemplateListPageState extends ConsumerState<TemplateListPage> {
             ),
           ),
           _CategoryBar(
-            categories: categoriesAsync.valueOrNull ?? const [],
+            categories: categoriesAsync.value ?? const [],
             selected: filter.category,
             onSelected: (value) =>
                 ref.read(templateFilterProvider.notifier).selectCategory(value),
@@ -222,7 +222,7 @@ class _CategoryBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         itemCount: options.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final option = options[index];
           return ChoiceChip(

@@ -182,7 +182,7 @@ class _PanelUsersPageState extends ConsumerState<PanelUsersPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(panelUsersProvider);
-    final currentUser = ref.watch(currentPanelUserProvider).valueOrNull;
+    final currentUser = ref.watch(currentPanelUserProvider).value;
 
     return Scaffold(
       appBar: AppBar(
@@ -263,7 +263,7 @@ class _HeaderNotice extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final account = ref.watch(wsAccountStatusProvider).valueOrNull;
+    final account = ref.watch(wsAccountStatusProvider).value;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

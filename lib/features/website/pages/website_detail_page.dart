@@ -218,7 +218,7 @@ abstract class _WebsiteDetailPageBase extends ConsumerState<WebsiteDetailPage> {
     }
 
     final isNginx =
-        ref.read(installedEnvironmentProvider).valueOrNull?.isNginx ?? true;
+        ref.read(installedEnvironmentProvider).value?.isNginx ?? true;
     _syncSslListens(setting, isNginx);
 
     setState(() => _saving = true);

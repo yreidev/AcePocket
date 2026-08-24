@@ -59,7 +59,7 @@ class ServerEditPage extends ConsumerWidget {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text('已删除「${server.name}」')));
 
-    final remaining = ref.read(serverListProvider).valueOrNull ?? const [];
+    final remaining = ref.read(serverListProvider).value ?? const [];
     if (remaining.isEmpty) {
       context.go('/servers/setup');
     } else {
@@ -79,7 +79,7 @@ class ServerEditPage extends ConsumerWidget {
     final serversAsync = ref.watch(serverListProvider);
 
     final ServerConfig? initial = _isEdit
-        ? _findServer(serversAsync.valueOrNull ?? const <ServerConfig>[])
+        ? _findServer(serversAsync.value ?? const <ServerConfig>[])
         : null;
 
     return Scaffold(

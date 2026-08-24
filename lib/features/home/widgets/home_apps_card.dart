@@ -16,7 +16,7 @@ class HomeAppsCard extends ConsumerWidget {
     final async = ref.watch(homeAppsProvider);
 
     // 未配置首页应用时不占位。
-    if (async.valueOrNull != null && async.valueOrNull!.isEmpty) {
+    if (async.value != null && async.value!.isEmpty) {
       return const SizedBox.shrink();
     }
 

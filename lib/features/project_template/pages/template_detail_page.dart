@@ -28,12 +28,12 @@ class TemplateDetailPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          detailAsync.valueOrNull?.name ?? '模板详情',
+          detailAsync.value?.name ?? '模板详情',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
-          if (detailAsync.valueOrNull != null)
+          if (detailAsync.value != null)
             A11yIconButton(
               tooltip: '向应用商店上报一次下载量',
               onPressed: () => _callback(context, ref, detailAsync.value!),
@@ -41,7 +41,7 @@ class TemplateDetailPage extends ConsumerWidget {
             ),
         ],
       ),
-      floatingActionButton: detailAsync.valueOrNull == null
+      floatingActionButton: detailAsync.value == null
           ? null
           : FloatingActionButton.extended(
               onPressed: () => context.push(

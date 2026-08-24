@@ -92,7 +92,7 @@ class PanelUsersNotifier extends PagedNotifier<PanelUser> {
 
   /// 就地替换一条用户数据（改用户名 / 邮箱 / 2FA 后避免整页刷新导致跳动）。
   void replace(PanelUser user) {
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     final items = current.items
         .map((item) => item.id == user.id ? user : item)

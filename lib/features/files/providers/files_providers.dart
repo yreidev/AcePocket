@@ -54,14 +54,16 @@ final fileListProvider = AsyncNotifierProvider.autoDispose
 /// 错误记录到 `loadMoreError`，由列表底部展示并可重试。
 class FileListNotifier
     extends PagedFamilyAsyncNotifier<FileItem, FileListQuery> {
+  FileListNotifier(super.arg);
+
   @override
   int get pageSize => 100;
 
   @override
-  Future<FileListState> build(FileListQuery arg) {
+  Future<FileListState> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(fileRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -173,7 +175,7 @@ final fileSharesProvider =
       FileSharesNotifier.new,
     );
 
-class FileSharesNotifier extends AutoDisposeAsyncNotifier<List<FileShare>> {
+class FileSharesNotifier extends AsyncNotifier<List<FileShare>> {
   @override
   Future<List<FileShare>> build() => ref.watch(fileRepoProvider).shareList();
 

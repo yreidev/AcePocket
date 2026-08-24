@@ -96,7 +96,7 @@ class _CertAccountListPageState extends ConsumerState<CertAccountListPage> {
   @override
   Widget build(BuildContext context) {
     final listState = ref.watch(certAccountListProvider);
-    final options = ref.watch(certOptionsProvider).valueOrNull;
+    final options = ref.watch(certOptionsProvider).value;
 
     return Scaffold(
       appBar: AppBar(title: const Text('CA 账户')),

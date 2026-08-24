@@ -165,7 +165,7 @@ class _PanelSecurityPageState extends ConsumerState<PanelSecurityPage> {
     final setting = ref.watch(panelSettingProvider);
     // 草稿的初始化放在 when 之前：底部未保存操作条与页面主体都要读它，
     // 依赖 Scaffold 参数的求值顺序太脆弱。
-    final loaded = setting.valueOrNull;
+    final loaded = setting.value;
     if (loaded != null) {
       _origin ??= loaded;
       _draft ??= loaded;

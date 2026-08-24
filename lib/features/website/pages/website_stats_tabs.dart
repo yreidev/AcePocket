@@ -223,7 +223,7 @@ class _UriTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statUrisProvider(query));
     final maxRequests =
-        state.valueOrNull?.items.fold<int>(
+        state.value?.items.fold<int>(
           0,
           (max, e) => e.requests > max ? e.requests : max,
         ) ??
@@ -274,7 +274,7 @@ class _SlowUriTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statSlowUrisProvider(query));
     final maxTime =
-        state.valueOrNull?.items.fold<double>(
+        state.value?.items.fold<double>(
           0,
           (max, e) => e.avgRequestTimeMs > max ? e.avgRequestTimeMs : max,
         ) ??
@@ -323,7 +323,7 @@ class _IpTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(statIpsProvider(query));
     final maxRequests =
-        state.valueOrNull?.items.fold<int>(
+        state.value?.items.fold<int>(
           0,
           (max, e) => e.requests > max ? e.requests : max,
         ) ??

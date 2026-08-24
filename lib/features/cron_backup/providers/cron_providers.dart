@@ -39,7 +39,7 @@ class CronListNotifier extends CronBackupPagedNotifier<Cron> {
   /// 启用 / 停用任务（成功后就地更新列表项）。
   Future<void> setStatus(Cron cron, bool status) async {
     await ref.read(cronRepoProvider).setStatus(cron.id, status);
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     state = AsyncData(
       current.copyWith(
@@ -53,7 +53,7 @@ class CronListNotifier extends CronBackupPagedNotifier<Cron> {
   /// 删除任务（成功后从列表移除）。
   Future<void> delete(int id) async {
     await ref.read(cronRepoProvider).delete(id);
-    final current = state.valueOrNull;
+    final current = state.value;
     if (current == null) return;
     final items = current.items.where((e) => e.id != id).toList();
     state = AsyncData(

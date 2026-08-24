@@ -69,15 +69,13 @@ class ContainerDetailPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          async.valueOrNull?.name.isNotEmpty == true
-              ? async.valueOrNull!.name
-              : '容器详情',
+          async.value?.name.isNotEmpty == true ? async.value!.name : '容器详情',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
           // 容器终端需要容器处于运行中（`/api/ws/container/<id>` 是 exec）。
-          if (async.valueOrNull?.state.running == true)
+          if (async.value?.state.running == true)
             A11yIconButton(
               tooltip: '打开容器终端',
               icon: const Icon(Icons.terminal_rounded),

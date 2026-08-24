@@ -167,7 +167,7 @@ class _AppHeader extends ConsumerWidget {
         .when(
           data: (v) => v,
           loading: () => kAppVersion,
-          error: (_, __) => kAppVersion,
+          error: (_, _) => kAppVersion,
         );
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
@@ -272,7 +272,7 @@ class _UpdateSectionState extends ConsumerState<_UpdateSection> {
               version.when(
                 data: (v) => 'v$v',
                 loading: () => '…',
-                error: (_, __) => '未知',
+                error: (_, _) => '未知',
               ),
             ),
           ),

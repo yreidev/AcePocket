@@ -141,6 +141,8 @@ typedef StatPagedState<T> = PagedState<T>;
 /// loadMore 与 refresh 交错时会把过期的第 2 页追加到刷新后的列表上。
 abstract class StatPagedNotifier<T>
     extends PagedFamilyAsyncNotifier<T, StatQuery> {
+  StatPagedNotifier(super.arg);
+
   @override
   int get pageSize => kStatPageSize;
 
@@ -159,11 +161,13 @@ abstract class StatPagedNotifier<T>
 
 /// URI 统计（分页）。
 class StatUrisNotifier extends StatPagedNotifier<UriRank> {
+  StatUrisNotifier(super.arg);
+
   @override
-  Future<StatPagedState<UriRank>> build(StatQuery arg) {
+  Future<StatPagedState<UriRank>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(websiteStatRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -179,11 +183,13 @@ final statUrisProvider = AsyncNotifierProvider.autoDispose
 
 /// 慢请求 URI 统计（分页）。
 class StatSlowUrisNotifier extends StatPagedNotifier<UriRank> {
+  StatSlowUrisNotifier(super.arg);
+
   @override
-  Future<StatPagedState<UriRank>> build(StatQuery arg) {
+  Future<StatPagedState<UriRank>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(websiteStatRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -205,11 +211,13 @@ final statSlowUrisProvider = AsyncNotifierProvider.autoDispose
 
 /// IP 统计（分页）。
 class StatIpsNotifier extends StatPagedNotifier<IpRank> {
+  StatIpsNotifier(super.arg);
+
   @override
-  Future<StatPagedState<IpRank>> build(StatQuery arg) {
+  Future<StatPagedState<IpRank>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(websiteStatRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override
@@ -225,11 +233,13 @@ final statIpsProvider = AsyncNotifierProvider.autoDispose
 
 /// 错误日志（分页）。
 class StatErrorsNotifier extends StatPagedNotifier<ErrorLogItem> {
+  StatErrorsNotifier(super.arg);
+
   @override
-  Future<StatPagedState<ErrorLogItem>> build(StatQuery arg) {
+  Future<StatPagedState<ErrorLogItem>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(websiteStatRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override

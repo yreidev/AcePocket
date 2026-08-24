@@ -200,7 +200,7 @@ class _ElasticsearchPageState extends ConsumerState<ElasticsearchPage> {
     final serversAsync = ref.watch(
       databaseServerOptionsProvider('elasticsearch'),
     );
-    final servers = serversAsync.valueOrNull ?? const <DatabaseServer>[];
+    final servers = serversAsync.value ?? const <DatabaseServer>[];
     final serverId = servers.any((s) => s.id == _serverId)
         ? _serverId
         : (servers.isEmpty ? null : servers.first.id);

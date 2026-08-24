@@ -16,7 +16,7 @@ void main() {
             onRefresh: () async {},
             onLoadMore: () {},
             onRetry: () {},
-            itemBuilder: (_, item, __) => Text(item),
+            itemBuilder: (_, item, _) => Text(item),
             emptyMessage: '还没有任何镜像',
           ),
         ),
@@ -43,7 +43,7 @@ void main() {
             onRefresh: () async {},
             onLoadMore: () => loadMore++,
             onRetry: () {},
-            itemBuilder: (_, item, __) => ListTile(title: Text(item)),
+            itemBuilder: (_, item, _) => ListTile(title: Text(item)),
           ),
         ),
       ),
@@ -64,6 +64,7 @@ void main() {
         hasMore: false,
       ),
     );
+    // ignore: invalid_use_of_internal_member
     final reloading = const AsyncLoading<PagedState<String>>().copyWithPrevious(
       previous,
       isRefresh: false,
@@ -79,7 +80,7 @@ void main() {
             onRefresh: () async {},
             onLoadMore: () {},
             onRetry: () {},
-            itemBuilder: (_, item, __) => Text(item),
+            itemBuilder: (_, item, _) => Text(item),
             loadingMessage: '正在加载列表…',
           ),
         ),
@@ -100,6 +101,7 @@ void main() {
       ),
     );
     final refreshing = const AsyncLoading<PagedState<String>>()
+        // ignore: invalid_use_of_internal_member
         .copyWithPrevious(previous);
     expect(refreshing.isRefreshing, isTrue);
     expect(refreshing.isReloading, isFalse);
@@ -112,7 +114,7 @@ void main() {
             onRefresh: () async {},
             onLoadMore: () {},
             onRetry: () {},
-            itemBuilder: (_, item, __) => Text(item),
+            itemBuilder: (_, item, _) => Text(item),
           ),
         ),
       ),
@@ -128,7 +130,7 @@ void main() {
           onRefresh: () async {},
           onLoadMore: () {},
           onRetry: () {},
-          itemBuilder: (_, item, __) => ListTile(title: Text(item)),
+          itemBuilder: (_, item, _) => ListTile(title: Text(item)),
         ),
       ),
     );

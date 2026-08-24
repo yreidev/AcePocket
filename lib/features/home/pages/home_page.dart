@@ -102,10 +102,10 @@ class HomePage extends ConsumerWidget {
       );
     }
 
-    final panelName = ref.watch(panelInfoProvider).valueOrNull?.name;
+    final panelName = ref.watch(panelInfoProvider).value?.name;
     final realtime = ref.watch(homeRealtimeProvider);
-    final systemInfo = ref.watch(systemInfoProvider).valueOrNull;
-    final state = realtime.valueOrNull;
+    final systemInfo = ref.watch(systemInfoProvider).value;
+    final state = realtime.value;
 
     Widget body;
     if (state != null) {

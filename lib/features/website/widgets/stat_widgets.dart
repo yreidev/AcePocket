@@ -218,7 +218,7 @@ class StatSeriesChart extends StatelessWidget {
                 reservedSize: 48,
                 interval: maxY / 4,
                 getTitlesWidget: (value, meta) => SideTitleWidget(
-                  axisSide: meta.axisSide,
+                  meta: meta,
                   space: 4,
                   child: Text(
                     metric.format(value),
@@ -243,7 +243,7 @@ class StatSeriesChart extends StatelessWidget {
                   }
                   if (index % labelStep != 0) return const SizedBox.shrink();
                   return SideTitleWidget(
-                    axisSide: meta.axisSide,
+                    meta: meta,
                     space: 6,
                     child: Text(
                       series[index].shortLabel,
@@ -263,7 +263,7 @@ class StatSeriesChart extends StatelessWidget {
             touchTooltipData: LineTouchTooltipData(
               getTooltipColor: (_) =>
                   scheme.inverseSurface.withValues(alpha: 0.92),
-              tooltipRoundedRadius: 8,
+              tooltipBorderRadius: BorderRadius.circular(8),
               fitInsideHorizontally: true,
               fitInsideVertically: true,
               getTooltipItems: (spots) => spots.map((spot) {

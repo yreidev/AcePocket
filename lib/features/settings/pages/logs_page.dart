@@ -202,13 +202,13 @@ class _PanelLogViewState extends ConsumerState<_PanelLogView>
     final logsAsync = ref.watch(logListProvider(_query));
 
     // 有新数据就更新缓存；仍在加载 / 出错时沿用上一批，列表与滚动位置不动。
-    final fresh = logsAsync.valueOrNull;
+    final fresh = logsAsync.value;
     if (fresh != null) _loaded = fresh;
     final entries = fresh ?? _loaded;
 
     final dateItems = <DropdownMenuItem<String>>[
       const DropdownMenuItem(value: '', child: Text('今天')),
-      ...(datesAsync.valueOrNull ?? const <String>[]).map(
+      ...(datesAsync.value ?? const <String>[]).map(
         (d) => DropdownMenuItem(value: d, child: Text(d)),
       ),
     ];
@@ -342,7 +342,7 @@ class _SshLogViewState extends ConsumerState<_SshLogView>
     super.build(context);
     final logsAsync = ref.watch(sshLogProvider(_limit));
 
-    final fresh = logsAsync.valueOrNull;
+    final fresh = logsAsync.value;
     if (fresh != null) _loaded = fresh;
     final logs = fresh ?? _loaded;
 

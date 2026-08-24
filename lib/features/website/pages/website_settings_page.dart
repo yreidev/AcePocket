@@ -175,7 +175,7 @@ class _DefaultConfigFormState extends ConsumerState<_DefaultConfigForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final envAsync = ref.watch(installedEnvironmentProvider);
-    final isNginx = envAsync.valueOrNull?.isNginx ?? true;
+    final isNginx = envAsync.value?.isNginx ?? true;
 
     // 页面内容是三段整页 HTML，误触返回手势丢掉草稿的代价很高；
     // PopScope 注册在所在路由上，放在 Scaffold 内部同样生效。

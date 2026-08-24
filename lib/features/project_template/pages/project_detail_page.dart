@@ -123,17 +123,17 @@ class _ProjectDetailPageState extends ConsumerState<ProjectDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          detailAsync.valueOrNull?.name ?? '项目详情',
+          detailAsync.value?.name ?? '项目详情',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
-          if (detailAsync.valueOrNull != null)
+          if (detailAsync.value != null)
             PopupMenuButton<String>(
               tooltip: '更多操作',
               enabled: !_busy,
               onSelected: (value) {
-                final project = detailAsync.valueOrNull;
+                final project = detailAsync.value;
                 if (project == null) return;
                 final repo = ref.read(projectRepoProvider);
                 switch (value) {
@@ -152,7 +152,7 @@ class _ProjectDetailPageState extends ConsumerState<ProjectDetailPage> {
                 }
               },
               itemBuilder: (context) {
-                final running = detailAsync.valueOrNull?.isRunning ?? false;
+                final running = detailAsync.value?.isRunning ?? false;
                 return [
                   const PopupMenuItem(
                     value: 'edit',

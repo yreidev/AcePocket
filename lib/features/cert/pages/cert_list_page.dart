@@ -120,7 +120,7 @@ class _CertListPageState extends ConsumerState<CertListPage> {
   }
 
   Future<void> _deploy(CertListItem cert) async {
-    final options = ref.read(certOptionsProvider).valueOrNull;
+    final options = ref.read(certOptionsProvider).value;
     if (options == null) {
       showSnack(context, '网站列表尚未加载完成，请稍候重试', error: true);
       return;
@@ -174,7 +174,7 @@ class _CertListPageState extends ConsumerState<CertListPage> {
   @override
   Widget build(BuildContext context) {
     final listState = ref.watch(certListProvider);
-    final options = ref.watch(certOptionsProvider).valueOrNull;
+    final options = ref.watch(certOptionsProvider).value;
 
     return Scaffold(
       appBar: AppBar(

@@ -83,7 +83,7 @@ class _PagedListViewState<T> extends State<PagedListView<T>> {
 
   void _onScroll() {
     if (!_controller.hasClients) return;
-    if (widget.state.valueOrNull?.loadMoreError != null) return;
+    if (widget.state.value?.loadMoreError != null) return;
     final position = _controller.position;
     if (position.pixels >= position.maxScrollExtent - 240) {
       widget.onLoadMore();

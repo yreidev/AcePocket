@@ -194,7 +194,7 @@ class _CategoryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final list = categories.valueOrNull ?? const <AppCategory>[];
+    final list = categories.value ?? const <AppCategory>[];
     if (list.isEmpty) return const SizedBox(height: 4);
     return SizedBox(
       height: 48,
@@ -202,7 +202,7 @@ class _CategoryBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         itemCount: list.length + 1,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final value = index == 0 ? '' : list[index - 1].value;
           final label = index == 0 ? '全部' : list[index - 1].label;
@@ -384,7 +384,7 @@ class _AppListViewState extends ConsumerState<_AppListView>
     final filter = ref.watch(appFilterProvider);
     final filtered = filter.keyword.isNotEmpty || filter.category.isNotEmpty;
     final categories =
-        ref.watch(appCategoriesProvider).valueOrNull ?? const <AppCategory>[];
+        ref.watch(appCategoriesProvider).value ?? const <AppCategory>[];
     final categoryLabels = {for (final c in categories) c.value: c.label};
 
     if (state.isLoading && state.items.isEmpty) {

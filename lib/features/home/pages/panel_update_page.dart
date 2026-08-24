@@ -344,7 +344,7 @@ class _PanelUpdatePageState extends ConsumerState<PanelUpdatePage> {
     final theme = Theme.of(context);
     final systemInfo = ref.watch(systemInfoProvider);
     final updateInfo = ref.watch(panelUpdateInfoProvider);
-    final currentVersion = systemInfo.valueOrNull?.panelVersion ?? '';
+    final currentVersion = systemInfo.value?.panelVersion ?? '';
 
     return RefreshIndicator(
       onRefresh: () async {

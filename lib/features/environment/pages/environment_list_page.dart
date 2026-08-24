@@ -199,7 +199,7 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
   Widget _header(EnvironmentFilter filter) {
     final theme = Theme.of(context);
     final types = ref.watch(environmentTypesProvider);
-    final typeItems = types.valueOrNull ?? const <EnvironmentType>[];
+    final typeItems = types.value ?? const <EnvironmentType>[];
 
     return Material(
       color: theme.colorScheme.surface,
@@ -321,8 +321,7 @@ class _EnvironmentListPageState extends ConsumerState<EnvironmentListPage> {
     List<EnvironmentDetail> items,
   ) {
     final types =
-        ref.read(environmentTypesProvider).valueOrNull ??
-        const <EnvironmentType>[];
+        ref.read(environmentTypesProvider).value ?? const <EnvironmentType>[];
     final order = <String>[for (final type in types) type.value];
     final buckets = <String, List<EnvironmentDetail>>{};
     for (final item in items) {

@@ -81,7 +81,11 @@ typedef AppListState = PagedListState<AppItem>;
 final appListProvider = NotifierProvider.autoDispose
     .family<AppListNotifier, AppListState, bool>(AppListNotifier.new);
 
-class AppListNotifier extends AutoDisposeFamilyNotifier<AppListState, bool> {
+class AppListNotifier extends Notifier<AppListState> {
+  AppListNotifier(this._installedOnly);
+
+  final bool _installedOnly;
+
   AppsRepo? _repo;
   AppFilter _filter = const AppFilter();
   bool _alive = true;
@@ -89,10 +93,8 @@ class AppListNotifier extends AutoDisposeFamilyNotifier<AppListState, bool> {
   /// 请求代次：依赖变化 / 手动刷新时自增，用于丢弃过期请求的结果。
   int _generation = 0;
 
-  bool get _installedOnly => arg;
-
   @override
-  AppListState build(bool installedOnly) {
+  AppListState build() {
     _alive = true;
     ref.onDispose(() => _alive = false);
 

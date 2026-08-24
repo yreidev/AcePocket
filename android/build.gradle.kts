@@ -24,7 +24,7 @@ tasks.register<Delete>("clean") {
 }
 
 // ---------------------------------------------------------------------------
-// file_picker 11.0.2 与 AGP 9 的兼容修补
+// file_picker 12.0.0 与 AGP 9 的兼容修补
 //
 // 该插件的 android/build.gradle 在检测到 AGP 9+ 时会**跳过**
 // `org.jetbrains.kotlin.android` 插件与 kotlinOptions，前提是工程启用了 AGP 内建

@@ -12,7 +12,7 @@ final connectionTestRepoProvider = Provider<ConnectionTestRepo>(
 
 /// 按 id 查找已保存的服务器；列表尚未加载或 id 不存在时为 null。
 final serverByIdProvider = Provider.family<ServerConfig?, String>((ref, id) {
-  final list = ref.watch(serverListProvider).valueOrNull;
+  final list = ref.watch(serverListProvider).value;
   if (list == null) return null;
   for (final s in list) {
     if (s.id == id) return s;
@@ -22,7 +22,7 @@ final serverByIdProvider = Provider.family<ServerConfig?, String>((ref, id) {
 
 /// 是否已配置至少一台服务器（用于引导页 / 路由判空）。
 final hasServersProvider = Provider<bool>((ref) {
-  final list = ref.watch(serverListProvider).valueOrNull;
+  final list = ref.watch(serverListProvider).value;
   return list != null && list.isNotEmpty;
 });
 

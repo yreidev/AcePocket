@@ -91,7 +91,7 @@ class MonitorPage extends ConsumerWidget {
 
     final range = ref.watch(monitorRangeProvider);
     final async = ref.watch(monitorDetailProvider);
-    final setting = ref.watch(monitorSettingProvider).valueOrNull;
+    final setting = ref.watch(monitorSettingProvider).value;
 
     return Scaffold(
       appBar: AppBar(

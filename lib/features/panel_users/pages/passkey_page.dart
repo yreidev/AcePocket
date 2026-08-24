@@ -87,7 +87,7 @@ class _PasskeyPageState extends ConsumerState<PasskeyPage> {
   @override
   Widget build(BuildContext context) {
     final currentAsync = ref.watch(currentPanelUserProvider);
-    final current = currentAsync.valueOrNull;
+    final current = currentAsync.value;
     final userId = _resolveUserId(current);
 
     return Scaffold(

@@ -167,7 +167,7 @@ class _DatabaseListPageState extends ConsumerState<DatabaseListPage> {
     // （而不是把面板的原始报错丢给用户）；探测失败则回退到通用错误视图。
     if (state.hasError && !state.isLoading) {
       final installed = ref.watch(databaseAppInstalledProvider);
-      if (installed.valueOrNull == false) {
+      if (installed.value == false) {
         return NotInstalledView(
           title: '未安装数据库服务',
           message:

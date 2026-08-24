@@ -326,33 +326,35 @@ mixin _FileBrowserActions on _FileBrowserPageBase {
   /// 小文件走 `POST /file/upload`，大文件自动走 `/file/chunk/start` →
   /// `/file/chunk/upload` → `/file/chunk/finish` 分片流程（可续传）。
   Future<void> _uploadLocalFiles() async {
-    FilePickerResult? picked;
+    List<PlatformFile> picked;
     try {
-      picked = await FilePicker.pickFiles(
-        allowMultiple: true,
-        // 大文件不预读进内存，统一由 UploadSource 按需分片读取。
-        withData: false,
-        withReadStream: false,
-      );
+      picked = await FilePicker.pickFiles();
     } catch (e) {
       _error(ApiException('打开文件选择器失败：${describeError(e)}'));
       return;
     }
-    if (picked == null || picked.files.isEmpty || !mounted) return;
+    if (picked.isEmpty || !mounted) return;
 
     final sources = <UploadSource>[];
     final unreadable = <String>[];
-    for (final file in picked.files) {
+    for (final file in picked) {
       try {
         final path = file.path;
         if (path != null && path.isNotEmpty) {
           sources.add(
             await LocalFileUploadSource.open(File(path), name: file.name),
           );
-        } else if (file.bytes != null) {
-          sources.add(BytesUploadSource(name: file.name, bytes: file.bytes!));
         } else {
-          unreadable.add(file.name);
+          try {
+            sources.add(
+              BytesUploadSource(
+                name: file.name,
+                bytes: await file.readAsBytes(),
+              ),
+            );
+          } catch (_) {
+            unreadable.add(file.name);
+          }
         }
       } catch (_) {
         unreadable.add(file.name);

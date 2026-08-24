@@ -19,7 +19,14 @@ class ServerStore {
   static const _kActiveId = 'acepanel_active_server_id';
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    aOptions: AndroidOptions(
+      // v9 -> v10 的过渡配置；迁移完成后再移除旧后端参数。
+      // ignore: deprecated_member_use
+      encryptedSharedPreferences: true,
+      migrateOnAlgorithmChange: true,
+      migrateWithBackup: true,
+      resetOnError: false,
+    ),
   );
 
   List<ServerConfig> _servers = const [];
@@ -93,7 +100,7 @@ class ServerListNotifier extends AsyncNotifier<List<ServerConfig>> {
     return ServerStore.instance.servers;
   }
 
-  List<ServerConfig> get _current => state.valueOrNull ?? const [];
+  List<ServerConfig> get _current => state.value ?? const [];
 
   /// 添加服务器；若此前无任何服务器则自动设为当前选中。
   Future<void> add(ServerConfig server) async {
@@ -151,8 +158,7 @@ class ActiveServerNotifier extends Notifier<ServerConfig?> {
   /// 选中指定 id 的服务器并持久化；id 不存在时不做任何事。
   Future<void> select(String id) async {
     final list =
-        ref.read(serverListProvider).valueOrNull ??
-        ServerStore.instance.servers;
+        ref.read(serverListProvider).value ?? ServerStore.instance.servers;
     for (final s in list) {
       if (s.id == id) {
         state = s;

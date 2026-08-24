@@ -99,7 +99,7 @@ class PinnedCertSection extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     // 加载中 / 出错时降级为空列表（main 中已预加载，几乎总是有值）。
-    final servers = ref.watch(serverListProvider).valueOrNull ?? const [];
+    final servers = ref.watch(serverListProvider).value ?? const [];
     final pinnedServers = servers
         .where((s) => s.pinnedCertSha256.isNotEmpty)
         .toList();

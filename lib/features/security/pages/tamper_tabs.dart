@@ -743,7 +743,7 @@ class _TamperPathsTabState extends ConsumerState<_TamperPathsTab> {
     final theme = Theme.of(context);
     final paths = ref.watch(tamperCheckPathListProvider);
     final checkAsync = ref.watch(tamperPathCheckProvider);
-    final check = checkAsync.valueOrNull;
+    final check = checkAsync.value;
 
     return RefreshIndicator(
       onRefresh: () async {

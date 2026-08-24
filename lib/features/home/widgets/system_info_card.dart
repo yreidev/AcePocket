@@ -15,7 +15,7 @@ class SystemInfoCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final async = ref.watch(systemInfoProvider);
-    final panel = ref.watch(panelInfoProvider).valueOrNull;
+    final panel = ref.watch(panelInfoProvider).value;
 
     return SectionCard(
       title: '系统信息',

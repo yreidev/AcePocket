@@ -142,7 +142,7 @@ class SecurityRawApi {
             'Authorization': signed.authorizationHeader(server.tokenId),
             'X-Timestamp': '${signed.timestamp}',
             if (body != null) Headers.contentLengthHeader: body.length,
-            if (contentType != null) Headers.contentTypeHeader: contentType,
+            Headers.contentTypeHeader: ?contentType,
           },
         ),
       );

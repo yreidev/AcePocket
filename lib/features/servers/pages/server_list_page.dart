@@ -56,7 +56,7 @@ class ServerListPage extends ConsumerWidget {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text('已删除「${server.name}」')));
 
-    final remaining = ref.read(serverListProvider).valueOrNull ?? const [];
+    final remaining = ref.read(serverListProvider).value ?? const [];
     if (remaining.isEmpty) {
       context.go('/servers/setup');
     }
@@ -79,7 +79,7 @@ class ServerListPage extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: (serversAsync.valueOrNull ?? const []).isEmpty
+      floatingActionButton: (serversAsync.value ?? const []).isEmpty
           ? null
           : FloatingActionButton.extended(
               onPressed: () => context.push('/servers/edit'),

@@ -55,7 +55,7 @@ void main() {
 
     final sub = container.listen(
       appListProvider(true),
-      (_, __) {},
+      (_, _) {},
       fireImmediately: true,
     );
     await Future<void>.delayed(Duration.zero);
@@ -82,7 +82,7 @@ void main() {
 
     final sub = container.listen(
       appListProvider(false),
-      (_, __) {},
+      (_, _) {},
       fireImmediately: true,
     );
     await Future<void>.delayed(Duration.zero);

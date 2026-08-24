@@ -40,14 +40,14 @@ class CustomServicesNotifier extends AsyncNotifier<List<String>> {
   Future<void> add(String name) async {
     final service = name.trim();
     if (service.isEmpty) return;
-    final current = state.valueOrNull ?? const <String>[];
+    final current = state.value ?? const <String>[];
     if (current.contains(service)) return;
     await _save([...current, service]);
   }
 
   /// 移除自定义服务。
   Future<void> remove(String name) async {
-    final current = state.valueOrNull ?? const <String>[];
+    final current = state.value ?? const <String>[];
     if (!current.contains(name)) return;
     await _save(current.where((s) => s != name).toList());
   }

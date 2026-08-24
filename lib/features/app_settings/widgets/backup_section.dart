@@ -161,24 +161,23 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
 
   /// 选取备份文件并读成文本，用户取消或读取失败返回 null。
   Future<String?> _pickBackupText() async {
-    FilePickerResult? picked;
     try {
-      picked = await FilePicker.pickFiles(withData: true);
+      final picked = await FilePicker.pickFile();
+      if (picked == null) return null;
+
+      final bytes = await picked.readAsBytes();
+      if (bytes.isEmpty) {
+        if (mounted) showErrorSnack(context, '无法读取所选文件');
+        return null;
+      }
+      try {
+        return utf8.decode(bytes);
+      } catch (_) {
+        if (mounted) showErrorSnack(context, '所选文件不是文本格式的备份');
+        return null;
+      }
     } catch (error) {
       if (mounted) showErrorSnack(context, error);
-      return null;
-    }
-    if (picked == null || picked.files.isEmpty) return null;
-
-    final bytes = picked.files.first.bytes;
-    if (bytes == null) {
-      if (mounted) showErrorSnack(context, '无法读取所选文件');
-      return null;
-    }
-    try {
-      return utf8.decode(bytes);
-    } catch (_) {
-      if (mounted) showErrorSnack(context, '所选文件不是文本格式的备份');
       return null;
     }
   }

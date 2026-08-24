@@ -40,7 +40,7 @@ class _PhpConfigEditorPageState extends ConsumerState<PhpConfigEditorPage> {
 
   String get _fileName => widget.fpm ? 'php-fpm.conf' : 'php.ini';
 
-  AutoDisposeFutureProvider<String> get _provider => widget.fpm
+  FutureProvider<String> get _provider => widget.fpm
       ? phpFpmConfigProvider(widget.version)
       : phpIniProvider(widget.version);
 
@@ -48,7 +48,7 @@ class _PhpConfigEditorPageState extends ConsumerState<PhpConfigEditorPage> {
   void initState() {
     super.initState();
     // provider 已有缓存值时（页面返回复用）直接填充，避免编辑器空白。
-    final cached = ref.read(_provider).valueOrNull;
+    final cached = ref.read(_provider).value;
     if (cached != null) {
       _controller.text = cached;
       _loaded = cached;

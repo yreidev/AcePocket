@@ -185,7 +185,7 @@ class _WebsiteCreatePageState extends ConsumerState<WebsiteCreatePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final envAsync = ref.watch(installedEnvironmentProvider);
-    final env = envAsync.valueOrNull ?? InstalledEnvironment.empty;
+    final env = envAsync.value ?? InstalledEnvironment.empty;
 
     final scaffold = Scaffold(
       appBar: AppBar(title: const Text('新建网站')),

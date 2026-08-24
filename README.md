@@ -10,12 +10,12 @@
 支持同时接入多台服务器并随时切换。UI 为简体中文、Material 3，跟随系统深浅色（也可手动切换）。
 
 - 目标平台：Android（本地文件选择 / 打开依赖 `file_picker`、`open_filex`）
-- Dart SDK：`^3.5.0`（Flutter 3.24+）
-- 状态管理：`flutter_riverpod` ^2.5，路由：`go_router` ^14
+- Dart SDK：`^3.12.0`（项目统一使用 Flutter 3.47.0）
+- 状态管理：`flutter_riverpod` ^3.4，路由：`go_router` ^17
 - 主要依赖：`dio`、`crypto`、`web_socket_channel`、`flutter_secure_storage`、
   `shared_preferences`、`fl_chart`、`xterm`、`intl`、`file_picker`、`path_provider`、`open_filex`
 
-> 仓库已包含用 Flutter 3.44.8 生成并做过必要修补的 `android/` 外壳
+> 仓库已包含按 Flutter 3.47.0 验证并做过必要修补的 `android/` 外壳
 > （Android 主 manifest 已声明 `INTERNET` 权限、`android/build.gradle.kts` 有
 > file_picker 与 AGP 9 的兼容修补），**不要**再执行 `flutter create .` 覆盖它们。
 
@@ -269,7 +269,7 @@ lib/
 
 ## 编译运行
 
-本机需要 Flutter 3.24 或更高版本（`flutter --version` 确认）。已在 **Flutter 3.44.8 stable** 上验证：
+本机使用 **Flutter 3.47.0 stable**（`flutter --version` 确认），与 CI 和发布流程保持一致：
 `dart analyze lib` **零 issue**（error / warning / info 全清），`flutter test` 通过，
 `flutter build apk --debug` 构建成功。
 
@@ -297,21 +297,19 @@ flutter build apk --release        # Android
 
 ### 注意事项
 
-- **`file_picker` 与 AGP 9**：`file_picker` 11.0.2 的 `android/build.gradle` 在检测到
+- **`file_picker` 与 AGP 9**：`file_picker` 12.0.0 的 Android 子工程在检测到
   AGP 9+ 时会跳过 `org.jetbrains.kotlin.android` 插件（它假定工程启用了 AGP 内建 Kotlin），
   但其他 Flutter 插件仍显式应用 KGP，工程只能保持 `android.builtInKotlin=false`；
   两者叠加会让 file_picker 的 Kotlin 源码不参与编译，构建时报
   `找不到符号: 类 FilePickerPlugin`。仓库已在 `android/build.gradle.kts` 末尾针对该子工程
   补回 Kotlin 插件与 JVM 17 目标，**重新生成 android/ 后需要手动补回这段**。
-- **Flutter 内建 Kotlin 迁移警告**：Flutter 3.44 构建时仍会提示 `file_picker` 11.0.2
-  与 `package_info_plus` 9.0.1 自行应用 KGP，未来 Flutter 版本会停止兼容。当前
-  `file_picker` 已是稳定最新版，而 `package_info_plus` 10.x 依赖 `win32` 6.x，和
-  `file_picker` 11.0.2 依赖的 `win32` 5.x 无法同时解析；需等待上游发布可兼容版本后
-  一并升级。在此之前当前 Flutter 3.44.8 的 release 构建可正常完成。
+- **Flutter 内建 Kotlin 迁移警告**：Flutter 3.47 / AGP 9 构建时，部分插件仍会提示
+  自行应用 Kotlin 插件。当前兼容配置可正常完成 release 构建；在所有插件支持 AGP
+  内建 Kotlin 前，不要删除 `gradle.properties` 与 `android/build.gradle.kts` 中的兼容处理。
 - **`flutter create .` 之后如果 `pubspec.yaml` 被改写**（某些 Flutter 版本会追加默认段落），
-  请确认 `name: acepanel_mobile`、`environment.sdk: ^3.5.0` 与 dependencies 列表仍与仓库版本一致。
+  请确认 `name: acepocket`、`environment.sdk: ^3.12.0` 与 dependencies 列表仍与仓库版本一致。
 - **`intl` 版本**：`flutter_localizations` 会把 `intl` 钉死在 Flutter SDK 内置的版本上。
-  本仓库用的是 `^0.20.2`（Flutter 3.44 内置版本）。若你的 Flutter 较旧导致
+  本仓库用的是 `^0.20.2`（Flutter 3.47 当前解析为 0.20.3）。若你的 Flutter 较旧导致
   `version solving failed`，按 pub 的提示把约束改成它要求的版本即可，代码本身不受影响。
 - **网络权限（重要）**：`flutter create` **只**把 `INTERNET` 权限写进 `debug`/`profile` 的
   manifest，主 manifest（release 用）里没有——release 包会因此完全无法联网，

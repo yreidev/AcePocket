@@ -330,7 +330,7 @@ void main() {
       TestPagedNotifier.fetch = fetch;
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final sub = container.listen(testPagedProvider, (_, __) {});
+      final sub = container.listen(testPagedProvider, (_, _) {});
       addTearDown(sub.close);
 
       // 首屏。

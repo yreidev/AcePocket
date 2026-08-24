@@ -104,7 +104,7 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
       sort: ref.watch(fileSortProvider),
     );
     final listAsync = ref.watch(fileListProvider(query));
-    final listState = listAsync.valueOrNull;
+    final listState = listAsync.value;
     final visibleCount = listState == null
         ? 0
         : _visibleItems(listState.items).length;
@@ -453,7 +453,7 @@ abstract class _FileBrowserPageBase extends ConsumerState<FileBrowserPage> {
   }
 
   void _selectAll() {
-    final state = ref.read(fileListProvider(_query)).valueOrNull;
+    final state = ref.read(fileListProvider(_query)).value;
     if (state == null) return;
     final visible = _visibleItems(state.items);
     setState(() {

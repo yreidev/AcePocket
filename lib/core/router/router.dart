@@ -152,8 +152,8 @@ final routerProvider = Provider<GoRouter>((ref) {
   // 服务器配置变化时让 GoRouter 重新求值 redirect。
   // 注意：这里刻意不用 ref.watch —— 重建 GoRouter 会丢失整个导航栈。
   final refresh = _RouterRefreshNotifier();
-  ref.listen(activeServerProvider, (_, __) => refresh.refresh());
-  ref.listen(serverListProvider, (_, __) => refresh.refresh());
+  ref.listen(activeServerProvider, (_, _) => refresh.refresh());
+  ref.listen(serverListProvider, (_, _) => refresh.refresh());
   ref.onDispose(refresh.dispose);
 
   return GoRouter(

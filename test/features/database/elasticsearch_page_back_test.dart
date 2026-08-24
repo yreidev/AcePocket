@@ -48,7 +48,7 @@ void main() {
           'elasticsearch',
         ).overrideWith((ref) async => const [esServer]),
         esIndicesProvider(7).overrideWith((ref) async => const [index]),
-        esDataProvider.overrideWith(_FakeEsData.new),
+        esDataProvider.overrideWith2((_) => _FakeEsData()),
       ],
       child: const MaterialApp(home: ElasticsearchPage()),
     );
@@ -109,8 +109,10 @@ class _FakeActiveServer extends ActiveServerNotifier {
 
 /// 文档分页 Notifier 的替身：直接给一页固定数据，不触碰网络。
 class _FakeEsData extends EsDataNotifier {
+  _FakeEsData() : super(const EsDataQuery(serverId: 0, index: ''));
+
   @override
-  Future<PagedState<EsDocument>> build(EsDataQuery arg) async {
+  Future<PagedState<EsDocument>> build() async {
     return const PagedState<EsDocument>(
       items: [EsDocument(id: 'doc-1', index: 'logs-2026', source: '{"a":1}')],
       total: 1,

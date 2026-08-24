@@ -123,7 +123,7 @@ class _ServiceTileState extends ConsumerState<ServiceTile> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final async = ref.watch(serviceStateProvider(_name));
-    final state = async.valueOrNull;
+    final state = async.value;
     final isCustom = widget.service.source == ServiceSource.custom;
 
     return Card(
@@ -345,7 +345,7 @@ class _StatusDot extends StatelessWidget {
         child: CircularProgressIndicator(strokeWidth: 2),
       );
     }
-    final state = async.valueOrNull;
+    final state = async.value;
     late final Color color;
     if (state == null) {
       color = colorScheme.outline;

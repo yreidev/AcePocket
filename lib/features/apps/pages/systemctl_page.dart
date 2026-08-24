@@ -31,7 +31,7 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
     setState(() => _refreshing = true);
     // 重新推导服务列表，并让每个服务重新查询状态。
     for (final service
-        in ref.read(serviceListProvider).valueOrNull ?? const <ServiceRef>[]) {
+        in ref.read(serviceListProvider).value ?? const <ServiceRef>[]) {
       ref.invalidate(serviceStateProvider(service.name));
     }
     ref.invalidate(serviceListProvider);
@@ -48,7 +48,7 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
 
   Future<void> _addService() async {
     final existing =
-        (ref.read(serviceListProvider).valueOrNull ?? const <ServiceRef>[])
+        (ref.read(serviceListProvider).value ?? const <ServiceRef>[])
             .map((s) => s.name)
             .toList();
     final name = await showAddServiceDialog(context, existing: existing);
@@ -68,7 +68,7 @@ class _SystemctlPageState extends ConsumerState<SystemctlPage> {
     final async = ref.watch(serviceListProvider);
     // 刷新失败时 AsyncError 仍带着上一次的数据：优先展示旧列表（错误由
     // _refresh 以提示条告知），只有从来没加载成功过才整页展示错误。
-    final services = async.valueOrNull;
+    final services = async.value;
 
     return Scaffold(
       appBar: AppBar(

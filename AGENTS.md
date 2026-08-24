@@ -20,7 +20,7 @@ flutter run
 flutter build apk --release --target-platform android-arm64
 ```
 
-使用 Flutter 3.44.8 stable 与 CI 对齐。静态检查必须达到 0 error、0 warning、0 info。真机更新安装使用 `adb install -r <apk>`，不要使用会先卸载应用、清除私有数据的 `flutter install`。发布签名读取不入库的 `android/key.properties`，模板见 `android/key.properties.example`；缺失时仅生成不可分发的 debug 签名包。
+使用 Flutter 3.47.0 stable 与 CI 对齐。静态检查必须达到 0 error、0 warning、0 info。真机更新安装使用 `adb install -r <apk>`，不要使用会先卸载应用、清除私有数据的 `flutter install`。发布签名读取不入库的 `android/key.properties`，模板见 `android/key.properties.example`；缺失时仅生成不可分发的 debug 签名包。
 
 ## 编码风格与命名约定
 

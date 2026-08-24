@@ -42,11 +42,13 @@ final esDataProvider = AsyncNotifierProvider.autoDispose
     );
 
 class EsDataNotifier extends DatabasePagedNotifier<EsDocument, EsDataQuery> {
+  EsDataNotifier(super.arg);
+
   @override
-  Future<PagedState<EsDocument>> build(EsDataQuery arg) {
+  Future<PagedState<EsDocument>> build() {
     // watch 而非 read：切换服务器时 repo 重建，列表需随之重新加载。
     ref.watch(databaseRepoProvider);
-    return super.build(arg);
+    return super.build();
   }
 
   @override

@@ -134,7 +134,7 @@ class _TasksPageState extends ConsumerState<TasksPage> {
       body: Column(
         children: [
           if (_busy) const LinearProgressIndicator(minHeight: 2),
-          if (runningAsync.valueOrNull == true)
+          if (runningAsync.value == true)
             Container(
               width: double.infinity,
               color: theme.colorScheme.primaryContainer,

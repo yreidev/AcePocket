@@ -132,7 +132,7 @@ class _SshSftpPageState extends ConsumerState<SshSftpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final hosts = ref.watch(sshHostOptionsProvider).valueOrNull ?? const [];
+    final hosts = ref.watch(sshHostOptionsProvider).value ?? const [];
     final listing = ref.watch(sftpListingProvider(_query));
     final isRoot = _path == '/';
     // 已有数据时（下拉刷新 / 建目录后重载）保留列表，只用细进度条表示在加载。

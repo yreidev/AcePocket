@@ -40,7 +40,7 @@ class FadeSwitch extends StatelessWidget {
       fit: StackFit.expand,
       children: <Widget>[
         for (final previous in previousChildren) IgnorePointer(child: previous),
-        if (currentChild != null) currentChild,
+        ?currentChild,
       ],
     );
   }
@@ -53,7 +53,7 @@ class FadeSwitch extends StatelessWidget {
       alignment: Alignment.center,
       children: <Widget>[
         for (final previous in previousChildren) IgnorePointer(child: previous),
-        if (currentChild != null) currentChild,
+        ?currentChild,
       ],
     );
   }

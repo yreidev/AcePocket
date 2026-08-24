@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' show CancelToken;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '../../../core/api/api_exception.dart';
 import '../../../core/providers/paged_notifier_base.dart';

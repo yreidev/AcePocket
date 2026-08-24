@@ -150,7 +150,7 @@ final notifyEventDraftProvider =
 final notifyEventDirtyProvider = Provider.autoDispose<bool>((ref) {
   final draft = ref.watch(notifyEventDraftProvider);
   if (draft == null) return false;
-  final saved = ref.watch(notifySettingProvider).valueOrNull;
+  final saved = ref.watch(notifySettingProvider).value;
   return saved == null || draft != saved;
 });
 

@@ -19,7 +19,8 @@ val hasReleaseSigning = keystoreProperties.getProperty("storeFile") != null
 
 android {
     namespace = "io.github.akumareal.acepocket"
-    compileSdk = flutter.compileSdkVersion
+    // flutter_secure_storage 11 要求 Android SDK 37。
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

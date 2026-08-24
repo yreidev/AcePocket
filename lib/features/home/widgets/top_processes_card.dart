@@ -111,6 +111,7 @@ class _TopProcessesCardState extends ConsumerState<TopProcessesCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
+                            flex: 3,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -135,13 +136,19 @@ class _TopProcessesCardState extends ConsumerState<TopProcessesCard> {
                           const SizedBox(width: 8),
                           // 「磁盘 IO」档位的文案是「读 X / 写 Y」，比另外两档
                           // 长得多，定宽 Text 在窄屏上会把左侧进程名挤到溢出。
-                          Flexible(
-                            child: Text(
-                              _formatValue(process),
-                              textAlign: TextAlign.end,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                fontFeatures: kTabularFigures,
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                _formatValue(process),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontFeatures: kTabularFigures,
+                                ),
                               ),
                             ),
                           ),

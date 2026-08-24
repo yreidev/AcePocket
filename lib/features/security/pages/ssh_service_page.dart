@@ -67,7 +67,7 @@ class _SshServicePageState extends ConsumerState<SshServicePage> {
             icon: const Icon(Icons.refresh),
             onPressed: () {
               ref.invalidate(sshInfoProvider);
-              final service = info.valueOrNull?.service;
+              final service = info.value?.service;
               if (service != null) {
                 ref.invalidate(serviceStatusProvider(service));
               }

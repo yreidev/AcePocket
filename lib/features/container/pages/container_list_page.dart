@@ -209,7 +209,7 @@ class _ContainerListPageState extends ConsumerState<ContainerListPage> {
     // （而不是把面板的原始报错丢给用户）；探测失败则回退到通用错误视图。
     if (state.hasError && !state.isLoading) {
       final installed = ref.watch(containerEngineInstalledProvider);
-      if (installed.valueOrNull == false) {
+      if (installed.value == false) {
         return NotInstalledView(
           title: '未安装容器引擎',
           message:

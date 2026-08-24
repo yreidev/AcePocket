@@ -38,7 +38,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
     final row = _row;
     final theme = Theme.of(context);
     final envAsync = ref.watch(installedEnvironmentProvider);
-    final env = envAsync.valueOrNull ?? InstalledEnvironment.empty;
+    final env = envAsync.value ?? InstalledEnvironment.empty;
 
     return _tabBody([
       SectionCard(
@@ -245,7 +245,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
   Widget _buildDomainTab() {
     final setting = _setting!;
     final isNginx =
-        ref.watch(installedEnvironmentProvider).valueOrNull?.isNginx ?? true;
+        ref.watch(installedEnvironmentProvider).value?.isNginx ?? true;
 
     return _tabBody([
       SectionCard(
@@ -638,7 +638,7 @@ mixin _WebsiteDetailTabs on _WebsiteDetailPageBase {
     final setting = _setting!;
     final theme = Theme.of(context);
     final isNginx =
-        ref.watch(installedEnvironmentProvider).valueOrNull?.isNginx ?? true;
+        ref.watch(installedEnvironmentProvider).value?.isNginx ?? true;
     // 面板默认日志路径（与前端一致，面板根目录固定为 /opt/ace）。
     final defaultAccessLog = '/opt/ace/sites/${setting.name}/log/access.log';
     final defaultErrorLog = '/opt/ace/sites/${setting.name}/log/error.log';

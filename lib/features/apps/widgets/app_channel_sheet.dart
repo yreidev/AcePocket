@@ -71,7 +71,7 @@ class _AppChannelSheet extends StatelessWidget {
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   itemCount: app.channels.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final channel = app.channels[index];
                     return _ChannelTile(channel: channel);

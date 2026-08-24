@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,28 +68,26 @@ class _FirewallImportPageState extends ConsumerState<FirewallImportPage> {
   // ------------------------------------------------------------ xlsx 文件导入
 
   Future<void> _pickAndUpload() async {
-    FilePickerResult? picked;
+    PlatformFile? picked;
     try {
-      picked = await FilePicker.pickFiles(withData: true);
+      picked = await FilePicker.pickFile();
     } catch (e) {
       if (!mounted) return;
       showErrorSnack(context, e);
       return;
     }
-    if (picked == null || picked.files.isEmpty) return;
+    if (picked == null) return;
 
-    final file = picked.files.first;
-    List<int>? bytes = file.bytes;
-    if (bytes == null && file.path != null) {
-      try {
-        bytes = await File(file.path!).readAsBytes();
-      } catch (e) {
-        if (!mounted) return;
-        showErrorSnack(context, e);
-        return;
-      }
+    final file = picked;
+    List<int> bytes;
+    try {
+      bytes = await file.readAsBytes();
+    } catch (e) {
+      if (!mounted) return;
+      showErrorSnack(context, e);
+      return;
     }
-    if (bytes == null || bytes.isEmpty) {
+    if (bytes.isEmpty) {
       if (!mounted) return;
       showErrorSnack(context, const ApiException('未能读取所选文件内容'));
       return;

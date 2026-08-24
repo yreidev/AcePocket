@@ -13,8 +13,7 @@ class HealthBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final issues =
-        ref.watch(healthProvider).valueOrNull ?? const <HealthIssue>[];
+    final issues = ref.watch(healthProvider).value ?? const <HealthIssue>[];
     // 健康检查是轮询回来的，直接 if/else 会让横幅在首页上突然弹出、把下方
     // 卡片整体顶下去；交给 AnimatedReveal 展开。
     return AnimatedReveal(
@@ -81,7 +80,7 @@ class PanelUpdateBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final hasUpdate = ref.watch(panelUpdateProvider).valueOrNull ?? false;
+    final hasUpdate = ref.watch(panelUpdateProvider).value ?? false;
     return AnimatedReveal(
       visible: hasUpdate,
       child: hasUpdate ? _buildBanner(context) : const SizedBox.shrink(),
